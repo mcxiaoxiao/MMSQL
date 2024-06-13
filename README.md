@@ -1,9 +1,3 @@
-明白了，我会在 README 中添加关于代码使用方法的介绍，包括如何运行评估脚本 `accs_eval.py` 以及下载数据集的链接和格式说明。
-
-以下是更新后的 README 内容：
-
----
-
 # MMSQL Dataset
 
 The MMSQL dataset was curated from the CoSQL data, which we refer to as the Multiple type Multi-turn Text-to-SQL test set (MMSQL). For the evaluation, we developed the Accuracy with SQL Matching (AccS) metric.
