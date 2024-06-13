@@ -147,7 +147,7 @@ span.line {
 
 #logo-img {
     display: inline;
-    max-height: 250px;
+    max-height: 220px;
     cursor: pointer;
     transition: all 0.2s;
 }
