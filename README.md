@@ -24,7 +24,7 @@ where \( \mathrm{I} = 1 \) if \( C_i \) matches \( \hat{C}_i \), and \( \mathrm{
 In the context of a database querying dialogue system, it is imperative not only to classify the type of user query accurately but also to furnish the appropriate SQL queries for those answerable questions. To comprehensively evaluate the system's performance, we enhance the Accuracy (Acc) measure by integrating Exact Match (EM) for questions that necessitate SQL query formulation. This integration results in a comprehensive metric, AccS, which assesses both the system’s proficiency in question classification and its precision in SQL query generation within multi-turn dialogues. For a given set of \( N \) questions, where \( S_i \) denotes the ground truth SQL query and \( \hat{S}_i \) represents the predicted SQL query, AccS is computed as follows:
 
 $$
-\text{AccS} = \frac{1}{N} \sum_{i=1}^{N} \left\{
+\text{IAccS} = \frac{1}{N} \sum_{i=1}^{N} \left\{
 \begin{array}{ll}
 \mathrm{I}(C_i = \hat{C}_i) \cdot \mathrm{QM}(S_i, \hat{S}_i) & \text{(a)} \\
 \mathrm{I}(C_i = \hat{C}_i) & \text{(b)} \\
