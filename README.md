@@ -1,7 +1,35 @@
+明白了，我会在 README 中添加关于代码使用方法的介绍，包括如何运行评估脚本 `accs_eval.py` 以及下载数据集的链接和格式说明。
+
+以下是更新后的 README 内容：
+
+---
 
 # MMSQL Dataset
 
 The MMSQL dataset was curated from the CoSQL data, which we refer to as the Multiple type Multi-turn Text-to-SQL test set (MMSQL). For the evaluation, we developed the Accuracy with SQL Matching (AccS) metric.
+
+## Usage
+
+To evaluate your model using the AccS metric, you can use the provided `accs_eval.py` script. Here is how to run the script:
+
+```sh
+python accs_eval.py "example.json" "../datasets/cosql_dataset/database"
+```
+
+- `example.json`: The file containing your model's prediction results.
+- `../datasets/cosql_dataset/database`: The directory containing the databases organized in the Spider/CoSQL/SParC format.
+
+### Download Datasets
+
+You can download the required datasets from the following links:
+
+| Dataset | Description | Download Link |
+|---------|-------------|---------------|
+| Spider  | A large-scale complex and cross-domain semantic parsing and text-to-SQL dataset | [Spider](https://yale-lily.github.io/spider) |
+| CoSQL   | A conversational text-to-SQL dataset | [CoSQL](https://yale-lily.github.io/cosql) |
+| SParC   | A cross-domain semantic parsing in context dataset | [SParC](https://yale-lily.github.io/sparc) |
+
+These datasets are organized in a specific format that is compatible with our evaluation script.
 
 ## Evaluation Metrics
 
