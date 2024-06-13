@@ -141,15 +141,15 @@ span.line {
     background: none !important;
 }
 
-#bird-title {
-    color: #9de2dd
+#mmsql-title {
+    color: #0c525a
 }
 
 #logo-img {
     display: inline;
-    max-height: 200px;
+    max-height: 250px;
     cursor: pointer;
-    transition: all 0.6s;
+    transition: all 0.2s;
 }
 
 #logo-img:hover {
