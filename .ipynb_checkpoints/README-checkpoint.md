@@ -3,7 +3,7 @@
 This repository contains the scripts and code used for the experiments in the paper titled "MMSQL: Advancing Multi-turn Text-to-SQL Evaluation with Comprehensive Dialogue Datasets and Large Language Models". The repository is structured to ensure reproducibility of the experiments and includes various scripts, notebooks, and data outputs.
 
 ## Directory Structure
-
+- `mmsql.json`: MMSQL test set.
 - `llm_generation.py`: Script responsible for generating responses using the LLM.
 - `rqs_evaluation.py`: Script for evaluating responses using GPT-4o to score RQS.
 - `accs_eval.py`: Script for calculating several metrics including ACCS, IACCS, EM, QM, and ERROR.
