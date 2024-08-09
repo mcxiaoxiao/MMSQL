@@ -1,3 +1,17 @@
+"""
+accs_eval.py
+
+This script calculates several metrics from the output JSON files, including ACCS, IACCS, EM, QM, and ERROR.
+
+Usage:
+    python accs_eval.py --input outputs/llm_responses.json --output outputs/metrics.json
+
+Arguments:
+    --input: Path to the input JSON file containing the LLM responses.
+    --output: Path to the output JSON file where the metrics will be saved.
+"""
+
+
 import json
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
