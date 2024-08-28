@@ -1016,7 +1016,7 @@
             {
                 "isuser": true,
                 "text": "Yes.",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -1381,7 +1381,7 @@
             {
                 "isuser": true,
                 "text": "which museums are visited the most?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -1391,7 +1391,7 @@
             {
                 "isuser": true,
                 "text": "can i have the id and name of the museum?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -1731,7 +1731,7 @@
             {
                 "isuser": true,
                 "text": "What is the ticket price at the Plaza Museum?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -1857,21 +1857,6 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT first_name,  last_name FROM players"
-            },
-            {
-                "isuser": true,
-                "text": "List the first names of all left hand players please",
-                "type": "improper"
-            },
-            {
-                "isuser": true,
-                "text": "* I have left the chat *",
-                "type": "answerable"
-            },
-            {
-                "isuser": false,
-                "text": "",
-                "query": "SELECT first_name ,  last_name FROM players WHERE hand  =  'L'"
             }
         ]
     },
@@ -1913,16 +1898,6 @@
     {
         "db_name": "course_teach",
         "turns": [
-            {
-                "isuser": false,
-                "text": "Do you mean the grades of the math courses?",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "Yes!",
-                "type": "improper"
-            },
             {
                 "isuser": true,
                 "text": "Show the name of the teacher for the math course please?",
@@ -2531,7 +2506,7 @@
             {
                 "isuser": true,
                 "text": "yes can tell me?\n",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -3011,7 +2986,7 @@
             {
                 "isuser": true,
                 "text": "Were there any other concerts other than Auditions, Super bootcamp, and Home Visits in 2014 or 2015?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -3075,18 +3050,8 @@
             },
             {
                 "isuser": true,
-                "text": "are there any tourneys that have more than 10 matches?",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "",
-                "query": "SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*)  >  10"
-            },
-            {
-                "isuser": true,
                 "text": "are these the tourneys with more than 10 matches?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -3121,7 +3086,7 @@
             {
                 "isuser": true,
                 "text": "Did the 15 graduates graduate at different times?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -3141,7 +3106,7 @@
             {
                 "isuser": true,
                 "text": "Please tell me the first name, middle name, and last name.",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -3581,7 +3546,7 @@
             {
                 "isuser": true,
                 "text": "exactly",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -3601,7 +3566,7 @@
             {
                 "isuser": true,
                 "text": "exactly",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -3666,7 +3631,7 @@
             {
                 "isuser": true,
                 "text": "Wow!  of the 3 nations with the lowest population, what are the population sizes of the other two besides Antarctica?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -4116,7 +4081,7 @@
             {
                 "isuser": true,
                 "text": "yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -4551,7 +4516,7 @@
             {
                 "isuser": true,
                 "text": "Are there any apartments with only one room?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -4626,7 +4591,7 @@
             {
                 "isuser": true,
                 "text": "Are there any other flights planned to depart from APG or ABR and what are the flight number of all flights planning to depart?\n",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -4726,7 +4691,7 @@
             {
                 "isuser": true,
                 "text": "Yes please.",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -4911,7 +4876,7 @@
             {
                 "isuser": true,
                 "text": "Are there any other singers that don't have a song in the song table?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -5031,7 +4996,7 @@
             {
                 "isuser": true,
                 "text": "Do any ships have a tonnage above 225?\n",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -5131,7 +5096,7 @@
             {
                 "isuser": true,
                 "text": "is that higher than the average money rank?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -5161,7 +5126,7 @@
             {
                 "isuser": true,
                 "text": "How much higher is his earning than the average?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -5356,7 +5321,7 @@
             {
                 "isuser": true,
                 "text": "so there are no United Airlines flights with destination \"ASY\"?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -5641,7 +5606,7 @@
             {
                 "isuser": true,
                 "text": "Thank you!  So none of the flights have neither APG nor ABR as their \"destination airport\"?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -5806,7 +5771,7 @@
             {
                 "isuser": true,
                 "text": "Yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -5883,16 +5848,6 @@
     {
         "db_name": "tvshow",
         "turns": [
-            {
-                "isuser": false,
-                "text": "Did you mean the titles of cartoons?",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "Yes",
-                "type": "improper"
-            },
             {
                 "isuser": true,
                 "text": "List the cartoons that are directed by Ben Jones.",
@@ -6381,7 +6336,7 @@
             {
                 "isuser": true,
                 "text": "Excellent!  Are there any template ids not associated with any document id?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -6446,7 +6401,7 @@
             {
                 "isuser": true,
                 "text": "yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -6476,7 +6431,7 @@
             {
                 "isuser": true,
                 "text": "yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -6521,7 +6476,7 @@
             {
                 "isuser": true,
                 "text": "yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -6551,7 +6506,7 @@
             {
                 "isuser": true,
                 "text": "yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -6760,7 +6715,7 @@
             },
             {
                 "isuser": true,
-                "text": "K THANKS",
+                "text": "OKK THANKS",
                 "type": "improper"
             },
             {
@@ -6955,18 +6910,18 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "How many stores are there?",
+                "text": "The number of stores?",
                 "type": "ambiguous"
             },
             {
                 "isuser": false,
-                "text": "Did you mean to ask for the number of shops?",
+                "text": "Did you mean to ask for the number of shops in the database?",
                 "query": ""
             },
             {
                 "isuser": true,
                 "text": "Yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7031,7 +6986,7 @@
             {
                 "isuser": true,
                 "text": "after bulldog, which breed has the next most dogs?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7041,7 +6996,7 @@
             {
                 "isuser": true,
                 "text": "are there any breeds with 0 dogs?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7051,7 +7006,7 @@
             {
                 "isuser": true,
                 "text": "any with 1 dog?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7073,16 +7028,6 @@
     {
         "db_name": "pets_1",
         "turns": [
-            {
-                "isuser": false,
-                "text": "Do you mean the first name of all students who have cat pets?",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "Yes",
-                "type": "improper"
-            },
             {
                 "isuser": true,
                 "text": "What are the names of all students who have cat pets?",
@@ -7116,7 +7061,7 @@
             {
                 "isuser": true,
                 "text": "Are there any students that have both a cat and a dog?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7226,7 +7171,7 @@
             {
                 "isuser": true,
                 "text": "yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7366,7 +7311,7 @@
             {
                 "isuser": true,
                 "text": "Do any conductors work for more than one orchestra?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7386,7 +7331,7 @@
             {
                 "isuser": true,
                 "text": "yes.",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7966,7 +7911,7 @@
             {
                 "isuser": true,
                 "text": "Do other countries speak Pashto?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7976,7 +7921,7 @@
             {
                 "isuser": true,
                 "text": "Is it an official language of Pakistan?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7995,7 +7940,7 @@
             },
             {
                 "isuser": true,
-                "text": "Nope, that's all.",
+                "text": "Nope, that's all, THX~",
                 "type": "improper"
             },
             {
@@ -8131,7 +8076,7 @@
             {
                 "isuser": true,
                 "text": "yes, please",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -8168,16 +8113,6 @@
     {
         "db_name": "dog_kennels",
         "turns": [
-            {
-                "isuser": false,
-                "text": "Did you mean first name?",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "Yes",
-                "type": "improper"
-            },
             {
                 "isuser": true,
                 "text": "List the names of all the professionals. ",
@@ -8296,7 +8231,7 @@
             {
                 "isuser": true,
                 "text": "Was anyone injured in these death events?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -8761,7 +8696,7 @@
             {
                 "isuser": true,
                 "text": "WHICH CAR MODEL GIVES MORE ACCELRATION",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -8801,7 +8736,7 @@
             {
                 "isuser": true,
                 "text": "Yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": true,
@@ -8836,7 +8771,7 @@
             {
                 "isuser": true,
                 "text": "yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -9030,7 +8965,7 @@
             },
             {
                 "isuser": true,
-                "text": "List the songs in increasing release years",
+                "text": "List all the songs, order them",
                 "type": "ambiguous"
             },
             {
@@ -9041,7 +8976,7 @@
             {
                 "isuser": true,
                 "text": "Yes I do\n",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -9075,7 +9010,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "Yes",
+                "text": "Hola!",
                 "type": "improper"
             },
             {
@@ -9096,7 +9031,7 @@
             {
                 "isuser": true,
                 "text": "yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -9396,7 +9331,7 @@
             {
                 "isuser": true,
                 "text": "Excellent!  Can you filter this list to show just the department that offers the largest number of degrees?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -9461,22 +9396,12 @@
             {
                 "isuser": true,
                 "text": "That would be fine if it is easier for you.  ",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
                 "text": "",
                 "query": "SELECT professional_id , role_code , email_address FROM Professionals EXCEPT SELECT T1.professional_id , T1.role_code , T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id = T2.professional_id"
-            },
-            {
-                "isuser": true,
-                "text": "Thanks!",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "bye",
-                "query": ""
             }
         ]
     },
@@ -9661,7 +9586,7 @@
             {
                 "isuser": true,
                 "text": "IS ANY CHANNEL AVAILABLE IN HIGH DEFINITION?\n",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -10301,7 +10226,7 @@
             {
                 "isuser": true,
                 "text": "Yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -10331,7 +10256,7 @@
             {
                 "isuser": true,
                 "text": "Yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -10441,7 +10366,7 @@
             {
                 "isuser": true,
                 "text": "YES \n",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -10486,7 +10411,7 @@
             {
                 "isuser": true,
                 "text": "Are there any other teachers from there?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -10506,7 +10431,7 @@
             {
                 "isuser": true,
                 "text": "Are there any other teachers with that age?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -10531,7 +10456,7 @@
             {
                 "isuser": true,
                 "text": "Are there any dog pet raised by any female student",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -10595,7 +10520,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "What are the cars with the lowest horsepower?",
+                "text": "What are the cars with lower hp?",
                 "type": "ambiguous"
             },
             {
@@ -10716,17 +10641,7 @@
             {
                 "isuser": true,
                 "text": "Show me other details of those transcripts",
-                "type": "ambiguous"
-            },
-            {
-                "isuser": false,
-                "text": "Do you mean other details of those transcripts with at least 2 course results?",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "Yes!",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -10932,21 +10847,6 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT avg(LifeExpectancy) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" AND T2.IsOfficial  =  \"T\")"
-            },
-            {
-                "isuser": true,
-                "text": "What is the average life expectancy in countries where English is the official language?",
-                "type": "improper"
-            },
-            {
-                "isuser": true,
-                "text": "* I have left the chat *",
-                "type": "answerable"
-            },
-            {
-                "isuser": false,
-                "text": "",
-                "query": "SELECT avg(LifeExpectancy) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" AND T2.IsOfficial  =  \"T\""
             }
         ]
     },
@@ -11301,7 +11201,7 @@
             {
                 "isuser": true,
                 "text": "Are there any other details about that department?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -11331,7 +11231,7 @@
             {
                 "isuser": true,
                 "text": "Are there any departments with other details that are not the word 'NULL' ?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -11641,7 +11541,7 @@
             {
                 "isuser": true,
                 "text": "Can you show a list of IDs that are on the second list, but are not on the first list?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -11887,26 +11787,6 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id GROUP BY T1.student_id ORDER BY count(*) DESC limit 1"
-            },
-            {
-                "isuser": true,
-                "text": "Thanks!",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "do  you  have more  question?",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "No.",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "welcome  and  bye ",
-                "query": ""
             }
         ]
     },
@@ -12056,7 +11936,7 @@
             {
                 "isuser": true,
                 "text": "yes flight numbers of all flights on Delta Airlines",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -12276,7 +12156,7 @@
             {
                 "isuser": true,
                 "text": "yes\n",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -12511,7 +12391,7 @@
             {
                 "isuser": true,
                 "text": "Interesting, can you tell me if there is any airport with a value of AHD, and if that value appears anywhere in the table at all?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -12935,7 +12815,7 @@
             },
             {
                 "isuser": true,
-                "text": "I don't think so...  Thank you for you time!",
+                "text": "I don't think so...  Thank you!",
                 "type": "improper"
             },
             {
@@ -13281,16 +13161,6 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "SELECT distinct T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id WHERE T2.ranking = 1"
-            },
-            {
-                "isuser": true,
-                "text": "is this correct?",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "",
                 "query": "SELECT distinct T1.first_name, T2.ranking FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id WHERE T2.ranking = 1"
             },
             {
@@ -13392,16 +13262,6 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT DISTINCT T3.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode JOIN city AS T3 ON T1.Code  =  T3.CountryCode WHERE T1.Continent  =  \"Asia\""
-            },
-            {
-                "isuser": true,
-                "text": "Which of those cities have Chinese as their official language?",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "* I have left the chat *",
-                "query": ""
             },
             {
                 "isuser": false,
@@ -13690,8 +13550,8 @@
             },
             {
                 "isuser": true,
-                "text": "Is Kyle one of them?",
-                "type": "improper"
+                "text": "The names of them?",
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -13756,7 +13616,7 @@
             {
                 "isuser": true,
                 "text": "football stadium",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -14094,16 +13954,6 @@
                 "query": "SELECT T1.first_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.current_address_id  =  T2.address_id WHERE T2.state_province_county  =  'NorthCarolina' EXCEPT SELECT DISTINCT T3.last_name FROM Students AS T3 JOIN Student_Enrolment AS T4 ON T3.student_id  =  T4.student_id"
             },
             {
-                "isuser": true,
-                "text": "What are the dates first registered of all students from the country Iceland?",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "* I have left the chat *",
-                "query": ""
-            },
-            {
                 "isuser": false,
                 "text": "",
                 "query": "SELECT T1.date_first_registered FROM Students AS T1 JOIN Addresses AS T2 ON T1.current_address_id  =  T2.address_id WHERE T2.country =  'Iceland'"
@@ -14380,8 +14230,8 @@
             },
             {
                 "isuser": true,
-                "text": "the course name",
-                "type": "improper"
+                "text": "the name",
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -14501,7 +14351,7 @@
             {
                 "isuser": true,
                 "text": "Yes, I do.",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -14711,7 +14561,7 @@
             {
                 "isuser": true,
                 "text": "Did they abandon their dogs (abandoned yes or no)?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -14811,7 +14661,7 @@
             {
                 "isuser": true,
                 "text": "which singers born before 1945 have the same citizenship?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -14821,7 +14671,7 @@
             {
                 "isuser": true,
                 "text": "which singers born after 1955 have the same citizenship?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -15246,7 +15096,7 @@
             {
                 "isuser": true,
                 "text": "Yes",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -15420,16 +15270,6 @@
             },
             {
                 "isuser": true,
-                "text": "is there one more name?\n",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "",
-                "query": "SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'"
-            },
-            {
-                "isuser": true,
                 "text": "excellent. Thanks!",
                 "type": "improper"
             },
@@ -15446,7 +15286,7 @@
             {
                 "isuser": true,
                 "text": "Do any states have owners living there?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -15601,7 +15441,7 @@
             {
                 "isuser": true,
                 "text": "Yes please, in a table if possible?",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -15620,8 +15460,8 @@
             },
             {
                 "isuser": true,
-                "text": "Yes please",
-                "type": "improper"
+                "text": "Yes",
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -15696,7 +15536,7 @@
             {
                 "isuser": true,
                 "text": "Yes please!",
-                "type": "improper"
+                "type": "answerable"
             },
             {
                 "isuser": false,
