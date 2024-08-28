@@ -154,12 +154,12 @@
             },
             {
                 "isuser": true,
-                "text": "Thanks!",
+                "text": "Send him an email , please.",
                 "type": "improper"
             },
             {
                 "isuser": false,
-                "text": "Thank you! bye",
+                "text": "Sorry , I am an AI and cannot send emails directly. However, you can use this email address jillian26@example.net to contact the person yourself. If you need help drafting an email, feel free to ask!",
                 "query": ""
             }
         ]
@@ -185,7 +185,7 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "select \tCapacity from stadium where name = 'Balmoor'"
+                "query": "select Capacity from stadium where name = 'Balmoor'"
             },
             {
                 "isuser": true,
@@ -199,12 +199,12 @@
             },
             {
                 "isuser": true,
-                "text": "Thanks!",
+                "text": "Cool! good theme.",
                 "type": "improper"
             },
             {
                 "isuser": false,
-                "text": "welcome goodbye",
+                "text": "Yes, the theme 'Happy Tonight' for Balmoor is indeed very cool!",
                 "query": ""
             }
         ]
