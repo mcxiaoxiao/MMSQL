@@ -411,16 +411,6 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT title FROM Cartoon where id=2.0"
-            },
-            {
-                "isuser": true,
-                "text": "thanks",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "Sure. Do you want to know something else?",
-                "query": ""
             }
         ]
     },
@@ -430,7 +420,7 @@
             {
                 "isuser": true,
                 "text": "which horsepower is hight?",
-                "type": "unanswerable"
+                "type": "ambiguous"
             },
             {
                 "isuser": false,
@@ -459,23 +449,13 @@
             },
             {
                 "isuser": true,
-                "text": "how many cylinders on the table?",
+                "text": "how many cylinders?",
                 "type": "answerable"
             },
             {
                 "isuser": false,
                 "text": "",
                 "query": "SELECT sum(cylinders) FROM CARS_DATA"
-            },
-            {
-                "isuser": true,
-                "text": "thanks",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "Thank you! Goodbye.",
-                "query": ""
             }
         ]
     },
@@ -531,16 +511,6 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT shop_ID FROM shop ORDER BY number_products DESC LIMIT 1"
-            },
-            {
-                "isuser": true,
-                "text": "Thanks!",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "Bye.",
-                "query": ""
             }
         ]
     },
@@ -549,7 +519,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "I want to know the average population of all cities please\n",
+                "text": "I want to know the average population of all cities please",
                 "type": "answerable"
             },
             {
@@ -579,12 +549,12 @@
             },
             {
                 "isuser": true,
-                "text": "Thanks!",
+                "text": "What does 'Abu Dhabi' mean in Arabic?",
                 "type": "improper"
             },
             {
                 "isuser": false,
-                "text": "You are welcome.",
+                "text": "In Arabic, 'Abu Dhabi' translates to 'Father of the Gazelle' in Arabic. 'Abu' means 'father' and 'Dhabi' refers to a type of gazelle. The name is believed to originate from the abundance of gazelles in the area.",
                 "query": ""
             }
         ]
@@ -614,24 +584,25 @@
             },
             {
                 "isuser": true,
-                "text": "Please find out the average GNP and total population of those nations.",
+                "text": "How is GNP typically calculated?",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "GNP (Gross National Product) is typically calculated by first determining the Gross Domestic Product (GDP), which is the total market value of all final goods and services produced within a country during a specific period, usually a year. This includes consumption, investment, government spending, and net exports (exports minus imports). Next, you add the net income from abroad, which is the total income earned by residents from overseas investments and other sources minus the total income earned by foreign residents from domestic investments and other sources. By combining these two components, you get the GNP. In essence, GNP equals GDP plus the net income from abroad. For example, if a country has a GDP of $1,000 billion, and its residents earn $50 billion from abroad while foreign residents earn $30 billion from the country, then the GNP would be $1,020 billion.",
+                "query": ""
+            },
+            {
+                "isuser": true,
+                "text": "OK, please find out the average GNP and total population of those nations.",
                 "type": "answerable"
             },
             {
                 "isuser": false,
                 "text": "",
                 "query": "SELECT avg(GNP) ,  sum(population) FROM country WHERE GovernmentForm  =  \"US Territory\""
-            },
-            {
-                "isuser": true,
-                "text": "Thanks!",
-                "type": "improper"
-            },
-            {
-                "isuser": false,
-                "text": "Bye.",
-                "query": ""
             }
+            
         ]
     },
     {
