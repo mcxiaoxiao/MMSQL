@@ -49,7 +49,7 @@
             },
             {
                 "isuser": false,
-                "text": "welcome goodbye",
+                "text": "Welcome goodbye!",
                 "query": ""
             }
         ]
@@ -89,12 +89,12 @@
             },
             {
                 "isuser": true,
-                "text": "Thanks!",
+                "text": "After that, how can I ensure that the documents are properly archived and easily accessible for future reference?",
                 "type": "improper"
             },
             {
                 "isuser": false,
-                "text": "Thanks, good bye",
+                "text": "To ensure that the documents are properly archived and easily accessible for future reference, you should label each document with the corresponding template ID, store them in clearly marked folders, organize the folders in a logical order within the filing cabinet, and maintain a digital index or catalog that records the location and details of each document.",
                 "query": ""
             }
         ]
