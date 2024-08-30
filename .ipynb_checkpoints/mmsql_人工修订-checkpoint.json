@@ -4,6 +4,16 @@
         "turns": [
             {
                 "isuser": true,
+                "text": "What is the average horsepower of cars produced by each car maker in Europe?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "Sorry, the information linking car manufacturers to continents is not available in this database, but details by country are provided."
+            },
+            {
+                "isuser": true,
                 "text": "How many car models are produced by each maker? List the count and the maker full name.",
                 "type": "answerable"
             },
@@ -309,12 +319,12 @@
             },
             {
                 "isuser": true,
-                "text": "Thanks!",
-                "type": "improper"
+                "text": "What is the email address of each teacher?",
+                "type": "unanswerable"
             },
             {
                 "isuser": false,
-                "text": "Bye",
+                "text": "This question cannot be answered because the database schema provided does not include a field for the email addresses of the teachers.",
                 "query": ""
             }
         ]
@@ -419,7 +429,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "which horsepower is hight?",
+                "text": "Which horsepower is higher?",
                 "type": "ambiguous"
             },
             {
@@ -625,7 +635,7 @@
             },
             {
                 "isuser": false,
-                "text": "Did you mean to ask for all local names?",
+                "text": "Did you mean to ask for all local names in country table?",
                 "query": ""
             },
             {
@@ -800,7 +810,7 @@
             },
             {
                 "isuser": true,
-                "text": "what is the name of the id 2?",
+                "text": "what is the model name of the id 2?",
                 "type": "ambiguous"
             },
             {
@@ -915,27 +925,7 @@
             },
             {
                 "isuser": true,
-                "text": "what is the name of the usa airline",
-                "type": "ambiguous"
-            },
-            {
-                "isuser": false,
-                "text": "What did you mean by \"the name of the USA airline?\"",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "united sates of america",
-                "type": "answerable"
-            },
-            {
-                "isuser": false,
-                "text": "",
-                "query": "SELECT Airline FROM AIRLINES WHERE Airline=\"United Airlines\""
-            },
-            {
-                "isuser": true,
-                "text": "what is the abbreviation of us airways",
+                "text": "what is the abbreviation of US Airways",
                 "type": "answerable"
             },
             {
@@ -1005,7 +995,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "How many courses in this table?",
+                "text": "How many different lessons it have?",
                 "type": "ambiguous"
             },
             {
@@ -1896,7 +1886,7 @@
             {
                 "isuser": true,
                 "text": "What grades do they teach?",
-                "type": "ambiguous"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -2085,7 +2075,7 @@
             },
             {
                 "isuser": true,
-                "text": "what is the Country Code of Herat",
+                "text": "what is the Code of Herat",
                 "type": "ambiguous"
             },
             {
@@ -2240,7 +2230,7 @@
             },
             {
                 "isuser": true,
-                "text": "WHAT IS THE POPULATION OF THE PEOPLE LIVING IN THE NATIONS NOT USING ENGLISH",
+                "text": "HOW MANY LIVING IN THE NATIONS NOT USING ENGLISH",
                 "type": "ambiguous"
             },
             {
@@ -2275,7 +2265,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "What is the weight of make id 1?",
+                "text": "What is the weight of id 1?",
                 "type": "ambiguous"
             },
             {
@@ -3230,7 +3220,7 @@
             },
             {
                 "isuser": true,
-                "text": "Find average grade of the students?",
+                "text": "Find average grade?",
                 "type": "ambiguous"
             },
             {
@@ -3520,7 +3510,7 @@
             },
             {
                 "isuser": true,
-                "text": "which dog is highest weight on table",
+                "text": "which dog is very very fat",
                 "type": "ambiguous"
             },
             {
@@ -3540,12 +3530,12 @@
             },
             {
                 "isuser": true,
-                "text": "what is the size code of BUL",
+                "text": "what is the size of BUL",
                 "type": "ambiguous"
             },
             {
                 "isuser": false,
-                "text": "Did you mean the  size codes of dogs with a breed code BUL?",
+                "text": "Did you mean the size codes of dogs with a breed code BUL?",
                 "query": ""
             },
             {
@@ -4045,7 +4035,7 @@
             },
             {
                 "isuser": true,
-                "text": "What is the difference in percent to Dutch speaking and Papiamento speaking countries?",
+                "text": "What is the difference to Dutch speaking and Papiamento speaking countries?",
                 "type": "ambiguous"
             },
             {
@@ -4655,7 +4645,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "Can you show the names of owners and the states they live in?",
+                "text": "Can you show the owners and the states they live in?",
                 "type": "ambiguous"
             },
             {
@@ -5145,7 +5135,7 @@
             },
             {
                 "isuser": true,
-                "text": "How many of them are there have no performance?",
+                "text": "How many without performance?",
                 "type": "ambiguous"
             },
             {
@@ -5253,16 +5243,6 @@
     {
         "db_name": "flight_2",
         "turns": [
-            {
-                "isuser": true,
-                "text": "how many flights does United Airlines operate in USA?",
-                "type": "ambiguous"
-            },
-            {
-                "isuser": false,
-                "text": "What do you mean by operate in USA?",
-                "query": ""
-            },
             {
                 "isuser": true,
                 "text": "how many flights does United Airlines have?",
@@ -5465,12 +5445,12 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "Can you show me a list of owner ids and zip codes?",
+                "text": "Can you show me a list of owner and zip?",
                 "type": "ambiguous"
             },
             {
                 "isuser": false,
-                "text": "can  you  give more infor  about  this question?",
+                "text": "can you give more Information about this question?",
                 "query": ""
             },
             {
@@ -5735,7 +5715,7 @@
             },
             {
                 "isuser": true,
-                "text": "What email can i use to contact Taryn",
+                "text": "How to contact Taryn",
                 "type": "ambiguous"
             },
             {
@@ -5826,7 +5806,7 @@
             {
                 "isuser": true,
                 "text": "List the cartoons that are directed by Ben Jones.",
-                "type": "ambiguous"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -6440,7 +6420,7 @@
             },
             {
                 "isuser": true,
-                "text": "Tell me how old the youngest is.",
+                "text": "Tell me how old the youngest dog is.",
                 "type": "ambiguous"
             },
             {
@@ -6470,7 +6450,7 @@
             },
             {
                 "isuser": true,
-                "text": "How about the average age?",
+                "text": "How about the average?",
                 "type": "ambiguous"
             },
             {
@@ -6505,7 +6485,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "Hi there! How many different semesters does this list have?",
+                "text": "Hi there! Does different semesters this list have?",
                 "type": "ambiguous"
             },
             {
@@ -6885,7 +6865,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "The number of stores?",
+                "text": "The no. of stores?",
                 "type": "ambiguous"
             },
             {
@@ -7135,7 +7115,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "who are the students enrolled in 2 degree programs in one semester?",
+                "text": "The students enrolled in 2 degree programs in one semester?",
                 "type": "ambiguous"
             },
             {
@@ -7295,7 +7275,7 @@
             },
             {
                 "isuser": true,
-                "text": "Can you list the orchestras by the date they were founded for me starting with the oldest?",
+                "text": "Can you list the orchestras by the date?",
                 "type": "ambiguous"
             },
             {
@@ -7405,7 +7385,7 @@
             },
             {
                 "isuser": true,
-                "text": "Which Volvo car has the least accelerate?",
+                "text": "Which of them has the least accelerate?",
                 "type": "ambiguous"
             },
             {
@@ -7491,7 +7471,7 @@
             {
                 "isuser": true,
                 "text": "Can you show me their corresponding friends\n as well?",
-                "type": "ambiguous"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -7845,12 +7825,12 @@
             },
             {
                 "isuser": true,
-                "text": "Is there an official language for the country?",
+                "text": "How about official?",
                 "type": "ambiguous"
             },
             {
                 "isuser": false,
-                "text": "For which country? Aruba?",
+                "text": "Do you ask for the official language of Aruba?",
                 "query": ""
             },
             {
@@ -8111,7 +8091,7 @@
             {
                 "isuser": true,
                 "text": "List the role of the professional named Taryn. ",
-                "type": "ambiguous"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -8215,7 +8195,7 @@
             },
             {
                 "isuser": true,
-                "text": "Were there any death events with the substring East?",
+                "text": "Were there any death with the substring East?",
                 "type": "ambiguous"
             },
             {
@@ -8940,7 +8920,7 @@
             },
             {
                 "isuser": true,
-                "text": "List all the songs, order them",
+                "text": "List all the songs, and order them",
                 "type": "ambiguous"
             },
             {
@@ -8995,7 +8975,7 @@
             },
             {
                 "isuser": true,
-                "text": "Please answer the question.what is the orchestra of conductor?",
+                "text": "Please answer the question：the orchestra of conductor?",
                 "type": "ambiguous"
             },
             {
@@ -9935,7 +9915,7 @@
             },
             {
                 "isuser": true,
-                "text": "Which government forms and their populations are those for?",
+                "text": "hich types of governance are associated with higher life expectancies, and how large are their populations?",
                 "type": "ambiguous"
             },
             {
@@ -10180,7 +10160,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "What are the full name of amc?",
+                "text": "What are the name of amc?",
                 "type": "ambiguous"
             },
             {
@@ -10200,7 +10180,7 @@
             },
             {
                 "isuser": true,
-                "text": "What type of car making by german country?",
+                "text": "What type of car making by german?",
                 "type": "ambiguous"
             },
             {
@@ -10427,26 +10407,6 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'"
-            },
-            {
-                "isuser": true,
-                "text": "Give me the names of all female students on ground",
-                "type": "ambiguous"
-            },
-            {
-                "isuser": false,
-                "text": "What do you mean by \"on ground\"?",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "That are available",
-                "type": "answerable"
-            },
-            {
-                "isuser": false,
-                "text": "",
-                "query": "SELECT fname, lname FROM student WHERE sex  =  'F'"
             },
             {
                 "isuser": true,
@@ -11155,7 +11115,7 @@
             },
             {
                 "isuser": true,
-                "text": "What about for history?",
+                "text": "how about history?",
                 "type": "ambiguous"
             },
             {
@@ -11465,7 +11425,7 @@
             },
             {
                 "isuser": true,
-                "text": "Can you show me a list of all student IDs?",
+                "text": "Show me a list of all IDs?",
                 "type": "ambiguous"
             },
             {
@@ -11650,7 +11610,7 @@
             },
             {
                 "isuser": true,
-                "text": "Who has high loser_rank_points higher than 3500 ?",
+                "text": "the one loser_rank_points higher than 3500 ?",
                 "type": "ambiguous"
             },
             {
@@ -12090,7 +12050,7 @@
             },
             {
                 "isuser": true,
-                "text": "what is the best grade ?",
+                "text": "Top score",
                 "type": "ambiguous"
             },
             {
@@ -12541,7 +12501,7 @@
             {
                 "isuser": true,
                 "text": "how much bonus was Employee with ID 1 awarded?",
-                "type": "ambiguous"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -12895,31 +12855,6 @@
             },
             {
                 "isuser": true,
-                "text": "When is birth date for Martina ?",
-                "type": "ambiguous"
-            },
-            {
-                "isuser": false,
-                "text": "There are a lot of Martina. Do you mean the Marina with id 200001? ",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "Martina with id 200001",
-                "type": "answerable"
-            },
-            {
-                "isuser": false,
-                "text": "",
-                "query": "SELECT birth_date FROM players WHERE player_id = 200001"
-            },
-            {
-                "isuser": true,
-                "text": "* I have left the chat *",
-                "type": "answerable"
-            },
-            {
-                "isuser": true,
                 "text": "what is the country code for player id 200003?\n",
                 "type": "answerable"
             },
@@ -12965,17 +12900,7 @@
             },
             {
                 "isuser": true,
-                "text": "When is birth date for Martina ?",
-                "type": "ambiguous"
-            },
-            {
-                "isuser": false,
-                "text": "There are a lot of Martina. Do you mean the Marina with id 200001? ",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "Martina with id 200001",
+                "text": "When is birth date for Martina with id 200001?",
                 "type": "answerable"
             },
             {
@@ -13025,7 +12950,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "How many ids are in document 'Welcome to NY'?",
+                "text": "How many 'Welcome to NY'?",
                 "type": "ambiguous"
             },
             {
@@ -13365,7 +13290,7 @@
             },
             {
                 "isuser": true,
-                "text": "Would you also add in their rankings?",
+                "text": "Would you also add in their ranks?",
                 "type": "ambiguous"
             },
             {
@@ -13506,7 +13431,7 @@
             {
                 "isuser": true,
                 "text": "What about his likes?",
-                "type": "ambiguous"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -13726,7 +13651,7 @@
             {
                 "isuser": true,
                 "text": "What about camque?",
-                "type": "ambiguous"
+                "type": "answerable"
             },
             {
                 "isuser": false,
@@ -14030,7 +13955,7 @@
             },
             {
                 "isuser": true,
-                "text": "what grade is gabriel",
+                "text": "what grade is gabrel",
                 "type": "ambiguous"
             },
             {
@@ -14085,7 +14010,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "Show  me the first and last name whose id number 1",
+                "text": "Show  me the first and last name that id number 1",
                 "type": "ambiguous"
             },
             {
@@ -14205,7 +14130,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "how many population in the country table",
+                "text": "how many pepole in these country ?",
                 "type": "ambiguous"
             },
             {
@@ -14215,7 +14140,7 @@
             },
             {
                 "isuser": true,
-                "text": "how many country code in the city table",
+                "text": "how many city code in related table",
                 "type": "ambiguous"
             },
             {
@@ -14270,7 +14195,7 @@
             },
             {
                 "isuser": true,
-                "text": "Which of the high schoolers are friends with Kyle?",
+                "text": "Friends with Kyle?",
                 "type": "ambiguous"
             },
             {
@@ -14610,12 +14535,12 @@
             },
             {
                 "isuser": true,
-                "text": "which singers born before 1945 and after 1955 have the same citizenship?",
+                "text": "1945 & 1955",
                 "type": "ambiguous"
             },
             {
                 "isuser": false,
-                "text": "Did you mean the singers born before 1945 OR after 1955?",
+                "text": "Did you mean the singers born before 1945 OR after 1955 have the same citizenship?",
                 "query": ""
             },
             {
@@ -14835,12 +14760,7 @@
             },
             {
                 "isuser": true,
-                "text": "What is the email address of Jaclyn?",
-                "type": "ambiguous"
-            },
-            {
-                "isuser": true,
-                "text": "Yes Jaclyn Stoltenberg",
+                "text": "What is the email address of Jaclyn Stoltenberg?",
                 "type": "answerable"
             },
             {
@@ -14930,7 +14850,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "can you tell me the email id of the owner id ?",
+                "text": "can you tell me the email id of this owner ?",
                 "type": "ambiguous"
             },
             {
@@ -15015,7 +14935,7 @@
             },
             {
                 "isuser": true,
-                "text": "What is the loser id  of petra kvitota?",
+                "text": "What is the id of petra kvitota?",
                 "type": "ambiguous"
             },
             {
@@ -15360,7 +15280,7 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "Can you list how many car makers are on each continent please?",
+                "text": "Can you list names are on each continent please?",
                 "type": "ambiguous"
             },
             {
@@ -15380,7 +15300,7 @@
             },
             {
                 "isuser": true,
-                "text": "Can you list the full name and country of every car maker from asia?",
+                "text": "List the name and asia country of every car maker?",
                 "type": "ambiguous"
             },
             {
@@ -15595,7 +15515,7 @@
             },
             {
                 "isuser": true,
-                "text": "what is the  friend id of  1689",
+                "text": "1689 id",
                 "type": "ambiguous"
             },
             {
@@ -15615,12 +15535,12 @@
             },
             {
                 "isuser": true,
-                "text": "thanks",
-                "type": "improper"
+                "text": "Who likes the most outgoing student?",
+                "type": "ambiguous"
             },
             {
                 "isuser": false,
-                "text": "You are welcome.",
+                "text": "This question is ambiguous because it does not clearly define what makes a student 'outgoing'. The database schema does not include any attributes or metrics to measure a student's outgoingness, such as participation in activities, number of friends, or social behavior.",
                 "query": ""
             }
         ]
@@ -15685,7 +15605,7 @@
             },
             {
                 "isuser": true,
-                "text": "whats the average horse power",
+                "text": "How about average horse power",
                 "type": "answerable"
             },
             {
