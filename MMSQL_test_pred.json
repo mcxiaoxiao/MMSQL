@@ -10,7 +10,8 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "This question cannot be answered because the provided database schema does not contain any information about car colors. Without a table or column that stores data on the color of cars, it is impossible to determine or list the most popular car color."
+                "query": "This question cannot be answered because the provided database schema does not contain any information about car colors. Without a table or column that stores data on the color of cars, it is impossible to determine or list the most popular car color.",
+                "predict": "The question is unanswerable because the database schema does not contain information about car color. \n"
             },
             {
                 "isuser": true,
@@ -20,7 +21,8 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;"
+                "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;",
+                "predict": "```sql\nSELECT COUNT(ml.ModelId), cm.FullName \r\nFROM model_list ml\r\nJOIN car_makers cm ON ml.Maker = cm.Id\r\nGROUP BY cm.FullName;\n```"
             },
             {
                 "isuser": true,
@@ -30,7 +32,8 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) desc limit 1;"
+                "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) desc limit 1;",
+                "predict": "This question is ambiguous because the database schema does not provide information about car popularity. The database contains details about car models, their specifications, and manufacturers, but it lacks data on sales figures, customer ratings, or any other metrics that could be used to determine the popularity of a car model. \n"
             },
             {
                 "isuser": true,
@@ -40,7 +43,8 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) limit 1;"
+                "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) limit 1;",
+                "predict": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) limit 1;\n"
             },
             {
                 "isuser": true,
@@ -50,7 +54,8 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "SELECT Count(*) ,  T2.FullName ,  T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;"
+                "query": "SELECT Count(*) ,  T2.FullName ,  T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;",
+                "predict": "SELECT T2.FullName FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id HAVING COUNT(*)  >=  3;\n"
             },
             {
                 "isuser": true,
@@ -60,7 +65,8 @@
             {
                 "isuser": false,
                 "text": "Welcome goodbye!",
-                "query": ""
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions about the database. \ud83d\ude0a \n"
             }
         ]
     },
@@ -612,7 +618,6 @@
                 "text": "",
                 "query": "SELECT avg(GNP) ,  sum(population) FROM country WHERE GovernmentForm  =  \"US Territory\""
             }
-            
         ]
     },
     {
@@ -8970,7 +8975,7 @@
             },
             {
                 "isuser": true,
-                "text": "Please answer the question：the orchestra of conductor?",
+                "text": "Please answer the question\u951b\u6b75he orchestra of conductor?",
                 "type": "ambiguous"
             },
             {

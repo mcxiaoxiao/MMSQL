@@ -1097,11 +1097,6 @@
                 "isuser": false,
                 "text": "Bye",
                 "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "bye",
-                "type": "improper"
             }
         ]
     },
