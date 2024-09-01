@@ -4,13 +4,13 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "What is the average horsepower of cars produced by each car maker in Europe?",
+                "text": "What is the most popular car color?",
                 "type": "unanswerable"
             },
             {
                 "isuser": false,
                 "text": "",
-                "query": "Sorry, the information linking car manufacturers to continents is not available in this database, but details by country are provided."
+                "query": "This question cannot be answered because the provided database schema does not contain any information about car colors. Without a table or column that stores data on the color of cars, it is impossible to determine or list the most popular car color."
             },
             {
                 "isuser": true,
