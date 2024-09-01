@@ -32,10 +32,10 @@ pip install -r requirements.txt
 
 ### 3. Generate Responses with LLM
 
-Use the `llm_generation.py` script to generate responses for the dataset. The generated responses will be saved in the `outputs` directory.
+Use the `llm_generation.py` script to generate responses for the dataset. The generated responses are saved in the `outputs` directory.
 
 ```bash
-python llm_generation.py --input data/input.json --output outputs/llm_responses.json
+python python llm_generation.py outputs/gemini1.5progen.json
 ```
 
 ### 4. Evaluate Responses with GPT-4o
