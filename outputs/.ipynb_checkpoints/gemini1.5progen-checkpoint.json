@@ -11,7 +11,7 @@
                 "isuser": false,
                 "text": "",
                 "query": "This question cannot be answered because the provided database schema does not contain any information about car colors. Without a table or column that stores data on the color of cars, it is impossible to determine or list the most popular car color.",
-                "predict": "The database does not contain information about car colors. Thus, the question is unanswerable. \n"
+                "predict": "The question is unanswerable because the database schema does not contain information about car color. \n"
             },
             {
                 "isuser": true,
@@ -22,7 +22,7 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;",
-                "predict": "```sql\nSELECT COUNT(DISTINCT ml.Model), cm.FullName \nFROM model_list ml\nJOIN car_makers cm ON ml.Maker = cm.Id\nGROUP BY cm.FullName;\n```"
+                "predict": "```sql\nSELECT COUNT(ml.ModelId), cm.FullName \r\nFROM model_list ml\r\nJOIN car_makers cm ON ml.Maker = cm.Id\r\nGROUP BY cm.FullName;\n```"
             },
             {
                 "isuser": true,
@@ -33,7 +33,7 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) desc limit 1;",
-                "predict": "This question is ambiguous because the database schema does not provide information about car popularity. The database contains details about car models, makers, and specifications, but it lacks data on sales figures, customer ratings, or any other metrics that could be used to determine the popularity of a car model. \n"
+                "predict": "This question is ambiguous because the database schema does not provide information about car popularity. The tables contain data on car makers, models, and specifications, but there's no information about sales figures, customer reviews, or any other metric that could be used to determine the popularity of a car model. \n"
             },
             {
                 "isuser": true,
@@ -44,7 +44,7 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) limit 1;",
-                "predict": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) limit 1; \n"
+                "predict": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) limit 1;\n"
             },
             {
                 "isuser": true,
@@ -55,7 +55,7 @@
                 "isuser": false,
                 "text": "",
                 "query": "SELECT Count(*) ,  T2.FullName ,  T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;",
-                "predict": "SELECT T2.FullName FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id HAVING COUNT(*)  >=  3;\n"
+                "predict": "SELECT T2.FullName FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker = T2.Id GROUP BY T2.id HAVING COUNT(*)  >=  3;\n"
             },
             {
                 "isuser": true,
@@ -81,7 +81,8 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "SELECT count(distinct template_id) FROM Documents "
+                "query": "SELECT count(distinct template_id) FROM Documents ",
+                "predict": "```sql\nSELECT COUNT(DISTINCT Template_ID) FROM Templates;\n```"
             },
             {
                 "isuser": true,
@@ -91,7 +92,8 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "SELECT count(template_id) FROM Documents GROUP BY template_id HAVING count(*)  >  1"
+                "query": "SELECT count(template_id) FROM Documents GROUP BY template_id HAVING count(*)  >  1",
+                "predict": "That information is not available from the database. The database only records which template ID is used by each document, but doesn't track how many documents use the same template ID. \n"
             },
             {
                 "isuser": true,
@@ -101,7 +103,8 @@
             {
                 "isuser": false,
                 "text": "",
-                "query": "SELECT document_id FROM Documents GROUP BY template_id HAVING count(*)  >  1"
+                "query": "SELECT document_id FROM Documents GROUP BY template_id HAVING count(*)  >  1",
+                "predict": "Ambiguous: It is not clear if you want to see all documents for each template ID, or just one document per template ID. \n"
             },
             {
                 "isuser": true,
@@ -111,7 +114,8 @@
             {
                 "isuser": false,
                 "text": "To ensure that the documents are properly archived and easily accessible for future reference, you should label each document with the corresponding template ID, store them in clearly marked folders, organize the folders in a logical order within the filing cabinet, and maintain a digital index or catalog that records the location and details of each document.",
-                "query": ""
+                "query": "",
+                "predict": "failed"
             }
         ]
     },

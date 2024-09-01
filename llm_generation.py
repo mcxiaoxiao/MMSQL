@@ -75,7 +75,8 @@ def process_json_part(data, output_file):
                     messages.append({"role": "assistant", "content": g_ans})
                     
         with open(output_file, 'w') as f:
-            json.dump(data, f, indent=4)
+            json.dump(item, f, indent=4)
+            f.write('\n')  # Add a newline for readability
 
 def process_json_multithreaded(input_file, output_file, num_threads=3):
     with open(input_file, 'r') as f:
