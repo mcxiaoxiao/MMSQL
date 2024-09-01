@@ -1,13 +1,20 @@
 from openai import OpenAI
 import requests
 import time
+import random
 import google.generativeai as genai
 # Set API key
 OPENAI_API_KEY = 'sk-proj-1JRQ9SkU0gSRKsBoCyD1T3BlbkFJSQ44FoEjAHN05t7FrryD'
 OPENAI_MODEL_NAME = "gpt-4-1106-preview"
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-GEMINI_API_KEY = 'AIzaSyAUJEkCFcasjISnFQLqu5kyXFZWLppKIaU'
+gemini_api_keys = [
+    "AIzaSyCxpeaNafORNa4mddSV-da0tD1XLGeTHkw",
+    "AIzaSyAUJEkCFcasjISnFQLqu5kyXFZWLppKIaU",
+    "AIzaSyDfFuhj-UgJxC2ThsAgPYPhKyjFaPHqJ1M",
+    "AIzaSyAWaTmfp7pCPcxpZln7EfzyZlkrIGltZfw"]
+
+GEMINI_API_KEY = random.choice(gemini_api_keys)
 GEMINI_MODEL_NAME = "gemini-1.5-pro"
 ge_model = genai.GenerativeModel(GEMINI_MODEL_NAME)
 
@@ -64,7 +71,7 @@ def request_gemini(messages):
         "contents": new_messages
     }
     
-    max_retries = 5
+    max_retries = 10
     retry_count = 0
     response = None
     
