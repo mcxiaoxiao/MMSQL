@@ -3,7 +3,7 @@
 This repository contains the scripts and code used for the experiments in the paper titled "MMSQL: Advancing Multi-turn Text-to-SQL Evaluation with Comprehensive Dialogue Datasets and Large Language Models". The repository is structured to ensure reproducibility of the experiments and includes various scripts, notebooks, and data outputs.
 
 ## Directory Structure
-- `mmsql.json`: MMSQL test set.
+- `\datasets`: MMSQL test set `MMSQL_test.json`, MMSQL train set `MMSQL_train.json`, CoSQL dataset (Our sets based on it) `cosql_dataset`.
 - `llm_generation.py`: Script responsible for generating responses using the LLM.
 - `rqs_evaluation.py`: Script for evaluating responses using GPT-4o to score RQS.
 - `accs_eval.py`: Script for calculating several metrics including ACCS, IACCS, EM, QM, and ERROR.
@@ -32,10 +32,10 @@ pip install -r requirements.txt
 
 ### 3. Generate Responses with LLM
 
-Use the `llm_generation.py` script to generate responses for the dataset. The generated responses will be saved in the `outputs` directory.
+Use the `llm_generation.py` script to generate responses for the dataset. The generated responses are saved in the `outputs` directory.
 
 ```bash
-python llm_generation.py --input data/input.json --output outputs/llm_responses.json
+python python llm_generation.py outputs/gemini1.5progen.json
 ```
 
 ### 4. Evaluate Responses with GPT-4o

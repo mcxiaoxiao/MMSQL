@@ -1,0 +1,149 @@
+[
+    {
+        "db_name": "tvshow",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Which titles were directed by Ben Jones or Brandon Vietti?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "```sql\nSELECT Title FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What are their original air dates?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title, original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "SELECT Original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "Who are the writers of these cartoons?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title, written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "SELECT Title, Written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ]
+    },
+    {
+        "db_name": "pets_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How many students have a cat pet? ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat'",
+                "predict": "```sql\nSELECT COUNT(DISTINCT S.StuID)\nFROM Student AS S\nJOIN Has_Pet AS HP ON S.StuID = HP.StuID\nJOIN Pets AS P ON HP.PetID = P.PetID\nWHERE P.PetType = 'cat';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "And what about students that don't have a cat pet?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select count(*) from (SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+                "predict": "```sql\nSELECT COUNT(DISTINCT StuID)\nFROM Student\nWHERE StuID NOT IN (\n    SELECT StuID\n    FROM Has_Pet\n    JOIN Pets ON Has_Pet.PetID = Pets.PetID\n    WHERE Pets.PetType = 'cat'\n);\n```"
+            },
+            {
+                "isuser": true,
+                "text": "And what are their ids? ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'",
+                "predict": "```sql\nSELECT StuID FROM Student\nEXCEPT\nSELECT T1.StuID FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T3.PetID = T2.PetID WHERE T3.PetType = 'cat'\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "goodbye!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ]
+    },
+    {
+        "db_name": "poker_player",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Hello!  Which nationalities are shared by more than one person?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*)  >  1",
+                "predict": "```sql\nSELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*)  >  1\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Okay.  Thanks for that!  Can you show me all of the people IDs that have Russia as the nationality?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT People_ID FROM people WHERE Nationality = 'Russia'",
+                "predict": "```sql\nSELECT People_ID FROM people WHERE Nationality = 'Russia'\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Excellent!  Can you  update this list to show the names of all of the associated individuals?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT People_ID, name FROM people WHERE Nationality = 'Russia'",
+                "predict": "```sql\nSELECT p.People_ID, p.Name\nFROM people p\nWHERE p.Nationality = 'Russia';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Thank you! Goodbye.",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with? \n"
+            }
+        ]
+    }
+]

@@ -11,6 +11,7 @@ Arguments:
 """
 
 # Import the functions from /tools
+import os
 from tools.api_request import request_gemini as request_llm
 from tools.db_detail import db_getdesc
 from tools.sql_execute import sqlite_execute as execute
@@ -63,8 +64,8 @@ def process_json_part(data, output_file):
                     # print(messages)
                     llm_response = request_llm(messages)
                     # llm record
-                    print("\nLLM Response:")
-                    print(llm_response)
+                    # print("\nLLM Response:")
+                    # print(llm_response)
                     item['turns'][index+1]['predict'] = llm_response
                     # update messages
                     g_ans = ""
@@ -74,15 +75,44 @@ def process_json_part(data, output_file):
                         g_ans = item['turns'][index+1]['query']
                     messages.append({"role": "assistant", "content": g_ans})
                     
-        with open(output_file, 'w') as f:
-            json.dump(item, f, indent=4)
-            f.write('\n')  # Add a newline for readability
+        if not os.path.exists(output_file):
+        # 文件不存在，直接写入第一个JSON对象
+            with open(output_file, 'w') as f:
+                json.dump(item, f, indent=4)
+                f.write('\n')  # 添加一个换行符以提高可读性
+        else:
+            # 文件存在，读取现有内容并追加新的JSON对象
+            with open(output_file, 'r') as f:
+                # 读取文件内容并转换为JSON对象列表
+                try:
+                    items = json.load(f)
+                except json.JSONDecodeError:
+                    # 如果文件内容不是有效的JSON格式，初始化为空列表
+                    items = []
 
-def process_json_multithreaded(input_file, output_file, num_threads=3):
+            # 确保items是一个列表
+            if not isinstance(items, list):
+                items = []
+
+            # 追加新的JSON对象
+            items.append(item)
+
+            # 将更新后的列表写回文件
+            with open(output_file, 'w') as f:
+                json.dump(items, f, indent=4)
+                f.write('\n')  # 添加一个换行符以提高可读性
+
+def process_json_multithreaded(input_file, output_file, num_threads=10):
     with open(input_file, 'r') as f:
         data = json.load(f)
     # split
-    data_parts = [data[i:i+len(data)//num_threads] for i in range(0, len(data), len(data)//num_threads)]
+    data_parts = []
+    chunk_size = math.ceil(len(data) / num_threads)  # Round up to ensure all data is included
+    for i in range(num_threads):
+        start = i * chunk_size
+        end = min((i + 1) * chunk_size, len(data))  # Ensure we don't go beyond the end of the data
+        data_parts.append(data[start:end])
+
     with ThreadPoolExecutor(max_workers=num_threads) as executor:
         futures = []
         for part in data_parts:
@@ -94,4 +124,4 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MMSQL-EVAL LLM GENERATION SCRIPT")
     parser.add_argument("output_file", help="Output JSON file path. Such as 'output/gemini-1,5-pro'")
     args = parser.parse_args()
-    process_json_multithreaded('MMSQL_test.json', args.output_file)
+    process_json_multithreaded('datasets/MMSQL_test.json', args.output_file)

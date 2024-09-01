@@ -1,0 +1,307 @@
+[
+    {
+        "db_name": "poker_player",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Which height of Aleksey Ostapenko?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT height FROM people where name = \"Aleksey Ostapenko\"",
+                "predict": "```sql\nSELECT Height\nFROM people\nWHERE Name = 'Aleksey Ostapenko';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Who the person is born on August 16, 1982?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT name FROM people where birth_date = \"August 16, 1982\"",
+                "predict": "SELECT Name FROM people WHERE Birth_Date = 'August 16, 1982'\n"
+            },
+            {
+                "isuser": true,
+                "text": "What are the people id of nationality Russia?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT people_id FROM people where nationality = \"Russia\"",
+                "predict": "SELECT People_ID FROM people WHERE Nationality = 'Russia'\n"
+            },
+            {
+                "isuser": true,
+                "text": "What are the nationalities that are shared by at least two people?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*)  >=  2",
+                "predict": "SELECT Nationality FROM people GROUP BY Nationality HAVING COUNT(*)  >=  2\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            }
+        ]
+    },
+    {
+        "db_name": "tvshow",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Which titles were directed by Ben Jones or Brandon Vietti?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "```sql\nSELECT Title FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What are their original air dates?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title, original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "SELECT Original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "Who are the writers of these cartoons?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title, written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "SELECT Title, Written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ]
+    },
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What is the average horsepower?\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(Horsepower) FROM cars_data",
+                "predict": "```sql\nSELECT AVG(Horsepower) FROM cars_data;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Which car has the largest horsepower?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Id FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1",
+                "predict": "```sql\nSELECT Make FROM car_names\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nORDER BY Horsepower DESC\nLIMIT 1;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What is the accelerate of car 39?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT accelerate FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1",
+                "predict": "SELECT Accelerate FROM cars_data WHERE Id = 39\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "Which cars have an accelerate larger than 19.0?\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT COUNT(*) FROM CARS_DATA WHERE Accelerate  >  19.0",
+                "predict": "SELECT Id FROM cars_data WHERE Accelerate > 19.0\n\n"
+            }
+        ]
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What are the populations of every country in Africa?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT name,population FROM country WHERE Continent  =  \"Africa\"",
+                "predict": "```sql\nSELECT T2.Population FROM countrylanguage AS T1 INNER JOIN country AS T2 ON T1.CountryCode = T2.Code WHERE T2.Continent = 'Africa'\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What are the names and populations of every country in Asia?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT name,population FROM country WHERE Continent  =  \"Asia\"",
+                "predict": "SELECT Name, Population FROM country WHERE Continent = 'Asia'\n"
+            },
+            {
+                "isuser": true,
+                "text": "What are the names of the Asian countries that have a larger population than that of any country in Africa?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name FROM country WHERE Continent  =  \"Asia\"  AND population  >  (SELECT min(population) FROM country WHERE Continent  =  \"Africa\")",
+                "predict": "```sql\nSELECT T1.Name FROM country AS T1\nJOIN country AS T2 ON T1.Population > T2.Population\nWHERE T1.Continent = 'Asia' AND T2.Continent = 'Africa'\nGROUP BY T1.Name\n```"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name FROM country WHERE Continent  =  \"Asia\"  AND population  >  (SELECT min(population) FROM country WHERE Continent  =  \"Africa\")"
+            },
+            {
+                "isuser": true,
+                "text": "What are the populations of those countries?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name,population FROM country WHERE Continent  =  \"Asia\"  AND population  >  (SELECT min(population) FROM country WHERE Continent  =  \"Africa\")",
+                "predict": "SELECT population FROM country WHERE Continent  =  \"Asia\"  AND population  >  (SELECT min(population) FROM country WHERE Continent  =  \"Africa\")\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "What are the government forms of those countries?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name,GovernmentForm FROM country WHERE Continent  =  \"Asia\"  AND population  >  (SELECT min(population) FROM country WHERE Continent  =  \"Africa\")",
+                "predict": "SELECT GovernmentForm FROM country WHERE Continent  =  \"Asia\"  AND population  >  (SELECT min(population) FROM country WHERE Continent  =  \"Africa\")\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "thanks. bye.",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ]
+    },
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can you tell me the ID of the american motor company ?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.FullName  =  'American Motor Company';",
+                "predict": "```sql\nSELECT Id FROM car_makers WHERE FullName = 'American Motor Company';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Can you tell me the model id of the maker amc ?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT ModelId FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.Maker  =  'amc';",
+                "predict": "SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'amc');\n"
+            },
+            {
+                "isuser": true,
+                "text": "Who is maker for the ID 2 ?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean Id or ModelId?",
+                "query": "",
+                "predict": "SELECT Maker FROM car_makers WHERE Id = 2;\n"
+            },
+            {
+                "isuser": true,
+                "text": "I mean id\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT DISTINCT(T1.Maker) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.Id = 2;",
+                "predict": "SELECT Maker FROM CAR_MAKERS WHERE Id = 2;\n"
+            },
+            {
+                "isuser": true,
+                "text": "How many car models were produced by the maker with the full name American Motor Company ?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.FullName  =  'American Motor Company';",
+                "predict": "SELECT COUNT(DISTINCT(T2.Model)) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.FullName  =  'American Motor Company';\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            }
+        ]
+    }
+]
