@@ -4,7 +4,7 @@ llm_generation.py
 This script generates responses using the Large Language Model (LLM) based on the test dataset "MMSQL_test.json".
 
 Usage:
-    python llm_generation.py --output outputs/llm_responses.json
+    python llm_generation.py outputs/llm_responses.json
 
 Arguments:
     --output: Path to the output JSON file where the LLM responses will be saved.
