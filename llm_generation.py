@@ -122,4 +122,4 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MMSQL-EVAL LLM GENERATION SCRIPT")
     parser.add_argument("output_file", help="Output JSON file path. Such as 'output/gemini-1,5-pro'")
     args = parser.parse_args()
-    process_json_multithreaded('datasets/data_with_ids.json', args.output_file)
+    process_json_multithreaded('datasets/MMSQL_test_small.json', args.output_file)

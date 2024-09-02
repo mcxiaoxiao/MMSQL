@@ -1,0 +1,1343 @@
+[
+    {
+        "db_name": "network_1",
+        "turns": [
+            {
+                "isuser": false,
+                "text": "Do you mean the number of friends?",
+                "query": ""
+            },
+            {
+                "isuser": true,
+                "text": "Yes",
+                "type": "improper"
+            },
+            {
+                "isuser": true,
+                "text": "How many students are there?",
+                "type": "answerable",
+                "predict": "Please provide a question that can be answered using the database schema. I need a question to generate an SQL query. \n"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM Highschooler ",
+                "predict": "```sql\nSELECT COUNT(*) FROM Highschooler;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What about friends?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM Friend",
+                "predict": "SELECT count(DISTINCT student_id) FROM Friend \nUNION \nSELECT count(DISTINCT friend_id) FROM Friend \n"
+            },
+            {
+                "isuser": true,
+                "text": "What are the names of all the highschoolers who have friends ?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id",
+                "predict": "SELECT T1.name FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id GROUP BY T1.ID\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "Can you show me their corresponding friends\n as well?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T2.name ,  count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id",
+                "predict": "```sql\nSELECT T2.name, T3.name FROM Friend AS T1 \nJOIN Highschooler AS T2 ON T1.student_id = T2.id \nJOIN Highschooler AS T3 ON T1.friend_id = T3.id\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ],
+        "id": 72
+    },
+    {
+        "db_name": "concert_singer",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What are the names of the singers whose song release year is greater than the average song release year",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT song_name FROM singer WHERE song_release_year  >  (SELECT avg(song_release_year) FROM singer)",
+                "predict": "```sql\nSELECT Name FROM singer WHERE CAST(SUBSTR(Song_release_year,1,4) AS INTEGER) > (SELECT AVG(CAST(SUBSTR(Song_release_year,1,4) AS INTEGER)) FROM singer)\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What is the average song release year?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(song_release_year) FROM singer",
+                "predict": "```sql\nSELECT AVG(Song_release_year) FROM singer;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "List all the songs, and order them",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you want the names of the songs ordered by their release year?",
+                "query": "",
+                "predict": "SELECT Song_Name FROM singer ORDER BY Song_Name \n"
+            },
+            {
+                "isuser": true,
+                "text": "Yes I do\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT song_name from singer order by song_release_year",
+                "predict": "```sql\nSELECT Song_Name FROM singer ORDER BY Song_release_year\n```"
+            },
+            {
+                "isuser": true,
+                "text": "List all song names by singers above the average age\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)",
+                "predict": "SELECT Song_Name FROM singer WHERE Age  >  (SELECT avg(Age) FROM singer)\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "bye.",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            }
+        ],
+        "id": 88
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can you list all nations whose government is US territory?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name FROM country WHERE GovernmentForm  =  \"US Territory\"",
+                "predict": "```sql\nSELECT Name FROM country WHERE GovernmentForm LIKE '%US Territory%'\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Hmm, I also want to know their GNP and population.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT GNP, population FROM country WHERE GovernmentForm  =  \"US Territory\"",
+                "predict": "SELECT Name, GNP, Population FROM country WHERE GovernmentForm  =  \"US Territory\" \n"
+            },
+            {
+                "isuser": true,
+                "text": "How is GNP typically calculated?",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "GNP (Gross National Product) is typically calculated by first determining the Gross Domestic Product (GDP), which is the total market value of all final goods and services produced within a country during a specific period, usually a year. This includes consumption, investment, government spending, and net exports (exports minus imports). Next, you add the net income from abroad, which is the total income earned by residents from overseas investments and other sources minus the total income earned by foreign residents from domestic investments and other sources. By combining these two components, you get the GNP. In essence, GNP equals GDP plus the net income from abroad. For example, if a country has a GDP of $1,000 billion, and its residents earn $50 billion from abroad while foreign residents earn $30 billion from the country, then the GNP would be $1,020 billion.",
+                "query": "",
+                "predict": "This question is unanswerable. The database contains information about GNP, but it does not provide information about how it is calculated. \n"
+            },
+            {
+                "isuser": true,
+                "text": "OK, please find out the average GNP and total population of those nations.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(GNP) ,  sum(population) FROM country WHERE GovernmentForm  =  \"US Territory\"",
+                "predict": "```sql\nSELECT AVG(GNP), SUM(Population) FROM country WHERE GovernmentForm = 'US Territory'\n```"
+            }
+        ],
+        "id": 8
+    },
+    {
+        "db_name": "tvshow",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Which titles were directed by Ben Jones or Brandon Vietti?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "```sql\nSELECT Title FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What are their original air dates?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title, original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "SELECT Original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "Who are the writers of these cartoons?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title, written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "SELECT Title, Written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ],
+        "id": 16
+    },
+    {
+        "db_name": "museum_visit",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Whats the level of membership customer id 1 has?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT \tLevel_of_membership FROM visitor WHERE ID = 1",
+                "predict": "```sql\nSELECT Level_of_membership FROM visitor WHERE ID = 1;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What is the name of customer id 1?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT \tName FROM visitor WHERE ID = 1",
+                "predict": "SELECT Name FROM visitor WHERE ID = 1\n"
+            },
+            {
+                "isuser": true,
+                "text": "What is the age of customer id 1?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT \t\tAge FROM visitor WHERE ID = 1",
+                "predict": "SELECT \tAge FROM visitor WHERE ID = 1\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "goodbye",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            }
+        ],
+        "id": 96
+    },
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can you list the number of car makers on each continent?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country GROUP BY T1.Continent;",
+                "predict": "```sql\nSELECT c.Continent, COUNT(DISTINCT cm.Maker) AS Number_of_Car_Makers\nFROM continents c\nJOIN countries co ON c.ContId = co.Continent\nJOIN car_makers cm ON co.CountryName = cm.Country\nGROUP BY c.Continent;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What about the number of car makers in the country USA?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"usa\"",
+                "predict": "SELECT COUNT(*) FROM car_makers WHERE Country  =  'USA';\n"
+            },
+            {
+                "isuser": true,
+                "text": "How about in the country Germany?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"germany\"",
+                "predict": "SELECT count(*) FROM car_makers AS T1 JOIN countries AS T2 ON T2.CountryId = T1.Country WHERE T2.CountryName = 'Germany';\n"
+            },
+            {
+                "isuser": true,
+                "text": "What about France?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"france\"",
+                "predict": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"france\"\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Bye",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ],
+        "id": 80
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "how many country there",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) from country",
+                "predict": "```sql\nSELECT COUNT(*) FROM country;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "what is the Code of Herat",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you mean the country code of city Herat?",
+                "query": "",
+                "predict": "```sql\nSELECT T1.Code FROM country AS T1 INNER JOIN city AS T2 ON T1.Code = T2.CountryCode WHERE T2.Name = 'Herat'\n```"
+            },
+            {
+                "isuser": true,
+                "text": "yes sir",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT countrycode  from city where name = \"Herat\"",
+                "predict": "```sql\nSELECT T2.Code FROM city AS T1 INNER JOIN country AS T2 ON T1.CountryCode = T2.Code WHERE T1.Name = 'Herat'\n```"
+            },
+            {
+                "isuser": true,
+                "text": "what is the Population of Qandahar",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT population  from city where name = \"Qandahar\"",
+                "predict": "SELECT Population FROM city WHERE Name = 'Qandahar';\n"
+            },
+            {
+                "isuser": true,
+                "text": "thanks",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ],
+        "id": 24
+    },
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "how many car makers are their in germany",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'germany';",
+                "predict": "```sql\nSELECT COUNT(*)\nFROM car_makers\nWHERE Country = 'germany';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "what are their names ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECt T1.maker FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'germany';",
+                "predict": "SELECT Maker FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'germany';\n"
+            },
+            {
+                "isuser": true,
+                "text": "how many cars are their in usa",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "do you mean car makers? ",
+                "query": "",
+                "predict": "Unanswerable. The database does not contain information about the number of cars produced by each maker. \n"
+            },
+            {
+                "isuser": true,
+                "text": "yes",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECt count(T1.maker) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'usa';",
+                "predict": "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'usa';\n"
+            },
+            {
+                "isuser": true,
+                "text": "what are their names ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECt T1.maker FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'usa';",
+                "predict": "SELECT T1.Maker FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'usa';\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Thank you, good bye. ",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            }
+        ],
+        "id": 48
+    },
+    {
+        "db_name": "network_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "what is the average of grades?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT AVG(grade) FROM Highschooler",
+                "predict": "```sql\nSELECT AVG(grade) FROM Highschooler;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "what is the name of higshoolers that starting with 'A'?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT AVG(grade) FROM Highschooler",
+                "predict": "SELECT name FROM Highschooler WHERE name LIKE 'A%' \n"
+            },
+            {
+                "isuser": true,
+                "text": "Top score",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean to ask for the highest grade?",
+                "query": "",
+                "predict": "SELECT name FROM Highschooler ORDER BY grade DESC LIMIT 1\n"
+            },
+            {
+                "isuser": true,
+                "text": "yes\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT MAX(grade) FROM Highschooler",
+                "predict": "```sql\nSELECT MAX(grade) FROM Highschooler\n```"
+            },
+            {
+                "isuser": true,
+                "text": "thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome. Good bye!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            }
+        ],
+        "id": 120
+    },
+    {
+        "db_name": "wta_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Could you list the average ranking for each player with their first name?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(ranking) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.player_id",
+                "predict": "```sql\nSELECT p.first_name, AVG(r.ranking) AS average_ranking\nFROM players p\nJOIN rankings r ON p.player_id = r.player_id\nGROUP BY p.first_name;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Could you add in their last names please?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(ranking) ,  T1.first_name, t1.last_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.player_id",
+                "predict": "```sql\nSELECT avg(ranking), T1.first_name, T1.last_name\nFROM players AS T1\nJOIN rankings AS T2 ON T1.player_id = T2.player_id\nGROUP BY T1.player_id\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What are the full names of all left-handed players (hand value \"L\")?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT  T1.first_name, t1.last_name FROM players AS T1 where t1.hand = \"L\";",
+                "predict": "SELECT first_name, last_name FROM players WHERE hand = 'L'\n"
+            },
+            {
+                "isuser": true,
+                "text": "Could you just show their last names, please?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.last_name FROM players AS T1 where t1.hand = \"L\";",
+                "predict": "SELECT  T1.last_name FROM players AS T1 where t1.hand = \"L\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "Would you also add in their ranks?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you mean their average rankings?",
+                "query": "",
+                "predict": "```sql\nSELECT T1.last_name, T2.ranking FROM players AS T1\nJOIN rankings AS T2 ON T1.player_id = T2.player_id\nWHERE T1.hand = 'L';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Yes, please.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(ranking) ,  T1.last_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id where T1.hand = \"L\" GROUP BY T1.first_name;",
+                "predict": "```sql\nSELECT T1.last_name, AVG(T2.ranking) AS average_ranking\nFROM players AS T1\nJOIN rankings AS T2 ON T1.player_id = T2.player_id\nWHERE T1.hand = 'L'\nGROUP BY T1.player_id;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Bye!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ],
+        "id": 128
+    },
+    {
+        "db_name": "orchestra",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Hola!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Hi, how can I help you?",
+                "query": "",
+                "predict": "Please ask your question. I'm ready to help! \ud83d\ude0a \n"
+            },
+            {
+                "isuser": true,
+                "text": "Please answer the question\uff1athe orchestra of conductor?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you want all the orchestras of all conductors?",
+                "query": "",
+                "predict": "```sql\nSELECT T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "yes",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID ",
+                "predict": "```sql\nSELECT o.Orchestra FROM orchestra o JOIN conductor c ON o.Conductor_ID = c.Conductor_ID;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "what is the name of all conductors?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name FROM conductor",
+                "predict": "```sql\nSELECT Name FROM conductor;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What is the age of Colin Davis?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Age FROM conductor WHERE Name = \"Colin Davis\"",
+                "predict": "```sql\nSELECT Age FROM conductor WHERE Name = 'Colin Davis';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "OK Thanks. ",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Thank you. Goodbye!",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with? \n"
+            }
+        ],
+        "id": 89
+    },
+    {
+        "db_name": "tvshow",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What is the TV Channel of TV series \"A love of a lifetime\"?\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.series_name FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Episode = \"A Love of a Lifetime\";",
+                "predict": "```sql\nSELECT T1.Channel FROM TV_series AS T1 JOIN TV_Channel AS T2 ON T1.Channel = T2.id WHERE T1.Episode = 'A Love of a Lifetime';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "How may viewers does \"A love of a lifetime\" have?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT  Viewers_m FROM  TV_series  where Episode = \"A Love of a Lifetime\";",
+                "predict": "SELECT Viewers_m FROM TV_series WHERE Episode = \"A Love of a Lifetime\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "How about the rating of \"A love of a lifetime?\"",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT  Weekly_Rank  FROM  TV_series  where Episode = \"A Love of a Lifetime\";",
+                "predict": "SELECT Rating FROM TV_series WHERE Episode = \"A Love of a Lifetime\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "And when was \"A love of a lifetime\" aired?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT  \tAir_Date  FROM  TV_series  where Episode = \"A Love of a Lifetime\";",
+                "predict": "SELECT  Air_Date  FROM  TV_series  where Episode = \"A Love of a Lifetime\";\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!\n",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "goodbye!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ],
+        "id": 104
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What are the names of the nations with the 3 lowest populations?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name FROM country ORDER BY Population ASC LIMIT 3",
+                "predict": "```sql\nSELECT Name FROM country ORDER BY Population LIMIT 3;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Which nation has the largest surface area?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name FROM country ORDER BY surfacearea desc LIMIT 1",
+                "predict": "SELECT Name FROM country ORDER BY SurfaceArea DESC LIMIT 1\n"
+            },
+            {
+                "isuser": true,
+                "text": "Of the 3 nations with the lowest populations, which has the largest surface area?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name FROM (select * FROM country order by population asc limit 3) ORDER BY surfacearea desc LIMIT 1",
+                "predict": "```sql\nSELECT Name FROM country ORDER BY Population ASC LIMIT 3\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What is the total population of Antarctica?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT population from country where name = \"Antarctica\"",
+                "predict": "Unanswerable. The database does not contain information about Antarctica. \n"
+            },
+            {
+                "isuser": true,
+                "text": "Wow!  of the 3 nations with the lowest population, what are the population sizes of the other two besides Antarctica?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT name, population FROM country ORDER BY Population ASC LIMIT 3",
+                "predict": "SELECT Population FROM country ORDER BY Population ASC LIMIT 2\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome!  Is there anything else I can help you with? \n"
+            }
+        ],
+        "id": 40
+    },
+    {
+        "db_name": "student_transcripts_tracking",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Which cause has the least enrollment?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you want the course id or course name?",
+                "query": "",
+                "predict": "```sql\nSELECT c.course_name\nFROM Courses c\nJOIN Student_Enrolment_Courses sec ON c.course_id = sec.course_id\nGROUP BY c.course_name\nORDER BY COUNT(sec.student_course_id) ASC\nLIMIT 1;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "the name",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) LIMIT 1",
+                "predict": "```sql\nSELECT T1.course_name\nFROM Courses AS T1\nJOIN Student_Enrolment_Courses AS T2\n  ON T1.course_id = T2.course_id\nGROUP BY T1.course_name\nORDER BY COUNT(T2.student_course_id)\nLIMIT 1;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "What is the course ID of Math?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT course_id from courses where course_name = \"math\"",
+                "predict": "```sql\nSELECT course_id FROM Courses WHERE course_name = 'math';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "How many students enrolled a course with the id of 14",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT  count(*) FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name having T1.course_id = 14",
+                "predict": "```sql\nSELECT COUNT(DISTINCT student_id)\nFROM Student_Enrolment_Courses\nWHERE course_id = 14;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            }
+        ],
+        "id": 136
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "give me the total surface area of the continent\n Asia ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT sum(SurfaceArea) FROM country WHERE Continent = \"Asia\"",
+                "predict": "```sql\nSELECT SUM(SurfaceArea) FROM country WHERE Continent = 'Asia';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "what is the local name ",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean to ask for all local names in country table?",
+                "query": "",
+                "predict": "The question is ambiguous. Please specify which country you are asking about. For example, \"What is the local name of Afghanistan?\" \n"
+            },
+            {
+                "isuser": true,
+                "text": "yes ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT LocalName FROM country",
+                "predict": "SELECT LocalName FROM country\n"
+            },
+            {
+                "isuser": true,
+                "text": "What is Aruba's code? ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Code FROM country WHERE Name = \"Aruba\"",
+                "predict": "SELECT Code FROM country WHERE Name = 'Aruba'\n"
+            }
+        ],
+        "id": 9
+    },
+    {
+        "db_name": "dog_kennels",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "kindly give me the names that might be used for professionals or owners but cannot be use for dog names",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT first_name FROM Professionals UNION SELECT first_name FROM Owners EXCEPT SELECT name FROM Dogs",
+                "predict": "```sql\nSELECT DISTINCT first_name\nFROM Owners\nUNION\nSELECT DISTINCT first_name\nFROM Professionals\nEXCEPT\nSELECT DISTINCT name\nFROM Dogs;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Are there names that are mostly used by professional but aren't used for dog names",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Can you please clarify what you would like me to search the database for?",
+                "query": "",
+                "predict": "```sql\nSELECT first_name FROM Professionals\nWHERE first_name NOT IN (SELECT name FROM Dogs)\nGROUP BY first_name\nHAVING COUNT(*) > (SELECT COUNT(*) FROM Owners WHERE first_name = Professionals.first_name)\n```"
+            },
+            {
+                "isuser": true,
+                "text": "How to contact Taryn",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Would you like the email address of professionals with name Taryn?",
+                "query": "",
+                "predict": "```sql\nSELECT email_address, home_phone, cell_number\nFROM Professionals\nWHERE first_name = 'Taryn';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Yes",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT email_address FROM Professionals WHERE First_Name = \"Taryn\"",
+                "predict": "```sql\nSELECT email_address FROM Professionals WHERE first_name = 'Taryn';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "In what state can i find Jayson",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT state FROM Professionals WHERE First_Name = \"Jayson\"",
+                "predict": "```sql\nSELECT state FROM Professionals WHERE first_name = 'Jayson';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "thanks",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Thank you! Goodbye.",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \n"
+            }
+        ],
+        "id": 56
+    },
+    {
+        "db_name": "network_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can you show me a list of student IDs and their friends IDs?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT student_id, friend_id FROM Friend",
+                "predict": ""
+            },
+            {
+                "isuser": true,
+                "text": "Show me a list of all IDs?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean the id of all High schoolers?",
+                "query": "",
+                "predict": "```sql\nSELECT ID FROM Highschooler\nUNION\nSELECT student_id FROM Friend\nUNION\nSELECT friend_id FROM Friend\nUNION\nSELECT student_id FROM Likes\nUNION\nSELECT liked_id FROM Likes;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Yes",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT id FROM Highschooler ",
+                "predict": "```sql\nSELECT ID FROM Highschooler\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Can you show a list of IDs that are on the second list, but are not on the first list?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT id FROM Highschooler where id not in (SELECT student_id FROM Friend UNION SELECT friend_id FROM Friend)",
+                "predict": "The question is ambiguous. Please clarify which two lists you are referring to. \n"
+            },
+            {
+                "isuser": true,
+                "text": "Can you tell me the total number of student IDs?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(id) FROM Highschooler",
+                "predict": "SELECT COUNT(*) FROM Highschooler \n"
+            },
+            {
+                "isuser": true,
+                "text": "Can you tell me the total number of Friend IDs?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(distinct friend_id) FROM Friend",
+                "predict": "```sql\nSELECT COUNT(DISTINCT student_id) + COUNT(DISTINCT friend_id) FROM Friend\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Can you tell me which Student ID is not on the list of Friend IDs?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "by student id, do you mean the student id in the table friend or all high schoolers' ids.",
+                "query": "",
+                "predict": "SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "All high schoolers' ids",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT id FROM Highschooler EXCEPT SELECT friend_id FROM Friend",
+                "predict": "SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend UNION SELECT friend_id FROM Friend\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "Can you tell me the name and the grade of student ID 1510?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT name, grade FROM Highschooler where id = 1510",
+                "predict": "SELECT name, grade FROM Highschooler WHERE id = 1510\n\n"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "you are welcome, bye!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            }
+        ],
+        "id": 112
+    },
+    {
+        "db_name": "voter_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can you tell me what the total number of votes are for the states of \"NY\" and \"CA\"?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM votes WHERE state  =  'NY' or  state  =  'CA'",
+                "predict": "```sql\nSELECT COUNT(*) FROM VOTES WHERE state IN ('NY', 'CA');\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thank you!  Can you provide me with a list of all of the different contestant numbers?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT distinct contestant_number FROM votes ",
+                "predict": "SELECT DISTINCT contestant_number FROM VOTES\n"
+            },
+            {
+                "isuser": true,
+                "text": "Awesome!  Can you show me which of the contestants received the most votes and show me that total please?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "Sorry, I can't answer the question based on the information in the table.",
+                "query": "",
+                "predict": "```sql\nSELECT contestant_number, COUNT(*) AS vote_count\nFROM votes\nGROUP BY contestant_number\nORDER BY vote_count DESC\nLIMIT 1;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Okay.  How many vote IDs correspond to contestant number 5?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) from votes where contestant_number = '5'",
+                "predict": "```sql\nSELECT COUNT(*) FROM VOTES WHERE contestant_number = 5;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome. Goodbye.",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with? \n"
+            }
+        ],
+        "id": 32
+    },
+    {
+        "db_name": "cre_Doc_Template_Mgt",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can I get all the documents with 'w' in them",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you want documents with 'w' in the name or description?",
+                "query": "",
+                "predict": "```sql\nSELECT *\nFROM Documents\nWHERE Document_Name LIKE '%w%';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Description pls",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT * from Documents WHERE Document_Description LIKE \"%w%\"",
+                "predict": "```sql\nSELECT *\nFROM Documents\nWHERE Document_Description LIKE '%w%';\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Ok can I get just their names",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_name from Documents WHERE Document_Description LIKE \"%w%\"",
+                "predict": "```sql\nSELECT Document_Name FROM Documents WHERE Document_Description LIKE \"%w%\"\n```"
+            },
+            {
+                "isuser": true,
+                "text": "I need the template ids too oops",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_name , template_id FROM Documents WHERE Document_Description LIKE \"%w%\"\n\n",
+                "predict": "```sql\nSELECT Document_Name, Template_ID FROM Documents WHERE Document_Description LIKE \"%w%\"\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Goodbye!",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_name , template_id FROM Documents WHERE Document_Description LIKE \"%w%\"\n\n"
+            }
+        ],
+        "id": 17
+    },
+    {
+        "db_name": "dog_kennels",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Do any states have owners living there?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT state FROM Owners",
+                "predict": "```sql\nSELECT DISTINCT state FROM Owners;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Which states have professionals living there?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT state FROM Professionals",
+                "predict": "SELECT DISTINCT state FROM Professionals\n"
+            },
+            {
+                "isuser": true,
+                "text": "May I have a list of states that has both owners and professionals living there?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT state FROM Owners INTERSECT SELECT state FROM Professionals",
+                "predict": "```sql\nSELECT DISTINCT state FROM Owners\nINTERSECT\nSELECT DISTINCT state FROM Professionals\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Let me know if you have any other questions. \ud83d\ude0a \n"
+            }
+        ],
+        "id": 144
+    },
+    {
+        "db_name": "pets_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How many students in the \"Student\" table are over the age of 20?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM student WHERE age  >  20",
+                "predict": "```sql\nSELECT COUNT(*)\nFROM Student\nWHERE Age > 20;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "How many of those students own pets?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20",
+                "predict": "```sql\nSELECT COUNT(DISTINCT S.StuID)\nFROM Student AS S\nJOIN Has_Pet AS HP ON S.StuID = HP.StuID\nWHERE S.Age > 20;\n```"
+            }
+        ],
+        "id": 113
+    }
+]
