@@ -11,11 +11,13 @@ Arguments:
 """
 
 # Import the functions from /tools
+import math
 import os
 from tools.api_request import request_gemini as request_llm
 from tools.db_detail import db_getdesc
 from tools.sql_execute import sqlite_execute as execute
 import threading
+import concurrent
 from concurrent.futures import ThreadPoolExecutor
 from tqdm import tqdm
 import json
@@ -44,7 +46,7 @@ def get_system(db_name):
     # Get db schema prompt
     description = db_getdesc(db_name)
     column_example = get_example(db_name)
-    question = "Database schema:\n" + description + "\nExamples for each table:"+ column_example + "\nBased on the provided information, if the user's question cannot be accurately answered with an SQL query, indicate whether the question is ambiguous or unanswerable and explain why. If the question is answerable, output only SQL query without additional content."
+    question = "Database schema:\n" + description + "\nExamples for each table:"+ column_example + "\nBased on the provided information, if the user's question cannot be accurately answered with an SQL query, indicate whether the question is ambiguous(Problem is not enough to generate SQL with sure tables and columns) or unanswerable(Unable to answer questions based on database information) and explain why. If the question is answerable, output only SQL query without additional content."
     return question
 
 def process_json_part(data, output_file):
@@ -76,33 +78,29 @@ def process_json_part(data, output_file):
                     messages.append({"role": "assistant", "content": g_ans})
                     
         if not os.path.exists(output_file):
-        # 文件不存在，直接写入第一个JSON对象
             with open(output_file, 'w') as f:
-                json.dump(item, f, indent=4)
-                f.write('\n')  # 添加一个换行符以提高可读性
+                items = [item]
+                json.dump(items, f, indent=4)
+                f.write('\n')
         else:
-            # 文件存在，读取现有内容并追加新的JSON对象
             with open(output_file, 'r') as f:
-                # 读取文件内容并转换为JSON对象列表
                 try:
                     items = json.load(f)
                 except json.JSONDecodeError:
-                    # 如果文件内容不是有效的JSON格式，初始化为空列表
-                    items = []
+                    print("\033[91mError:The file content is not in valid JSON format\033[0m")
+                    # items = []
 
-            # 确保items是一个列表
             if not isinstance(items, list):
-                items = []
+                print("\033[91mError:The file content is not in valid JSON format\033[0m")
+                # items = []
 
-            # 追加新的JSON对象
             items.append(item)
 
-            # 将更新后的列表写回文件
             with open(output_file, 'w') as f:
                 json.dump(items, f, indent=4)
-                f.write('\n')  # 添加一个换行符以提高可读性
+                f.write('\n') 
 
-def process_json_multithreaded(input_file, output_file, num_threads=10):
+def process_json_multithreaded(input_file, output_file, num_threads=20):
     with open(input_file, 'r') as f:
         data = json.load(f)
     # split

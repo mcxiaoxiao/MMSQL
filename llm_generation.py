@@ -46,7 +46,7 @@ def get_system(db_name):
     # Get db schema prompt
     description = db_getdesc(db_name)
     column_example = get_example(db_name)
-    question = "Database schema:\n" + description + "\nExamples for each table:"+ column_example + "\nBased on the provided information, if the user's question cannot be accurately answered with an SQL query, indicate whether the question is ambiguous or unanswerable and explain why. If the question is answerable, output only SQL query without additional content."
+    question = "Database schema:\n" + description + "\nExamples for each table:"+ column_example + "\nBased on the provided information, if the user's question cannot be accurately answered with an SQL query, indicate whether the question is ambiguous(Problem is not enough to generate SQL with sure tables and columns) or unanswerable(Unable to answer questions based on database information) and explain why. If the question is answerable, output only SQL query without additional content."
     return question
 
 def process_json_part(data, output_file):
@@ -101,7 +101,7 @@ def process_json_part(data, output_file):
                 f.write('\n') 
 
 def process_json_multithreaded(input_file, output_file, num_threads=20):
-    with open(input_file, 'r') as f:
+    with  open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
     # split
     data_parts = []
@@ -122,4 +122,4 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MMSQL-EVAL LLM GENERATION SCRIPT")
     parser.add_argument("output_file", help="Output JSON file path. Such as 'output/gemini-1,5-pro'")
     args = parser.parse_args()
-    process_json_multithreaded('datasets/MMSQL_test.json', args.output_file)
+    process_json_multithreaded('datasets/data_with_ids.json', args.output_file)
