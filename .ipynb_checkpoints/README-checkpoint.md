@@ -6,7 +6,7 @@ This repository contains the scripts and code used for the experiments in the pa
 - `\datasets`: MMSQL test set `MMSQL_test.json`, MMSQL train set `MMSQL_train.json`, CoSQL dataset (Our sets based on it) `cosql_dataset`.
 - `llm_generation.py`: Script responsible for generating responses using the LLM.
 - `RQS_eval.py`: Script for evaluating responses using GPT-4o to score RQS and label the response types.
-- `ACCS_eval.py`: Script for calculating several metrics including ACCS, IACCS, EM, QM, and ERROR.
+- `ACCS_eval.py`: Script for calculating several metrics including ACCS, IACCS, EM, QM, ERROR...
 - `process_outputs.ipynb`: Jupyter notebook for processing the output JSON files and generating plots.
 - `correlation_analysis.ipynb`: Jupyter notebook for calculating the Spearman and Pearson correlations between human ratings and GPT-4o ratings.
 - `outputs/`: Directory containing various experimental output JSON files.
