@@ -593,10 +593,10 @@ for element in tqdm(data):
     for i in range(len(turns) - 1):
         if i%2 == 0:
             print("\n turn:"+str((i+1)//2))
-        if turns[i].get('isUser'):
+        if turns[i].get('isuser'):
             allqa+=1
             # print(turns[i]['text'])
-            gold_type = turns[i+1].get('type',[])
+            gold_type = turns[i].get('type',[])
             predict_type = turns[i+1].get('predict_type','answerable')
             if len(gold_type) == 0:
                 gold_type ='answerable'
@@ -614,7 +614,7 @@ for element in tqdm(data):
             if gold_type == predict_type and predict_type == 'answerable':
                 try:
                     print("Question:"+turns[i].get('text',''))
-                    if qm("datasets/cosql_dataset/database",turns[i+1].get('query',''), turns[i+1].get('predict',''), db_name):
+                    if qm("datasets/cosql_dataset/database",turns[i+1].get('query',''), turns[i+1].get('predict_sql',''), db_name):
                         # print("QM\n")
                         qm_count += 1
                         accs += 1
@@ -628,7 +628,7 @@ for element in tqdm(data):
                     print("\033[91mIACCS failed\033[0m")
                 try:
                     
-                    if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict',''), turns[i+1].get('query','')):
+                    if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict_sql',''), turns[i+1].get('query','')):
                         em_count += 1
                 except Exception as e:
                     # print("EM error")
