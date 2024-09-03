@@ -25,6 +25,17 @@ import argparse
 
 from process_sql import tokenize, get_schema, get_tables_with_alias, Schema, get_sql
 
+import nltk
+
+try:
+    nltk.data.find('punkt_tab')  # check
+except LookupError:
+    print("check::: punkt_tab not found，start download...")
+    nltk.download('punkt_tab')  # auto download
+    print("punkt_tab has installed")
+else:
+    print("check::: punkt_tab exist")
+
 
 # Flag to disable value evaluation
 DISABLE_VALUE = True
@@ -526,23 +537,6 @@ evaluator = Evaluator()
 
 
 
-def map_labels_to_new_categories(label):
-    mapping = {
-        'INFER_SQL': 'Answerable',
-        'INFORM_SQL': 'Answerable',
-        'CANNOT_ANSWER': 'Unanswerable',
-        'CANNOT_UNDERSTAND': 'Ambiguous',
-        'NOT_RELATED': 'Unanswerable',
-        'AMBIGUOUS': 'Ambiguous'
-    }
-    return mapping.get(label, 'Improper')
-
-def process_labels(turn_type):
-    for label in turn_type:
-        new_label = map_labels_to_new_categories(label)
-        if "Answeable" in new_label:
-            return "Answeable"
-    return map_labels_to_new_categories(turn_type[0])
 
 
 def qm(db_path,p_str,g_str,db):
@@ -570,9 +564,8 @@ def qm(db_path,p_str,g_str,db):
     exact_score = evaluator.eval_exact_match(p_sql, g_sql)
     return exact_score
 
-parser = argparse.ArgumentParser(description='evaluation of AccS. Input JSON file and database path.')
+parser = argparse.ArgumentParser(description='evaluation of AccS. Input JSON file path.')
 parser.add_argument('json_file_path', type=str, help='Path to the JSON file')
-parser.add_argument('database_path', type=str, help='Path to the database')
 
 # 解析命令行参数
 args = parser.parse_args()
@@ -603,27 +596,25 @@ for element in tqdm(data):
         if turns[i].get('isUser'):
             allqa+=1
             # print(turns[i]['text'])
-            gold_type = turns[i].get('type',[])
-            predict_type = turns[i].get('predict_type',['INFORM_SQL'])
+            gold_type = turns[i+1].get('type',[])
+            predict_type = turns[i+1].get('predict_type','answerable')
             if len(gold_type) == 0:
-                gold_type = ['INFORM_SQL']
+                gold_type ='answerable'
             if len(predict_type) == 0:
-                predict_type = ['INFORM_SQL']
+                predict_type = 'answerable'
             print("Gold Type:"+str(gold_type))
             print("Predict Type:"+str(predict_type))
-            gold_type = process_labels (gold_type)
-            predict_type = process_labels (predict_type)
             # print("gold   :"+gold_type)
             # print("predict:"+predict_type)
             
-            if gold_type == 'Answerable':
+            if gold_type == 'answerable':
                 allsqlqa += 1
-            if predict_type == 'Answerable':
+            if predict_type == 'answerable':
                 allsqla += 1
-            if gold_type == predict_type and predict_type == 'Answerable':
+            if gold_type == predict_type and predict_type == 'answerable':
                 try:
                     print("Question:"+turns[i].get('text',''))
-                    if qm(args.database_path,turns[i+1].get('query',''), turns[i+1].get('predict',''), db_name):
+                    if qm("datasets/cosql_dataset/database",turns[i+1].get('query',''), turns[i+1].get('predict',''), db_name):
                         # print("QM\n")
                         qm_count += 1
                         accs += 1
@@ -637,12 +628,12 @@ for element in tqdm(data):
                     print("\033[91mIACCS failed\033[0m")
                 try:
                     
-                    if eval_exec_match(args.database_path,db_name, turns[i+1].get('predict',''), turns[i+1].get('query','')):
+                    if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict',''), turns[i+1].get('query','')):
                         em_count += 1
                 except Exception as e:
                     # print("EM error")
                     print(e)
-            if gold_type == predict_type and predict_type != 'Answerable':
+            if gold_type == predict_type and predict_type != 'answerable':
                 print("Question:"+turns[i].get('text',''))
                 accs += 1
                 print("\033[92mACCS+1\033[0m")
