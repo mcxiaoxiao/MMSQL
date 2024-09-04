@@ -5239,16 +5239,6 @@
     "db_name": "cre_Doc_Template_Mgt",
     "turns": [
       {
-        "isuser": false,
-        "text": "Did you mean the number of templates used in any document?",
-        "query": ""
-      },
-      {
-        "isuser": true,
-        "text": "Yes",
-        "type": "answerable"
-      },
-      {
         "isuser": true,
         "text": "what are all of the template ids?",
         "type": "answerable"
