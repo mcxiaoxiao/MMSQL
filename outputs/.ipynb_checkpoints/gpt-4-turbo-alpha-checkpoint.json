@@ -1,0 +1,74 @@
+[
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What is the most popular car color?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "This question cannot be answered because the provided database schema does not contain any information about car colors. Without a table or column that stores data on the color of cars, it is impossible to determine or list the most popular car color.",
+                "predict": "unanswerable\n\nThe database does not contain any information regarding car colors, so it is not possible to determine the most popular car color from the available data."
+            },
+            {
+                "isuser": true,
+                "text": "How many car models are produced by each maker? List the count and the maker full name.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;",
+                "predict": "```sql\nSELECT COUNT(model_list.ModelId) AS ModelCount, car_makers.FullName\nFROM model_list\nJOIN car_makers ON model_list.Maker = car_makers.Id\nGROUP BY car_makers.FullName;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Which models are the most popular?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) desc limit 1;",
+                "predict": "The question is unanswerable with the current database schema. There is no data available on the popularity or sales of car models, such as sales figures, production numbers, or ownership statistics. Therefore, it's impossible to determine which models are the most popular based on the provided database information."
+            },
+            {
+                "isuser": true,
+                "text": "How about the least?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) limit 1;",
+                "predict": "The question is ambiguous because it's unclear whether you're asking for the least popular model from each maker or the least popular model overall. Additionally, the database does not contain direct information on the popularity of car models (such as sales data or production numbers), so it's not possible to determine the least popular model based on the available data."
+            },
+            {
+                "isuser": true,
+                "text": "Which companies have three or more models?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Count(*) ,  T2.FullName ,  T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;",
+                "predict": "```sql\nSELECT T2.FullName, COUNT(*) AS ModelCount\nFROM model_list AS T1\nJOIN car_makers AS T2 ON T1.Maker = T2.Id\nGROUP BY T1.Maker\nHAVING COUNT(*) >= 3;\n```"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Welcome goodbye!",
+                "query": "",
+                "predict": "You're welcome! If you have any more questions, feel free to ask."
+            }
+        ],
+        "id": 0
+    }
+]

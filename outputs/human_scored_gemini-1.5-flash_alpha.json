@@ -231,7 +231,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 8,
                 "RQS_Rationale": "The system response correctly identifies that the question about how GNP is calculated cannot be answered based on the information available in the database. However, it fails to provide any context or explanation about GNP itself, which could have been useful. \n\nRelevance: 2 points - The response is fully relevant as it addresses the user's question about GNP calculation. \nClarity: 2 points - The response is clear and easy to understand, stating that the question is unanswerable. \nCompleteness: 1 point - While it states that the question is unanswerable, it does not provide any additional information about GNP, which could have enhanced the completeness of the response. \nAccuracy: 2 points - The response is accurate in stating that the database does not contain the necessary information to answer the question. \nUtility: 1 point - The response somewhat meets the user's needs by indicating the unanswerability but lacks further context or information that could have been helpful. \n\nTotal Score: 8 points.",
-                "RQS_human_avg": 8
+                "RQS_human_avg": 4
             },
             {
                 "isuser": true,
@@ -580,7 +580,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 8,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human_avg": 8
+                "RQS_human_avg": 4
             },
             {
                 "isuser": true,
@@ -1192,7 +1192,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 8,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human_avg": 8
+                "RQS_human_avg": 9
             },
             {
                 "isuser": true,
@@ -2056,7 +2056,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question about the population of unspecified countries. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the need for more specific information. Completeness: 1 point - While the response addresses the ambiguity, it does not provide any additional context or options for the user to clarify their question. Accuracy: 2 points - The response is completely accurate in identifying the ambiguity of the question. Utility: 1 point - The response somewhat meets the user's needs by pointing out the ambiguity but could have offered suggestions on how to clarify the question further. Total Score: 8.",
-                "RQS_human_avg": 8
+                "RQS_human_avg": 5
             },
             {
                 "isuser": true,
@@ -2557,7 +2557,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question regarding which teacher's age and hometown are being asked about. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the ambiguity. Completeness: 2 points - The response thoroughly addresses the question by explaining the lack of specificity in the user's query. Accuracy: 2 points - The response is completely accurate in stating that the question is ambiguous. Utility: 2 points - The response excellently meets the user's needs by clarifying the ambiguity and explaining the context of the question. Total Score: 10 points.",
-                "RQS_human_avg": 10
+                "RQS_human_avg": 6
             },
             {
                 "isuser": true,
@@ -2732,7 +2732,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 7,
                 "RQS_Rationale": "{'Relevance': 1, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human_avg": 7
+                "RQS_human_avg": 5
             },
             {
                 "isuser": true,
@@ -3414,7 +3414,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity regarding Kyle's presence in the database. Clarity: 2 points - The response is clear and easy to understand, stating that the database does not contain information about Kyle. Completeness: 1 point - While the response addresses the ambiguity, it does not offer to clarify or ask for more information about what the user is looking for regarding Kyle. Accuracy: 2 points - The response is factually accurate, as there is no mention of Kyle in the database. Utility: 1 point - The response somewhat meets the user's needs by clarifying the ambiguity but does not provide further assistance or options for the user to clarify their request. Total Score: 8 points.",
-                "RQS_human_avg": 8
+                "RQS_human_avg": 2
             },
             {
                 "isuser": true,
@@ -5553,9 +5553,9 @@
                 "predict": "",
                 "predict_sql": "",
                 "predict_type": "ambiguous",
-                "RQS": 9,
-                "RQS_Rationale": "Relevance: 2 points - The response is relevant as it addresses the ambiguity in the user's request by asking for clarification on which address is needed. Clarity: 2 points - The response is clear and easy to understand, effectively communicating the need for clarification. Completeness: 1 point - While the response addresses the ambiguity, it does not provide any information about the last name or address, which was part of the user's request. Accuracy: 2 points - The response is accurate in its request for clarification. Utility: 2 points - The response meets the user's needs by clarifying the ambiguity in the question. Total Score: 9 points.",
-                "RQS_human_avg": 9
+                "RQS": 0,
+                "RQS_Rationale": "SKIP",
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -6240,7 +6240,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 8,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human_avg": 8
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -7434,9 +7434,9 @@
                 "predict": "unanswerable. The database does not contain information about the number of \"Welcome to NY\". \n",
                 "predict_sql": "",
                 "predict_type": "unanswerable",
-                "RQS": 7,
-                "RQS_Rationale": "{'Relevance': 1, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human_avg": 7
+                "RQS": 4,
+                "RQS_Rationale": "{'Relevance': 1, 'Clarity': 1, 'Completeness': 1, 'Accuracy': 1, 'Utility': 0}",
+                "RQS_human_avg": 6
             },
             {
                 "isuser": true,
@@ -8682,7 +8682,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 7,
                 "RQS_Rationale": "{'Relevance': 1, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human_avg": 7
+                "RQS_human_avg": 6
             },
             {
                 "isuser": true,
@@ -8698,7 +8698,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human_avg": 10
+                "RQS_human_avg": 8
             },
             {
                 "isuser": true,
@@ -9203,9 +9203,9 @@
                 "predict": "",
                 "predict_sql": "",
                 "predict_type": "ambiguous",
-                "RQS": 6,
-                "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it attempts to clarify the user's question but does not provide a direct answer to the query about Petra Kvitova's ID. Clarity: 1 point - The response is somewhat clear but introduces ambiguity by asking if the user meant 'loser id' without explicitly stating that it refers to Petra Kvitova. Completeness: 1 point - The response does not fully address the user's question about the ID of Petra Kvitova, as it does not provide the actual ID or clarify the context sufficiently. Accuracy: 2 points - The response does not contain any factually incorrect information; it simply seeks clarification. Utility: 1 point - The response somewhat meets the user's needs by attempting to clarify the ambiguity but does not provide the information the user is looking for. Total Score: 6 points.",
-                "RQS_human_avg": 6
+                "RQS": 0,
+                "RQS_Rationale": "SKIP",
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -10746,7 +10746,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 9,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question about horsepower. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the need for more context. Completeness: 1 point - While the response identifies the ambiguity, it could have provided examples of what additional information is needed. Accuracy: 2 points - The response is completely accurate in stating that the question is ambiguous. Utility: 2 points - The response excellently meets the user's needs by explaining the ambiguity and prompting for clarification. Total Score: 9.",
-                "RQS_human_avg": 9
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -12191,7 +12191,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 7,
                 "RQS_Rationale": "{'Relevance': 1, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human_avg": 7
+                "RQS_human_avg": 6
             },
             {
                 "isuser": true,

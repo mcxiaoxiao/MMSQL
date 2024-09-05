@@ -5,7 +5,7 @@ import random
 import google.generativeai as genai
 # Set API key
 OPENAI_API_KEY = 'sk-proj-1JRQ9SkU0gSRKsBoCyD1T3BlbkFJSQ44FoEjAHN05t7FrryD'
-OPENAI_MODEL_NAME = "gpt-4o-mini"
+OPENAI_MODEL_NAME = "gpt-4-turbo"
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 GEMINI_API_KEYS = [
@@ -13,7 +13,7 @@ GEMINI_API_KEYS = [
     "AIzaSyDfFuhj-UgJxC2ThsAgPYPhKyjFaPHqJ1M",
     "AIzaSyAWaTmfp7pCPcxpZln7EfzyZlkrIGltZfw",
     "AIzaSyC5FBoMFzNWvsz7FlnexrmdLFoHWed4LTc"]
-GEMINI_MODEL_NAME = "gemini-1.5-flash"
+GEMINI_MODEL_NAME = "gemini-1.0-pro"
 ge_model = genai.GenerativeModel(GEMINI_MODEL_NAME)
 
 def transform_messages_for_gemini(messages):
