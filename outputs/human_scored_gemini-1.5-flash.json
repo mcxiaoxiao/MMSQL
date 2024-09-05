@@ -2492,7 +2492,7 @@
                 "predict_type": "improper",
                 "RQS": "2",
                 "RQS_Rationale": "The user's message 'Thanks!' is a simple expression of gratitude, typically signaling the end of a conversation or satisfaction with the provided information. The system's response 'You should ask at least 3 questions' is inappropriate and irrelevant in this context, as it does not acknowledge the closure indicated by the user but instead prompts further interaction inappropriately. The response does not align with the conversational cues provided by the user, making it irrelevant and unclear in this scenario.",
-                "RQS_human": "2"
+                "RQS_human": "0"
             }
         ]
     },
@@ -3643,7 +3643,7 @@
                 "predict_type": "improper",
                 "RQS": "2",
                 "RQS_Rationale": "The system's response is missing, which makes it impossible to evaluate based on the criteria provided. The user's question seems to be asking for an email address, but without specifying whose email address they need. This lack of specificity in the user's question could lead to ambiguity, but since the system did not provide any response at all, it is classified as 'improper' because it does not address the user's question in any form. Therefore, all criteria are not applicable as there is no content to evaluate.",
-                "RQS_human": "2"
+                "RQS_human": "0"
             },
             {
                 "isuser": true,
@@ -4314,7 +4314,7 @@
                 "predict_type": "improper",
                 "RQS": "6",
                 "RQS_Rationale": "The user's comment 'Cool! good theme.' is ambiguous as it does not specify what aspect of the theme they are referring to, whether it's a concert theme, a thematic element in a song, or something else entirely. The system's response, 'You're welcome! I'm glad you like it. 😊 Is there anything else I can help you with?' assumes the user was complimenting the system or a service, which is not clearly the case based on the user's statement. The system's response does not address any specific theme or provide information related to the database content (concerts, singers, stadiums), making it irrelevant in the context of the provided database schema and examples.",
-                "RQS_human": "6"
+                "RQS_human": "4"
             }
         ]
     },
@@ -8465,7 +8465,7 @@
                 "predict_type": "improper",
                 "RQS": "8",
                 "RQS_Rationale": "The user's initial greeting 'hey' does not pose a specific question or request related to the database schema provided. The system's response, while attempting to guide the user towards formulating a query-based question, does not directly address the greeting or engage in a typical conversational manner that might be expected in response to a greeting. Instead, it jumps straight into a technical assistance mode, which might not align with the user's expectations if they were merely initiating conversation. The response is clear and accurate in terms of the assistance it offers but lacks relevance and utility in the context of a simple greeting.",
-                "RQS_human": "8"
+                "RQS_human": "10"
             },
             {
                 "isuser": true,
@@ -9850,7 +9850,7 @@
                 "predict_type": "improper",
                 "RQS": "8",
                 "RQS_Rationale": "The user's input 'Thanks!' is a simple expression of gratitude, typically signaling the end of a conversation or satisfaction with the provided information. The system's response 'You're welcome! Is there anything else I can help you with?' is polite and appropriate, aiming to check if the user needs further assistance. However, the reference answer 'Bye!' suggests that the expected response should have been a closure to the conversation, acknowledging the end of the interaction. Therefore, the system's response, while polite and engaging, does not align with the expected closure indicated by the reference answer.",
-                "RQS_human": "8"
+                "RQS_human": "10"
             }
         ]
     },
