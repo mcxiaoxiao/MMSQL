@@ -22,7 +22,7 @@ import sqlite3
 import traceback
 import argparse
 
-from process_sql import tokenize, get_schema, get_tables_with_alias, Schema, get_sql
+from tools.process_sql import tokenize, get_schema, get_tables_with_alias, Schema, get_sql
 
 import nltk
 
