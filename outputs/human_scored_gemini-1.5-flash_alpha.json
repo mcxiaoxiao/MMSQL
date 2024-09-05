@@ -21,7 +21,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it asks for a question that can be answered using the database schema. Clarity: 2 points - The response is very clear and easy to understand, directly asking for a question. Completeness: 2 points - The response thoroughly addresses the user's request for a question. Accuracy: 2 points - The response is completely accurate in its request for a question. Utility: 2 points - The response excellently meets the user's needs by prompting for a specific type of question that can be answered with the database. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": false,
@@ -88,7 +88,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 72
@@ -137,7 +137,7 @@
                 "predict_sql": "SELECT Song_Name FROM singer ORDER BY Song_Name  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -181,7 +181,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 88
@@ -231,7 +231,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 8,
                 "RQS_Rationale": "The system response correctly identifies that the question about how GNP is calculated cannot be answered based on the information available in the database. However, it fails to provide any context or explanation about GNP itself, which could have been useful. \n\nRelevance: 2 points - The response is fully relevant as it addresses the user's question about GNP calculation. \nClarity: 2 points - The response is clear and easy to understand, stating that the question is unanswerable. \nCompleteness: 1 point - While it states that the question is unanswerable, it does not provide any additional information about GNP, which could have enhanced the completeness of the response. \nAccuracy: 2 points - The response is accurate in stating that the database does not contain the necessary information to answer the question. \nUtility: 1 point - The response somewhat meets the user's needs by indicating the unanswerability but lacks further context or information that could have been helpful. \n\nTotal Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             },
             {
                 "isuser": true,
@@ -309,7 +309,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 16
@@ -373,7 +373,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 96
@@ -451,7 +451,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 80
@@ -486,7 +486,7 @@
                 "predict_sql": "SELECT T1.Code FROM country AS T1 INNER JOIN city AS T2 ON T1.Code = T2.CountryCode WHERE T2.Name = 'Herat' ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -530,7 +530,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's gratitude. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of thanks. Accuracy: 2 points - The response is completely accurate as it correctly acknowledges the user's thanks. Utility: 2 points - The response meets the user's needs by providing a polite acknowledgment. Total Score: 10 points, as the response is appropriate for a greeting and does not require SQL-based information.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 24
@@ -580,7 +580,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 8,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             },
             {
                 "isuser": true,
@@ -624,7 +624,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 48
@@ -673,7 +673,7 @@
                 "predict_sql": "SELECT name FROM Highschooler ORDER BY grade DESC LIMIT 1 ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -703,7 +703,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 120
@@ -780,7 +780,7 @@
                 "predict_sql": "SELECT T1.last_name, T2.ranking FROM players AS T1JOIN rankings AS T2 ON T1.player_id = T2.player_idWHERE T1.hand = 'L'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -810,7 +810,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 128
@@ -832,7 +832,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it invites the user to ask a question. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response thoroughly addresses the user's greeting by encouraging further interaction. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response excellently meets the user's needs by prompting them to continue the conversation. Total Score: 10 points for a direct greeting and engagement.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -847,7 +847,7 @@
                 "predict_sql": "SELECT T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -905,7 +905,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 1 point - While the response is polite and offers help, it does not provide a closing statement like 'Goodbye' which was present in the reference answer. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 1 point - The response somewhat meets the user's needs by offering further assistance but does not fully address the context of the user's statement of thanks. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 10
             }
         ],
         "id": 89
@@ -983,7 +983,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of gratitude and invites further questions. Accuracy: 2 points - The response is accurate as it does not contain any incorrect information. Utility: 2 points - The response meets the user's needs by providing a polite acknowledgment and an invitation for more questions. Overall, the response is appropriate for the context of a non-SQL based user question, hence classified as 'improper'.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 104
@@ -1047,7 +1047,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -1077,7 +1077,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 40
@@ -1098,7 +1098,7 @@
                 "predict_sql": "SELECT c.course_nameFROM Courses cJOIN Student_Enrolment_Courses sec ON c.course_id = sec.course_idGROUP BY c.course_nameORDER BY COUNT(sec.student_course_id) ASCLIMIT 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -1156,7 +1156,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 136
@@ -1192,7 +1192,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 8,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             },
             {
                 "isuser": true,
@@ -1255,7 +1255,7 @@
                 "predict_sql": "SELECT first_name FROM Professionals WHERE first_name NOT IN (SELECT name FROM Dogs) GROUP BY first_name HAVING COUNT(*) > (SELECT COUNT(*) FROM Owners WHERE first_name = Professionals.first_name) ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -1270,7 +1270,7 @@
                 "predict_sql": "SELECT email_address, home_phone, cell_numberFROM ProfessionalsWHERE first_name = 'Taryn'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -1314,7 +1314,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 1 point - While the response is polite, it could have included a closing remark or invitation for further questions, making it slightly less complete. Accuracy: 2 points - The response is factually accurate and does not contain any errors. Utility: 1 point - The response meets the user's needs but could have provided more context or a more engaging closing. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 10
             }
         ],
         "id": 56
@@ -1336,7 +1336,7 @@
                 "predict_type": "answerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it directly addresses the user's request for a list of student IDs and their friends' IDs. Clarity: 2 points - The response is clear and easy to understand, presenting the information in a straightforward manner. Completeness: 2 points - The response thoroughly addresses the question by providing all necessary details about the student IDs and their corresponding friends' IDs. Accuracy: 2 points - The response is completely accurate, as it correctly reflects the data from the Friend table. Utility: 2 points - The response excellently meets the user's needs by providing the requested information without any unnecessary details or confusion.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -1351,7 +1351,7 @@
                 "predict_sql": "SELECT ID FROM HighschoolerUNIONSELECT student_id FROM FriendUNIONSELECT friend_id FROM FriendUNIONSELECT student_id FROM LikesUNIONSELECT liked_id FROM Likes",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -1381,7 +1381,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 7,
                 "RQS_Rationale": "{'Relevance': 1, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human": 7
+                "RQS_human_avg": 7
             },
             {
                 "isuser": true,
@@ -1424,7 +1424,7 @@
                 "predict_sql": "SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -1468,7 +1468,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 112
@@ -1517,7 +1517,7 @@
                 "predict_sql": "SELECT contestant_number, COUNT(*) AS vote_countFROM votesGROUP BY contestant_numberORDER BY vote_count DESCLIMIT 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -1547,7 +1547,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 32
@@ -1568,7 +1568,7 @@
                 "predict_sql": "SELECT *FROM DocumentsWHERE Document_Name LIKE '%w%'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -1626,7 +1626,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - While the response is polite, it does not fully address the user's expression of gratitude in a meaningful way, lacking a more engaging or conclusive response. Accuracy: 2 points - The response is accurate in its acknowledgment of the user's thanks. Utility: 1 point - The response somewhat meets the user's needs but could have provided a more engaging or conclusive follow-up. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 10
             },
             {
                 "isuser": false,
@@ -1695,7 +1695,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 144
@@ -1765,7 +1765,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -1809,7 +1809,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 121
@@ -1844,7 +1844,7 @@
                 "predict_sql": "SELECT SUM(Population) FROM country WHERE Code NOT IN (SELECT CountryCode FROM countrylanguage WHERE Language = 'English')  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -1874,7 +1874,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's gratitude and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of thanks and invites further questions. Accuracy: 2 points - The response is accurate in its acknowledgment of the user's thanks. Utility: 2 points - The response meets the user's needs by providing a friendly and open-ended reply. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 25
@@ -1938,7 +1938,7 @@
                 "predict_type": "improper",
                 "RQS": 9,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's gratitude and offers further assistance. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 1 point - While the response is polite and offers help, it does not provide a closing statement or farewell, which could enhance completeness. Accuracy: 2 points - The response is factually accurate and does not contain any errors. Utility: 2 points - The response meets the user's needs by being friendly and open to further questions. Total Score: 9.",
-                "RQS_human": 9
+                "RQS_human_avg": 10
             }
         ],
         "id": 81
@@ -1960,7 +1960,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -1990,7 +1990,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -2034,7 +2034,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 0
@@ -2056,7 +2056,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question about the population of unspecified countries. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the need for more specific information. Completeness: 1 point - While the response addresses the ambiguity, it does not provide any additional context or options for the user to clarify their question. Accuracy: 2 points - The response is completely accurate in identifying the ambiguity of the question. Utility: 1 point - The response somewhat meets the user's needs by pointing out the ambiguity but could have offered suggestions on how to clarify the question further. Total Score: 8.",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             },
             {
                 "isuser": true,
@@ -2071,7 +2071,7 @@
                 "predict_sql": "SELECT COUNT(DISTINCT CityCode) FROM countrylanguage ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -2115,7 +2115,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's greeting and provides a polite reply. Clarity: 2 points - The response is clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's greeting without missing any details. Accuracy: 2 points - The response is accurate as it correctly responds to the user's expression of thanks. Utility: 2 points - The response meets the user's needs by providing a friendly acknowledgment. Total Score: 10 points, as the response is a direct greeting and fulfills the criteria for a proper response.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 137
@@ -2193,7 +2193,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's gratitude. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - While the response is polite, it does not provide any additional information or context that could enhance the interaction. Accuracy: 2 points - The response is accurate and does not contain any errors. Utility: 1 point - The response meets the user's needs to some extent but lacks depth or further engagement. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 10
             }
         ],
         "id": 74
@@ -2214,7 +2214,7 @@
                 "predict_sql": "SELECT first_name, last_name, stateFROM Owners",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -2272,7 +2272,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 49
@@ -2349,7 +2349,7 @@
                 "predict_sql": "SELECT DISTINCT ship_type FROM ship WHERE lost_in_battle IN (SELECT id FROM battle WHERE name NOT IN (SELECT T1.name FROM battle AS T1 JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.location = 'English Channel')) ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -2379,7 +2379,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 64
@@ -2443,7 +2443,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 41
@@ -2521,7 +2521,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 33
@@ -2557,7 +2557,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question regarding which teacher's age and hometown are being asked about. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the ambiguity. Completeness: 2 points - The response thoroughly addresses the question by explaining the lack of specificity in the user's query. Accuracy: 2 points - The response is completely accurate in stating that the question is ambiguous. Utility: 2 points - The response excellently meets the user's needs by clarifying the ambiguity and explaining the context of the question. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -2587,7 +2587,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 105
@@ -2608,7 +2608,7 @@
                 "predict_sql": "SELECT FullName FROM car_makers WHERE Maker = 'amc'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -2637,7 +2637,7 @@
                 "predict_sql": "SELECT DISTINCT c.ModelFROM car_names cJOIN car_makers cm ON c.Make = cm.MakerJOIN countries co ON cm.Country = co.CountryNameWHERE co.CountryName = 'Germany'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -2652,7 +2652,7 @@
                 "predict_sql": "SELECT DISTINCT cn.MakeFROM car_names AS cnJOIN car_makers AS cm ON cn.MakeId = cm.IdJOIN countries AS c ON cm.Country = c.CountryIdWHERE c.CountryName = 'Germany'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -2710,7 +2710,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 97
@@ -2732,7 +2732,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 7,
                 "RQS_Rationale": "{'Relevance': 1, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human": 7
+                "RQS_human_avg": 7
             },
             {
                 "isuser": true,
@@ -2790,7 +2790,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 10
@@ -2854,7 +2854,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of gratitude and invites further questions. Accuracy: 2 points - The response is accurate as it does not contain any incorrect information. Utility: 2 points - The response meets the user's needs by being friendly and open to further inquiries. Total Score: 10 points, as the response is appropriate for a casual interaction.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 90
@@ -2903,7 +2903,7 @@
                 "predict_sql": "SELECT Model FROM car_names WHERE MakeId = 2  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -2930,36 +2930,6 @@
     {
         "db_name": "employee_hire_evaluation",
         "turns": [
-            {
-                "isuser": false,
-                "text": "did you mean the total amount of bonuses that employee got?",
-                "query": ""
-            },
-            {
-                "isuser": true,
-                "text": "yes, thx!",
-                "type": "improper"
-            },
-            {
-                "isuser": true,
-                "text": "how old is George Chuter?",
-                "type": "answerable",
-                "predict": "Please provide me with the question you want to answer. I need the question to generate the appropriate SQL query. \n",
-                "predict_sql": "",
-                "predict_type": "improper",
-                "RQS": 7,
-                "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it acknowledges the need for a question but does not directly address the user's implied question about George Chuter's age. Clarity: 2 points - The response is clear and easy to understand, asking for a specific question. Completeness: 1 point - The response does not cover the user's implied question about George Chuter's age, lacking a direct answer. Accuracy: 2 points - The response is factually accurate in stating that a question is needed. Utility: 1 point - The response somewhat meets the user's needs by prompting for a question but does not provide any useful information regarding the user's implied inquiry. Total Score: 7 points.",
-                "RQS_human": 7
-            },
-            {
-                "isuser": false,
-                "text": "",
-                "query": "select age from employee where name = \"George Chuter\"",
-                "predict": "```sql\nSELECT Age FROM employee WHERE Name = 'George Chuter';\n```",
-                "predict_sql": "SELECT Age FROM employee WHERE Name = 'George Chuter'",
-                "predict_type": "answerable",
-                "RQS": "N/A"
-            },
             {
                 "isuser": true,
                 "text": "how much bonus was Employee with ID 1 awarded?",
@@ -3002,7 +2972,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's thanks. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of gratitude. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response meets the user's needs by acknowledging their thanks and inviting further questions. Total Score: 10 points, as the response is appropriate for a casual interaction.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 122
@@ -3024,7 +2994,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "0",
                 "RQS_Rationale": "The system response does not provide any information regarding the loser_name whose age is 24.626967830300003. Since the question is asking for a specific detail from the database, and the response fails to address it, it is classified as unanswerable. \n\nRelevance: 0 points - The response does not relate to the user's question at all. \nClarity: 0 points - The response is not clear as it does not provide any information. \nCompleteness: 0 points - The response does not address the question in any way. \nAccuracy: 0 points - There is no factual information provided, making it impossible to assess accuracy. \nUtility: 0 points - The response does not meet the user's needs as it does not provide any relevant information or context. ",
-                "RQS_human": "0"
+                "RQS_human_avg": "0"
             },
             {
                 "isuser": true,
@@ -3053,7 +3023,7 @@
                 "predict_sql": "SELECT count(*) from matches where loser_rank_points > 3500  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -3069,7 +3039,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "0",
                 "RQS_Rationale": "The system response does not provide any information or context related to the user's question about 'loser_id'. It fails to address the question, making it unanswerable under the existing conditions. \n\nRelevance: 0 points - The response is completely irrelevant as it does not relate to the user's question. \nClarity: 0 points - The response is incomprehensible since it does not contain any information. \nCompleteness: 0 points - The response does not address the question at all. \nAccuracy: 0 points - There is no factual information provided, so it cannot be accurate. \nUtility: 0 points - The response does not meet the user's needs or provide any context. \n\nTotal Score: 0 points.",
-                "RQS_human": "0"
+                "RQS_human_avg": "0"
             },
             {
                 "isuser": true,
@@ -3099,7 +3069,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 114
@@ -3163,7 +3133,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -3207,7 +3177,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 57
@@ -3228,7 +3198,7 @@
                 "predict_sql": "SELECT COUNT(*) FROM shop",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -3286,7 +3256,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 65
@@ -3307,7 +3277,7 @@
                 "predict_sql": "SELECT  c.Continent,  GROUP_CONCAT(DISTINCT cn.Make) AS Car_NamesFROM continents AS cJOIN countries AS co  ON c.ContId = co.ContinentJOIN car_makers AS cm  ON co.CountryId = cm.CountryJOIN car_names AS cn  ON cm.Id = cn.MakeIdGROUP BY  c.Continent",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -3336,7 +3306,7 @@
                 "predict_sql": "SELECT T3.Maker, T2.CountryNameFROM continents AS T1JOIN countries AS T2 ON T1.ContId = T2.ContinentJOIN car_makers AS T3 ON T2.CountryId = T3.CountryWHERE T1.Continent = 'asia'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -3408,7 +3378,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 145
@@ -3444,7 +3414,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity regarding Kyle's presence in the database. Clarity: 2 points - The response is clear and easy to understand, stating that the database does not contain information about Kyle. Completeness: 1 point - While the response addresses the ambiguity, it does not offer to clarify or ask for more information about what the user is looking for regarding Kyle. Accuracy: 2 points - The response is factually accurate, as there is no mention of Kyle in the database. Utility: 1 point - The response somewhat meets the user's needs by clarifying the ambiguity but does not provide further assistance or options for the user to clarify their request. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             },
             {
                 "isuser": true,
@@ -3530,7 +3500,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's statement and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - While the response is polite and offers help, it does not fully address the user's statement, which was a simple acknowledgment. Accuracy: 2 points - The response is accurate and does not contain any incorrect information. Utility: 1 point - The response somewhat meets the user's needs by offering further assistance, but it does not provide any additional context or information related to the user's statement. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 10
             }
         ],
         "id": 138
@@ -3566,7 +3536,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the user's question about the number of likes for each high schooler. Clarity: 2 points - The response is clear and easy to understand, explaining why the question cannot be answered. Completeness: 2 points - The response thoroughly addresses the question by explaining the limitations of the database. Accuracy: 2 points - The response is completely accurate in stating that the database does not provide the necessary information. Utility: 2 points - The response meets the user's needs by clarifying the ambiguity in the question and explaining the context of the database's limitations. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -3582,7 +3552,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the user's question about the greatest number of likes. It correctly identifies that the database lacks the necessary information to answer the question. Clarity: 2 points - The response is very clear and easy to understand, explaining why the question cannot be answered. Completeness: 2 points - The response thoroughly addresses the question by explaining the limitations of the database schema. Accuracy: 2 points - The response is completely accurate in stating that the Likes table does not provide the needed information. Utility: 2 points - The response excellently meets the user's needs by clearly explaining the context and limitations of the database regarding the question asked.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -3618,7 +3588,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -3690,7 +3660,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 66
@@ -3782,7 +3752,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 129
@@ -3818,7 +3788,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 0,
                 "RQS_Rationale": "Relevance: 0 points - The response does not provide any relevant information regarding the country codes that do not speak English and whose government forms are not Republic. Clarity: 0 points - The response is not clear as it does not address the user's question at all. Completeness: 0 points - The response does not cover any aspect of the question. Accuracy: 0 points - The response does not contain any factual information related to the question. Utility: 0 points - The response does not meet the user's needs or provide any context. Overall, the response fails to address the user's question, making it unanswerable under the existing conditions.",
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -3867,7 +3837,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 82
@@ -3922,7 +3892,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -3938,7 +3908,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's sentiment about dogs and emphasizes the importance of giving them loving homes. Clarity: 2 points - The response is very clear and easy to understand, conveying a positive message. Completeness: 2 points - The response thoroughly addresses the user's comment about abandoned dogs and expresses agreement. Accuracy: 2 points - The response is completely accurate in its sentiment and message. Utility: 2 points - The response excellently meets the user's needs by providing a supportive and empathetic reply. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 139
@@ -3960,7 +3930,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 0,
                 "RQS_Rationale": "The system response does not provide any information or calculation regarding the average age of the losers from all matches. It fails to address the user's question, making it unanswerable under the existing conditions. \n\nRelevance: 0 points - The response is completely irrelevant as it does not relate to the user's question about the average age of losers. \nClarity: 0 points - The response is incomprehensible as it does not contain any information. \nCompleteness: 0 points - The response does not address the question at all. \nAccuracy: 0 points - The response contains no information, thus cannot be accurate. \nUtility: 0 points - The response does not meet the user's needs or provide any context. ",
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -4018,7 +3988,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 18
@@ -4039,7 +4009,7 @@
                 "predict_sql": "SELECT Weight FROM cars_data WHERE Id = 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -4054,7 +4024,7 @@
                 "predict_sql": "SELECT Weight FROM cars_data WHERE Id = 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -4069,7 +4039,7 @@
                 "predict_sql": "SELECT DISTINCT T3.Year FROM car_names AS T1 JOIN model_list AS T2 ON T1.Make = T2.Model JOIN cars_data AS T3 ON T2.ModelId = T3.Id WHERE T1.Make = 'buick' ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -4084,7 +4054,7 @@
                 "predict_sql": "SELECT DISTINCT T3.Year FROM car_names AS T1 JOIN model_list AS T2 ON T1.MakeId = T2.Maker JOIN cars_data AS T3 ON T3.Id = T2.ModelId WHERE T1.Make = 'buick' ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -4128,7 +4098,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 26
@@ -4206,7 +4176,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's gratitude. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of thanks. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response meets the user's needs by acknowledging their thanks appropriately. Total Score: 10 points for a direct greeting alone.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 91
@@ -4270,7 +4240,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 98
@@ -4334,7 +4304,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the user's question about document archiving and accessibility. Clarity: 2 points - The response is very clear and easy to understand, providing a straightforward explanation of why the question cannot be answered. Completeness: 2 points - The response thoroughly addresses the question by explaining the limitations of the database schema in relation to the user's inquiry. Accuracy: 2 points - The response is completely accurate, correctly stating that the database does not provide the necessary information. Utility: 2 points - The response excellently meets the user's needs by clearly explaining the context of the question and why it cannot be answered with the given information.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 1
@@ -4355,7 +4325,7 @@
                 "predict_sql": "SELECT * FROM Professionals WHERE state = 'Indiana'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -4399,7 +4369,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - While the response is polite, it does not fully address the user's implied farewell, which could have been acknowledged more directly. Accuracy: 2 points - The response is accurate and does not contain any incorrect information. Utility: 1 point - The response somewhat meets the user's needs by offering further assistance but does not provide a clear closure to the conversation. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 10
             }
         ],
         "id": 83
@@ -4421,7 +4391,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 0,
                 "RQS_Rationale": "The system response does not provide an answer to the user's question about the country with the shortest life expectancy in Asia. Therefore, it is classified as unanswerable. \n\nRelevance: 0 points - The response does not address the question at all. \nClarity: 0 points - The response is incomprehensible as it does not provide any information. \nCompleteness: 0 points - The response does not cover any aspects of the question. \nAccuracy: 0 points - The response contains no information, thus cannot be accurate. \nUtility: 0 points - The response does not meet the user's needs or provide any context. \n\nTotal Score: 0 points.",
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -4436,7 +4406,7 @@
                 "predict_sql": "SELECT Name FROM country WHERE Continent  =  \"Africa\" ORDER BY LifeExpectancy LIMIT 1  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": false,
@@ -4499,7 +4469,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -4515,7 +4485,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's input and offers to assist further. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's input by inviting further questions. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response excellently meets the user's needs by providing a polite closure and inviting further interaction. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 58
@@ -4579,7 +4549,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 116
@@ -4643,7 +4613,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 106
@@ -4735,7 +4705,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 50
@@ -4770,7 +4740,7 @@
                 "predict_sql": "SELECT degree_summary_name FROM Degree_Programs WHERE degree_program_id = 9 ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -4861,7 +4831,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 123
@@ -4911,7 +4881,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 27
@@ -4946,7 +4916,7 @@
                 "predict_sql": "SELECT DISTINCT p.professional_id, p.first_name, t.treatment_type_codeFROM Professionals pJOIN Treatments t ON p.professional_id = t.professional_id",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -4990,7 +4960,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 146
@@ -5026,7 +4996,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question regarding 'document text' and clarifies that the database contains paragraph text. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the ambiguity. Completeness: 1 point - While the response addresses the ambiguity, it could have provided examples of what 'document text' might refer to, such as asking if the user meant the text of all paragraphs in a document. Accuracy: 2 points - The response is completely accurate in stating that the database contains paragraph text and not document text. Utility: 1 point - The response somewhat meets the user's needs by explaining the ambiguity but does not provide further guidance on how to clarify their request. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             },
             {
                 "isuser": true,
@@ -5056,7 +5026,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's farewell. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response thoroughly addresses the user's farewell without missing any details. Accuracy: 2 points - The response is completely accurate as it appropriately responds to the user's goodbye. Utility: 2 points - The response excellently meets the user's needs by providing a polite farewell. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 99
@@ -5092,7 +5062,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -5136,7 +5106,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -5152,7 +5122,7 @@
                 "predict_type": "improper",
                 "RQS": 7,
                 "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it acknowledges the user's statement but does not address the user's sentiment of disagreement. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - The response does not fully address the user's implied dissatisfaction and lacks engagement with the user's feelings. Accuracy: 2 points - The response is accurate in its content but does not align with the user's sentiment. Utility: 1 point - The response somewhat meets the user's needs by offering assistance but fails to engage with the user's expressed feelings. Total Score: 7 points.",
-                "RQS_human": 7
+                "RQS_human_avg": 8
             }
         ],
         "id": 124
@@ -5173,7 +5143,7 @@
                 "predict_sql": "SELECT COUNT(DISTINCT course_id) FROM Student_Enrolment_Courses",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -5217,7 +5187,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it directly addresses the user's question about predicting student success. Clarity: 2 points - The response is very clear and easy to understand, explaining why the question cannot be answered. Completeness: 2 points - The response thoroughly addresses all aspects of the question, explaining the lack of necessary data for making such predictions. Accuracy: 2 points - The response is completely accurate, stating that the current data does not allow for predictions about future success. Utility: 2 points - The response excellently meets the user's needs by clearly explaining the limitations of the available data and the complexity of predicting success. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -5233,7 +5203,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 12
@@ -5283,7 +5253,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 107
@@ -5333,7 +5303,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question about the differences between Dutch and Papiamento speaking countries. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the need for clarification. Completeness: 1 point - While the response identifies the ambiguity, it does not explore any specific aspects of the differences that could have been mentioned, such as the number of countries or population percentages. Accuracy: 2 points - The response is completely accurate in stating that the question is ambiguous and requires clarification. Utility: 1 point - The response somewhat meets the user's needs by pointing out the ambiguity but does not provide any additional context or examples that could help the user refine their question. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             },
             {
                 "isuser": true,
@@ -5348,7 +5318,7 @@
                 "predict_sql": "SELECT   (    SELECT       AVG(Percentage)     FROM countrylanguage     WHERE Language = 'Dutch'  ) - (    SELECT       AVG(Percentage)     FROM countrylanguage     WHERE Language = 'Papiamento'  ) AS difference",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -5378,7 +5348,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 42
@@ -5399,7 +5369,7 @@
                 "predict_sql": "SELECT S.Fname, S.LnameFROM Student AS SJOIN Has_Pet AS HP ON S.StuID = HP.StuIDJOIN Pets AS P ON HP.PetID = P.PetIDWHERE P.PetType = 'cat'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -5471,7 +5441,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 67
@@ -5535,7 +5505,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of gratitude and invites further questions. Accuracy: 2 points - The response is accurate and does not contain any incorrect information. Utility: 2 points - The response meets the user's needs by providing a polite acknowledgment and an invitation for more questions. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 34
@@ -5585,7 +5555,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 9,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it addresses the ambiguity in the user's request by asking for clarification on which address is needed. Clarity: 2 points - The response is clear and easy to understand, effectively communicating the need for clarification. Completeness: 1 point - While the response addresses the ambiguity, it does not provide any information about the last name or address, which was part of the user's request. Accuracy: 2 points - The response is accurate in its request for clarification. Utility: 2 points - The response meets the user's needs by clarifying the ambiguity in the question. Total Score: 9 points.",
-                "RQS_human": 9
+                "RQS_human_avg": 9
             },
             {
                 "isuser": true,
@@ -5629,7 +5599,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the user's request by explaining the limitations of the AI in sending emails. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the AI's capabilities. Completeness: 1 point - While the response explains that the AI cannot send emails, it lacks an alternative suggestion or a way for the user to proceed, such as providing an email address. Accuracy: 2 points - The information provided is accurate regarding the AI's capabilities. Utility: 1 point - The response somewhat meets the user's needs by clarifying the AI's limitations but does not provide a practical solution or alternative for the user to contact the person. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             }
         ],
         "id": 2
@@ -5693,7 +5663,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 28
@@ -5756,7 +5726,7 @@
                 "predict_sql": "SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  \"Aruba\" AND T2.IsOfficial  =  \"T\" ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -5842,7 +5812,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -5858,7 +5828,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's statement and provides a polite farewell. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response thoroughly addresses the user's comment by providing a closing remark. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response excellently meets the user's needs by providing a friendly and appropriate conclusion to the interaction.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 75
@@ -5935,7 +5905,7 @@
                 "predict_sql": "SELECT * FROM singer WHERE Birth_Year BETWEEN 1945 AND 1955  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -6049,7 +6019,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 140
@@ -6070,7 +6040,7 @@
                 "predict_sql": "SELECT DestAirport FROM flights WHERE Airline = (SELECT uid FROM airlines WHERE Airline = 'United Airlines')",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -6113,7 +6083,7 @@
                 "predict_sql": "SELECT uid FROM airlines WHERE Airline = 'Delta Airlines' ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -6143,7 +6113,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 117
@@ -6212,7 +6182,7 @@
                 "predict_sql": "SELECT *FROM Dogs",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -6270,7 +6240,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 8,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             },
             {
                 "isuser": true,
@@ -6285,7 +6255,7 @@
                 "predict_sql": "SELECT  T.treatment_id,  T.dog_id,  T.professional_id,  T.treatment_type_code,  T.date_of_treatment,  T.cost_of_treatment,  TT.treatment_type_description,  P.first_name AS professional_first_name,  P.last_name AS professional_last_name,  D.name AS dog_nameFROM Treatments AS TJOIN Treatment_Types AS TT  ON T.treatment_type_code = TT.treatment_type_codeJOIN Professionals AS P  ON T.professional_id = P.professional_idJOIN Dogs AS D  ON T.dog_id = D.dog_id",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -6321,7 +6291,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it correctly identifies that the user's statement is not a question and prompts for a question that can be answered using the database schema. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating that the user needs to provide a question. Completeness: 2 points - The response thoroughly addresses the user's statement by indicating that it is not a question and requesting a valid question. Accuracy: 2 points - The response is completely accurate in its assessment of the user's input. Utility: 2 points - The response excellently meets the user's needs by clarifying the requirement for a question that can be answered with the database schema. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": false,
@@ -6388,7 +6358,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 84
@@ -6424,7 +6394,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -6440,7 +6410,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -6470,7 +6440,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's gratitude. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of thanks. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response meets the user's needs by providing a polite acknowledgment of their thanks. Total Score: 10 points, as the response is appropriate for a direct greeting.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 130
@@ -6534,7 +6504,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 118
@@ -6598,7 +6568,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 13
@@ -6695,7 +6665,7 @@
                 "predict_sql": "SELECT p.NameFROM people pJOIN poker_player pp ON p.People_ID = pp.People_IDWHERE pp.Best_Finish = 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -6753,7 +6723,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 59
@@ -6803,7 +6773,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the user's question about the theme of Balmoor, indicating that the information is not available in the database. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating that the theme of stadiums is not included in the database. Completeness: 2 points - The response thoroughly addresses the question by explaining the limitation of the database regarding stadium themes. Accuracy: 2 points - The response is completely accurate, as it correctly states that the database does not contain the requested information. Utility: 2 points - The response excellently meets the user's needs by clearly explaining why the question cannot be answered based on the available data.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -6819,7 +6789,7 @@
                 "predict_type": "improper",
                 "RQS": 7,
                 "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it acknowledges the user's comment but does not specifically address the theme mentioned. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - The response does not fully address the user's comment about the theme, lacking specific details. Accuracy: 2 points - The response does not contain any factual inaccuracies. Utility: 1 point - The response somewhat meets the user's needs by acknowledging their comment but does not provide any additional context or information about the theme. Total Score: 7 points.",
-                "RQS_human": 7
+                "RQS_human_avg": 6
             }
         ],
         "id": 3
@@ -6883,7 +6853,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -6899,7 +6869,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's statement and offers further assistance. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 1 point - While the response is polite and acknowledges the user's statement, it could have been more concise by simply saying goodbye. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 1 point - The response somewhat meets the user's needs by offering further assistance, but it could have been more straightforward given the user's indication that they have no further questions. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 8
             }
         ],
         "id": 131
@@ -6991,7 +6961,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 51
@@ -7040,7 +7010,7 @@
                 "predict_sql": "SELECT * FROM Highschooler WHERE ID = 1689 ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -7070,7 +7040,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the user's question about the outgoing student and explains the lack of information in the database. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the reason for the unanswerable status. Completeness: 2 points - The response thoroughly addresses the question by explaining the ambiguity of 'outgoing' and the absence of relevant data in the schema. Accuracy: 2 points - The response is completely accurate, correctly stating that the database does not contain information about outgoingness. Utility: 2 points - The response excellently meets the user's needs by clarifying the ambiguity and providing context regarding the limitations of the database.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 147
@@ -7091,7 +7061,7 @@
                 "predict_sql": "SELECT email_addressFROM OwnersWHERE owner_id = 3",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -7163,7 +7133,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 141
@@ -7185,7 +7155,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's greeting and prompts for a question related to the database. Clarity: 2 points - The response is clear and easy to understand, effectively communicating the need for a question. Completeness: 2 points - The response thoroughly addresses the user's greeting by inviting them to ask a question. Accuracy: 2 points - The response is factually accurate in its request for a question. Utility: 2 points - The response meets the user's needs by encouraging further interaction and clarifying the context of the database. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -7214,7 +7184,7 @@
                 "predict_sql": "SELECT DISTINCT T1.Airline FROM airlines AS T1 JOIN flights AS T2 ON T1.uid = T2.Airline WHERE T2.DestAirport IN (SELECT AirportCode FROM airports WHERE City = 'London') ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -7244,7 +7214,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 14
@@ -7265,7 +7235,7 @@
                 "predict_sql": "SELECT DISTINCT s.student_idFROM Students AS sJOIN Student_Enrolment AS se ON s.student_id = se.student_idGROUP BY s.student_idHAVING COUNT(DISTINCT se.degree_program_id) = 2",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -7337,7 +7307,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 68
@@ -7386,7 +7356,7 @@
                 "predict_sql": "SELECT SourceAirport FROM flights WHERE DestAirport  =  \"ASY\"  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -7444,7 +7414,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's gratitude. Clarity: 2 points - The response is clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of thanks. Accuracy: 2 points - The response is accurate and does not contain any incorrect information. Utility: 2 points - The response meets the user's needs by providing a polite acknowledgment. Total Score: 10 points for a direct greeting alone.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 119
@@ -7466,7 +7436,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 7,
                 "RQS_Rationale": "{'Relevance': 1, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human": 7
+                "RQS_human_avg": 7
             },
             {
                 "isuser": true,
@@ -7524,7 +7494,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 125
@@ -7588,7 +7558,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 20
@@ -7623,7 +7593,7 @@
                 "predict_sql": "SELECT T2.winner_rank FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id ORDER BY T2.winner_age LIMIT 3 ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -7672,7 +7642,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 76
@@ -7764,7 +7734,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 100
@@ -7828,7 +7798,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's farewell. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response thoroughly addresses the user's farewell without missing any details. Accuracy: 2 points - The response is completely accurate as it reflects a polite farewell. Utility: 2 points - The response excellently meets the user's needs by providing a friendly and appropriate closing. Total Score: 10 points for a direct greeting and farewell.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 85
@@ -7877,7 +7847,7 @@
                 "predict_sql": "SELECT Maker FROM car_makers WHERE Id = 2",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -7921,7 +7891,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 93
@@ -7985,7 +7955,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -8001,7 +7971,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's statement and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - While the response is polite, it does not fully address the user's implied desire to end the conversation. Accuracy: 2 points - The response is factually accurate and does not contain any errors. Utility: 1 point - The response somewhat meets the user's needs by offering further assistance, but it does not respect the user's indication of wanting to end the conversation. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 9
             }
         ],
         "id": 4
@@ -8036,7 +8006,7 @@
                 "predict_sql": "SELECT AirportCode FROM airports WHERE City = 'Abilene' ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8052,7 +8022,7 @@
                 "predict_type": "improper",
                 "RQS": 9,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's greeting and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - While the response is adequate, it could have included a farewell or acknowledgment of the user's gratitude. Accuracy: 2 points - The response is accurate and does not contain any factual errors. Utility: 2 points - The response meets the user's needs by providing a friendly reply and inviting further questions. Total Score: 9 points.",
-                "RQS_human": 9
+                "RQS_human_avg": 10
             }
         ],
         "id": 15
@@ -8158,7 +8128,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 43
@@ -8193,7 +8163,7 @@
                 "predict_sql": "SELECT p.first_name, p.last_nameFROM players pJOIN rankings r ON p.player_id = r.player_idWHERE r.ranking = 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8223,7 +8193,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's thanks. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of gratitude. Accuracy: 2 points - The response is completely accurate as it correctly acknowledges the user's statement. Utility: 2 points - The response meets the user's needs by providing a polite acknowledgment. Total Score: 10 points, as the response is a direct greeting and adequately addresses the user's input.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 126
@@ -8250,7 +8220,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 7,
                 "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it addresses the ambiguity of the user's input but does not provide a direct answer to any specific question. Clarity: 2 points - The response is clear in stating that the user's input is ambiguous and requests clarification. Completeness: 1 point - The response does not cover the user's input adequately as it does not suggest any specific questions that could be asked. Accuracy: 2 points - The response accurately identifies the ambiguity in the user's question. Utility: 1 point - The response somewhat meets the user's needs by asking for clarification but does not provide any useful information or context. Total Score: 7 points.",
-                "RQS_human": 7
+                "RQS_human_avg": 7
             },
             {
                 "isuser": false,
@@ -8288,7 +8258,7 @@
                 "predict_sql": "SELECT Template_ID FROM Templates WHERE Date_Effective_To > CURRENT_TIMESTAMP",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8317,7 +8287,7 @@
                 "predict_sql": "SELECT COUNT(DISTINCT Template_ID) FROM Documents  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8361,7 +8331,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 86
@@ -8382,7 +8352,7 @@
                 "predict_sql": "SELECT  MakeFROM car_namesJOIN cars_data  ON car_names.MakeId = cars_data.IdORDER BY  Horsepower",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8397,7 +8367,7 @@
                 "predict_sql": "SELECT Id FROM cars_data ORDER BY Horsepower ASC LIMIT 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8455,7 +8425,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 101
@@ -8490,7 +8460,7 @@
                 "predict_sql": "SELECT age FROM Dogs ORDER BY age LIMIT 1 ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8533,7 +8503,7 @@
                 "predict_sql": "SELECT avg(age) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8563,7 +8533,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 60
@@ -8584,7 +8554,7 @@
                 "predict_sql": "SELECT DISTINCT T2.Language FROM countrylanguage AS T1 INNER JOIN country AS T2 ON T1.CountryCode = T2.Code WHERE T1.IsOfficial = 'T' ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8674,9 +8644,9 @@
                 "predict": "You're welcome! Let me know if you have any other questions. 😊 \n",
                 "predict_sql": "",
                 "predict_type": "improper",
-                "RQS": 8,
-                "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - While the response is polite, it does not provide any additional information or context that could enhance the interaction. Accuracy: 2 points - The response is accurate in its acknowledgment of the user's gratitude. Utility: 1 point - The response somewhat meets the user's needs by offering further assistance but does not provide any additional value or context. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS": 10,
+                "RQS_Rationale": "",
+                "RQS_human_avg": 10
             }
         ],
         "id": 94
@@ -8712,7 +8682,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 7,
                 "RQS_Rationale": "{'Relevance': 1, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human": 7
+                "RQS_human_avg": 7
             },
             {
                 "isuser": true,
@@ -8728,7 +8698,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -8744,7 +8714,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -8759,7 +8729,7 @@
                 "predict_sql": "SELECT AVG(Num_of_Ticket) FROM visit AS t1 JOIN museum AS t2 ON t1.Museum_ID  =  t2.Museum_ID WHERE t2.Name  =  \"Plaza Museum\"  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8803,7 +8773,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 21
@@ -8880,7 +8850,7 @@
                 "predict_sql": "SELECT other_details FROM Departments WHERE department_name LIKE '%history%'  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8924,7 +8894,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 108
@@ -8945,7 +8915,7 @@
                 "predict_sql": "SELECT contestant_name FROM CONTESTANTS",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8960,7 +8930,7 @@
                 "predict_sql": "SELECT contestant_name FROM CONTESTANTS",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -8990,7 +8960,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -9006,7 +8976,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it directly addresses the user's question about the number of female contestants by stating that the information is not available in the database. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the lack of information. Completeness: 2 points - The response thoroughly addresses the question by explaining that the database does not contain gender information, which is essential to answering the question. Accuracy: 2 points - The response is completely accurate as it correctly identifies the limitation of the database regarding gender information. Utility: 2 points - The response excellently meets the user's needs by clearly explaining why the question cannot be answered based on the available data.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -9021,7 +8991,7 @@
                 "predict_sql": "SELECT contestant_name FROM CONTESTANTS ORDER BY contestant_number LIMIT 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -9065,7 +9035,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 29
@@ -9185,7 +9155,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 36
@@ -9235,7 +9205,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 6,
                 "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it attempts to clarify the user's question but does not provide a direct answer to the query about Petra Kvitova's ID. Clarity: 1 point - The response is somewhat clear but introduces ambiguity by asking if the user meant 'loser id' without explicitly stating that it refers to Petra Kvitova. Completeness: 1 point - The response does not fully address the user's question about the ID of Petra Kvitova, as it does not provide the actual ID or clarify the context sufficiently. Accuracy: 2 points - The response does not contain any factually incorrect information; it simply seeks clarification. Utility: 1 point - The response somewhat meets the user's needs by attempting to clarify the ambiguity but does not provide the information the user is looking for. Total Score: 6 points.",
-                "RQS_human": 6
+                "RQS_human_avg": 6
             },
             {
                 "isuser": true,
@@ -9251,7 +9221,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 0,
                 "RQS_Rationale": "The system response does not provide any information or answer to the user's question. It is unclear what the user is asking, and without context or content in the response, it cannot be evaluated for relevance, clarity, completeness, or accuracy. Therefore, it is classified as unanswerable since it does not meet the criteria for a proper response.",
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -9267,7 +9237,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 142
@@ -9330,7 +9300,7 @@
                 "predict_sql": "SELECT o.Orchestra, p.DateFROM orchestra oJOIN performance p ON o.Orchestra_ID = p.Orchestra_IDORDER BY p.Date",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -9388,7 +9358,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 69
@@ -9437,7 +9407,7 @@
                 "predict_sql": "SELECT tourney_name FROM matches ORDER BY minutes DESC LIMIT 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -9453,7 +9423,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 133
@@ -9531,7 +9501,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 52
@@ -9609,7 +9579,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 22
@@ -9644,7 +9614,7 @@
                 "predict_sql": "SELECT MIN(age) FROM Dogs",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -9687,7 +9657,7 @@
                 "predict_sql": "SELECT avg(age) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -9717,7 +9687,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 61
@@ -9767,7 +9737,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it directly addresses the user's question about the absence of data regarding who recorded the transcripts. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the lack of information. Completeness: 2 points - The response thoroughly addresses the question by stating that the database schema does not include the requested information. Accuracy: 2 points - The response is completely accurate, as it correctly identifies the limitations of the database schema. Utility: 2 points - The response excellently meets the user's needs by clearly explaining the context of the question and the limitations of the data available.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -9783,7 +9753,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's thanks. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of gratitude. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response meets the user's needs by providing a polite acknowledgment. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 102
@@ -9804,7 +9774,7 @@
                 "predict_sql": "SELECT COUNT(*)FROM visitor",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -9876,7 +9846,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 127
@@ -9954,7 +9924,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 5
@@ -9990,7 +9960,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -10020,7 +9990,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -10048,9 +10018,9 @@
                 "predict": "You're welcome! Is there anything else I can help you with? \n",
                 "predict_sql": "",
                 "predict_type": "improper",
-                "RQS": 8,
-                "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - While the response is polite and offers help, it does not provide any additional information or context that could enhance the interaction. Accuracy: 2 points - The response is accurate in its acknowledgment of the user's gratitude. Utility: 1 point - The response somewhat meets the user's needs by offering further assistance, but it lacks depth or additional context that could be useful. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS": 9,
+                "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 2 point. Accuracy: 2 points - The response is accurate in its acknowledgment of the user's gratitude. Utility: 1 point - The response somewhat meets the user's needs by offering further assistance, but it lacks depth or additional context that could be useful. Total Score: 8 points.",
+                "RQS_human_avg": 10
             }
         ],
         "id": 30
@@ -10072,7 +10042,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it directly addresses the user's question about the number of graduates by stating that the database does not contain information about graduation status. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the lack of information. Completeness: 2 points - The response thoroughly addresses the question by explaining that the information needed to answer it is not available. Accuracy: 2 points - The response is completely accurate as it correctly identifies the limitation of the database. Utility: 2 points - The response excellently meets the user's needs by clearly explaining why the question cannot be answered based on the available data.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -10101,7 +10071,7 @@
                 "predict_sql": "SELECT first_name, last_name, date_leftFROM StudentsWHERE date_left IS NOT NULLORDER BY date_left ASCLIMIT 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -10131,7 +10101,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 37
@@ -10195,7 +10165,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 70
@@ -10217,7 +10187,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -10232,7 +10202,7 @@
                 "predict_sql": "SELECT c.ModelFROM car_names cJOIN cars_data cd ON c.MakeId = cd.IdWHERE c.Make = 'volvo'ORDER BY cd.Accelerate ASCLIMIT 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -10276,7 +10246,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 71
@@ -10353,7 +10323,7 @@
                 "predict_sql": "SELECT first_name, last_name FROM professionals WHERE state = (SELECT state FROM professionals WHERE first_name = 'Taryn')  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -10397,7 +10367,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 77
@@ -10432,7 +10402,7 @@
                 "predict_sql": "SELECT COUNT(DISTINCT O.Orchestra_ID)FROM orchestra AS OLEFT JOIN performance AS P ON O.Orchestra_ID = P.Orchestra_IDWHERE P.Orchestra_ID IS NULL",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -10476,7 +10446,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 53
@@ -10540,7 +10510,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's gratitude and offers further assistance. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response thoroughly addresses the user's expression of thanks and invites further questions. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response excellently meets the user's needs by providing a polite acknowledgment and an invitation for more questions. Total Score: 10 points for a direct greeting and engagement.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 143
@@ -10575,7 +10545,7 @@
                 "predict_sql": "SELECT avg(grade) FROM Highschooler  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -10619,7 +10589,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 38
@@ -10696,7 +10666,7 @@
                 "predict_sql": "SELECT SUM(T1.Population * T2.Percentage / 100) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Name = 'Canada' AND T2.Language = 'Chinese'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -10754,7 +10724,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 44
@@ -10776,7 +10746,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 9,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question about horsepower. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the need for more context. Completeness: 1 point - While the response identifies the ambiguity, it could have provided examples of what additional information is needed. Accuracy: 2 points - The response is completely accurate in stating that the question is ambiguous. Utility: 2 points - The response excellently meets the user's needs by explaining the ambiguity and prompting for clarification. Total Score: 9.",
-                "RQS_human": 9
+                "RQS_human_avg": 9
             },
             {
                 "isuser": true,
@@ -10820,7 +10790,7 @@
                 "predict_type": "ambiguous",
                 "RQS": 7,
                 "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it attempts to clarify the user's question but does not directly address the inquiry about the number of cylinders. Clarity: 2 points - The response is clear and easy to understand, asking for clarification in a straightforward manner. Completeness: 1 point - The response covers the need for clarification but does not provide any information about the cylinders themselves. Accuracy: 2 points - The response is factually accurate in its request for clarification. Utility: 1 point - The response somewhat meets the user's needs by seeking clarification but does not provide any useful information regarding the original question about cylinders. Total Score: 7 points.",
-                "RQS_human": 7
+                "RQS_human_avg": 7
             }
         ],
         "id": 6
@@ -10897,7 +10867,7 @@
                 "predict_sql": "SELECT grade FROM Highschooler WHERE name = 'Gabriel'",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -10955,7 +10925,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 134
@@ -10976,7 +10946,7 @@
                 "predict_sql": "SELECT DISTINCT semester_name FROM Semesters",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -11034,7 +11004,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 62
@@ -11097,7 +11067,7 @@
                 "predict_sql": "SELECT Region ,  GovernmentForm FROM country GROUP BY GovernmentForm HAVING avg(LifeExpectancy)  >  72  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -11126,7 +11096,7 @@
                 "predict_sql": "SELECT GovernmentForm, AVG(LifeExpectancy) AS AverageLifeExpectancy, SUM(Population) AS TotalPopulationFROM countryGROUP BY GovernmentFormHAVING AVG(LifeExpectancy) > 72ORDER BY AverageLifeExpectancy DESC",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -11156,7 +11126,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 95
@@ -11220,7 +11190,7 @@
                 "predict_type": "improper",
                 "RQS": 7,
                 "RQS_Rationale": "Relevance: 1 point - The response is somewhat relevant as it acknowledges the user's gratitude but does not directly address the user's statement. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - The response does not fully address the user's statement, as it does not acknowledge the farewell aspect. Accuracy: 2 points - The response is accurate in its content. Utility: 1 point - The response somewhat meets the user's needs but does not provide a meaningful continuation of the conversation. Total Score: 7 points.",
-                "RQS_human": 7
+                "RQS_human_avg": 7
             }
         ],
         "id": 109
@@ -11283,7 +11253,7 @@
                 "predict_sql": "SELECT GNP FROM country WHERE Code = 'ABW' ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -11327,7 +11297,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 87
@@ -11405,7 +11375,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response thoroughly addresses the user's expression of gratitude and invites further questions. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response excellently meets the user's needs by providing a friendly and open-ended invitation for more questions. Total Score: 10 points for a direct greeting and positive engagement.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 54
@@ -11469,7 +11439,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 31
@@ -11533,7 +11503,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it correctly identifies that the question cannot be answered based on the provided database information. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the limitations of the database. Completeness: 2 points - The response thoroughly addresses the question by explaining that the database lacks the necessary information. Accuracy: 2 points - The response is completely accurate in stating that the meaning of 'Abu Dhabi' is not found in the database. Utility: 2 points - The response excellently meets the user's needs by clarifying the context of the question and the limitations of the database.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 7
@@ -11568,7 +11538,7 @@
                 "predict_sql": "SELECT id FROM death ORDER BY killed DESC LIMIT 1 ```",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -11611,7 +11581,7 @@
                 "predict_sql": "SELECT * FROM death WHERE note LIKE '%East%'  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -11641,7 +11611,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 78
@@ -11705,7 +11675,7 @@
                 "predict_type": "improper",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's expression of thanks and invites further questions. Clarity: 2 points - The response is clear and easy to understand. Completeness: 1 point - While the response invites further questions, it does not provide any additional information or context that could enhance the interaction. Accuracy: 2 points - The response is accurate and does not contain any misleading information. Utility: 1 point - The response somewhat meets the user's needs by inviting further questions but does not provide any additional context or information. Total Score: 8 points.",
-                "RQS_human": 8
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -11721,7 +11691,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's statement and offers a polite follow-up. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's statement by offering to assist further. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response excellently meets the user's needs by providing a polite closure and inviting further questions.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 103
@@ -11785,7 +11755,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 45
@@ -11806,7 +11776,7 @@
                 "predict_sql": "SELECT first_name, last_name FROM Owners WHERE owner_id = 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -11878,7 +11848,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 135
@@ -11942,7 +11912,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 79
@@ -11991,7 +11961,7 @@
                 "predict_sql": "SELECT first_name, last_name FROM players WHERE country_code = 'AHO' ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -12063,7 +12033,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             },
             {
                 "isuser": true,
@@ -12079,7 +12049,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's farewell and reciprocates the sentiment. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response thoroughly addresses the user's statement by wishing them well in return. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response excellently meets the user's needs by providing a friendly and appropriate reply to their farewell. Total Score: 10 points for a direct greeting and positive interaction.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 63
@@ -12171,7 +12141,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 46
@@ -12221,7 +12191,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 7,
                 "RQS_Rationale": "{'Relevance': 1, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}",
-                "RQS_human": 7
+                "RQS_human_avg": 7
             },
             {
                 "isuser": true,
@@ -12250,7 +12220,7 @@
                 "predict_sql": "SELECT size_description FROM Sizes JOIN Breeds ON Sizes.size_code = Breeds.size_code WHERE Breeds.breed_code = 'BUL'  ",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -12280,7 +12250,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is clear and easy to understand. Completeness: 2 points - The response adequately addresses the user's expression of gratitude and invites further questions. Accuracy: 2 points - The response is accurate as it does not contain any incorrect information. Utility: 2 points - The response meets the user's needs by providing a polite acknowledgment and an invitation for more questions. Total Score: 10 points.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 39
@@ -12372,7 +12342,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it acknowledges the user's thanks and offers further assistance. Clarity: 2 points - The response is very clear and easy to understand. Completeness: 2 points - The response thoroughly addresses the user's expression of gratitude and offers to help further. Accuracy: 2 points - The response is completely accurate as it does not contain any incorrect information. Utility: 2 points - The response excellently meets the user's needs by acknowledging their thanks and inviting further questions. Total Score: 10 points, as the response is appropriate for a non-SQL based user question.",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 47
@@ -12393,7 +12363,7 @@
                 "predict_sql": "SELECT first_name, last_name, zip_codeFROM Owners",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -12436,7 +12406,7 @@
                 "predict_sql": "SELECT O.first_name, O.last_name, O.owner_id, SUM(T.cost_of_treatment) AS total_costFROM Owners AS OJOIN Dogs AS D ON O.owner_id = D.owner_idJOIN Treatments AS T ON D.dog_id = T.dog_idGROUP BY O.owner_id, O.first_name, O.last_nameORDER BY total_cost DESCLIMIT 1",
                 "predict_type": "answerable",
                 "RQS": 0,
-                "RQS_human": 0
+                "RQS_human_avg": 0
             },
             {
                 "isuser": true,
@@ -12494,7 +12464,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 55
@@ -12586,7 +12556,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 110
@@ -12664,7 +12634,7 @@
                 "predict_type": "improper",
                 "RQS": 10,
                 "RQS_Rationale": "Direct greeting",
-                "RQS_human": 10
+                "RQS_human_avg": 10
             }
         ],
         "id": 111

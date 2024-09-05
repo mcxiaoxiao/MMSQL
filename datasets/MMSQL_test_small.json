@@ -7345,16 +7345,6 @@
     "db_name": "employee_hire_evaluation",
     "turns": [
       {
-        "isuser": false,
-        "text": "did you mean the total amount of bonuses that employee got?",
-        "query": ""
-      },
-      {
-        "isuser": true,
-        "text": "yes, thx!",
-        "type": "improper"
-      },
-      {
         "isuser": true,
         "text": "how old is George Chuter?",
         "type": "answerable"
