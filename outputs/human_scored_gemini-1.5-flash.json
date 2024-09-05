@@ -328,7 +328,7 @@
                 "query": "SELECT avg(loser_age)  FROM matches",
                 "predict": "",
                 "predict_sql": "",
-                "predict_type": "unanswerable",
+                "predict_type": "improper",
                 "RQS": "0",
                 "RQS_Rationale": "The system's response is missing, making it impossible to evaluate based on the criteria provided. Without a response, we cannot assess relevance, clarity, completeness, accuracy, or utility. The question asked for the average age of losers from all matches, which requires calculating an average based on data from the 'matches' table. However, without a system response showing how it processed or calculated this average, or even if it did, we cannot determine if the system addressed the question correctly or not. Therefore, the question is unanswerable under the existing conditions of the provided information.",
                 "RQS_human": "0"
@@ -861,7 +861,7 @@
                 "query": "SELECT Code FROM country WHERE GovernmentForm != \"Republic\" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  \"English\"",
                 "predict": "",
                 "predict_sql": "",
-                "predict_type": "unanswerable",
+                "predict_type": "improper",
                 "RQS": "0",
                 "RQS_Rationale": "The system's response is missing, making it impossible to evaluate based on the criteria provided. Without a response, we cannot assess relevance, clarity, completeness, accuracy, or utility. The question posed requires querying a database to identify countries that do not speak English and whose government forms are not Republics. Without a system response, it is unanswerable under the existing conditions.",
                 "RQS_human": "0"
@@ -1442,7 +1442,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "3",
                 "RQS_Rationale": "The system's response indicates that the database does not contain information on 15 owners, which is a misunderstanding or misinterpretation of the user's question. The user's question specifically asks for the name of the owner who owns a dog named 'Evangeline.' The system's response does not address this query but instead comments on the number of owners in the database, which is not directly relevant to the question asked. The response is clear in stating the perceived limitation but is not accurate or complete in addressing the user's actual need. It does not provide utility as it fails to attempt to identify the owner of 'Evangeline' or explain why this cannot be done.",
-                "RQS_human": "3"
+                "RQS_human": "4"
             },
             {
                 "isuser": true,
@@ -2527,7 +2527,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "10",
                 "RQS_Rationale": "The system's response correctly identifies that the database schema does not contain direct information linking the number of deaths to specific battles, making it impossible to answer the user's question based on the provided schema. The response is clear in explaining why the question is unanswerable, and it accurately addresses the limitations of the data structure. The response is highly relevant as it directly addresses the user's query about filtering battles based on death counts and clarifies why this cannot be done. It is also complete in covering the reason for its inability to provide the requested data. The utility of the response is high as it correctly sets the user's expectations about the limitations of the available data.",
-                "RQS_human": "10"
+                "RQS_human": "6"
             },
             {
                 "isuser": true,
@@ -2737,7 +2737,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "10",
                 "RQS_Rationale": "The system's response correctly identifies that the database lacks the necessary information to determine which singer has the 'longest time performing' at the stadiums, as it does not track the duration of performances or the specific dates of each concert. The response is relevant as it directly addresses the limitations of the database in relation to the user's question. It is clear in explaining why the question cannot be answered, using understandable language and logical reasoning. The response is complete in covering the reasons for its unanswerability, and it is accurate in stating that the database does not contain the required data. The utility of the response is high as it clarifies the ambiguity and limitations of the database concerning the user's query.",
-                "RQS_human": "10"
+                "RQS_human": "8"
             },
             {
                 "isuser": true,
@@ -3363,7 +3363,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "9",
                 "RQS_Rationale": "The system response correctly identifies that the database schema does not provide direct information about the number of likes a student receives, which is essential to answer the user's question about the 'greatest number of likes'. The response is clear in stating the limitation of the database schema and the inability to answer the question based on the provided schema. However, the response could have been more helpful by suggesting a possible SQL query to count the likes each student received if the schema supported such a query. This would have increased the utility of the response. The response is accurate in stating that the question is unanswerable with the current schema, and it is clear and complete in its explanation of why the question cannot be answered.",
-                "RQS_human": "9"
+                "RQS_human": "8"
             },
             {
                 "isuser": true,
@@ -4172,9 +4172,9 @@
                 "predict": "The database does not contain information about ticket prices. The query is unanswerable. \n",
                 "predict_sql": "",
                 "predict_type": "unanswerable",
-                "RQS": "10",
+                "RQS": "7",
                 "RQS_Rationale": "The system's response is accurate in stating that the database does not contain information about ticket prices, which directly addresses the user's question about the ticket price at the Plaza Museum. This makes the response relevant as it correctly identifies the limitations of the available data. The clarity of the response is high as it straightforwardly communicates the absence of the required information without any ambiguity. The response is complete in the context of the data provided, as it covers the fact that the necessary information (ticket prices) is not available in the database. The accuracy of the response is also high because it correctly reflects the content and limitations of the database. Finally, the utility of the response is optimal under the circumstances, as it informs the user about the unavailability of the requested information, thereby setting the correct expectations.",
-                "RQS_human": "10"
+                "RQS_human": "6"
             },
             {
                 "isuser": true,
@@ -4296,9 +4296,9 @@
                 "predict": "The database does not contain information about the theme of stadiums. Therefore, this question is **unanswerable**. \n",
                 "predict_sql": "",
                 "predict_type": "unanswerable",
-                "RQS": "10",
+                "RQS": "6",
                 "RQS_Rationale": "The user's question inquires about the theme of 'Balmoor', which is presumably a stadium. However, the database schema provided does not include any information about themes related to stadiums, as themes are associated with concerts in the given schema. The system's response correctly identifies that the database does not contain the requested information, making the question unanswerable with the current data. The response is relevant as it directly addresses the lack of information regarding the theme of stadiums. It is clear and easy to understand, stating the limitation of the database. The response is complete in the context of the database's limitations and is accurate in stating that the database does not contain the requested information. The utility of the response is high as it clarifies why the question cannot be answered and correctly interprets the database schema.",
-                "RQS_human": "10"
+                "RQS_human": "6"
             },
             {
                 "isuser": true,
@@ -4721,7 +4721,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "10",
                 "RQS_Rationale": "The system's response is categorized as 'unanswerable' because the database does not contain any information about an individual named 'Kyle', making it impossible to answer the user's question about friends associated with Kyle. The response is relevant as it directly addresses the absence of 'Kyle' in the database. It is clear and easy to understand, stating the reason why the question cannot be answered. The response is complete in the context of the available data, and it is accurate as it truthfully reflects the database's content. Lastly, the utility is high as it informs the user about the limitation in the data, which is crucial for understanding why the question cannot be answered.",
-                "RQS_human": "10"
+                "RQS_human": "2"
             },
             {
                 "isuser": true,
@@ -5659,7 +5659,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "10",
                 "RQS_Rationale": "The system's response correctly identifies that the database does not contain specific information about the type of stadium, such as whether it is a football stadium or not. This directly addresses the user's query about 'football stadium' by stating the limitations of the available data. The response is clear and accurate in explaining why the question cannot be answered with the current database schema. It is also complete in the sense that it addresses the entirety of the user's question by referencing the database's limitations. The utility of the response is high as it clarifies why the question cannot be answered, thus effectively managing the user's expectations.",
-                "RQS_human": "10"
+                "RQS_human": "4"
             },
             {
                 "isuser": true,
@@ -6859,7 +6859,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "10",
                 "RQS_Rationale": "The system's response correctly identifies the logical impossibility in the user's question, which asks for singers who are simultaneously above age 40 and below age 30. This is a contradiction, making the question unanswerable as stated. The response is clear in pointing out the impossibility, making it easy for the user to understand the issue with their question. It is also complete in the sense that it addresses the core issue without needing to provide additional irrelevant details. The response is accurate as it correctly interprets the logical error in the question. Finally, the utility of the response is high as it directly addresses the user's confusion and clarifies why the question cannot be answered, guiding the user to possibly rephrase or reconsider their query.",
-                "RQS_human": "10"
+                "RQS_human": "6"
             },
             {
                 "isuser": true,
@@ -8246,7 +8246,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "10",
                 "RQS_Rationale": "The system's response correctly identifies that the database does not contain information about a singer named 'Tribal King'. This makes the question unanswerable based on the provided database schema and examples. The response is relevant as it directly addresses the user's query about 'Tribal King'. It is clear and straightforward, stating the absence of the required information in the database. The response is complete in the context of the information available in the database, and it is accurate as it truthfully reflects the database content. The utility of the response is high as it clarifies the limitation of the available data in answering the user's question.",
-                "RQS_human": "10"
+                "RQS_human": "8"
             },
             {
                 "isuser": true,
@@ -8666,7 +8666,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "10",
                 "RQS_Rationale": "The system's response correctly identifies that the database does not contain information about the size of the dog breeds themselves, only the size categories (Small, Medium, Large) assigned to individual dogs. This makes the question about the 'biggest breed' unanswerable with the given data. The response is relevant as it directly addresses the limitation in the data related to the question. It is clear in explaining why the question cannot be answered, and it is accurate in stating that the database does not provide breed size information. The response is complete in the context of the data limitations and is useful in clarifying why the question cannot be answered.",
-                "RQS_human": "10"
+                "RQS_human": "8"
             },
             {
                 "isuser": true,
@@ -10479,7 +10479,7 @@
                 "predict_type": "unanswerable",
                 "RQS": "9",
                 "RQS_Rationale": "The system's response correctly identifies that the database does not contain information about a dog's fatness, which directly addresses the user's question about which dog is 'very very fat'. The response is clear in stating the limitation of the database in relation to the user's query. It is accurate in reflecting the database schema's lack of data on fatness, making it impossible to answer the question as posed. The response is also useful in guiding the user to understand the limitations of the available data. However, it could have been more helpful if it suggested an alternative approach, such as identifying the dog with the highest weight, which is a related concept and data available in the database.",
-                "RQS_human": "9"
+                "RQS_human": "8"
             },
             {
                 "isuser": true,
