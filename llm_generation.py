@@ -13,7 +13,7 @@ Arguments:
 # Import the functions from /tools
 import math
 import os
-from tools.api_request import request_gemini as request_llm
+from tools.api_request import request_gpt as request_llm
 from tools.db_detail import db_getdesc
 from tools.sql_execute import sqlite_execute as execute
 import threading

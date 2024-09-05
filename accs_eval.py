@@ -4,7 +4,7 @@ accs_eval.py
 This script calculates several metrics from the output JSON files, including ACCS, IACCS, EM, QM, and ERROR.
 
 Usage:
-    python accs_eval.py "outputs/rqs_gemini-1-Copy1.5-flash-llm.json"
+    python accs_eval.py "outputs/gpt_gemini-1-Copy1.5-flash-llm.json"
 
 Arguments:
     --input: Path to the input JSON file containing the LLM responses.

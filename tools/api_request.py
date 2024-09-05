@@ -5,7 +5,7 @@ import random
 import google.generativeai as genai
 # Set API key
 OPENAI_API_KEY = 'sk-proj-1JRQ9SkU0gSRKsBoCyD1T3BlbkFJSQ44FoEjAHN05t7FrryD'
-OPENAI_MODEL_NAME = "gpt-4-turbo"
+OPENAI_MODEL_NAME = "gpt-4o-mini"
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 GEMINI_API_KEYS = [
