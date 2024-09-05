@@ -97,7 +97,7 @@ template = template_dict[template_name]
 # 是否使用4bit进行推理，能够节省很多显存，但效果可能会有一定的下降
 load_in_4bit = True
 # 生成超参配置
-max_new_tokens = 500
+max_new_tokens = 2048
 top_p = 0.9
 temperature = 0.0
 repetition_penalty = 1.0
@@ -124,8 +124,11 @@ else:
 def process_messages(messages):
     system_message = messages[0]['content']
     filtered_messages = messages[1:]
+    
     for message in filtered_messages:
-        message['message'] = message.pop('content')
+        print(message)
+        if 'content' in message:
+            message['message'] = message.pop('content')
         
     return system_message, filtered_messages
 
@@ -149,10 +152,6 @@ def request_llm(message):
     response = response.strip().replace(template.stop_word, "").strip()
     
 
-    print("Output：{}".format(response))
+    # print("Output：{}".format(response))
 
-    return response
-
-if __name__ == '__main__':
-    main()
-
+    return "666"

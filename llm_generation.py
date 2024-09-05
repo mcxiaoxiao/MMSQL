@@ -67,8 +67,8 @@ def process_json_part(data, output_file):
                     # print(messages)
                     llm_response = request_llm(messages)
                     # llm record
-                    # print("\nLLM Response:")
-                    # print(llm_response)
+                    print("\nLLM Response:")
+                    print(llm_response)
                     item['turns'][index+1]['predict'] = llm_response
                     # update messages
                     g_ans = ""
