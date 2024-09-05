@@ -93,13 +93,13 @@ Output Format:
     # print(filled_template)
 
     messages = [{"role": "user", "content": filled_template}]
-    max_attempts = 5
+    max_attempts = 10
     attempt = 0
     while attempt < max_attempts:
         llm_response = request_llm(messages)
         print("LLM Response:", llm_response)
         select_pos = llm_response.find('{')
-        colon_pos = llm_response.find('}', select_pos)
+        colon_pos = llm_response.rfind('}')
         if select_pos != -1 and colon_pos != -1:
             llm_response = llm_response[select_pos:colon_pos+1].replace('\n',' ')
             print("formatted json "+llm_response)
@@ -108,14 +108,14 @@ Output Format:
             type_ai = response_data.get("AnswerType", "")
             rqs_ai = response_data.get("Score", 0)
             rationale_ai = response_data.get("Rationale", "")
-            
-            # 检查返回的类型和分数是否符合预期
-            if type_ai in ["improper", "unanswerable", "ambiguous"] and int(rqs_ai) >= 0 and int(rqs_ai) <= 10:
+            rationale_ai = str(rationale_ai)
+
+            if int(rqs_ai) >= 0 and int(rqs_ai) <= 10:
                 return type_ai, rqs_ai, rationale_ai
             else:
                 raise ValueError("Response type or score out of expected range.")
         except (json.JSONDecodeError, KeyError, ValueError, TypeError, Exception) as e:
-            print("\033[91mRQS_eval.py::: Retry Reason: {}\033[0m".format(str(e)))  # 红色字体提示重试原因
+            print("\033[91mRQS_eval.py::: Retry Reason: {}\033[0m".format(str(e))) 
             attempt += 1
     return "error", 0, "error"
 
@@ -144,6 +144,7 @@ def process_turns(file_path, output_path):
                     if i + 1 < length:
                         next_turn = turns[i + 1]
                         predict_text = next_turn.get('predict', '')
+                        print("Next Turn predict_text:", predict_text)
                         # Find the positions of SELECT and the semicolon
                         select_pos = predict_text.upper().find('SELECT')
                         colon_pos = predict_text.find(';', select_pos)
@@ -180,7 +181,7 @@ def process_turns(file_path, output_path):
                             next_turn['predict_type'] = type_ai
                             next_turn['RQS'] = rqs_ai
                             next_turn['RQS_Rationale'] = rationale_ai
-                        print("Next Turn predict_text:", predict_text)
+                        
                         print("Predict Type:", next_turn['predict_type'])
                     else:
                         print("Next Turn does not exist.")
@@ -191,17 +192,10 @@ def process_turns(file_path, output_path):
 
 
 def main():
-    # 创建解析器
     parser = argparse.ArgumentParser(description='Process JSON files.')
-    
-    # 添加参数
     parser.add_argument('input_file', type=str, help='Path to the input JSON file')
     parser.add_argument('output_file', type=str, help='Path to the output JSON file')
-    
-    # 解析参数
     args = parser.parse_args()
-    
-    # 调用处理函数
     process_turns(args.input_file, args.output_file)
 
 if __name__ == "__main__":

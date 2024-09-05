@@ -1431,7 +1431,7 @@
       {
         "isuser": true,
         "text": "Yes",
-        "type": "improper"
+        "type": "answerable"
       },
       {
         "isuser": false,
@@ -4390,16 +4390,6 @@
     "db_name": "network_1",
     "turns": [
       {
-        "isuser": false,
-        "text": "Do you mean the number of friends?",
-        "query": ""
-      },
-      {
-        "isuser": true,
-        "text": "Yes",
-        "type": "improper"
-      },
-      {
         "isuser": true,
         "text": "How many students are there?",
         "type": "answerable"
@@ -6171,7 +6161,7 @@
       {
         "isuser": true,
         "text": "Yes please.",
-        "type": "improper"
+        "type": "answerable"
       },
       {
         "isuser": false,
