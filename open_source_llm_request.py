@@ -89,14 +89,13 @@ from component.template import template_dict
 # template_name = 'qwen'
 #  adapter_name_or_path = None
 
-model_name_or_path = '/mnt/nvme1n1p2/share/hf-models/Meta-Llama-3-8B-Instruct'
+model_name_or_path = '/mnt/nvme1n1p2/share/hf-models/llama-3-sqlcoder-8b'
 template_name = 'llama3'
 adapter_name_or_path = None
 
 template = template_dict[template_name]
 # 是否使用4bit进行推理，能够节省很多显存，但效果可能会有一定的下降
-load_in_4bit = True
-# 生成超参配置
+load_in_4bit = False
 max_new_tokens = 2048
 top_p = 0.9
 temperature = 0.0
@@ -126,7 +125,7 @@ def process_messages(messages):
     filtered_messages = messages[1:]
     
     for message in filtered_messages:
-        print(message)
+        # print(message)
         if 'content' in message:
             message['message'] = message.pop('content')
         
@@ -154,4 +153,4 @@ def request_llm(message):
 
     # print("Output：{}".format(response))
 
-    return "666"
+    return response
