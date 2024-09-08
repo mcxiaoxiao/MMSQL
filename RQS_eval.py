@@ -4,7 +4,7 @@ RQS_eval.py
 Reads a specified JSON file and iterates through each object's 'turns' array to find a turn where 'isuser' is true and its following turn.
 
 Usage:
-    python RQS_eval.py outputs/gemini-1.5-flash.json outputs/gpt4_scored_gemini-1.5-flash.json
+    python RQS_eval.py outputs/Llama-3-70B.json outputs/gpt4_scored_Llama-3-70B.json
 
 Arguments:
     --file_path: Path to the JSON file.
