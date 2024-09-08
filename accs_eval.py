@@ -4,13 +4,13 @@ accs_eval.py
 This script calculates several metrics from the output JSON files, including ACCS, IACCS, EM, QM, and ERROR.
 
 Usage:
-    python accs_eval.py "outputs/gpt_gemini-1-Copy1.5-flash-llm.json"
+    python accs_eval.py outputs/gpt_gemini-1-Copy1.5-flash-llm.json
 
 Arguments:
     --input: Path to the input JSON file containing the LLM responses.
 """
 
-
+from collections import defaultdict
 import json
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
@@ -535,12 +535,20 @@ class Evaluator:
 evaluator = Evaluator()
 
 
-
+def calculate_metrics(correct, total_gold, total_pred):
+    precision = correct / total_pred if total_pred > 0 else 0
+    recall = correct / total_gold if total_gold > 0 else 0
+    accuracy = correct / total_gold if total_gold > 0 else 0
+    return precision, recall, accuracy
 
 
 def qm(db_path,p_str,g_str,db):
+    print("Initial Gold SQL:"+g_str)
     p_str = p_str.lower()
     g_str = g_str.lower()
+    p_str = p_str.replace("```","")
+    p_str = p_str.replace(";","")
+    g_str = g_str.replace("```","")
     p_str = p_str.replace("`","'")
     p_str = p_str.replace("▁"," ")
     split_index = p_str.find('=')
@@ -574,6 +582,7 @@ with open(args.json_file_path, 'r', encoding='utf-8') as file:
     data = json.load(file)
 
 qm_count = 0
+im_count = 0
 allsqlqa = 0
 allsqla = 0
 em_count = 0
@@ -581,6 +590,11 @@ accs = 0
 allqa = 0
 iaccs_count = 0 
 allturn = 0
+
+gold_counts = defaultdict(int)
+predict_counts = defaultdict(int)
+correct_counts = defaultdict(int)
+
 # 遍历每个元素
 for element in tqdm(data):
     print("_________________________")
@@ -589,6 +603,7 @@ for element in tqdm(data):
     # 遍历每个元素的turns数组
     allturn += 1
     iaccs = True
+    imatch = True
     for i in range(len(turns) - 1):
         if i%2 == 0:
             print("\n turn:"+str((i+1)//2))
@@ -606,6 +621,11 @@ for element in tqdm(data):
             # print("gold   :"+gold_type)
             # print("predict:"+predict_type)
             
+            gold_counts[gold_type] += 1
+            predict_counts[predict_type] += 1
+            if gold_type == predict_type:
+                correct_counts[gold_type] += 1
+
             if gold_type == 'answerable':
                 allsqlqa += 1
             if predict_type == 'answerable':
@@ -620,10 +640,17 @@ for element in tqdm(data):
                         print("\033[92mACCS+1\033[0m")
                     else:
                         iaccs = False
+                        imatch = False
                         print("\033[91mIACCS failed\033[0m")
-                except:
+                except Exception as e:
+                    print("\033[91mQM error\033[0m")
+                    print(turns[i+1].get('query',''))
+                    print(turns[i+1].get('predict_sql',''))
+                    print(e)
+                    
                     accs += 0
                     iaccs = False
+                    imatch = False
                     print("\033[91mIACCS failed\033[0m")
                 try:
                     
@@ -643,6 +670,9 @@ for element in tqdm(data):
     if iaccs:
         print("\033[92mIACCS+1\033[0m")
         iaccs_count += 1
+    if imatch:
+        print("\033[92mIM+1\033[0m")
+        im_count += 1
 
 print("_____________________________________")
 
@@ -651,6 +681,7 @@ percentage2_iaccs = (iaccs_count / allturn) * 100
 percentage3 = (em_count / allsqlqa) * 100
 percentage4 = (qm_count / allsqlqa) * 100
 percentage5 = (error_count / allsqla) * 100
+percentage6 = (im_count / allturn) * 100
 
 print("Result")
 print("_____________________________________")
@@ -662,6 +693,23 @@ print(f"| IACCS  | {iaccs_count:<5} | {allturn:<5} | {percentage2_iaccs:.1f}%   
 print(f"| EM     | {em_count:<5} | {allsqlqa:<5} | {percentage3:.1f}%      |")
 print(f"| QM     | {qm_count:<5} | {allsqlqa:<5} | {percentage4:.1f}%      |")
 print(f"| ERROR  | {error_count:<5} | {allsqla:<5} | {percentage5:.1f}%      |")
-
+print(f"| IM     | {im_count:<5} | {allturn:<5} | {percentage6:.1f}%      |")
 print("-------------------------------------")
+
+
+# 打印分类的精确率、召回率和准确率
+categories = ['answerable', 'unanswerable', 'ambiguous', 'improper']
+
+print("_________________________________________________")
+print("| Category       | Precision | Recall | Accuracy |")
+print("|----------------|-----------|--------|----------|")
+
+for category in categories:
+    precision, recall, accuracy = calculate_metrics(correct_counts[category], gold_counts[category], predict_counts[category])
+    print(f"| {category.capitalize():<14} | {precision*100:.2f}%    | {recall*100:.2f}%  | {accuracy*100:.2f}%   |")
+
+print("_________________________________________________")
+
+
 print("For more details, please refer to: https://github.com/mcxiaoxiao/MMSQL")
+print("-------------------------------------")

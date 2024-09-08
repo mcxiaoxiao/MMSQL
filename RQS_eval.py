@@ -149,7 +149,7 @@ def process_turns(file_path, output_path):
                         select_pos = predict_text.upper().find('SELECT')
                         colon_pos = predict_text.find(';', select_pos)
                         if select_pos != -1 and colon_pos != -1:
-                            predict_sql = predict_text[select_pos:colon_pos].replace('\n','')
+                            predict_sql = predict_text[select_pos:colon_pos].replace('\n',' ')
                         elif select_pos != -1:
                             predict_sql = predict_text[select_pos:].replace('\n',' ')
                         else:
