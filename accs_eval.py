@@ -538,12 +538,11 @@ evaluator = Evaluator()
 def calculate_metrics(correct, total_gold, total_pred):
     precision = correct / total_pred if total_pred > 0 else 0
     recall = correct / total_gold if total_gold > 0 else 0
-    accuracy = correct / total_gold if total_gold > 0 else 0
-    return precision, recall, accuracy
+    return precision, recall
 
 
 def qm(db_path,p_str,g_str,db):
-    print("Initial Gold SQL:"+g_str)
+    # print("Initial Gold SQL:"+g_str)
     p_str = p_str.lower()
     g_str = g_str.lower()
     p_str = p_str.replace("```","")
@@ -590,6 +589,8 @@ accs = 0
 allqa = 0
 iaccs_count = 0 
 allturn = 0
+RQS_count = 0
+RQS_sum = 0
 
 gold_counts = defaultdict(int)
 predict_counts = defaultdict(int)
@@ -605,6 +606,12 @@ for element in tqdm(data):
     iaccs = True
     imatch = True
     for i in range(len(turns) - 1):
+        if  turns[i].get('RQS','N/A') != 'N/A':
+                predict_type = turns[i].get('predict_type','answerable')
+                if predict_type != 'answerable':
+                    RQS_count += 1
+                    RQS_sum += int(turns[i].get('RQS'))
+                    print("RQS:"+str(turns[i].get('RQS')))
         if i%2 == 0:
             print("\n turn:"+str((i+1)//2))
         if turns[i].get('isuser'):
@@ -618,8 +625,6 @@ for element in tqdm(data):
                 predict_type = 'answerable'
             print("Gold Type:"+str(gold_type))
             print("Predict Type:"+str(predict_type))
-            # print("gold   :"+gold_type)
-            # print("predict:"+predict_type)
             
             gold_counts[gold_type] += 1
             predict_counts[predict_type] += 1
@@ -630,22 +635,26 @@ for element in tqdm(data):
                 allsqlqa += 1
             if predict_type == 'answerable':
                 allsqla += 1
+
+            
+
             if gold_type == predict_type and predict_type == 'answerable':
                 try:
                     print("Question:"+turns[i].get('text',''))
                     if qm("datasets/cosql_dataset/database",turns[i+1].get('query',''), turns[i+1].get('predict_sql',''), db_name):
-                        # print("QM\n")
+                        
                         qm_count += 1
                         accs += 1
                         print("\033[92mACCS+1\033[0m")
                     else:
                         iaccs = False
                         imatch = False
+                        print("QM nok\n")
                         print("\033[91mIACCS failed\033[0m")
                 except Exception as e:
                     print("\033[91mQM error\033[0m")
-                    print(turns[i+1].get('query',''))
-                    print(turns[i+1].get('predict_sql',''))
+                    # print(turns[i+1].get('query',''))
+                    # print(turns[i+1].get('predict_sql',''))
                     print(e)
                     
                     accs += 0
@@ -663,6 +672,8 @@ for element in tqdm(data):
                 print("Question:"+turns[i].get('text',''))
                 accs += 1
                 print("\033[92mACCS+1\033[0m")
+            if gold_type == 'answerable' and predict_type != 'answerable':
+                imatch = False
             if gold_type != predict_type:
                 iaccs = False
                 print("\033[91mIACCS failed\033[0m")
@@ -694,6 +705,7 @@ print(f"| EM     | {em_count:<5} | {allsqlqa:<5} | {percentage3:.1f}%      |")
 print(f"| QM     | {qm_count:<5} | {allsqlqa:<5} | {percentage4:.1f}%      |")
 print(f"| ERROR  | {error_count:<5} | {allsqla:<5} | {percentage5:.1f}%      |")
 print(f"| IM     | {im_count:<5} | {allturn:<5} | {percentage6:.1f}%      |")
+print(f"| RQS    | {RQS_sum:<5} | {RQS_count:<5} | {RQS_sum/RQS_count:.1f}      |")
 print("-------------------------------------")
 
 
@@ -701,12 +713,12 @@ print("-------------------------------------")
 categories = ['answerable', 'unanswerable', 'ambiguous', 'improper']
 
 print("_________________________________________________")
-print("| Category       | Precision | Recall | Accuracy |")
-print("|----------------|-----------|--------|----------|")
+print("| Category       | Precision | Recall |")
+print("|----------------|-----------|--------|")
 
 for category in categories:
-    precision, recall, accuracy = calculate_metrics(correct_counts[category], gold_counts[category], predict_counts[category])
-    print(f"| {category.capitalize():<14} | {precision*100:.2f}%    | {recall*100:.2f}%  | {accuracy*100:.2f}%   |")
+    precision, recall = calculate_metrics(correct_counts[category], gold_counts[category], predict_counts[category])
+    print(f"| {category.capitalize():<14} | {precision*100:.1f}%    | {recall*100:.1f}%  |")
 
 print("_________________________________________________")
 

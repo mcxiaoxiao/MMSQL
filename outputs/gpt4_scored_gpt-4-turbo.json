@@ -27,7 +27,7 @@
                 "text": "",
                 "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;",
                 "predict": "```sql\nSELECT COUNT(model_list.ModelId) AS ModelCount, car_makers.FullName\nFROM model_list\nJOIN car_makers ON model_list.Maker = car_makers.Id\nGROUP BY car_makers.FullName;\n```",
-                "predict_sql": "SELECT COUNT(model_list.ModelId) AS ModelCount, car_makers.FullNameFROM model_listJOIN car_makers ON model_list.Maker = car_makers.IdGROUP BY car_makers.FullName",
+                "predict_sql": "SELECT COUNT(model_list.ModelId) AS ModelCount, car_makers.FullName FROM model_list JOIN car_makers ON model_list.Maker = car_makers.Id GROUP BY car_makers.FullName;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -71,7 +71,7 @@
                 "text": "",
                 "query": "SELECT Count(*) ,  T2.FullName ,  T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;",
                 "predict": "```sql\nSELECT T2.FullName, COUNT(*) AS ModelCount\nFROM model_list AS T1\nJOIN car_makers AS T2 ON T1.Maker = T2.Id\nGROUP BY T1.Maker\nHAVING COUNT(*) >= 3;\n```",
-                "predict_sql": "SELECT T2.FullName, COUNT(*) AS ModelCountFROM model_list AS T1JOIN car_makers AS T2 ON T1.Maker = T2.IdGROUP BY T1.MakerHAVING COUNT(*) >= 3",
+                "predict_sql": "SELECT T2.FullName, COUNT(*) AS ModelCount FROM model_list AS T1 JOIN car_makers AS T2 ON T1.Maker = T2.Id GROUP BY T1.Maker HAVING COUNT(*) >= 3;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -106,7 +106,7 @@
                 "text": "",
                 "query": "SELECT Population FROM country where Name  =  \"Afghanistan\"",
                 "predict": "```sql\nSELECT Population FROM country WHERE Name = 'Afghanistan';\n```",
-                "predict_sql": "SELECT Population FROM country WHERE Name = 'Afghanistan'",
+                "predict_sql": "SELECT Population FROM country WHERE Name = 'Afghanistan';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -268,7 +268,7 @@
                 "text": "",
                 "query": "SELECT winner_name  FROM matches ORDER BY winner_age LIMIT 3",
                 "predict": "```sql\nSELECT winner_name, MIN(winner_age) AS youngest_age\nFROM matches\nGROUP BY winner_name\nORDER BY youngest_age ASC\nLIMIT 3;\n```",
-                "predict_sql": "SELECT winner_name, MIN(winner_age) AS youngest_ageFROM matchesGROUP BY winner_nameORDER BY youngest_age ASCLIMIT 3",
+                "predict_sql": "SELECT winner_name, MIN(winner_age) AS youngest_age FROM matches GROUP BY winner_name ORDER BY youngest_age ASC LIMIT 3;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -351,7 +351,7 @@
                 "text": "",
                 "query": "SELECT count(distinct template_id) FROM Documents ",
                 "predict": "```sql\nSELECT COUNT(DISTINCT Template_ID) FROM Templates;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT Template_ID) FROM Templates",
+                "predict_sql": "SELECT COUNT(DISTINCT Template_ID) FROM Templates;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -379,7 +379,7 @@
                 "text": "",
                 "query": "SELECT document_id FROM Documents GROUP BY template_id HAVING count(*)  >  1",
                 "predict": "The request to show the corresponding document for each template ID used by more than one document is ambiguous because it's unclear whether you want all documents associated with each template ID or just one document per template ID. Additionally, the SQL provided earlier was incorrect as it only counted the template IDs used by more than one document but did not list them. Here's the corrected approach to first list the template IDs used by more than one document:\n\n```sql\nSELECT template_id FROM Documents GROUP BY template_id HAVING count(*) > 1;\n```\n\nIf you need all documents for each of these template IDs, the query would be:\n\n```sql\nSELECT * FROM Documents WHERE template_id IN (SELECT template_id FROM Documents GROUP BY template_id HAVING count(*) > 1);\n```",
-                "predict_sql": "SELECT template_id FROM Documents GROUP BY template_id HAVING count(*) > 1",
+                "predict_sql": "SELECT template_id FROM Documents GROUP BY template_id HAVING count(*) > 1;",
                 "predict_type": "ambiguous",
                 "RQS": 6,
                 "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it addresses the user's request for documents associated with template IDs but does not directly provide the documents themselves. Clarity: 1 point - The response is mostly clear but introduces ambiguity regarding whether the user wants all documents or just one per template ID. Completeness: 1 point - The response covers the SQL queries needed to find the documents but does not provide the actual documents or a clear answer to the user's question. Accuracy: 2 points - The SQL queries provided are accurate and correctly identify the documents based on the user's request. Utility: 1 point - The response somewhat meets the user's needs by providing SQL queries but does not fulfill the request for the actual documents. Total Score: 6 points."
@@ -415,7 +415,7 @@
                 "text": "",
                 "query": "SELECT first_name, last_name FROM professionals ",
                 "predict": "```sql\nSELECT first_name, last_name FROM Professionals;\n```",
-                "predict_sql": "SELECT first_name, last_name FROM Professionals",
+                "predict_sql": "SELECT first_name, last_name FROM Professionals;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -534,7 +534,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM death ",
                 "predict": "```sql\nSELECT COUNT(*) FROM death;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM death",
+                "predict_sql": "SELECT COUNT(*) FROM death;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -639,7 +639,7 @@
                 "text": "",
                 "query": "SELECT T1.first_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.permanent_address_id  =  T2.address_id WHERE T2.country  =  'Haiti' ",
                 "predict": "```sql\nSELECT Students.first_name\nFROM Students\nJOIN Addresses ON Students.permanent_address_id = Addresses.address_id\nWHERE Addresses.country = 'Haiti';\n```",
-                "predict_sql": "SELECT Students.first_nameFROM StudentsJOIN Addresses ON Students.permanent_address_id = Addresses.address_idWHERE Addresses.country = 'Haiti'",
+                "predict_sql": "SELECT Students.first_name FROM Students JOIN Addresses ON Students.permanent_address_id = Addresses.address_id WHERE Addresses.country = 'Haiti';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -731,7 +731,7 @@
                 "text": "",
                 "query": "SELECT T1.killed FROM death AS T1 JOIN ship AS t2 ON T1.caused_by_ship_id = T2.id WHERE T2.tonnage = 't'\n\n",
                 "predict": "```sql\nSELECT d.note, d.killed, d.injured\nFROM death d\nJOIN ship s ON d.caused_by_ship_id = s.id\nWHERE s.tonnage = 't';\n```",
-                "predict_sql": "SELECT d.note, d.killed, d.injuredFROM death dJOIN ship s ON d.caused_by_ship_id = s.idWHERE s.tonnage = 't'",
+                "predict_sql": "SELECT d.note, d.killed, d.injured FROM death d JOIN ship s ON d.caused_by_ship_id = s.id WHERE s.tonnage = 't';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -795,7 +795,7 @@
                 "text": "",
                 "query": "SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014",
                 "predict": "```sql\nSELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = '2014');\n```",
-                "predict_sql": "SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = '2014')",
+                "predict_sql": "SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = '2014');",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -860,7 +860,7 @@
                 "text": "",
                 "query": "SELECT T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country GROUP BY T1.Continent;",
                 "predict": "```sql\nSELECT continents.Continent, COUNT(car_makers.Id) AS NumberOfCarMakers\nFROM continents\nJOIN countries ON continents.ContId = countries.Continent\nJOIN car_makers ON countries.CountryId = car_makers.Country\nGROUP BY continents.Continent;\n```",
-                "predict_sql": "SELECT continents.Continent, COUNT(car_makers.Id) AS NumberOfCarMakersFROM continentsJOIN countries ON continents.ContId = countries.ContinentJOIN car_makers ON countries.CountryId = car_makers.CountryGROUP BY continents.Continent",
+                "predict_sql": "SELECT continents.Continent, COUNT(car_makers.Id) AS NumberOfCarMakers FROM continents JOIN countries ON continents.ContId = countries.Continent JOIN car_makers ON countries.CountryId = car_makers.Country GROUP BY continents.Continent;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -874,7 +874,7 @@
                 "text": "",
                 "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"usa\"",
                 "predict": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'USA');",
-                "predict_sql": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'USA')",
+                "predict_sql": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'USA');",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -888,7 +888,7 @@
                 "text": "",
                 "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"germany\"",
                 "predict": "SELECT count(*) FROM car_makers AS T1 JOIN countries AS T2 ON T2.CountryId = T1.Country WHERE T2.CountryName = \"Germany\";",
-                "predict_sql": "SELECT count(*) FROM car_makers AS T1 JOIN countries AS T2 ON T2.CountryId = T1.Country WHERE T2.CountryName = \"Germany\"",
+                "predict_sql": "SELECT count(*) FROM car_makers AS T1 JOIN countries AS T2 ON T2.CountryId = T1.Country WHERE T2.CountryName = \"Germany\";",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -937,7 +937,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )",
                 "predict": "```sql\nSELECT COUNT(DISTINCT Dogs.dog_id) AS Female_Dogs_Treated\nFROM Dogs\nJOIN Treatments ON Dogs.dog_id = Treatments.dog_id\nWHERE Dogs.gender = '1';\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT Dogs.dog_id) AS Female_Dogs_TreatedFROM DogsJOIN Treatments ON Dogs.dog_id = Treatments.dog_idWHERE Dogs.gender = '1'",
+                "predict_sql": "SELECT COUNT(DISTINCT Dogs.dog_id) AS Female_Dogs_Treated FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id WHERE Dogs.gender = '1';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -951,7 +951,7 @@
                 "text": "",
                 "query": "SELECT age FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )",
                 "predict": "SELECT age FROM Dogs WHERE gender = '1' AND dog_id IN (SELECT dog_id FROM Treatments);",
-                "predict_sql": "SELECT age FROM Dogs WHERE gender = '1' AND dog_id IN (SELECT dog_id FROM Treatments)",
+                "predict_sql": "SELECT age FROM Dogs WHERE gender = '1' AND dog_id IN (SELECT dog_id FROM Treatments);",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1015,7 +1015,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id WHERE T1.template_type_code  =  \"BK\"",
                 "predict": "```sql\nSELECT COUNT(*) \nFROM Documents \nJOIN Templates ON Documents.Template_ID = Templates.Template_ID \nWHERE Templates.Template_Type_Code = 'BK';\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Documents JOIN Templates ON Documents.Template_ID = Templates.Template_ID WHERE Templates.Template_Type_Code = 'BK'",
+                "predict_sql": "SELECT COUNT(*)  FROM Documents  JOIN Templates ON Documents.Template_ID = Templates.Template_ID  WHERE Templates.Template_Type_Code = 'BK';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1029,7 +1029,7 @@
                 "text": "",
                 "query": "SELECT T2.document_name FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id WHERE T1.template_type_code  =  \"BK\"",
                 "predict": "```sql\nSELECT Document_Name FROM Templates AS T1 JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID WHERE T1.Template_Type_Code = 'BK';\n```",
-                "predict_sql": "SELECT Document_Name FROM Templates AS T1 JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID WHERE T1.Template_Type_Code = 'BK'",
+                "predict_sql": "SELECT Document_Name FROM Templates AS T1 JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID WHERE T1.Template_Type_Code = 'BK';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1078,7 +1078,7 @@
                 "text": "",
                 "query": "SELECT COUNT(*) FROM teacher",
                 "predict": "```sql\nSELECT COUNT(*) FROM teacher;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM teacher",
+                "predict_sql": "SELECT COUNT(*) FROM teacher;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1170,7 +1170,7 @@
                 "text": "",
                 "query": "SELECT Horsepower FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1",
                 "predict": "```sql\nSELECT MAX(Horsepower) FROM cars_data;\n```",
-                "predict_sql": "SELECT MAX(Horsepower) FROM cars_data",
+                "predict_sql": "SELECT MAX(Horsepower) FROM cars_data;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1234,7 +1234,7 @@
                 "text": "",
                 "query": "SELECT Code FROM country WHERE GovernmentForm != \"Republic\" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  \"English\"",
                 "predict": "```sql\nSELECT DISTINCT cl.CountryCode \nFROM countrylanguage cl\nJOIN country c ON cl.CountryCode = c.Code\nWHERE cl.Language != 'English' AND c.GovernmentForm != 'Republic';\n```",
-                "predict_sql": "SELECT DISTINCT cl.CountryCode FROM countrylanguage clJOIN country c ON cl.CountryCode = c.CodeWHERE cl.Language != 'English' AND c.GovernmentForm != 'Republic'",
+                "predict_sql": "SELECT DISTINCT cl.CountryCode  FROM countrylanguage cl JOIN country c ON cl.CountryCode = c.Code WHERE cl.Language != 'English' AND c.GovernmentForm != 'Republic';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1302,7 +1302,7 @@
                 "text": "",
                 "query": "SELECT avg(Population) FROM city",
                 "predict": "```sql\nSELECT AVG(Population) FROM city;\n```",
-                "predict_sql": "SELECT AVG(Population) FROM city",
+                "predict_sql": "SELECT AVG(Population) FROM city;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1365,7 +1365,7 @@
                 "text": "What information do you want to know about these professionals? ",
                 "query": "",
                 "predict": "```sql\nSELECT professional_id, first_name, last_name, city, state\nFROM Professionals\nWHERE state = 'Indiana';\n```",
-                "predict_sql": "SELECT professional_id, first_name, last_name, city, stateFROM ProfessionalsWHERE state = 'Indiana'",
+                "predict_sql": "SELECT professional_id, first_name, last_name, city, state FROM Professionals WHERE state = 'Indiana';",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -1379,7 +1379,7 @@
                 "text": "",
                 "query": "SELECT * FROM Professionals WHERE state  =  'Indiana'",
                 "predict": "```sql\nSELECT * FROM Professionals WHERE state = 'Indiana';\n```",
-                "predict_sql": "SELECT * FROM Professionals WHERE state = 'Indiana'",
+                "predict_sql": "SELECT * FROM Professionals WHERE state = 'Indiana';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1438,7 +1438,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Templates",
                 "predict": "```sql\nSELECT COUNT(*) FROM Templates;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Templates",
+                "predict_sql": "SELECT COUNT(*) FROM Templates;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1579,7 +1579,7 @@
                 "text": "",
                 "query": "SELECT sum(SurfaceArea) FROM country WHERE Continent = \"Asia\"",
                 "predict": "```sql\nSELECT SUM(SurfaceArea) AS TotalSurfaceArea FROM country WHERE Continent = 'Asia';\n```",
-                "predict_sql": "SELECT SUM(SurfaceArea) AS TotalSurfaceArea FROM country WHERE Continent = 'Asia'",
+                "predict_sql": "SELECT SUM(SurfaceArea) AS TotalSurfaceArea FROM country WHERE Continent = 'Asia';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1672,7 +1672,7 @@
                 "text": "",
                 "query": "SELECT T2.Model FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId order by T1.Year desc limit 1",
                 "predict": "SELECT T2.Model FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId ORDER BY T1.Year DESC LIMIT 1;",
-                "predict_sql": "SELECT T2.Model FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId ORDER BY T1.Year DESC LIMIT 1",
+                "predict_sql": "SELECT T2.Model FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId ORDER BY T1.Year DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1785,7 +1785,7 @@
                 "text": "",
                 "query": "SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.Model  =  T2.Model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.Id JOIN CAR_MAKERS AS T4 ON T1.Maker  =  T4.Id WHERE T3.weight  <  3500",
                 "predict": "```sql\nSELECT car_names.Model\nFROM cars_data\nJOIN car_names ON cars_data.Id = car_names.MakeId\nWHERE cars_data.Weight < 3500;\n```",
-                "predict_sql": "SELECT car_names.ModelFROM cars_dataJOIN car_names ON cars_data.Id = car_names.MakeIdWHERE cars_data.Weight < 3500",
+                "predict_sql": "SELECT car_names.Model FROM cars_data JOIN car_names ON cars_data.Id = car_names.MakeId WHERE cars_data.Weight < 3500;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1814,7 +1814,7 @@
                 "text": "Are you asking about the car or the carmaker?",
                 "query": "",
                 "predict": "SELECT Model FROM model_list WHERE ModelId = 2;",
-                "predict_sql": "SELECT Model FROM model_list WHERE ModelId = 2",
+                "predict_sql": "SELECT Model FROM model_list WHERE ModelId = 2;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -1828,7 +1828,7 @@
                 "text": "",
                 "query": "SELECT Model FROM car_names WHERE MakeId=2",
                 "predict": "```sql\nSELECT FullName FROM car_makers WHERE Id = 2;\n```",
-                "predict_sql": "SELECT FullName FROM car_makers WHERE Id = 2",
+                "predict_sql": "SELECT FullName FROM car_makers WHERE Id = 2;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1853,7 +1853,7 @@
                 "text": "",
                 "query": "SELECT template_id FROM Templates;",
                 "predict": "```sql\nSELECT Template_ID FROM Templates;\n```",
-                "predict_sql": "SELECT Template_ID FROM Templates",
+                "predict_sql": "SELECT Template_ID FROM Templates;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1867,7 +1867,7 @@
                 "text": "",
                 "query": "SELECT template_id FROM Templates EXCEPT SELECT template_id FROM Documents\n\n",
                 "predict": "```sql\nSELECT Template_ID FROM Templates\nWHERE Template_ID NOT IN (SELECT Template_ID FROM Documents);\n```",
-                "predict_sql": "SELECT Template_ID FROM TemplatesWHERE Template_ID NOT IN (SELECT Template_ID FROM Documents)",
+                "predict_sql": "SELECT Template_ID FROM Templates WHERE Template_ID NOT IN (SELECT Template_ID FROM Documents);",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1881,7 +1881,7 @@
                 "text": "Do you mean the effective-to date of those templates?",
                 "query": "",
                 "predict": "SELECT T.template_id \nFROM Templates T\nWHERE T.template_id NOT IN (SELECT D.template_id FROM Documents D)\nAND T.date_effective_to > CURRENT_TIMESTAMP;",
-                "predict_sql": "SELECT T.template_id FROM Templates TWHERE T.template_id NOT IN (SELECT D.template_id FROM Documents D)AND T.date_effective_to > CURRENT_TIMESTAMP",
+                "predict_sql": "SELECT T.template_id  FROM Templates T WHERE T.template_id NOT IN (SELECT D.template_id FROM Documents D) AND T.date_effective_to > CURRENT_TIMESTAMP;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -1895,7 +1895,7 @@
                 "text": "",
                 "query": "SELECT Date_effective_to FROM Templates WHERE template_id IN ( SELECT template_id FROM Templates EXCEPT SELECT template_id FROM Documents)\n\n",
                 "predict": "SELECT template_id FROM Templates WHERE template_id NOT IN (SELECT template_id FROM Documents) AND Date_Effective_To > CURRENT_TIMESTAMP;",
-                "predict_sql": "SELECT template_id FROM Templates WHERE template_id NOT IN (SELECT template_id FROM Documents) AND Date_Effective_To > CURRENT_TIMESTAMP",
+                "predict_sql": "SELECT template_id FROM Templates WHERE template_id NOT IN (SELECT template_id FROM Documents) AND Date_Effective_To > CURRENT_TIMESTAMP;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -1909,7 +1909,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Templates WHERE template_id IN (SELECT template_id FROM Documents)\n\n",
                 "predict": "SELECT COUNT(DISTINCT template_id) FROM Documents;",
-                "predict_sql": "SELECT COUNT(DISTINCT template_id) FROM Documents",
+                "predict_sql": "SELECT COUNT(DISTINCT template_id) FROM Documents;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -1972,7 +1972,7 @@
                 "text": "",
                 "query": "SELECT sum(Population) FROM country where Continent = 'Asia'",
                 "predict": "```sql\nSELECT SUM(Population) AS TotalPopulation\nFROM country\nWHERE Continent = 'Asia';\n```",
-                "predict_sql": "SELECT SUM(Population) AS TotalPopulationFROM countryWHERE Continent = 'Asia'",
+                "predict_sql": "SELECT SUM(Population) AS TotalPopulation FROM country WHERE Continent = 'Asia';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2092,7 +2092,7 @@
                 "text": "",
                 "query": "SELECT  count(distinct course_id) from courses",
                 "predict": "```sql\nSELECT COUNT(DISTINCT course_id) FROM Courses;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT course_id) FROM Courses",
+                "predict_sql": "SELECT COUNT(DISTINCT course_id) FROM Courses;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2106,7 +2106,7 @@
                 "text": "",
                 "query": "SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) LIMIT 1",
                 "predict": "The question is ambiguous because the database schema does not directly provide a count of students enrolled per course. However, we can infer this information by joining the `Student_Enrolment_Courses` table with the `Courses` table and then counting the number of student enrollments per course. Here is the SQL query to find the course name with the least number of student enrollments:\n\n```sql\nSELECT c.course_name\nFROM Courses c\nJOIN Student_Enrolment_Courses sec ON c.course_id = sec.course_id\nGROUP BY c.course_id, c.course_name\nORDER BY COUNT(sec.student_course_id) ASC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT c.course_nameFROM Courses cJOIN Student_Enrolment_Courses sec ON c.course_id = sec.course_idGROUP BY c.course_id, c.course_nameORDER BY COUNT(sec.student_course_id) ASCLIMIT 1",
+                "predict_sql": "SELECT c.course_name FROM Courses c JOIN Student_Enrolment_Courses sec ON c.course_id = sec.course_id GROUP BY c.course_id, c.course_name ORDER BY COUNT(sec.student_course_id) ASC LIMIT 1;",
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the user's question about finding the course with the least number of student enrollments. It provides a SQL query that can be used to obtain the desired information. Clarity: 2 points - The response is very clear and easy to understand, explaining the ambiguity in the question and how to resolve it with a SQL query. Completeness: 2 points - The response thoroughly addresses the question by providing a method to find the answer, including the necessary SQL query. Accuracy: 2 points - The SQL query provided is accurate and correctly structured to achieve the intended result. Utility: 2 points - The response excellently meets the user's needs by explaining the ambiguity and providing a clear solution. However, the question is ultimately unanswerable under existing conditions because the database does not directly provide the count of students per course without executing the query. Therefore, the overall classification is 'unanswerable' due to the inability to provide a definitive answer without running the query."
@@ -2157,7 +2157,7 @@
                 "text": "",
                 "query": "SELECT song_name FROM singer WHERE song_release_year  >  (SELECT avg(song_release_year) FROM singer)",
                 "predict": "The question requires calculating the average song release year and then selecting singers whose song release year is greater than this average. Here is the SQL query to achieve this:\n\n```sql\nSELECT Name\nFROM singer\nWHERE Song_release_year > (SELECT AVG(Song_release_year) FROM singer);\n```",
-                "predict_sql": "selecting singers whose song release year is greater than this average. Here is the SQL query to achieve this:```sqlSELECT NameFROM singerWHERE Song_release_year > (SELECT AVG(Song_release_year) FROM singer)",
+                "predict_sql": "selecting singers whose song release year is greater than this average. Here is the SQL query to achieve this:  ```sql SELECT Name FROM singer WHERE Song_release_year > (SELECT AVG(Song_release_year) FROM singer);",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2171,7 +2171,7 @@
                 "text": "",
                 "query": "SELECT avg(song_release_year) FROM singer",
                 "predict": "```sql\nSELECT AVG(Song_release_year) FROM singer;\n```",
-                "predict_sql": "SELECT AVG(Song_release_year) FROM singer",
+                "predict_sql": "SELECT AVG(Song_release_year) FROM singer;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2185,7 +2185,7 @@
                 "text": "Do you want the names of the songs ordered by their release year?",
                 "query": "",
                 "predict": "SELECT Song_Name FROM singer ORDER BY Song_Name;",
-                "predict_sql": "SELECT Song_Name FROM singer ORDER BY Song_Name",
+                "predict_sql": "SELECT Song_Name FROM singer ORDER BY Song_Name;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -2248,7 +2248,7 @@
                 "text": "",
                 "query": "select count(*) from (SELECT distinct treatment_type_code from treatments)",
                 "predict": "```sql\nSELECT COUNT(*) FROM Treatment_Types;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Treatment_Types",
+                "predict_sql": "SELECT COUNT(*) FROM Treatment_Types;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2262,7 +2262,7 @@
                 "text": "",
                 "query": "SELECT * FROM Treatments ORDER BY cost_of_treatment DESC LIMIT 1",
                 "predict": "```sql\nSELECT treatment_type_code, MAX(cost_of_treatment) as highest_cost\nFROM Treatments\nGROUP BY treatment_type_code\nORDER BY highest_cost DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT treatment_type_code, MAX(cost_of_treatment) as highest_costFROM TreatmentsGROUP BY treatment_type_codeORDER BY highest_cost DESCLIMIT 1",
+                "predict_sql": "SELECT treatment_type_code, MAX(cost_of_treatment) as highest_cost FROM Treatments GROUP BY treatment_type_code ORDER BY highest_cost DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2399,7 +2399,7 @@
             },
             {
                 "isuser": true,
-                "text": "Please answer the question\uff1athe orchestra of conductor?",
+                "text": "Please answer the question：the orchestra of conductor?",
                 "type": "ambiguous"
             },
             {
@@ -2422,7 +2422,7 @@
                 "text": "",
                 "query": "SELECT T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID ",
                 "predict": "```sql\nSELECT conductor.Name AS Conductor_Name, orchestra.Orchestra AS Orchestra_Name\nFROM conductor\nJOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID;\n```",
-                "predict_sql": "SELECT conductor.Name AS Conductor_Name, orchestra.Orchestra AS Orchestra_NameFROM conductorJOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID",
+                "predict_sql": "SELECT conductor.Name AS Conductor_Name, orchestra.Orchestra AS Orchestra_Name FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2436,7 +2436,7 @@
                 "text": "",
                 "query": "SELECT Name FROM conductor",
                 "predict": "```sql\nSELECT Name FROM conductor;\n```",
-                "predict_sql": "SELECT Name FROM conductor",
+                "predict_sql": "SELECT Name FROM conductor;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2485,7 +2485,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Flights AS T1 JOIN Airports AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.city  like  \"%Aberdeen%\" OR T2.city  like  \"%Abilene%\"",
                 "predict": "```sql\nSELECT COUNT(*) FROM flights\nWHERE DestAirport IN (\n    SELECT AirportCode FROM airports\n    WHERE City IN ('Aberdeen', 'Abilene')\n);\n```",
-                "predict_sql": "SELECT COUNT(*) FROM flightsWHERE DestAirport IN (    SELECT AirportCode FROM airports    WHERE City IN ('Aberdeen', 'Abilene'))",
+                "predict_sql": "SELECT COUNT(*) FROM flights WHERE DestAirport IN (     SELECT AirportCode FROM airports     WHERE City IN ('Aberdeen', 'Abilene') );",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2534,7 +2534,7 @@
                 "text": "",
                 "query": "SELECT Title FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
                 "predict": "```sql\nSELECT Title FROM Cartoon WHERE Directed_by IN ('Ben Jones', 'Brandon Vietti');\n```",
-                "predict_sql": "SELECT Title FROM Cartoon WHERE Directed_by IN ('Ben Jones', 'Brandon Vietti')",
+                "predict_sql": "SELECT Title FROM Cartoon WHERE Directed_by IN ('Ben Jones', 'Brandon Vietti');",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2548,7 +2548,7 @@
                 "text": "",
                 "query": "SELECT Title, original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
                 "predict": "SELECT Title, Original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
-                "predict_sql": "SELECT Title, Original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\"",
+                "predict_sql": "SELECT Title, Original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2562,7 +2562,7 @@
                 "text": "",
                 "query": "SELECT Title, written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
                 "predict": "SELECT Title, Written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
-                "predict_sql": "SELECT Title, Written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\"",
+                "predict_sql": "SELECT Title, Written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2597,7 +2597,7 @@
                 "text": "",
                 "query": "SELECT * FROM Templates AS T1 JOIN Documents AS T2 ON T1.Template_ID  =  T2.template_ID",
                 "predict": "```sql\nSELECT DISTINCT T.Template_ID, T.Template_Details\nFROM Templates T\nJOIN Documents D ON T.Template_ID = D.Template_ID;\n```",
-                "predict_sql": "SELECT DISTINCT T.Template_ID, T.Template_DetailsFROM Templates TJOIN Documents D ON T.Template_ID = D.Template_ID",
+                "predict_sql": "SELECT DISTINCT T.Template_ID, T.Template_Details FROM Templates T JOIN Documents D ON T.Template_ID = D.Template_ID;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2611,7 +2611,7 @@
                 "text": "",
                 "query": "SELECT T1.template_type_description FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code = T2.template_type_code JOIN Documents AS T3 ON T2.Template_ID = T3.template_ID",
                 "predict": "```sql\nSELECT DISTINCT RT.Template_Type_Description\nFROM Ref_Template_Types RT\nJOIN Templates T ON RT.Template_Type_Code = T.Template_Type_Code\nJOIN Documents D ON T.Template_ID = D.Template_ID;\n```",
-                "predict_sql": "SELECT DISTINCT RT.Template_Type_DescriptionFROM Ref_Template_Types RTJOIN Templates T ON RT.Template_Type_Code = T.Template_Type_CodeJOIN Documents D ON T.Template_ID = D.Template_ID",
+                "predict_sql": "SELECT DISTINCT RT.Template_Type_Description FROM Ref_Template_Types RT JOIN Templates T ON RT.Template_Type_Code = T.Template_Type_Code JOIN Documents D ON T.Template_ID = D.Template_ID;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2660,7 +2660,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM shop ",
                 "predict": "```sql\nSELECT COUNT(*) FROM shop;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM shop",
+                "predict_sql": "SELECT COUNT(*) FROM shop;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2752,7 +2752,7 @@
                 "text": "",
                 "query": "SELECT * from Documents WHERE Document_Description LIKE \"%w%\"",
                 "predict": "```sql\nSELECT * FROM Documents WHERE Document_Description LIKE '%w%';\n```",
-                "predict_sql": "SELECT * FROM Documents WHERE Document_Description LIKE '%w%'",
+                "predict_sql": "SELECT * FROM Documents WHERE Document_Description LIKE '%w%';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2820,7 +2820,7 @@
                 "text": "",
                 "query": "SELECT professional_id  FROM Professionals ",
                 "predict": "```sql\nSELECT professional_id FROM Professionals;\n```",
-                "predict_sql": "SELECT professional_id FROM Professionals",
+                "predict_sql": "SELECT professional_id FROM Professionals;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2868,7 +2868,7 @@
                 "text": "",
                 "query": "SELECT avg(loser_age)  FROM matches",
                 "predict": "```sql\nSELECT AVG(loser_age) FROM matches;\n```",
-                "predict_sql": "SELECT AVG(loser_age) FROM matches",
+                "predict_sql": "SELECT AVG(loser_age) FROM matches;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2945,7 +2945,7 @@
                 "text": "",
                 "query": "SELECT Id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.FullName  =  'American Motor Company';",
                 "predict": "```sql\nSELECT Id FROM car_makers WHERE Maker = 'amc';\n```",
-                "predict_sql": "SELECT Id FROM car_makers WHERE Maker = 'amc'",
+                "predict_sql": "SELECT Id FROM car_makers WHERE Maker = 'amc';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2959,7 +2959,7 @@
                 "text": "",
                 "query": "SELECT ModelId FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.Maker  =  'amc';",
                 "predict": "SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'amc');",
-                "predict_sql": "SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'amc')",
+                "predict_sql": "SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'amc');",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -2973,7 +2973,7 @@
                 "text": "Did you mean Id or ModelId?",
                 "query": "",
                 "predict": "SELECT Maker FROM car_makers WHERE Id = 2;",
-                "predict_sql": "SELECT Maker FROM car_makers WHERE Id = 2",
+                "predict_sql": "SELECT Maker FROM car_makers WHERE Id = 2;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -2987,7 +2987,7 @@
                 "text": "",
                 "query": "SELECT DISTINCT(T1.Maker) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.Id = 2;",
                 "predict": "SELECT Maker FROM car_makers WHERE Id = 2;",
-                "predict_sql": "SELECT Maker FROM car_makers WHERE Id = 2",
+                "predict_sql": "SELECT Maker FROM car_makers WHERE Id = 2;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3001,7 +3001,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.FullName  =  'American Motor Company';",
                 "predict": "SELECT COUNT(*) FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE FullName = 'American Motor Company');",
-                "predict_sql": "SELECT COUNT(*) FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE FullName = 'American Motor Company')",
+                "predict_sql": "SELECT COUNT(*) FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE FullName = 'American Motor Company');",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3036,7 +3036,7 @@
                 "text": "",
                 "query": "SELECT count(Museum_ID ) FROM museum",
                 "predict": "```sql\nSELECT COUNT(DISTINCT Museum_ID) FROM museum;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT Museum_ID) FROM museum",
+                "predict_sql": "SELECT COUNT(DISTINCT Museum_ID) FROM museum;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3099,7 +3099,7 @@
                 "text": "do you want to show all the attributes of the dogs?",
                 "query": "",
                 "predict": "```sql\nSELECT * FROM Dogs;\n```",
-                "predict_sql": "SELECT * FROM Dogs",
+                "predict_sql": "SELECT * FROM Dogs;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -3113,7 +3113,7 @@
                 "text": "",
                 "query": "SELECT name FROM Dogs ",
                 "predict": "```sql\nSELECT name FROM Dogs;\n```",
-                "predict_sql": "SELECT name FROM Dogs",
+                "predict_sql": "SELECT name FROM Dogs;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3127,7 +3127,7 @@
                 "text": "",
                 "query": "SELECT name FROM Dogs WHERE breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )",
                 "predict": "To determine the rarest breed among the dogs, we would need to count the number of dogs of each breed and then identify the breed with the fewest dogs. Here is the SQL query to find the breed name of the rarest breed:\n\n```sql\nSELECT breed_name\nFROM Breeds\nWHERE breed_code = (\n    SELECT breed_code\n    FROM Dogs\n    GROUP BY breed_code\n    ORDER BY COUNT(*) ASC\n    LIMIT 1\n);\n```",
-                "predict_sql": "SELECT breed_nameFROM BreedsWHERE breed_code = (    SELECT breed_code    FROM Dogs    GROUP BY breed_code    ORDER BY COUNT(*) ASC    LIMIT 1)",
+                "predict_sql": "SELECT breed_name FROM Breeds WHERE breed_code = (     SELECT breed_code     FROM Dogs     GROUP BY breed_code     ORDER BY COUNT(*) ASC     LIMIT 1 );",
                 "predict_type": "answerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it directly addresses the user's question about identifying the rarest breed of dog. Clarity: 2 points - The response is very clear and easy to understand, providing a straightforward SQL query. Completeness: 2 points - The response thoroughly addresses the question by providing a complete SQL query that would yield the desired information. Accuracy: 2 points - The SQL query is accurate and correctly structured to find the rarest breed based on the provided database schema. Utility: 2 points - The response excellently meets the user's needs by providing a practical solution to their question and explaining how to achieve it using SQL."
@@ -3206,7 +3206,7 @@
                 "text": "",
                 "query": "SELECT count(GovernmentForm) FROM country",
                 "predict": "```sql\nSELECT COUNT(DISTINCT GovernmentForm) FROM country;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT GovernmentForm) FROM country",
+                "predict_sql": "SELECT COUNT(DISTINCT GovernmentForm) FROM country;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3220,7 +3220,7 @@
                 "text": "",
                 "query": "SELECT GovernmentForm FROM country GROUP BY GovernmentForm HAVING avg(LifeExpectancy)  >  72",
                 "predict": "```sql\nSELECT COUNT(DISTINCT GovernmentForm) \nFROM country \nWHERE LifeExpectancy > 72;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT GovernmentForm) FROM country WHERE LifeExpectancy > 72",
+                "predict_sql": "SELECT COUNT(DISTINCT GovernmentForm)  FROM country  WHERE LifeExpectancy > 72;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3325,7 +3325,7 @@
                 "text": "",
                 "query": "SELECT \tLevel_of_membership FROM visitor WHERE ID = 1",
                 "predict": "```sql\nSELECT Level_of_membership FROM visitor WHERE ID = 1;\n```",
-                "predict_sql": "SELECT Level_of_membership FROM visitor WHERE ID = 1",
+                "predict_sql": "SELECT Level_of_membership FROM visitor WHERE ID = 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3388,7 +3388,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat'",
                 "predict": "```sql\nSELECT COUNT(DISTINCT s.StuID) AS NumberOfStudentsWithCats\nFROM Student s\nJOIN Has_Pet hp ON s.StuID = hp.StuID\nJOIN Pets p ON hp.PetID = p.PetID\nWHERE p.PetType = 'cat';\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT s.StuID) AS NumberOfStudentsWithCatsFROM Student sJOIN Has_Pet hp ON s.StuID = hp.StuIDJOIN Pets p ON hp.PetID = p.PetIDWHERE p.PetType = 'cat'",
+                "predict_sql": "SELECT COUNT(DISTINCT s.StuID) AS NumberOfStudentsWithCats FROM Student s JOIN Has_Pet hp ON s.StuID = hp.StuID JOIN Pets p ON hp.PetID = p.PetID WHERE p.PetType = 'cat';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3402,7 +3402,7 @@
                 "text": "",
                 "query": "select count(*) from (SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
                 "predict": "```sql\nSELECT COUNT(DISTINCT T1.StuID)\nFROM Student AS T1\nLEFT JOIN (\n    SELECT T2.StuID\n    FROM Has_Pet AS T2\n    JOIN Pets AS T3 ON T2.PetID = T3.PetID\n    WHERE T3.PetType = 'cat'\n) AS Cats ON T1.StuID = Cats.StuID\nWHERE Cats.StuID IS NULL;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT T1.StuID)FROM Student AS T1LEFT JOIN (    SELECT T2.StuID    FROM Has_Pet AS T2    JOIN Pets AS T3 ON T2.PetID = T3.PetID    WHERE T3.PetType = 'cat') AS Cats ON T1.StuID = Cats.StuIDWHERE Cats.StuID IS NULL",
+                "predict_sql": "SELECT COUNT(DISTINCT T1.StuID) FROM Student AS T1 LEFT JOIN (     SELECT T2.StuID     FROM Has_Pet AS T2     JOIN Pets AS T3 ON T2.PetID = T3.PetID     WHERE T3.PetType = 'cat' ) AS Cats ON T1.StuID = Cats.StuID WHERE Cats.StuID IS NULL;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3466,7 +3466,7 @@
                 "text": "",
                 "query": "select fullname from car_makers where maker = \"amc\"",
                 "predict": "```sql\nSELECT FullName FROM car_makers WHERE Maker = 'amc';\n```",
-                "predict_sql": "SELECT FullName FROM car_makers WHERE Maker = 'amc'",
+                "predict_sql": "SELECT FullName FROM car_makers WHERE Maker = 'amc';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3538,7 +3538,7 @@
                 "text": "",
                 "query": "SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.countryId HAVING count(*)  >  3 UNION SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T3.Model  =  'fiat';",
                 "predict": "The query you're asking for involves checking the number of car makers per country and also checking for a specific model. However, the model name 'flat' does not appear in the example data provided. Assuming 'flat' is a typo or an example, and you meant a generic model name, here's how you could structure the SQL query:\n\n```sql\nSELECT T1.CountryId, T1.CountryName\nFROM countries AS T1\nJOIN car_makers AS T2 ON T1.CountryId = T2.Country\nJOIN model_list AS T3 ON T2.Id = T3.Maker\nGROUP BY T1.CountryId, T1.CountryName\nHAVING COUNT(DISTINCT T2.Id) > 3 OR SUM(CASE WHEN T3.Model = 'flat' THEN 1 ELSE 0 END) > 0;\n```\n\nThis query checks for countries with more than three distinct car makers or that produce the model named 'flat'. Adjust the model name as necessary to fit the actual data.",
-                "predict_sql": "SELECT T1.CountryId, T1.CountryNameFROM countries AS T1JOIN car_makers AS T2 ON T1.CountryId = T2.CountryJOIN model_list AS T3 ON T2.Id = T3.MakerGROUP BY T1.CountryId, T1.CountryNameHAVING COUNT(DISTINCT T2.Id) > 3 OR SUM(CASE WHEN T3.Model = 'flat' THEN 1 ELSE 0 END) > 0",
+                "predict_sql": "SELECT T1.CountryId, T1.CountryName FROM countries AS T1 JOIN car_makers AS T2 ON T1.CountryId = T2.Country JOIN model_list AS T3 ON T2.Id = T3.Maker GROUP BY T1.CountryId, T1.CountryName HAVING COUNT(DISTINCT T2.Id) > 3 OR SUM(CASE WHEN T3.Model = 'flat' THEN 1 ELSE 0 END) > 0;",
                 "predict_type": "answerable",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the user's question about countries with more than three car makers or producing a specific model. Clarity: 2 points - The response is clear and easy to understand, providing a structured SQL query. Completeness: 1 point - While the response provides a SQL query, it lacks specific details about the actual data in the database regarding the number of car makers per country and the existence of the 'flat' model. Accuracy: 2 points - The SQL query is accurate in its structure and logic based on the provided schema. Utility: 1 point - The response somewhat meets the user's needs by providing a SQL query but does not clarify the absence of the 'flat' model in the example data. Total Score: 8 points."
@@ -3574,7 +3574,7 @@
                 "text": "",
                 "query": "SELECT T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id order by count(*)  desc limit 1",
                 "predict": "```sql\nSELECT p.cell_number\nFROM Professionals p\nJOIN Treatments t ON p.professional_id = t.professional_id\nGROUP BY p.professional_id\nORDER BY COUNT(t.treatment_id) DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT p.cell_numberFROM Professionals pJOIN Treatments t ON p.professional_id = t.professional_idGROUP BY p.professional_idORDER BY COUNT(t.treatment_id) DESCLIMIT 1",
+                "predict_sql": "SELECT p.cell_number FROM Professionals p JOIN Treatments t ON p.professional_id = t.professional_id GROUP BY p.professional_id ORDER BY COUNT(t.treatment_id) DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3637,7 +3637,7 @@
                 "text": "",
                 "query": "SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*) BETWEEN 1 AND 2",
                 "predict": "```sql\nSELECT Document_ID, COUNT(Paragraph_ID) AS Paragraph_Count\nFROM Paragraphs\nGROUP BY Document_ID\nHAVING Paragraph_Count BETWEEN 1 AND 2;\n```",
-                "predict_sql": "SELECT Document_ID, COUNT(Paragraph_ID) AS Paragraph_CountFROM ParagraphsGROUP BY Document_IDHAVING Paragraph_Count BETWEEN 1 AND 2",
+                "predict_sql": "SELECT Document_ID, COUNT(Paragraph_ID) AS Paragraph_Count FROM Paragraphs GROUP BY Document_ID HAVING Paragraph_Count BETWEEN 1 AND 2;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3826,7 +3826,7 @@
                 "text": "",
                 "query": "select name from teacher order by Age asc limit 1",
                 "predict": "```sql\nSELECT * FROM teacher ORDER BY Age ASC LIMIT 1;\n```",
-                "predict_sql": "SELECT * FROM teacher ORDER BY Age ASC LIMIT 1",
+                "predict_sql": "SELECT * FROM teacher ORDER BY Age ASC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3947,7 +3947,7 @@
                 "text": "",
                 "query": "SELECT DestAirport FROM flights WHERE FlightNo = 28",
                 "predict": "SELECT DestAirport FROM flights WHERE FlightNo = 28;",
-                "predict_sql": "SELECT DestAirport FROM flights WHERE FlightNo = 28",
+                "predict_sql": "SELECT DestAirport FROM flights WHERE FlightNo = 28;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -3996,7 +3996,7 @@
                 "text": "",
                 "query": "SELECT T3.Name FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID WHERE T2.Course  =  \"Math\"",
                 "predict": "```sql\nSELECT t.Name\nFROM teacher t\nJOIN course_arrange ca ON t.Teacher_ID = ca.Teacher_ID\nJOIN course c ON ca.Course_ID = c.Course_ID\nWHERE c.Course = 'Math';\n```",
-                "predict_sql": "SELECT t.NameFROM teacher tJOIN course_arrange ca ON t.Teacher_ID = ca.Teacher_IDJOIN course c ON ca.Course_ID = c.Course_IDWHERE c.Course = 'Math'",
+                "predict_sql": "SELECT t.Name FROM teacher t JOIN course_arrange ca ON t.Teacher_ID = ca.Teacher_ID JOIN course c ON ca.Course_ID = c.Course_ID WHERE c.Course = 'Math';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4074,7 +4074,7 @@
                 "text": "",
                 "query": "SELECT id from cars_data order by horsepower limit 1 ",
                 "predict": "```sql\nSELECT Id FROM cars_data WHERE Horsepower = (SELECT MIN(Horsepower) FROM cars_data WHERE Horsepower != 'NA');\n```",
-                "predict_sql": "SELECT Id FROM cars_data WHERE Horsepower = (SELECT MIN(Horsepower) FROM cars_data WHERE Horsepower != 'NA')",
+                "predict_sql": "SELECT Id FROM cars_data WHERE Horsepower = (SELECT MIN(Horsepower) FROM cars_data WHERE Horsepower != 'NA');",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4088,7 +4088,7 @@
                 "text": "",
                 "query": "SELECT avg(horsepower)from cars_data ",
                 "predict": "```sql\nSELECT AVG(CAST(horsepower AS INTEGER)) FROM cars_data WHERE horsepower != 'NA';\n```",
-                "predict_sql": "SELECT AVG(CAST(horsepower AS INTEGER)) FROM cars_data WHERE horsepower != 'NA'",
+                "predict_sql": "SELECT AVG(CAST(horsepower AS INTEGER)) FROM cars_data WHERE horsepower != 'NA';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4116,7 +4116,7 @@
                 "text": "",
                 "query": "SELECT T1.Id ,T2.model FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T1.Horsepower < (SELECT avg(Horsepower) FROM CARS_DATA) ",
                 "predict": "```sql\nSELECT T1.Id, T2.Model, T2.Make\nFROM cars_data AS T1\nJOIN car_names AS T2 ON T1.Id = T2.MakeId\nWHERE T1.Horsepower < (SELECT AVG(Horsepower) FROM cars_data);\n```",
-                "predict_sql": "SELECT T1.Id, T2.Model, T2.MakeFROM cars_data AS T1JOIN car_names AS T2 ON T1.Id = T2.MakeIdWHERE T1.Horsepower < (SELECT AVG(Horsepower) FROM cars_data)",
+                "predict_sql": "SELECT T1.Id, T2.Model, T2.Make FROM cars_data AS T1 JOIN car_names AS T2 ON T1.Id = T2.MakeId WHERE T1.Horsepower < (SELECT AVG(Horsepower) FROM cars_data);",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4151,7 +4151,7 @@
                 "text": "",
                 "query": "SELECT count(*) from country",
                 "predict": "```sql\nSELECT COUNT(*) FROM country;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM country",
+                "predict_sql": "SELECT COUNT(*) FROM country;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4165,7 +4165,7 @@
                 "text": "Do you mean the country code of city Herat?",
                 "query": "",
                 "predict": "The question is ambiguous because it's unclear whether you are asking for the country code of the city Herat or some other specific \"Code\" related to Herat. Based on the database schema, if you are asking for the country code where Herat is located, the SQL query would be:\n\n```sql\nSELECT CountryCode FROM city WHERE Name = 'Herat';\n```",
-                "predict_sql": "SELECT CountryCode FROM city WHERE Name = 'Herat'",
+                "predict_sql": "SELECT CountryCode FROM city WHERE Name = 'Herat';",
                 "predict_type": "ambiguous",
                 "RQS": 9,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question regarding the 'Code' of Herat. It correctly identifies that the question could pertain to the country code. Clarity: 2 points - The response is very clear and easy to understand, effectively communicating the ambiguity of the question. Completeness: 1 point - While the response addresses the ambiguity, it could have provided more context or examples of what other types of 'Code' could be relevant. Accuracy: 2 points - The response is completely accurate in its interpretation of the question and the SQL query provided. Utility: 2 points - The response excellently meets the user's needs by explaining the ambiguity and providing a relevant SQL query to find the country code. Total Score: 9 points."
@@ -4180,7 +4180,7 @@
                 "text": "",
                 "query": "SELECT countrycode  from city where name = \"Herat\"",
                 "predict": "```sql\nSELECT CountryCode FROM city WHERE Name = 'Herat';\n```",
-                "predict_sql": "SELECT CountryCode FROM city WHERE Name = 'Herat'",
+                "predict_sql": "SELECT CountryCode FROM city WHERE Name = 'Herat';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4229,7 +4229,7 @@
                 "text": "",
                 "query": "SELECT transcript_id FROM Transcripts ORDER BY transcript_date DESC LIMIT 1",
                 "predict": "```sql\nSELECT * FROM Transcripts ORDER BY transcript_date DESC LIMIT 1;\n```",
-                "predict_sql": "SELECT * FROM Transcripts ORDER BY transcript_date DESC LIMIT 1",
+                "predict_sql": "SELECT * FROM Transcripts ORDER BY transcript_date DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4293,7 +4293,7 @@
                 "text": "",
                 "query": "SELECT Name FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\")",
                 "predict": "```sql\nSELECT Name FROM country\nWHERE Code NOT IN (\n    SELECT CountryCode FROM countrylanguage WHERE Language = 'English'\n);\n```",
-                "predict_sql": "SELECT Name FROM countryWHERE Code NOT IN (    SELECT CountryCode FROM countrylanguage WHERE Language = 'English')",
+                "predict_sql": "SELECT Name FROM country WHERE Code NOT IN (     SELECT CountryCode FROM countrylanguage WHERE Language = 'English' );",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4356,7 +4356,7 @@
                 "text": "",
                 "query": "SELECT FlightNo FROM flights where SourceAirport=\"CVO\" and DestAirport=\"SNA\"",
                 "predict": "```sql\nSELECT * FROM flights WHERE SourceAirport = 'CVO' AND DestAirport = 'SNA';\n```",
-                "predict_sql": "SELECT * FROM flights WHERE SourceAirport = 'CVO' AND DestAirport = 'SNA'",
+                "predict_sql": "SELECT * FROM flights WHERE SourceAirport = 'CVO' AND DestAirport = 'SNA';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4434,7 +4434,7 @@
                 "text": "",
                 "query": "SELECT T1.series_name FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Episode = \"A Love of a Lifetime\";",
                 "predict": "```sql\nSELECT Channel FROM TV_series WHERE Episode = 'A Love of a Lifetime';\n```",
-                "predict_sql": "SELECT Channel FROM TV_series WHERE Episode = 'A Love of a Lifetime'",
+                "predict_sql": "SELECT Channel FROM TV_series WHERE Episode = 'A Love of a Lifetime';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4448,7 +4448,7 @@
                 "text": "",
                 "query": "SELECT  Viewers_m FROM  TV_series  where Episode = \"A Love of a Lifetime\";",
                 "predict": "SELECT Viewers_m FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
-                "predict_sql": "SELECT Viewers_m FROM TV_series WHERE Episode = \"A Love of a Lifetime\"",
+                "predict_sql": "SELECT Viewers_m FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4462,7 +4462,7 @@
                 "text": "",
                 "query": "SELECT  Weekly_Rank  FROM  TV_series  where Episode = \"A Love of a Lifetime\";",
                 "predict": "SELECT Rating FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
-                "predict_sql": "SELECT Rating FROM TV_series WHERE Episode = \"A Love of a Lifetime\"",
+                "predict_sql": "SELECT Rating FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4476,7 +4476,7 @@
                 "text": "",
                 "query": "SELECT  \tAir_Date  FROM  TV_series  where Episode = \"A Love of a Lifetime\";",
                 "predict": "SELECT Air_Date FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
-                "predict_sql": "SELECT Air_Date FROM TV_series WHERE Episode = \"A Love of a Lifetime\"",
+                "predict_sql": "SELECT Air_Date FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4511,7 +4511,7 @@
                 "text": "Did you mean to ask for the weight of the car with make id 1?",
                 "query": "",
                 "predict": "```sql\nSELECT Weight FROM cars_data WHERE Id = 1;\n```",
-                "predict_sql": "SELECT Weight FROM cars_data WHERE Id = 1",
+                "predict_sql": "SELECT Weight FROM cars_data WHERE Id = 1;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -4525,7 +4525,7 @@
                 "text": "",
                 "query": "SELECT T2.Weight FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T1.MakeID = 1",
                 "predict": "```sql\nSELECT Weight FROM cars_data WHERE Id = 1;\n```",
-                "predict_sql": "SELECT Weight FROM cars_data WHERE Id = 1",
+                "predict_sql": "SELECT Weight FROM cars_data WHERE Id = 1;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -4539,7 +4539,7 @@
                 "text": "Did you want to ask for the year on which the car model buick was launched?",
                 "query": "",
                 "predict": "```sql\nSELECT T2.Year FROM car_names AS T1 JOIN cars_data AS T2 ON T1.MakeId = T2.Id WHERE T1.Model = 'buick';\n```",
-                "predict_sql": "SELECT T2.Year FROM car_names AS T1 JOIN cars_data AS T2 ON T1.MakeId = T2.Id WHERE T1.Model = 'buick'",
+                "predict_sql": "SELECT T2.Year FROM car_names AS T1 JOIN cars_data AS T2 ON T1.MakeId = T2.Id WHERE T1.Model = 'buick';",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -4553,7 +4553,7 @@
                 "text": "",
                 "query": "SELECT T2.Year FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T1.Model = \"buick\"",
                 "predict": "SELECT Year FROM car_names JOIN cars_data ON car_names.MakeId = cars_data.Id WHERE car_names.Model = 'buick';",
-                "predict_sql": "SELECT Year FROM car_names JOIN cars_data ON car_names.MakeId = cars_data.Id WHERE car_names.Model = 'buick'",
+                "predict_sql": "SELECT Year FROM car_names JOIN cars_data ON car_names.MakeId = cars_data.Id WHERE car_names.Model = 'buick';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4616,7 +4616,7 @@
                 "text": "",
                 "query": "SELECT T2.Name FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name HAVING COUNT(*)  >=  2",
                 "predict": "```sql\nSELECT t.Name\nFROM teacher t\nJOIN course_arrange ca ON t.Teacher_ID = ca.Teacher_ID\nGROUP BY t.Teacher_ID\nHAVING COUNT(ca.Course_ID) >= 2;\n```",
-                "predict_sql": "SELECT t.NameFROM teacher tJOIN course_arrange ca ON t.Teacher_ID = ca.Teacher_IDGROUP BY t.Teacher_IDHAVING COUNT(ca.Course_ID) >= 2",
+                "predict_sql": "SELECT t.Name FROM teacher t JOIN course_arrange ca ON t.Teacher_ID = ca.Teacher_ID GROUP BY t.Teacher_ID HAVING COUNT(ca.Course_ID) >= 2;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4680,7 +4680,7 @@
                 "text": "",
                 "query": "select count(*) from cars_data where year='1974'",
                 "predict": "```sql\nSELECT COUNT(*) FROM cars_data WHERE Year = 1974;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM cars_data WHERE Year = 1974",
+                "predict_sql": "SELECT COUNT(*) FROM cars_data WHERE Year = 1974;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4729,7 +4729,7 @@
                 "text": "",
                 "query": "SELECT Name FROM singer ORDER BY age LIMIT 1",
                 "predict": "The question can be answered using the database information. Here is the SQL query to find the name of the youngest singer:\n\n```sql\nSELECT Name FROM singer ORDER BY Age ASC LIMIT 1;\n```",
-                "predict_sql": "SELECT Name FROM singer ORDER BY Age ASC LIMIT 1",
+                "predict_sql": "SELECT Name FROM singer ORDER BY Age ASC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it directly addresses the user's question about the youngest singer by providing a SQL query that retrieves the necessary information. Clarity: 2 points - The response is very clear and easy to understand, presenting the SQL query in a straightforward manner. Completeness: 2 points - The response thoroughly addresses the question by providing a complete SQL query that would yield the desired result. Accuracy: 2 points - The SQL query is accurate and correctly structured to find the youngest singer based on the provided database schema. Utility: 2 points - The response excellently meets the user's needs by providing a clear and relevant SQL query that can be executed to find the answer to the question."
@@ -4795,7 +4795,7 @@
                 "text": "",
                 "query": "select count(distinct Singer_ID) from Singer",
                 "predict": "```sql\nSELECT COUNT(*) FROM singer;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM singer",
+                "predict_sql": "SELECT COUNT(*) FROM singer;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4858,7 +4858,7 @@
                 "text": "",
                 "query": "SELECT Name FROM country WHERE continent  =  \"Europe\"",
                 "predict": "```sql\nSELECT Name FROM country WHERE Continent = 'Europe';\n```",
-                "predict_sql": "SELECT Name FROM country WHERE Continent = 'Europe'",
+                "predict_sql": "SELECT Name FROM country WHERE Continent = 'Europe';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -4907,7 +4907,7 @@
                 "text": "Did you mean  to ask for the names of all contestants?",
                 "query": "",
                 "predict": "The question seems to be asking for a list of all contestants. Here is the SQL query to retrieve that information:\n\n```sql\nSELECT contestant_number, contestant_name FROM CONTESTANTS;\n```",
-                "predict_sql": "SELECT contestant_number, contestant_name FROM CONTESTANTS",
+                "predict_sql": "SELECT contestant_number, contestant_name FROM CONTESTANTS;",
                 "predict_type": "ambiguous",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it provides a SQL query to retrieve the list of contestants, which directly addresses the user's question. Clarity: 2 points - The response is clear and easy to understand, presenting the SQL query in a straightforward manner. Completeness: 1 point - While the response provides a SQL query, it does not explicitly list the names of the contestants, which could be seen as lacking detail. Accuracy: 2 points - The SQL query is accurate and correctly structured to retrieve the desired information. Utility: 1 point - The response meets the user's needs by providing a query but does not clarify the ambiguity in the user's question regarding the term 'contest'. Overall, the response is helpful but could be improved by addressing the ambiguity in the user's request more directly."
@@ -4922,7 +4922,7 @@
                 "text": "",
                 "query": "SELECT contestant_name FROM CONTESTANTS",
                 "predict": "```sql\nSELECT contestant_name FROM CONTESTANTS;\n```",
-                "predict_sql": "SELECT contestant_name FROM CONTESTANTS",
+                "predict_sql": "SELECT contestant_name FROM CONTESTANTS;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -5043,7 +5043,7 @@
                 "text": "",
                 "query": "SELECT department_name FROM Departments WHERE department_name LIKE '%computer%'",
                 "predict": "```sql\nSELECT department_name FROM Departments WHERE department_name LIKE '%computer%';\n```",
-                "predict_sql": "SELECT department_name FROM Departments WHERE department_name LIKE '%computer%'",
+                "predict_sql": "SELECT department_name FROM Departments WHERE department_name LIKE '%computer%';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5162,7 +5162,7 @@
                 "text": "",
                 "query": "SELECT age from singer where name = \"Joe Sharp\"",
                 "predict": "```sql\nSELECT Age FROM singer WHERE Name = 'Joe Sharp';\n```",
-                "predict_sql": "SELECT Age FROM singer WHERE Name = 'Joe Sharp'",
+                "predict_sql": "SELECT Age FROM singer WHERE Name = 'Joe Sharp';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5225,7 +5225,7 @@
                 "text": "",
                 "query": "SELECT count(*) from Breeds",
                 "predict": "```sql\nSELECT COUNT(*) FROM Breeds;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Breeds",
+                "predict_sql": "SELECT COUNT(*) FROM Breeds;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5318,7 +5318,7 @@
                 "text": "",
                 "query": "SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1",
                 "predict": "```sql\nSELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1;\n```",
-                "predict_sql": "SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1",
+                "predict_sql": "SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5396,7 +5396,7 @@
                 "text": "",
                 "query": "SELECT DISTINCT T2.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model  =  T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker  =  T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId  =  T4.Id WHERE T4.weight  >  3500;",
                 "predict": "```sql\nSELECT Model FROM car_names WHERE MakeId IN (SELECT Id FROM cars_data WHERE Weight > 3500);\n```",
-                "predict_sql": "SELECT Model FROM car_names WHERE MakeId IN (SELECT Id FROM cars_data WHERE Weight > 3500)",
+                "predict_sql": "SELECT Model FROM car_names WHERE MakeId IN (SELECT Id FROM cars_data WHERE Weight > 3500);",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5410,7 +5410,7 @@
                 "text": "",
                 "query": "SELECT DISTINCT T2.Model, T3.maker FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model  =  T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker  =  T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId  =  T4.Id WHERE T3.FullName  =  'General Motors' order by t4.horsepower desc limit 1",
                 "predict": "SELECT T1.Make, T1.Model FROM car_names AS T1 JOIN cars_data AS T2 ON T1.MakeId = T2.Id WHERE T2.Horsepower = (SELECT MAX(Horsepower) FROM cars_data WHERE Horsepower NOT LIKE '%?%');",
-                "predict_sql": "SELECT T1.Make, T1.Model FROM car_names AS T1 JOIN cars_data AS T2 ON T1.MakeId = T2.Id WHERE T2.Horsepower = (SELECT MAX(Horsepower) FROM cars_data WHERE Horsepower NOT LIKE '%?%')",
+                "predict_sql": "SELECT T1.Make, T1.Model FROM car_names AS T1 JOIN cars_data AS T2 ON T1.MakeId = T2.Id WHERE T2.Horsepower = (SELECT MAX(Horsepower) FROM cars_data WHERE Horsepower NOT LIKE '%?%');",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5438,7 +5438,7 @@
                 "text": "",
                 "query": "SELECT DISTINCT t1.make, t1.model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model  =  T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker  =  T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId  =  T4.Id WHERE T3.FullName  =  'General Motors' order by t4.mpg desc limit 1",
                 "predict": "SELECT T1.Make, T1.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model = T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker = T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId = T4.Id WHERE T3.FullName = 'General Motors' ORDER BY T4.MPG DESC LIMIT 1;",
-                "predict_sql": "SELECT T1.Make, T1.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model = T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker = T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId = T4.Id WHERE T3.FullName = 'General Motors' ORDER BY T4.MPG DESC LIMIT 1",
+                "predict_sql": "SELECT T1.Make, T1.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model = T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker = T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId = T4.Id WHERE T3.FullName = 'General Motors' ORDER BY T4.MPG DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5473,7 +5473,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM votes WHERE state  =  'NY' or  state  =  'CA'",
                 "predict": "```sql\nSELECT state, COUNT(*) AS total_votes\nFROM VOTES\nWHERE state IN ('NY', 'CA')\nGROUP BY state;\n```",
-                "predict_sql": "SELECT state, COUNT(*) AS total_votesFROM VOTESWHERE state IN ('NY', 'CA')GROUP BY state",
+                "predict_sql": "SELECT state, COUNT(*) AS total_votes FROM VOTES WHERE state IN ('NY', 'CA') GROUP BY state;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5487,7 +5487,7 @@
                 "text": "",
                 "query": "SELECT distinct contestant_number FROM votes ",
                 "predict": "```sql\nSELECT DISTINCT contestant_number FROM CONTESTANTS;\n```",
-                "predict_sql": "SELECT DISTINCT contestant_number FROM CONTESTANTS",
+                "predict_sql": "SELECT DISTINCT contestant_number FROM CONTESTANTS;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5501,7 +5501,7 @@
                 "text": "Sorry, I can't answer the question based on the information in the table.",
                 "query": "",
                 "predict": "```sql\nSELECT contestant_number, COUNT(*) as total_votes\nFROM votes\nGROUP BY contestant_number\nORDER BY total_votes DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT contestant_number, COUNT(*) as total_votesFROM votesGROUP BY contestant_numberORDER BY total_votes DESCLIMIT 1",
+                "predict_sql": "SELECT contestant_number, COUNT(*) as total_votes FROM votes GROUP BY contestant_number ORDER BY total_votes DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -5550,7 +5550,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Highschooler",
                 "predict": "```sql\nSELECT COUNT(*) FROM Highschooler;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Highschooler",
+                "predict_sql": "SELECT COUNT(*) FROM Highschooler;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5564,7 +5564,7 @@
                 "text": "",
                 "query": "SELECT avg(grade) FROM Highschooler",
                 "predict": "SELECT AVG(grade) FROM Highschooler;",
-                "predict_sql": "SELECT AVG(grade) FROM Highschooler",
+                "predict_sql": "SELECT AVG(grade) FROM Highschooler;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5627,7 +5627,7 @@
                 "text": "",
                 "query": "SELECT distinct Nationality FROM people",
                 "predict": "```sql\nSELECT DISTINCT Nationality FROM people;\n```",
-                "predict_sql": "SELECT DISTINCT Nationality FROM people",
+                "predict_sql": "SELECT DISTINCT Nationality FROM people;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5704,7 +5704,7 @@
                 "text": "",
                 "query": "SELECT T1.* FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;",
                 "predict": "```sql\nSELECT Maker, COUNT(Model) AS ModelCount\nFROM model_list\nGROUP BY Maker\nHAVING COUNT(Model) > 3;\n```",
-                "predict_sql": "SELECT Maker, COUNT(Model) AS ModelCountFROM model_listGROUP BY MakerHAVING COUNT(Model) > 3",
+                "predict_sql": "SELECT Maker, COUNT(Model) AS ModelCount FROM model_list GROUP BY Maker HAVING COUNT(Model) > 3;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5718,7 +5718,7 @@
                 "text": "",
                 "query": "SELECT T1.id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;",
                 "predict": "The SQL query provided in the previous response already includes the IDs of the makers who designed more than 3 car models. Here is the query again for clarity:\n\n```sql\nSELECT T1.Id FROM car_makers AS T1\nJOIN model_list AS T2 ON T1.Id = T2.Maker\nGROUP BY T1.Id\nHAVING COUNT(*) > 3;\n```",
-                "predict_sql": "SELECT T1.Id FROM car_makers AS T1JOIN model_list AS T2 ON T1.Id = T2.MakerGROUP BY T1.IdHAVING COUNT(*) > 3",
+                "predict_sql": "SELECT T1.Id FROM car_makers AS T1 JOIN model_list AS T2 ON T1.Id = T2.Maker GROUP BY T1.Id HAVING COUNT(*) > 3;",
                 "predict_type": "unanswerable",
                 "RQS": 2,
                 "RQS_Rationale": "The system's response does not directly answer the user's question about the IDs of the makers. Instead, it provides an SQL query that is intended to find makers with more than 3 car models, which is not relevant to the user's request. \n\nRelevance: 0 points - The response is completely irrelevant to the user's question about the IDs of specific makers. \nClarity: 1 point - The response is mostly clear in presenting the SQL query, but it does not clarify how it relates to the user's question. \nCompleteness: 0 points - The response does not address the user's question at all. \nAccuracy: 1 point - The SQL query itself is accurate in its context but does not pertain to the user's request. \nUtility: 0 points - The response does not meet the user's needs as it fails to provide the requested information about maker IDs. \n\nTotal Score: 2 points."
@@ -5733,7 +5733,7 @@
                 "text": "",
                 "query": "SELECT T1.FullName ,  T1.Id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;",
                 "predict": "```sql\nSELECT T1.Id, T1.FullName\nFROM car_makers AS T1\nJOIN model_list AS T2 ON T1.Id = T2.Maker\nGROUP BY T1.Id, T1.FullName\nHAVING COUNT(*) > 3;\n```",
-                "predict_sql": "SELECT T1.Id, T1.FullNameFROM car_makers AS T1JOIN model_list AS T2 ON T1.Id = T2.MakerGROUP BY T1.Id, T1.FullNameHAVING COUNT(*) > 3",
+                "predict_sql": "SELECT T1.Id, T1.FullName FROM car_makers AS T1 JOIN model_list AS T2 ON T1.Id = T2.Maker GROUP BY T1.Id, T1.FullName HAVING COUNT(*) > 3;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5768,7 +5768,7 @@
                 "text": "",
                 "query": "SELECT student_id, friend_id FROM Friend",
                 "predict": "```sql\nSELECT student_id, friend_id FROM Friend;\n```",
-                "predict_sql": "SELECT student_id, friend_id FROM Friend",
+                "predict_sql": "SELECT student_id, friend_id FROM Friend;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5917,7 +5917,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM student WHERE age  >  20",
                 "predict": "```sql\nSELECT COUNT(*) FROM Student WHERE Age > 20;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Student WHERE Age > 20",
+                "predict_sql": "SELECT COUNT(*) FROM Student WHERE Age > 20;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -5951,7 +5951,7 @@
                 "text": "",
                 "query": "SELECT avg(Horsepower) FROM cars_data",
                 "predict": "```sql\nSELECT AVG(CAST(Horsepower AS INTEGER)) AS AverageHorsepower FROM cars_data WHERE Horsepower != 'NA';\n```",
-                "predict_sql": "SELECT AVG(CAST(Horsepower AS INTEGER)) AS AverageHorsepower FROM cars_data WHERE Horsepower != 'NA'",
+                "predict_sql": "SELECT AVG(CAST(Horsepower AS INTEGER)) AS AverageHorsepower FROM cars_data WHERE Horsepower != 'NA';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6013,7 +6013,7 @@
                 "text": "",
                 "query": "SELECT distinct loser_name from matches where loser_age = 24.626967830300003",
                 "predict": "```sql\nSELECT loser_name FROM matches WHERE loser_age = 24.626967830300003;\n```",
-                "predict_sql": "SELECT loser_name FROM matches WHERE loser_age = 24.626967830300003",
+                "predict_sql": "SELECT loser_name FROM matches WHERE loser_age = 24.626967830300003;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6027,7 +6027,7 @@
                 "text": "",
                 "query": "SELECT count(*) from matches where loser_name = \"Petra Kvitova\" or winner_name = \"Petra Kvitova\"",
                 "predict": "```sql\nSELECT COUNT(*) FROM matches WHERE winner_name = 'Petra Kvitova' OR loser_name = 'Petra Kvitova';\n```",
-                "predict_sql": "SELECT COUNT(*) FROM matches WHERE winner_name = 'Petra Kvitova' OR loser_name = 'Petra Kvitova'",
+                "predict_sql": "SELECT COUNT(*) FROM matches WHERE winner_name = 'Petra Kvitova' OR loser_name = 'Petra Kvitova';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6055,7 +6055,7 @@
                 "text": "",
                 "query": "SELECT distinct loser_id from matches where loser_rank_points > 3500",
                 "predict": "SELECT loser_id, count(*) as total_matches FROM matches WHERE loser_rank_points > 3500 GROUP BY loser_id;",
-                "predict_sql": "SELECT loser_id, count(*) as total_matches FROM matches WHERE loser_rank_points > 3500 GROUP BY loser_id",
+                "predict_sql": "SELECT loser_id, count(*) as total_matches FROM matches WHERE loser_rank_points > 3500 GROUP BY loser_id;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6104,7 +6104,7 @@
                 "text": "",
                 "query": "SELECT year from concert where concert_name = \"Auditions\"",
                 "predict": "```sql\nSELECT Year FROM concert WHERE concert_Name = 'Auditions';\n```",
-                "predict_sql": "SELECT Year FROM concert WHERE concert_Name = 'Auditions'",
+                "predict_sql": "SELECT Year FROM concert WHERE concert_Name = 'Auditions';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6118,7 +6118,7 @@
                 "text": "",
                 "query": "SELECT year from concert where concert_name = \"Super bootcamp\"",
                 "predict": "SELECT year FROM concert WHERE concert_Name = 'Super bootcamp';",
-                "predict_sql": "SELECT year FROM concert WHERE concert_Name = 'Super bootcamp'",
+                "predict_sql": "SELECT year FROM concert WHERE concert_Name = 'Super bootcamp';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6223,7 +6223,7 @@
                 "text": "",
                 "query": "SELECT name FROM Highschooler",
                 "predict": "```sql\nSELECT name FROM Highschooler;\n```",
-                "predict_sql": "SELECT name FROM Highschooler",
+                "predict_sql": "SELECT name FROM Highschooler;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6252,7 +6252,7 @@
                 "text": "",
                 "query": "SELECT count(*) from  Likes  group by student_id order by  count(*) desc limit  1",
                 "predict": "```sql\nSELECT student_id, COUNT(liked_id) AS number_of_likes\nFROM Likes\nGROUP BY student_id\nORDER BY number_of_likes DESC;\n```",
-                "predict_sql": "SELECT student_id, COUNT(liked_id) AS number_of_likesFROM LikesGROUP BY student_idORDER BY number_of_likes DESC",
+                "predict_sql": "SELECT student_id, COUNT(liked_id) AS number_of_likes FROM Likes GROUP BY student_id ORDER BY number_of_likes DESC;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6330,7 +6330,7 @@
                 "text": "",
                 "query": "SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_left ASC LIMIT 1",
                 "predict": "```sql\nSELECT first_name, middle_name, last_name FROM Students WHERE date_left = (SELECT MIN(date_left) FROM Students WHERE date_left IS NOT NULL);\n```",
-                "predict_sql": "SELECT first_name, middle_name, last_name FROM Students WHERE date_left = (SELECT MIN(date_left) FROM Students WHERE date_left IS NOT NULL)",
+                "predict_sql": "SELECT first_name, middle_name, last_name FROM Students WHERE date_left = (SELECT MIN(date_left) FROM Students WHERE date_left IS NOT NULL);",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6365,7 +6365,7 @@
                 "text": "",
                 "query": "SELECT transcript_date FROM Transcripts group by transcript_date order by count(*) asc limit 1",
                 "predict": "```sql\nSELECT transcript_date, COUNT(*) AS count\nFROM Transcripts\nGROUP BY transcript_date\nORDER BY count ASC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT transcript_date, COUNT(*) AS countFROM TranscriptsGROUP BY transcript_dateORDER BY count ASCLIMIT 1",
+                "predict_sql": "SELECT transcript_date, COUNT(*) AS count FROM Transcripts GROUP BY transcript_date ORDER BY count ASC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6379,7 +6379,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Transcripts Where transcript_date = \"1975-05-06 12:04:47\"",
                 "predict": "```sql\nSELECT COUNT(*) FROM Transcripts WHERE transcript_date = '1975-05-06 12:04:47';\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Transcripts WHERE transcript_date = '1975-05-06 12:04:47'",
+                "predict_sql": "SELECT COUNT(*) FROM Transcripts WHERE transcript_date = '1975-05-06 12:04:47';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6428,7 +6428,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Friend",
                 "predict": "```sql\nSELECT COUNT(*) FROM Friend;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Friend",
+                "predict_sql": "SELECT COUNT(*) FROM Friend;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6442,7 +6442,7 @@
                 "text": "Do you want me to find the average grade of entries in the Highschooler table?",
                 "query": "",
                 "predict": "```sql\nSELECT AVG(grade) FROM Highschooler;\n```",
-                "predict_sql": "SELECT AVG(grade) FROM Highschooler",
+                "predict_sql": "SELECT AVG(grade) FROM Highschooler;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -6456,7 +6456,7 @@
                 "text": "",
                 "query": "SELECT avg(grade) FROM Highschooler",
                 "predict": "SELECT AVG(grade) FROM Highschooler;",
-                "predict_sql": "SELECT AVG(grade) FROM Highschooler",
+                "predict_sql": "SELECT AVG(grade) FROM Highschooler;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6535,7 +6535,7 @@
                 "text": "",
                 "query": "SELECT COUNT(T1.Airline) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T2.sourceAirport like \"%APG%\"\n\n",
                 "predict": "```sql\nSELECT COUNT(DISTINCT Airline) FROM flights WHERE SourceAirport = 'APG';\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT Airline) FROM flights WHERE SourceAirport = 'APG'",
+                "predict_sql": "SELECT COUNT(DISTINCT Airline) FROM flights WHERE SourceAirport = 'APG';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6549,7 +6549,7 @@
                 "text": "Did you mean to ask for the flight numbers of all flights on Delta Airlines?",
                 "query": "",
                 "predict": "SELECT uid FROM airlines WHERE Airline = 'Delta Airlines';",
-                "predict_sql": "SELECT uid FROM airlines WHERE Airline = 'Delta Airlines'",
+                "predict_sql": "SELECT uid FROM airlines WHERE Airline = 'Delta Airlines';",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -6563,7 +6563,7 @@
                 "text": "",
                 "query": "SELECT T2.FlightNo FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid = T2.Airline WHERE T1.Airline = \"Delta Airlines\"\n\n",
                 "predict": "```sql\nSELECT FlightNo FROM flights JOIN airlines ON flights.Airline = airlines.uid WHERE airlines.Airline = 'Delta Airlines';\n```",
-                "predict_sql": "SELECT FlightNo FROM flights JOIN airlines ON flights.Airline = airlines.uid WHERE airlines.Airline = 'Delta Airlines'",
+                "predict_sql": "SELECT FlightNo FROM flights JOIN airlines ON flights.Airline = airlines.uid WHERE airlines.Airline = 'Delta Airlines';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6598,7 +6598,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Dogs",
                 "predict": "```sql\nSELECT COUNT(*) FROM Dogs;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Dogs",
+                "predict_sql": "SELECT COUNT(*) FROM Dogs;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6612,7 +6612,7 @@
                 "text": "",
                 "query": "SELECT age FROM Dogs where name = \"Kacey\"",
                 "predict": "SELECT age FROM Dogs WHERE name = 'Kacey';",
-                "predict_sql": "SELECT age FROM Dogs WHERE name = 'Kacey'",
+                "predict_sql": "SELECT age FROM Dogs WHERE name = 'Kacey';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6704,7 +6704,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id JOIN COUNTRIES AS T3 ON T2.Country  =  T3.CountryId WHERE T3.CountryName  =  'usa';",
                 "predict": "```sql\nSELECT COUNT(*) FROM model_list\nJOIN car_makers ON model_list.Maker = car_makers.Id\nWHERE car_makers.Country = 'usa';\n```",
-                "predict_sql": "SELECT COUNT(*) FROM model_listJOIN car_makers ON model_list.Maker = car_makers.IdWHERE car_makers.Country = 'usa'",
+                "predict_sql": "SELECT COUNT(*) FROM model_list JOIN car_makers ON model_list.Maker = car_makers.Id WHERE car_makers.Country = 'usa';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6718,7 +6718,7 @@
                 "text": "",
                 "query": "SELECT distinct t1.maker FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'usa';",
                 "predict": "SELECT DISTINCT T2.FullName FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id JOIN COUNTRIES AS T3 ON T2.Country  =  T3.CountryId WHERE T3.CountryName  =  'usa';",
-                "predict_sql": "SELECT DISTINCT T2.FullName FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id JOIN COUNTRIES AS T3 ON T2.Country  =  T3.CountryId WHERE T3.CountryName  =  'usa'",
+                "predict_sql": "SELECT DISTINCT T2.FullName FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id JOIN COUNTRIES AS T3 ON T2.Country  =  T3.CountryId WHERE T3.CountryName  =  'usa';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -6768,7 +6768,7 @@
                 "text": "",
                 "query": "SELECT Name FROM country ORDER BY Population ASC LIMIT 3",
                 "predict": "```sql\nSELECT Name FROM country ORDER BY Population ASC LIMIT 3;\n```",
-                "predict_sql": "SELECT Name FROM country ORDER BY Population ASC LIMIT 3",
+                "predict_sql": "SELECT Name FROM country ORDER BY Population ASC LIMIT 3;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7030,7 +7030,7 @@
                 "text": "",
                 "query": "SELECT AVG(grade) FROM Highschooler",
                 "predict": "```sql\nSELECT AVG(grade) FROM Highschooler;\n```",
-                "predict_sql": "SELECT AVG(grade) FROM Highschooler",
+                "predict_sql": "SELECT AVG(grade) FROM Highschooler;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7073,7 +7073,7 @@
                 "text": "",
                 "query": "SELECT MAX(grade) FROM Highschooler",
                 "predict": "SELECT MAX(grade) FROM Highschooler;",
-                "predict_sql": "SELECT MAX(grade) FROM Highschooler",
+                "predict_sql": "SELECT MAX(grade) FROM Highschooler;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7202,7 +7202,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM stadium WHERE average > 1000",
                 "predict": "```sql\nSELECT COUNT(*) FROM stadium WHERE Average > 1000;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM stadium WHERE Average > 1000",
+                "predict_sql": "SELECT COUNT(*) FROM stadium WHERE Average > 1000;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7280,7 +7280,7 @@
                 "text": "",
                 "query": "select age from employee where name = \"George Chuter\"",
                 "predict": "```sql\nSELECT Age FROM employee WHERE Name = 'George Chuter';\n```",
-                "predict_sql": "SELECT Age FROM employee WHERE Name = 'George Chuter'",
+                "predict_sql": "SELECT Age FROM employee WHERE Name = 'George Chuter';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7335,15 +7335,15 @@
         "turns": [
             {
                 "isuser": true,
-                "text": "What is the membership level of Gonzalo Higua\u00edn ?",
+                "text": "What is the membership level of Gonzalo Higuaín ?",
                 "type": "answerable"
             },
             {
                 "isuser": false,
                 "text": "",
-                "query": "SELECT Level_of_membership FROM visitor WHERE name =  \"Gonzalo Higua\u00edn \"",
-                "predict": "```sql\nSELECT Level_of_membership FROM visitor WHERE Name = 'Gonzalo Higua\u00edn';\n```",
-                "predict_sql": "SELECT Level_of_membership FROM visitor WHERE Name = 'Gonzalo Higua\u00edn'",
+                "query": "SELECT Level_of_membership FROM visitor WHERE name =  \"Gonzalo Higuaín \"",
+                "predict": "```sql\nSELECT Level_of_membership FROM visitor WHERE Name = 'Gonzalo Higuaín';\n```",
+                "predict_sql": "SELECT Level_of_membership FROM visitor WHERE Name = 'Gonzalo Higuaín';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7448,7 +7448,7 @@
                 "text": "",
                 "query": "SELECT T1.degree_program_id ,  T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1",
                 "predict": "```sql\nSELECT degree_program_id, degree_summary_name\nFROM Degree_Programs\nWHERE degree_program_id = (\n    SELECT degree_program_id\n    FROM Student_Enrolment\n    GROUP BY degree_program_id\n    ORDER BY COUNT(*) DESC\n    LIMIT 1\n);\n```",
-                "predict_sql": "SELECT degree_program_id, degree_summary_nameFROM Degree_ProgramsWHERE degree_program_id = (    SELECT degree_program_id    FROM Student_Enrolment    GROUP BY degree_program_id    ORDER BY COUNT(*) DESC    LIMIT 1)",
+                "predict_sql": "SELECT degree_program_id, degree_summary_name FROM Degree_Programs WHERE degree_program_id = (     SELECT degree_program_id     FROM Student_Enrolment     GROUP BY degree_program_id     ORDER BY COUNT(*) DESC     LIMIT 1 );",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7462,7 +7462,7 @@
                 "text": "Could you please clarify your question? Since one program has only one degree summary.",
                 "query": "",
                 "predict": "```sql\nSELECT degree_summary_name\nFROM Degree_Programs\nWHERE degree_program_id = 9\nGROUP BY degree_summary_name\nORDER BY COUNT(*) DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT degree_summary_nameFROM Degree_ProgramsWHERE degree_program_id = 9GROUP BY degree_summary_nameORDER BY COUNT(*) DESCLIMIT 1",
+                "predict_sql": "SELECT degree_summary_name FROM Degree_Programs WHERE degree_program_id = 9 GROUP BY degree_summary_name ORDER BY COUNT(*) DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -7476,7 +7476,7 @@
                 "text": "",
                 "query": "SELECT T1.degree_program_id  FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1",
                 "predict": "```sql\nSELECT degree_program_id, COUNT(student_id) AS student_count\nFROM Student_Enrolment\nGROUP BY degree_program_id\nORDER BY student_count DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT degree_program_id, COUNT(student_id) AS student_countFROM Student_EnrolmentGROUP BY degree_program_idORDER BY student_count DESCLIMIT 1",
+                "predict_sql": "SELECT degree_program_id, COUNT(student_id) AS student_count FROM Student_Enrolment GROUP BY degree_program_id ORDER BY student_count DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7490,7 +7490,7 @@
                 "text": "",
                 "query": "SELECT COUNT(*) FROM Student_Enrolment WHERE degree_program_id = \"9\"",
                 "predict": "```sql\nSELECT COUNT(*) AS number_of_students FROM Student_Enrolment WHERE degree_program_id = 9;\n```",
-                "predict_sql": "SELECT COUNT(*) AS number_of_students FROM Student_Enrolment WHERE degree_program_id = 9",
+                "predict_sql": "SELECT COUNT(*) AS number_of_students FROM Student_Enrolment WHERE degree_program_id = 9;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7573,7 +7573,7 @@
                 "text": "",
                 "query": "SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1",
                 "predict": "```sql\nSELECT CountryCode, COUNT(Language) AS NumberOfLanguages\nFROM countrylanguage\nGROUP BY CountryCode\nORDER BY NumberOfLanguages DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT CountryCode, COUNT(Language) AS NumberOfLanguagesFROM countrylanguageGROUP BY CountryCodeORDER BY NumberOfLanguages DESCLIMIT 1",
+                "predict_sql": "SELECT CountryCode, COUNT(Language) AS NumberOfLanguages FROM countrylanguage GROUP BY CountryCode ORDER BY NumberOfLanguages DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7707,7 +7707,7 @@
                 "text": "",
                 "query": "select count(*) from (SELECT region FROM country WHERE Continent  =  \"Asia\" group by region)",
                 "predict": "```sql\nSELECT COUNT(DISTINCT Region) FROM country WHERE Continent = 'Asia';\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT Region) FROM country WHERE Continent = 'Asia'",
+                "predict_sql": "SELECT COUNT(DISTINCT Region) FROM country WHERE Continent = 'Asia';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7721,7 +7721,7 @@
                 "text": "",
                 "query": "select count(*) from (SELECT region FROM country WHERE Continent  =  \"Europe\" group by region)",
                 "predict": "```sql\nselect count(distinct region) from country where Continent = 'Europe';\n```",
-                "predict_sql": "select count(distinct region) from country where Continent = 'Europe'",
+                "predict_sql": "select count(distinct region) from country where Continent = 'Europe';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7771,7 +7771,7 @@
                 "text": "",
                 "query": "SELECT T1.document_id ,  T2.document_name ,  count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id",
                 "predict": "```sql\nSELECT Documents.Document_ID, Documents.Document_Name, COUNT(Paragraphs.Paragraph_ID) AS NumberOfParagraphs\nFROM Documents\nLEFT JOIN Paragraphs ON Documents.Document_ID = Paragraphs.Document_ID\nGROUP BY Documents.Document_ID, Documents.Document_Name;\n```",
-                "predict_sql": "SELECT Documents.Document_ID, Documents.Document_Name, COUNT(Paragraphs.Paragraph_ID) AS NumberOfParagraphsFROM DocumentsLEFT JOIN Paragraphs ON Documents.Document_ID = Paragraphs.Document_IDGROUP BY Documents.Document_ID, Documents.Document_Name",
+                "predict_sql": "SELECT Documents.Document_ID, Documents.Document_Name, COUNT(Paragraphs.Paragraph_ID) AS NumberOfParagraphs FROM Documents LEFT JOIN Paragraphs ON Documents.Document_ID = Paragraphs.Document_ID GROUP BY Documents.Document_ID, Documents.Document_Name;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7800,7 +7800,7 @@
                 "text": "",
                 "query": "SELECT Paragraph_Text FROM Paragraphs",
                 "predict": "```sql\nSELECT Paragraph_Text FROM Paragraphs;\n```",
-                "predict_sql": "SELECT Paragraph_Text FROM Paragraphs",
+                "predict_sql": "SELECT Paragraph_Text FROM Paragraphs;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -7864,7 +7864,7 @@
                 "text": "",
                 "query": "SELECT property_name FROM Properties WHERE room_count  >  1",
                 "predict": "```sql\nSELECT property_name FROM Properties WHERE room_count > 1;\n```",
-                "predict_sql": "SELECT property_name FROM Properties WHERE room_count > 1",
+                "predict_sql": "SELECT property_name FROM Properties WHERE room_count > 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8034,7 +8034,7 @@
                 "text": "",
                 "query": "SELECT count(*) from airports",
                 "predict": "```sql\nSELECT COUNT(*) FROM airports;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM airports",
+                "predict_sql": "SELECT COUNT(*) FROM airports;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8125,7 +8125,7 @@
                 "text": "",
                 "query": "SELECT sum(ranking_points) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name",
                 "predict": "```sql\nSELECT p.first_name, SUM(r.ranking_points) AS total_ranking_points\nFROM players p\nJOIN rankings r ON p.player_id = r.player_id\nGROUP BY p.player_id, p.first_name;\n```",
-                "predict_sql": "SELECT p.first_name, SUM(r.ranking_points) AS total_ranking_pointsFROM players pJOIN rankings r ON p.player_id = r.player_idGROUP BY p.player_id, p.first_name",
+                "predict_sql": "SELECT p.first_name, SUM(r.ranking_points) AS total_ranking_points FROM players p JOIN rankings r ON p.player_id = r.player_id GROUP BY p.player_id, p.first_name;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8188,7 +8188,7 @@
                 "text": "Sorry, I can not answer that question based on this table. ",
                 "query": "",
                 "predict": "```sql\nSELECT COUNT(*) FROM visitor;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM visitor",
+                "predict_sql": "SELECT COUNT(*) FROM visitor;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -8202,7 +8202,7 @@
                 "text": "",
                 "query": "SELECT count(*) from visitor",
                 "predict": "```sql\nSELECT COUNT(*) FROM visitor;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM visitor",
+                "predict_sql": "SELECT COUNT(*) FROM visitor;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8216,7 +8216,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM visitor WHERE Level_of_membership  >  4",
                 "predict": "```sql\nSELECT COUNT(*) FROM visitor WHERE Level_of_membership > 4;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM visitor WHERE Level_of_membership > 4",
+                "predict_sql": "SELECT COUNT(*) FROM visitor WHERE Level_of_membership > 4;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8279,7 +8279,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'germany';",
                 "predict": "```sql\nSELECT COUNT(*) FROM car_makers WHERE Country = 'germany';\n```",
-                "predict_sql": "SELECT COUNT(*) FROM car_makers WHERE Country = 'germany'",
+                "predict_sql": "SELECT COUNT(*) FROM car_makers WHERE Country = 'germany';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8293,7 +8293,7 @@
                 "text": "",
                 "query": "SELECt T1.maker FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'germany';",
                 "predict": "```sql\nSELECT Maker FROM car_makers\nJOIN countries ON car_makers.Country = countries.CountryId\nWHERE countries.CountryName = 'Germany';\n```",
-                "predict_sql": "SELECT Maker FROM car_makersJOIN countries ON car_makers.Country = countries.CountryIdWHERE countries.CountryName = 'Germany'",
+                "predict_sql": "SELECT Maker FROM car_makers JOIN countries ON car_makers.Country = countries.CountryId WHERE countries.CountryName = 'Germany';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8307,7 +8307,7 @@
                 "text": "do you mean car makers? ",
                 "query": "",
                 "predict": "```sql\nSELECT COUNT(*) FROM car_makers AS cm\nJOIN countries AS c ON cm.Country = c.CountryId\nJOIN model_list AS ml ON cm.Id = ml.Maker\nJOIN car_names AS cn ON ml.Model = cn.Model\nWHERE c.CountryName = 'USA';\n```",
-                "predict_sql": "SELECT COUNT(*) FROM car_makers AS cmJOIN countries AS c ON cm.Country = c.CountryIdJOIN model_list AS ml ON cm.Id = ml.MakerJOIN car_names AS cn ON ml.Model = cn.ModelWHERE c.CountryName = 'USA'",
+                "predict_sql": "SELECT COUNT(*) FROM car_makers AS cm JOIN countries AS c ON cm.Country = c.CountryId JOIN model_list AS ml ON cm.Id = ml.Maker JOIN car_names AS cn ON ml.Model = cn.Model WHERE c.CountryName = 'USA';",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -8321,7 +8321,7 @@
                 "text": "",
                 "query": "SELECt count(T1.maker) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'usa';",
                 "predict": "SELECT count(*) FROM car_makers AS cm JOIN countries AS c ON cm.Country = c.CountryId WHERE c.CountryName = 'USA';",
-                "predict_sql": "SELECT count(*) FROM car_makers AS cm JOIN countries AS c ON cm.Country = c.CountryId WHERE c.CountryName = 'USA'",
+                "predict_sql": "SELECT count(*) FROM car_makers AS cm JOIN countries AS c ON cm.Country = c.CountryId WHERE c.CountryName = 'USA';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8335,7 +8335,7 @@
                 "text": "",
                 "query": "SELECt T1.maker FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'usa';",
                 "predict": "SELECT T1.Maker FROM car_makers AS T1 JOIN countries AS T2 ON T1.Country = T2.CountryId WHERE T2.CountryName = 'USA';",
-                "predict_sql": "SELECT T1.Maker FROM car_makers AS T1 JOIN countries AS T2 ON T1.Country = T2.CountryId WHERE T2.CountryName = 'USA'",
+                "predict_sql": "SELECT T1.Maker FROM car_makers AS T1 JOIN countries AS T2 ON T1.Country = T2.CountryId WHERE T2.CountryName = 'USA';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8370,7 +8370,7 @@
                 "text": "Do you want the first and last names of owners and the states they live in?",
                 "query": "",
                 "predict": "```sql\nSELECT first_name, last_name, state FROM Owners;\n```",
-                "predict_sql": "SELECT first_name, last_name, state FROM Owners",
+                "predict_sql": "SELECT first_name, last_name, state FROM Owners;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -8384,7 +8384,7 @@
                 "text": "",
                 "query": "SELECT first_name ,  last_name, state FROM Owners",
                 "predict": "```sql\nSELECT first_name, last_name, state FROM Owners;\n```",
-                "predict_sql": "SELECT first_name, last_name, state FROM Owners",
+                "predict_sql": "SELECT first_name, last_name, state FROM Owners;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8447,7 +8447,7 @@
                 "text": "",
                 "query": "SELECT city FROM employee WHERE age  <  30 GROUP BY city HAVING count(*)  >  1",
                 "predict": "```sql\nSELECT City\nFROM employee\nWHERE Age < 30\nGROUP BY City\nHAVING COUNT(*) > 1;\n```",
-                "predict_sql": "SELECT CityFROM employeeWHERE Age < 30GROUP BY CityHAVING COUNT(*) > 1",
+                "predict_sql": "SELECT City FROM employee WHERE Age < 30 GROUP BY City HAVING COUNT(*) > 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8461,7 +8461,7 @@
                 "text": "",
                 "query": "SELECT city FROM employee WHERE age  >  30 GROUP BY city HAVING count(*)  >  1",
                 "predict": "```sql\nSELECT City FROM employee WHERE Age > 30 GROUP BY City HAVING COUNT(*) > 1;\n```",
-                "predict_sql": "SELECT City FROM employee WHERE Age > 30 GROUP BY City HAVING COUNT(*) > 1",
+                "predict_sql": "SELECT City FROM employee WHERE Age > 30 GROUP BY City HAVING COUNT(*) > 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8538,7 +8538,7 @@
                 "text": "",
                 "query": "SELECT avg(ranking) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.player_id",
                 "predict": "The request to list the average ranking for each player with their first name is ambiguous because it's unclear whether the average ranking should be calculated over time or for a specific period. Additionally, the database schema provided does not directly link players' first names with their rankings in a straightforward manner. However, assuming you want the average ranking over all available data for each player, here is an SQL query that could achieve this:\n\n```sql\nSELECT p.first_name, AVG(r.ranking) AS average_ranking\nFROM players p\nJOIN rankings r ON p.player_id = r.player_id\nGROUP BY p.first_name;\n```",
-                "predict_sql": "SELECT p.first_name, AVG(r.ranking) AS average_rankingFROM players pJOIN rankings r ON p.player_id = r.player_idGROUP BY p.first_name",
+                "predict_sql": "SELECT p.first_name, AVG(r.ranking) AS average_ranking FROM players p JOIN rankings r ON p.player_id = r.player_id GROUP BY p.first_name;",
                 "predict_type": "answerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it provides an SQL query that directly addresses the user's request for average rankings by player first name. Clarity: 2 points - The response is very clear and easy to understand, explaining the SQL query and its purpose. Completeness: 2 points - The response thoroughly addresses the question by providing a complete SQL query that meets the user's needs. Accuracy: 2 points - The SQL query is accurate and correctly structured based on the provided database schema. Utility: 2 points - The response excellently meets the user's needs by providing a practical solution to their request and clarifying any potential ambiguity regarding the average ranking calculation. Total Score: 10 points."
@@ -8581,7 +8581,7 @@
                 "text": "",
                 "query": "SELECT T1.last_name FROM players AS T1 where t1.hand = \"L\";",
                 "predict": "SELECT last_name FROM players WHERE hand = 'L';",
-                "predict_sql": "SELECT last_name FROM players WHERE hand = 'L'",
+                "predict_sql": "SELECT last_name FROM players WHERE hand = 'L';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8610,7 +8610,7 @@
                 "text": "",
                 "query": "SELECT avg(ranking) ,  T1.last_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id where T1.hand = \"L\" GROUP BY T1.first_name;",
                 "predict": "```sql\nSELECT T1.last_name, AVG(T2.ranking) AS average_rank\nFROM players AS T1\nJOIN rankings AS T2 ON T1.player_id = T2.player_id\nWHERE T1.hand = 'L'\nGROUP BY T1.player_id;\n```",
-                "predict_sql": "SELECT T1.last_name, AVG(T2.ranking) AS average_rankFROM players AS T1JOIN rankings AS T2 ON T1.player_id = T2.player_idWHERE T1.hand = 'L'GROUP BY T1.player_id",
+                "predict_sql": "SELECT T1.last_name, AVG(T2.ranking) AS average_rank FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id WHERE T1.hand = 'L' GROUP BY T1.player_id;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8751,7 +8751,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM battle WHERE id IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
                 "predict": "SELECT count(*) FROM battle WHERE id IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
-                "predict_sql": "SELECT count(*) FROM battle WHERE id IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' )",
+                "predict_sql": "SELECT count(*) FROM battle WHERE id IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8765,7 +8765,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM ship WHERE tonnage  =  '225'",
                 "predict": "SELECT count(*) FROM ship WHERE tonnage = '225';",
-                "predict_sql": "SELECT count(*) FROM ship WHERE tonnage = '225'",
+                "predict_sql": "SELECT count(*) FROM ship WHERE tonnage = '225';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8830,7 +8830,7 @@
                 "text": "",
                 "query": "SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)",
                 "predict": "```sql\nSELECT Name FROM stadium;\n```",
-                "predict_sql": "SELECT Name FROM stadium",
+                "predict_sql": "SELECT Name FROM stadium;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8910,7 +8910,7 @@
                 "text": "",
                 "query": "SELECT Fullname FROM car_makers WHERE maker = \"amc\"",
                 "predict": "```sql\nSELECT FullName FROM car_makers WHERE Maker = 'amc';\n```",
-                "predict_sql": "SELECT FullName FROM car_makers WHERE Maker = 'amc'",
+                "predict_sql": "SELECT FullName FROM car_makers WHERE Maker = 'amc';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -8988,7 +8988,7 @@
                 "text": "",
                 "query": "SELECT Citizenship FROM singer GROUP BY Citizenship ORDER BY COUNT(*) DESC LIMIT 1",
                 "predict": "```sql\nSELECT Citizenship, COUNT(*) AS Count\nFROM singer\nGROUP BY Citizenship\nORDER BY Count DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT Citizenship, COUNT(*) AS CountFROM singerGROUP BY CitizenshipORDER BY Count DESCLIMIT 1",
+                "predict_sql": "SELECT Citizenship, COUNT(*) AS Count FROM singer GROUP BY Citizenship ORDER BY Count DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9066,7 +9066,7 @@
                 "text": "",
                 "query": "SELECT COUNT(DISTINCT Orchestra) FROM orchestra",
                 "predict": "```sql\nSELECT COUNT(*) FROM orchestra;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM orchestra",
+                "predict_sql": "SELECT COUNT(*) FROM orchestra;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9094,7 +9094,7 @@
                 "text": "",
                 "query": "SELECT COUNT(Orchestra) FROM orchestra WHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance)\n\n",
                 "predict": "```sql\nSELECT COUNT(*) FROM orchestra \nWHERE Orchestra_ID NOT IN (SELECT DISTINCT Orchestra_ID FROM performance);\n```",
-                "predict_sql": "SELECT COUNT(*) FROM orchestra WHERE Orchestra_ID NOT IN (SELECT DISTINCT Orchestra_ID FROM performance)",
+                "predict_sql": "SELECT COUNT(*) FROM orchestra  WHERE Orchestra_ID NOT IN (SELECT DISTINCT Orchestra_ID FROM performance);",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9143,7 +9143,7 @@
                 "text": "",
                 "query": "SELECT T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_summary_name ORDER BY count(*) DESC LIMIT 1",
                 "predict": "```sql\nSELECT degree_program_id, COUNT(student_id) AS student_count\nFROM Student_Enrolment\nGROUP BY degree_program_id\nORDER BY student_count ASC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT degree_program_id, COUNT(student_id) AS student_countFROM Student_EnrolmentGROUP BY degree_program_idORDER BY student_count ASCLIMIT 1",
+                "predict_sql": "SELECT degree_program_id, COUNT(student_id) AS student_count FROM Student_Enrolment GROUP BY degree_program_id ORDER BY student_count ASC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9171,7 +9171,7 @@
                 "text": "",
                 "query": "SELECT degree_program_id from Degree_Programs where degree_summary_description = 'architecto'",
                 "predict": "SELECT degree_program_id FROM Degree_Programs WHERE degree_summary_name = 'architecto';",
-                "predict_sql": "SELECT degree_program_id FROM Degree_Programs WHERE degree_summary_name = 'architecto'",
+                "predict_sql": "SELECT degree_program_id FROM Degree_Programs WHERE degree_summary_name = 'architecto';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9220,7 +9220,7 @@
                 "text": "",
                 "query": "SELECT degree_program_id from Student_Enrolment",
                 "predict": "```sql\nSELECT degree_program_id FROM Student_Enrolment;\n```",
-                "predict_sql": "SELECT degree_program_id FROM Student_Enrolment",
+                "predict_sql": "SELECT degree_program_id FROM Student_Enrolment;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9234,7 +9234,7 @@
                 "text": "",
                 "query": "SELECT semester_id from Student_Enrolment",
                 "predict": "```sql\nSELECT semester_id FROM Student_Enrolment;\n```",
-                "predict_sql": "SELECT semester_id FROM Student_Enrolment",
+                "predict_sql": "SELECT semester_id FROM Student_Enrolment;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9262,7 +9262,7 @@
                 "text": "",
                 "query": "SELECT T1.semester_name ,  T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id ORDER BY count(*) DESC LIMIT 1",
                 "predict": "```sql\nSELECT Semesters.semester_id, Semesters.semester_name, COUNT(Student_Enrolment.student_id) AS student_count\nFROM Student_Enrolment\nJOIN Semesters ON Student_Enrolment.semester_id = Semesters.semester_id\nGROUP BY Semesters.semester_id, Semesters.semester_name\nORDER BY student_count DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT Semesters.semester_id, Semesters.semester_name, COUNT(Student_Enrolment.student_id) AS student_countFROM Student_EnrolmentJOIN Semesters ON Student_Enrolment.semester_id = Semesters.semester_idGROUP BY Semesters.semester_id, Semesters.semester_nameORDER BY student_count DESCLIMIT 1",
+                "predict_sql": "SELECT Semesters.semester_id, Semesters.semester_name, COUNT(Student_Enrolment.student_id) AS student_count FROM Student_Enrolment JOIN Semesters ON Student_Enrolment.semester_id = Semesters.semester_id GROUP BY Semesters.semester_id, Semesters.semester_name ORDER BY student_count DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9297,7 +9297,7 @@
                 "text": "",
                 "query": "SELECT winner_name ,  loser_name FROM matches ORDER BY minutes DESC LIMIT 1",
                 "predict": "```sql\nSELECT m.loser_name, m.winner_name\nFROM matches m\nORDER BY m.minutes DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT m.loser_name, m.winner_nameFROM matches mORDER BY m.minutes DESCLIMIT 1",
+                "predict_sql": "SELECT m.loser_name, m.winner_name FROM matches m ORDER BY m.minutes DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9360,7 +9360,7 @@
                 "text": "",
                 "query": "SELECT grade FROM Highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1",
                 "predict": "```sql\nSELECT grade, COUNT(*) AS num_students\nFROM Highschooler\nGROUP BY grade\nORDER BY num_students DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT grade, COUNT(*) AS num_studentsFROM HighschoolerGROUP BY gradeORDER BY num_students DESCLIMIT 1",
+                "predict_sql": "SELECT grade, COUNT(*) AS num_students FROM Highschooler GROUP BY grade ORDER BY num_students DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9388,7 +9388,7 @@
                 "text": "",
                 "query": "SELECT grade FROM Highschooler WHERE name = \"Tiffany\"",
                 "predict": "SELECT grade FROM Highschooler WHERE name = 'Tiffany';",
-                "predict_sql": "SELECT grade FROM Highschooler WHERE name = 'Tiffany'",
+                "predict_sql": "SELECT grade FROM Highschooler WHERE name = 'Tiffany';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9402,7 +9402,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Highschooler WHERE grade = 9;",
                 "predict": "SELECT COUNT(*) FROM Highschooler WHERE grade = 9;",
-                "predict_sql": "SELECT COUNT(*) FROM Highschooler WHERE grade = 9",
+                "predict_sql": "SELECT COUNT(*) FROM Highschooler WHERE grade = 9;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9416,7 +9416,7 @@
                 "text": "Did you mean the Gabriel with ID 1689?",
                 "query": "",
                 "predict": "The name \"Gabrel\" does not match any examples provided, which include a similar name \"Gabriel.\" If you meant \"Gabriel,\" the query would be:\n\n```sql\nSELECT grade FROM Highschooler WHERE name = \"Gabriel\";\n```\n\nIf \"Gabrel\" is indeed the correct name you are asking about, this query would be unanswerable as there is no such name in the provided examples.",
-                "predict_sql": "SELECT grade FROM Highschooler WHERE name = \"Gabriel\"",
+                "predict_sql": "SELECT grade FROM Highschooler WHERE name = \"Gabriel\";",
                 "predict_type": "unanswerable",
                 "RQS": 8,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 1, 'Accuracy': 2, 'Utility': 1}"
@@ -9431,7 +9431,7 @@
                 "text": "",
                 "query": "SELECT grade FROM Highschooler WHERE name = \"Gabriel\" AND ID = 1689",
                 "predict": "SELECT grade FROM Highschooler WHERE name = \"Gabriel\" AND ID = 1689;",
-                "predict_sql": "SELECT grade FROM Highschooler WHERE name = \"Gabriel\" AND ID = 1689",
+                "predict_sql": "SELECT grade FROM Highschooler WHERE name = \"Gabriel\" AND ID = 1689;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9445,7 +9445,7 @@
                 "text": "",
                 "query": "SELECT ID FROM Highschooler WHERE name = \"Tiffany\"",
                 "predict": "SELECT ID FROM Highschooler WHERE name = \"Tiffany\";",
-                "predict_sql": "SELECT ID FROM Highschooler WHERE name = \"Tiffany\"",
+                "predict_sql": "SELECT ID FROM Highschooler WHERE name = \"Tiffany\";",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9494,7 +9494,7 @@
                 "text": "can you give more Information about this question?",
                 "query": "",
                 "predict": "```sql\nSELECT first_name, last_name, zip_code FROM Owners;\n```",
-                "predict_sql": "SELECT first_name, last_name, zip_code FROM Owners",
+                "predict_sql": "SELECT first_name, last_name, zip_code FROM Owners;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -9508,7 +9508,7 @@
                 "text": "",
                 "query": "SELECT  \nowner_id,\tzip_code from Owners",
                 "predict": "```sql\nSELECT owner_id, zip_code FROM Owners;\n```",
-                "predict_sql": "SELECT owner_id, zip_code FROM Owners",
+                "predict_sql": "SELECT owner_id, zip_code FROM Owners;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9536,7 +9536,7 @@
                 "text": "Did  you mean  the  full name?",
                 "query": "",
                 "predict": "```sql\nSELECT \n    O.owner_id, \n    O.first_name, \n    O.last_name, \n    SUM(T.cost_of_treatment) AS total_cost\nFROM \n    Owners O\nJOIN \n    Dogs D ON O.owner_id = D.owner_id\nJOIN \n    Treatments T ON D.dog_id = T.dog_id\nGROUP BY \n    O.owner_id, O.first_name, O.last_name\nORDER BY \n    total_cost DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT     O.owner_id,     O.first_name,     O.last_name,     SUM(T.cost_of_treatment) AS total_costFROM     Owners OJOIN     Dogs D ON O.owner_id = D.owner_idJOIN     Treatments T ON D.dog_id = T.dog_idGROUP BY     O.owner_id, O.first_name, O.last_nameORDER BY     total_cost DESCLIMIT 1",
+                "predict_sql": "SELECT      O.owner_id,      O.first_name,      O.last_name,      SUM(T.cost_of_treatment) AS total_cost FROM      Owners O JOIN      Dogs D ON O.owner_id = D.owner_id JOIN      Treatments T ON D.dog_id = T.dog_id GROUP BY      O.owner_id, O.first_name, O.last_name ORDER BY      total_cost DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -9550,7 +9550,7 @@
                 "text": "",
                 "query": "SELECT  T1.first_name,T1.owner_id  FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1",
                 "predict": "```sql\nSELECT O.first_name, O.owner_id, SUM(T.cost_of_treatment) AS total_cost\nFROM Owners O\nJOIN Dogs D ON O.owner_id = D.owner_id\nJOIN Treatments T ON D.dog_id = T.dog_id\nGROUP BY O.owner_id, O.first_name\nORDER BY total_cost DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT O.first_name, O.owner_id, SUM(T.cost_of_treatment) AS total_costFROM Owners OJOIN Dogs D ON O.owner_id = D.owner_idJOIN Treatments T ON D.dog_id = T.dog_idGROUP BY O.owner_id, O.first_nameORDER BY total_cost DESCLIMIT 1",
+                "predict_sql": "SELECT O.first_name, O.owner_id, SUM(T.cost_of_treatment) AS total_cost FROM Owners O JOIN Dogs D ON O.owner_id = D.owner_id JOIN Treatments T ON D.dog_id = T.dog_id GROUP BY O.owner_id, O.first_name ORDER BY total_cost DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9628,7 +9628,7 @@
                 "text": "",
                 "query": "SELECT T1.first_name , T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T1.owner_id  = 1",
                 "predict": "```sql\nSELECT first_name, last_name FROM Owners WHERE owner_id = 1;\n```",
-                "predict_sql": "SELECT first_name, last_name FROM Owners WHERE owner_id = 1",
+                "predict_sql": "SELECT first_name, last_name FROM Owners WHERE owner_id = 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9642,7 +9642,7 @@
                 "text": "",
                 "query": "SELECT name  FROM Dogs  WHERE age = 6",
                 "predict": "SELECT name FROM Dogs WHERE age = '6';",
-                "predict_sql": "SELECT name FROM Dogs WHERE age = '6'",
+                "predict_sql": "SELECT name FROM Dogs WHERE age = '6';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9705,7 +9705,7 @@
                 "text": "",
                 "query": "SELECT first_name FROM Professionals UNION SELECT first_name FROM Owners EXCEPT SELECT name FROM Dogs",
                 "predict": "The question you've asked requires comparing names across different entities (professionals, owners, and dogs) to identify names that are used for professionals or owners but not for dogs. This involves checking for unique names in the professionals and owners tables that do not appear in the dogs table. Here's an SQL query to find such names:\n\n```sql\nSELECT first_name, last_name FROM (\n    SELECT first_name, last_name FROM Owners\n    UNION\n    SELECT first_name, last_name FROM Professionals\n) AS CombinedNames\nWHERE (first_name, last_name) NOT IN (\n    SELECT name AS first_name, '' AS last_name FROM Dogs\n)\nGROUP BY first_name, last_name;\n```\n\nThis query combines the first and last names from both the Owners and Professionals tables, then checks if these names do not appear as dog names in the Dogs table. Note that this assumes dog names are only given as 'first names' and do not include last names.",
-                "predict_sql": "SELECT first_name, last_name FROM (    SELECT first_name, last_name FROM Owners    UNION    SELECT first_name, last_name FROM Professionals) AS CombinedNamesWHERE (first_name, last_name) NOT IN (    SELECT name AS first_name, '' AS last_name FROM Dogs)GROUP BY first_name, last_name",
+                "predict_sql": "SELECT first_name, last_name FROM (     SELECT first_name, last_name FROM Owners     UNION     SELECT first_name, last_name FROM Professionals ) AS CombinedNames WHERE (first_name, last_name) NOT IN (     SELECT name AS first_name, '' AS last_name FROM Dogs ) GROUP BY first_name, last_name;",
                 "predict_type": "answerable",
                 "RQS": 10,
                 "RQS_Rationale": "The response is relevant as it directly addresses the user's request to find names that can be used for professionals or owners but not for dogs. The SQL query provided is appropriate for the task, demonstrating a clear understanding of the database schema and how to extract the required information. The clarity of the response is high; the SQL query is well-structured and easy to follow, making it clear how the solution is derived. In terms of completeness, the response thoroughly covers the question by providing a complete SQL query that fulfills the user's request. The accuracy of the response is also high, as the SQL logic correctly identifies the names that meet the criteria specified by the user. Finally, the utility of the response is strong; it not only meets the user's needs but also provides a clear explanation of how to achieve the desired outcome using SQL. Overall, the response is well-rounded and effectively addresses the user's question."
@@ -9720,7 +9720,7 @@
                 "text": "Can you please clarify what you would like me to search the database for?",
                 "query": "",
                 "predict": "```sql\nSELECT first_name FROM Professionals\nEXCEPT\nSELECT name FROM Dogs;\n```",
-                "predict_sql": "SELECT first_name FROM ProfessionalsEXCEPTSELECT name FROM Dogs",
+                "predict_sql": "SELECT first_name FROM Professionals EXCEPT SELECT name FROM Dogs;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -9734,7 +9734,7 @@
                 "text": "Would you like the email address of professionals with name Taryn?",
                 "query": "",
                 "predict": "```sql\nSELECT email_address, home_phone, cell_number FROM Professionals WHERE first_name = 'Taryn';\n```",
-                "predict_sql": "SELECT email_address, home_phone, cell_number FROM Professionals WHERE first_name = 'Taryn'",
+                "predict_sql": "SELECT email_address, home_phone, cell_number FROM Professionals WHERE first_name = 'Taryn';",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -9748,7 +9748,7 @@
                 "text": "",
                 "query": "SELECT email_address FROM Professionals WHERE First_Name = \"Taryn\"",
                 "predict": "```sql\nSELECT email_address FROM Professionals WHERE first_name = 'Taryn';\n```",
-                "predict_sql": "SELECT email_address FROM Professionals WHERE first_name = 'Taryn'",
+                "predict_sql": "SELECT email_address FROM Professionals WHERE first_name = 'Taryn';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9812,7 +9812,7 @@
                 "text": "",
                 "query": "SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) LIMIT 1",
                 "predict": "The question is ambiguous because the database schema does not directly provide information on the number of enrollments per course. However, we can infer this by counting the entries in the `Student_Enrolment_Courses` table for each course and then joining this with the `Courses` table to get the course names. Here is the SQL query to find the course name with the least enrollment:\n\n```sql\nSELECT c.course_name\nFROM Courses c\nJOIN Student_Enrolment_Courses sec ON c.course_id = sec.course_id\nGROUP BY c.course_name\nORDER BY COUNT(sec.student_course_id) ASC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT c.course_nameFROM Courses cJOIN Student_Enrolment_Courses sec ON c.course_id = sec.course_idGROUP BY c.course_nameORDER BY COUNT(sec.student_course_id) ASCLIMIT 1",
+                "predict_sql": "SELECT c.course_name FROM Courses c JOIN Student_Enrolment_Courses sec ON c.course_id = sec.course_id GROUP BY c.course_name ORDER BY COUNT(sec.student_course_id) ASC LIMIT 1;",
                 "predict_type": "unanswerable",
                 "RQS": 6,
                 "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it attempts to address the user's question about course enrollment but does not directly answer it. Clarity: 1 point - The response is mostly clear but could be confusing for someone unfamiliar with SQL. Completeness: 1 point - The response covers the method to find the course with the least enrollment but does not provide a definitive answer. Accuracy: 2 points - The SQL query provided is accurate for the task described. Utility: 1 point - The response somewhat meets the user's needs by providing a SQL query but does not clarify that the actual data is not available to execute the query. Overall, the response is unanswerable because it does not provide a direct answer to the user's question about the course name with the least enrollment, as it relies on executing a query that cannot be performed without access to the database."
@@ -9827,7 +9827,7 @@
                 "text": "",
                 "query": "SELECT course_id from courses where course_name = \"math\"",
                 "predict": "```sql\nSELECT course_id FROM Courses WHERE course_name = 'math';\n```",
-                "predict_sql": "SELECT course_id FROM Courses WHERE course_name = 'math'",
+                "predict_sql": "SELECT course_id FROM Courses WHERE course_name = 'math';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9891,7 +9891,7 @@
                 "text": "Do  you  want  to  know  the distinct country code?",
                 "query": "",
                 "predict": "The question is ambiguous as it's unclear what \"city code\" refers to in the context of the provided database schema. If you are asking about the number of unique country codes associated with cities in the `city` table, the SQL query would be:\n\n```sql\nSELECT COUNT(DISTINCT CountryCode) FROM city;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT CountryCode) FROM city",
+                "predict_sql": "SELECT COUNT(DISTINCT CountryCode) FROM city;",
                 "predict_type": "ambiguous",
                 "RQS": 8,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the ambiguity in the user's question regarding 'city code' and provides a SQL query that could be useful. Clarity: 2 points - The response is clear and easy to understand, explaining the ambiguity well. Completeness: 1 point - While the response provides a SQL query, it could have elaborated more on what 'city code' might refer to, such as distinguishing between city IDs and country codes. Accuracy: 2 points - The SQL query provided is accurate and correctly addresses the potential interpretation of the user's question. Utility: 1 point - The response somewhat meets the user's needs by providing a SQL query but could have better explained the context of the ambiguity. Total Score: 8 points."
@@ -9906,7 +9906,7 @@
                 "text": "",
                 "query": "SELECT count(distinct  Language) from countrylanguage",
                 "predict": "```sql\nSELECT COUNT(DISTINCT Language) FROM countrylanguage;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT Language) FROM countrylanguage",
+                "predict_sql": "SELECT COUNT(DISTINCT Language) FROM countrylanguage;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9955,7 +9955,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM flights",
                 "predict": "```sql\nSELECT COUNT(*) FROM flights;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM flights",
+                "predict_sql": "SELECT COUNT(*) FROM flights;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -9969,7 +9969,7 @@
                 "text": "",
                 "query": "SELECT T1.City FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.SourceAirport GROUP BY T1.City ORDER BY count(*) ASC LIMIT 1",
                 "predict": "```sql\nSELECT City, COUNT(*) as DepartureCount\nFROM airports\nJOIN flights ON airports.AirportCode = flights.SourceAirport\nGROUP BY City\nORDER BY DepartureCount ASC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT City, COUNT(*) as DepartureCountFROM airportsJOIN flights ON airports.AirportCode = flights.SourceAirportGROUP BY CityORDER BY DepartureCount ASCLIMIT 1",
+                "predict_sql": "SELECT City, COUNT(*) as DepartureCount FROM airports JOIN flights ON airports.AirportCode = flights.SourceAirport GROUP BY City ORDER BY DepartureCount ASC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10062,7 +10062,7 @@
                 "text": "",
                 "query": "SELECT Name FROM country WHERE Continent  =  \"Asia\" ORDER BY LifeExpectancy LIMIT 1",
                 "predict": "```sql\nSELECT Name FROM country WHERE Continent = 'Asia' ORDER BY LifeExpectancy ASC LIMIT 1;\n```",
-                "predict_sql": "SELECT Name FROM country WHERE Continent = 'Asia' ORDER BY LifeExpectancy ASC LIMIT 1",
+                "predict_sql": "SELECT Name FROM country WHERE Continent = 'Asia' ORDER BY LifeExpectancy ASC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10173,7 +10173,7 @@
                 "text": "",
                 "query": "select name from highschooler",
                 "predict": "```sql\nSELECT name FROM Highschooler;\n```",
-                "predict_sql": "SELECT name FROM Highschooler",
+                "predict_sql": "SELECT name FROM Highschooler;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10202,7 +10202,7 @@
                 "text": "",
                 "query": "SELECT T3.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id = T2.id JOIN Highschooler AS T3 ON T1.friend_id = T3.id WHERE T2.name = \"Kyle\"",
                 "predict": "```sql\nSELECT h.name \nFROM Highschooler h \nJOIN Friend f ON h.ID = f.friend_id \nWHERE f.student_id = (SELECT ID FROM Highschooler WHERE name = 'Kyle');\n```",
-                "predict_sql": "SELECT h.name FROM Highschooler h JOIN Friend f ON h.ID = f.friend_id WHERE f.student_id = (SELECT ID FROM Highschooler WHERE name = 'Kyle')",
+                "predict_sql": "SELECT h.name  FROM Highschooler h  JOIN Friend f ON h.ID = f.friend_id  WHERE f.student_id = (SELECT ID FROM Highschooler WHERE name = 'Kyle');",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10293,7 +10293,7 @@
                 "text": "",
                 "query": "SELECT Earnings FROM poker_player ",
                 "predict": "```sql\nSELECT MAX(Earnings) FROM poker_player WHERE Best_Finish = 1;\n```",
-                "predict_sql": "SELECT MAX(Earnings) FROM poker_player WHERE Best_Finish = 1",
+                "predict_sql": "SELECT MAX(Earnings) FROM poker_player WHERE Best_Finish = 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10307,7 +10307,7 @@
                 "text": "Sorry the information is not available from the table.",
                 "query": "",
                 "predict": "```sql\nSELECT Name FROM people \nJOIN poker_player ON people.People_ID = poker_player.People_ID \nWHERE Best_Finish = 1;\n```",
-                "predict_sql": "SELECT Name FROM people JOIN poker_player ON people.People_ID = poker_player.People_ID WHERE Best_Finish = 1",
+                "predict_sql": "SELECT Name FROM people  JOIN poker_player ON people.People_ID = poker_player.People_ID  WHERE Best_Finish = 1;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -10321,7 +10321,7 @@
                 "text": "",
                 "query": "SELECT Earnings FROM poker_player order by Earnings desc ",
                 "predict": "SELECT Poker_Player_ID, Earnings FROM poker_player ORDER BY Earnings DESC;",
-                "predict_sql": "SELECT Poker_Player_ID, Earnings FROM poker_player ORDER BY Earnings DESC",
+                "predict_sql": "SELECT Poker_Player_ID, Earnings FROM poker_player ORDER BY Earnings DESC;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10384,7 +10384,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs )",
                 "predict": "The question you've asked requires clarification on what you mean by \"temporarily do not have dogs.\" If you are referring to owners who have had dogs that were either adopted or passed away, and currently do not have any dogs registered under their name, we can proceed with that assumption. However, if your definition differs, please specify.\n\nAssuming the former, the SQL query to find the number of owners who currently do not have any dogs registered under their name would be:\n\n```sql\nSELECT COUNT(DISTINCT o.owner_id) \nFROM Owners o \nLEFT JOIN Dogs d ON o.owner_id = d.owner_id \nWHERE d.dog_id IS NULL;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT o.owner_id) FROM Owners o LEFT JOIN Dogs d ON o.owner_id = d.owner_id WHERE d.dog_id IS NULL",
+                "predict_sql": "SELECT COUNT(DISTINCT o.owner_id)  FROM Owners o  LEFT JOIN Dogs d ON o.owner_id = d.owner_id  WHERE d.dog_id IS NULL;",
                 "predict_type": "answerable",
                 "RQS": 10,
                 "RQS_Rationale": "Relevance: 2 points - The response is fully relevant as it addresses the user's question about owners who temporarily do not have dogs. It provides a SQL query that directly relates to the inquiry. Clarity: 2 points - The response is very clear and easy to understand, explaining the assumption made about the term 'temporarily do not have dogs.' Completeness: 2 points - The response thoroughly addresses the question by providing a SQL query and clarifying the assumption. Accuracy: 2 points - The SQL query provided is accurate and correctly identifies owners without dogs. Utility: 2 points - The response excellently meets the user's needs by clarifying the question and providing a relevant SQL query. Total Score: 10 points."
@@ -10454,7 +10454,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )",
                 "predict": "```sql\nSELECT COUNT(DISTINCT dog_id) FROM Treatments;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT dog_id) FROM Treatments",
+                "predict_sql": "SELECT COUNT(DISTINCT dog_id) FROM Treatments;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10559,7 +10559,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )",
                 "predict": "```sql\nSELECT COUNT(DISTINCT dog_id) FROM Treatments;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT dog_id) FROM Treatments",
+                "predict_sql": "SELECT COUNT(DISTINCT dog_id) FROM Treatments;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10661,10 +10661,10 @@
             },
             {
                 "isuser": false,
-                "text": "Do  you  mean  the type of  semester name\uff1f",
+                "text": "Do  you  mean  the type of  semester name？",
                 "query": "",
                 "predict": "```sql\nSELECT DISTINCT semester_name FROM Semesters;\n```",
-                "predict_sql": "SELECT DISTINCT semester_name FROM Semesters",
+                "predict_sql": "SELECT DISTINCT semester_name FROM Semesters;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -10678,7 +10678,7 @@
                 "text": "",
                 "query": "SELECT distinct semester_name FROM Semesters ",
                 "predict": "```sql\nSELECT COUNT(DISTINCT semester_name) FROM Semesters;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT semester_name) FROM Semesters",
+                "predict_sql": "SELECT COUNT(DISTINCT semester_name) FROM Semesters;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10741,7 +10741,7 @@
                 "text": "",
                 "query": "SELECT * FROM singer WHERE Birth_Year  <  1945",
                 "predict": "```sql\nSELECT Name FROM singer WHERE Birth_Year < 1945;\n```",
-                "predict_sql": "SELECT Name FROM singer WHERE Birth_Year < 1945",
+                "predict_sql": "SELECT Name FROM singer WHERE Birth_Year < 1945;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10945,7 +10945,7 @@
                 "text": "",
                 "query": "SELECT email_address from owners where owner_id = 1",
                 "predict": "```sql\nSELECT email_address FROM Owners WHERE owner_id = 1;\n```",
-                "predict_sql": "SELECT email_address FROM Owners WHERE owner_id = 1",
+                "predict_sql": "SELECT email_address FROM Owners WHERE owner_id = 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -10959,7 +10959,7 @@
                 "text": "",
                 "query": "SELECT weight from dogs where dog_id = 1",
                 "predict": "SELECT weight FROM Dogs WHERE dog_id = 1;",
-                "predict_sql": "SELECT weight FROM Dogs WHERE dog_id = 1",
+                "predict_sql": "SELECT weight FROM Dogs WHERE dog_id = 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11023,7 +11023,7 @@
                 "text": "",
                 "query": "SELECT country_code FROM players GROUP BY country_code HAVING count(*)  >  50",
                 "predict": "```sql\nSELECT country_code, COUNT(player_id) AS player_count\nFROM players\nGROUP BY country_code\nHAVING COUNT(player_id) > 50;\n```",
-                "predict_sql": "SELECT country_code, COUNT(player_id) AS player_countFROM playersGROUP BY country_codeHAVING COUNT(player_id) > 50",
+                "predict_sql": "SELECT country_code, COUNT(player_id) AS player_count FROM players GROUP BY country_code HAVING COUNT(player_id) > 50;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11158,7 +11158,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM matches WHERE YEAR  =  2013 ",
                 "predict": "```sql\nSELECT COUNT(*) FROM matches WHERE year = 2013;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM matches WHERE year = 2013",
+                "predict_sql": "SELECT COUNT(*) FROM matches WHERE year = 2013;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11172,7 +11172,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM matches WHERE YEAR  =  2016",
                 "predict": "SELECT count(*) FROM matches WHERE year = 2016;",
-                "predict_sql": "SELECT count(*) FROM matches WHERE year = 2016",
+                "predict_sql": "SELECT count(*) FROM matches WHERE year = 2016;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11201,7 +11201,7 @@
                 "text": "",
                 "query": "SELECT distinct loser_id  FROM  matches where loser_name  =\"Petra Kvitova\"",
                 "predict": "SELECT loser_id FROM matches WHERE loser_name = 'Petra Kvitova' LIMIT 1;",
-                "predict_sql": "SELECT loser_id FROM matches WHERE loser_name = 'Petra Kvitova' LIMIT 1",
+                "predict_sql": "SELECT loser_id FROM matches WHERE loser_name = 'Petra Kvitova' LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11236,7 +11236,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog'",
                 "predict": "```sql\nSELECT COUNT(DISTINCT Has_Pet.StuID) AS NumberOfStudentsWithDogs\nFROM Has_Pet\nJOIN Pets ON Has_Pet.PetID = Pets.PetID\nWHERE Pets.PetType = 'dog';\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT Has_Pet.StuID) AS NumberOfStudentsWithDogsFROM Has_PetJOIN Pets ON Has_Pet.PetID = Pets.PetIDWHERE Pets.PetType = 'dog'",
+                "predict_sql": "SELECT COUNT(DISTINCT Has_Pet.StuID) AS NumberOfStudentsWithDogs FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11300,7 +11300,7 @@
                 "text": "",
                 "query": "SELECT name FROM battle EXCEPT SELECT T1.name FROM battle AS T1 JOIN ship AS T2 ON T1.id  =  T2.lost_in_battle WHERE T2.location  =  'English Channel'",
                 "predict": "```sql\nSELECT b.name \nFROM battle b \nLEFT JOIN ship s ON b.id = s.lost_in_battle \nWHERE s.location != 'English Channel' OR s.location IS NULL;\n```",
-                "predict_sql": "SELECT b.name FROM battle b LEFT JOIN ship s ON b.id = s.lost_in_battle WHERE s.location != 'English Channel' OR s.location IS NULL",
+                "predict_sql": "SELECT b.name  FROM battle b  LEFT JOIN ship s ON b.id = s.lost_in_battle  WHERE s.location != 'English Channel' OR s.location IS NULL;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11406,7 +11406,7 @@
                 "text": "",
                 "query": "SELECT state FROM Owners",
                 "predict": "```sql\nSELECT DISTINCT state FROM Owners;\n```",
-                "predict_sql": "SELECT DISTINCT state FROM Owners",
+                "predict_sql": "SELECT DISTINCT state FROM Owners;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11420,7 +11420,7 @@
                 "text": "",
                 "query": "SELECT state FROM Professionals",
                 "predict": "```sql\nSELECT DISTINCT state FROM Professionals;\n```",
-                "predict_sql": "SELECT DISTINCT state FROM Professionals",
+                "predict_sql": "SELECT DISTINCT state FROM Professionals;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11434,7 +11434,7 @@
                 "text": "",
                 "query": "SELECT state FROM Owners INTERSECT SELECT state FROM Professionals",
                 "predict": "```sql\nSELECT DISTINCT O.state \nFROM Owners O \nJOIN Professionals P ON O.state = P.state;\n```",
-                "predict_sql": "SELECT DISTINCT O.state FROM Owners O JOIN Professionals P ON O.state = P.state",
+                "predict_sql": "SELECT DISTINCT O.state  FROM Owners O  JOIN Professionals P ON O.state = P.state;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11469,7 +11469,7 @@
                 "text": "Did you mean to ask for the number of shops in the database?",
                 "query": "",
                 "predict": "```sql\nSELECT COUNT(*) FROM shop;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM shop",
+                "predict_sql": "SELECT COUNT(*) FROM shop;",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -11483,7 +11483,7 @@
                 "text": "",
                 "query": "SELECT COUNT(*) FROM shop",
                 "predict": "```sql\nSELECT COUNT(*) FROM shop;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM shop",
+                "predict_sql": "SELECT COUNT(*) FROM shop;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11653,7 +11653,7 @@
                 "text": "",
                 "query": "SELECT T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country GROUP BY T1.Continent;",
                 "predict": "```sql\nSELECT continents.Continent, COUNT(car_makers.Id) AS NumberOfCarMakers\nFROM continents\nJOIN countries ON continents.ContId = countries.Continent\nJOIN car_makers ON countries.CountryId = car_makers.Country\nGROUP BY continents.Continent;\n```",
-                "predict_sql": "SELECT continents.Continent, COUNT(car_makers.Id) AS NumberOfCarMakersFROM continentsJOIN countries ON continents.ContId = countries.ContinentJOIN car_makers ON countries.CountryId = car_makers.CountryGROUP BY continents.Continent",
+                "predict_sql": "SELECT continents.Continent, COUNT(car_makers.Id) AS NumberOfCarMakers FROM continents JOIN countries ON continents.ContId = countries.Continent JOIN car_makers ON countries.CountryId = car_makers.Country GROUP BY continents.Continent;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11667,7 +11667,7 @@
                 "text": "Do you want the full name and country name of the car makers from asia?",
                 "query": "",
                 "predict": "The request is ambiguous because it's unclear what specific information is needed regarding \"asia country.\" If you are asking for the names of car makers and the names of the countries in Asia where they are located, the query would look like this:\n\n```sql\nSELECT cm.FullName, c.CountryName\nFROM car_makers cm\nJOIN countries c ON cm.Country = c.CountryId\nJOIN continents ct ON c.Continent = ct.ContId\nWHERE ct.Continent = 'asia';\n```\n\nHowever, if \"asia country\" refers to something else, please clarify.",
-                "predict_sql": "SELECT cm.FullName, c.CountryNameFROM car_makers cmJOIN countries c ON cm.Country = c.CountryIdJOIN continents ct ON c.Continent = ct.ContIdWHERE ct.Continent = 'asia'",
+                "predict_sql": "SELECT cm.FullName, c.CountryName FROM car_makers cm JOIN countries c ON cm.Country = c.CountryId JOIN continents ct ON c.Continent = ct.ContId WHERE ct.Continent = 'asia';",
                 "predict_type": "ambiguous",
                 "RQS": 6,
                 "RQS_Rationale": "Relevance: 1 point - The response is partially relevant as it attempts to address the user's question about car makers and Asian countries, but it does not directly provide the requested information. Clarity: 1 point - The response is mostly clear but introduces ambiguity regarding the term 'asia country,' which could lead to confusion. Completeness: 1 point - The response covers some aspects of the question but does not provide a direct answer or list as requested. Accuracy: 2 points - The SQL query provided is accurate based on the database schema, but it does not directly answer the user's question. Utility: 1 point - The response somewhat meets the user's needs by providing a SQL query but does not clarify the ambiguity effectively. Total Score: 6 points."
@@ -11682,7 +11682,7 @@
                 "text": "",
                 "query": "SELECT T3.fullname,  T2.countryName FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country where T1.continent = \"asia\"",
                 "predict": "```sql\nSELECT cm.FullName, c.CountryName \nFROM car_makers cm \nJOIN countries c ON cm.Country = c.CountryId \nJOIN continents ct ON c.Continent = ct.ContId \nWHERE ct.Continent = 'asia';\n```",
-                "predict_sql": "SELECT cm.FullName, c.CountryName FROM car_makers cm JOIN countries c ON cm.Country = c.CountryId JOIN continents ct ON c.Continent = ct.ContId WHERE ct.Continent = 'asia'",
+                "predict_sql": "SELECT cm.FullName, c.CountryName  FROM car_makers cm  JOIN countries c ON cm.Country = c.CountryId  JOIN continents ct ON c.Continent = ct.ContId  WHERE ct.Continent = 'asia';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11696,7 +11696,7 @@
                 "text": "",
                 "query": "SELECT T3.fullname,  T2.countryName FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country where T1.continent = \"europe\"",
                 "predict": "```sql\nSELECT T3.FullName, T2.CountryName FROM continents AS T1 \nJOIN countries AS T2 ON T1.ContId = T2.Continent \nJOIN car_makers AS T3 ON T2.CountryId = T3.Country \nWHERE T1.Continent = 'Europe';\n```",
-                "predict_sql": "SELECT T3.FullName, T2.CountryName FROM continents AS T1 JOIN countries AS T2 ON T1.ContId = T2.Continent JOIN car_makers AS T3 ON T2.CountryId = T3.Country WHERE T1.Continent = 'Europe'",
+                "predict_sql": "SELECT T3.FullName, T2.CountryName FROM continents AS T1  JOIN countries AS T2 ON T1.ContId = T2.Continent  JOIN car_makers AS T3 ON T2.CountryId = T3.Country  WHERE T1.Continent = 'Europe';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11724,7 +11724,7 @@
                 "text": "",
                 "query": "select count(*) from car_makers",
                 "predict": "```sql\nSELECT COUNT(*) FROM car_makers;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM car_makers",
+                "predict_sql": "SELECT COUNT(*) FROM car_makers;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11759,7 +11759,7 @@
                 "text": "",
                 "query": "SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' ",
                 "predict": "```sql\nSELECT S.Fname, S.LName\nFROM Student S\nJOIN Has_Pet HP ON S.StuID = HP.StuID\nJOIN Pets P ON HP.PetID = P.PetID\nWHERE P.PetType = 'cat';\n```",
-                "predict_sql": "SELECT S.Fname, S.LNameFROM Student SJOIN Has_Pet HP ON S.StuID = HP.StuIDJOIN Pets P ON HP.PetID = P.PetIDWHERE P.PetType = 'cat'",
+                "predict_sql": "SELECT S.Fname, S.LName FROM Student S JOIN Has_Pet HP ON S.StuID = HP.StuID JOIN Pets P ON HP.PetID = P.PetID WHERE P.PetType = 'cat';",
                 "predict_type": "answerable",
                 "RQS": 0
             },
@@ -11773,7 +11773,7 @@
                 "text": "",
                 "query": "SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' ",
                 "predict": "```sql\nSELECT Student.Fname\nFROM Student\nJOIN Has_Pet ON Student.StuID = Has_Pet.StuID\nJOIN Pets ON Has_Pet.PetID = Pets.PetID\nWHERE Pets.PetType = 'dog';\n```",
-                "predict_sql": "SELECT Student.FnameFROM StudentJOIN Has_Pet ON Student.StuID = Has_Pet.StuIDJOIN Pets ON Has_Pet.PetID = Pets.PetIDWHERE Pets.PetType = 'dog'",
+                "predict_sql": "SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11850,7 +11850,7 @@
                 "text": "",
                 "query": "SELECT count(distinct professional_id) from professionals",
                 "predict": "```sql\nSELECT COUNT(DISTINCT professional_id) FROM Professionals;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT professional_id) FROM Professionals",
+                "predict_sql": "SELECT COUNT(DISTINCT professional_id) FROM Professionals;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11878,7 +11878,7 @@
                 "text": "",
                 "query": "SELECT T1.professional_id, T1.first_name ,  T3.treatment_type_code FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code",
                 "predict": "```sql\nSELECT p.professional_id, p.first_name, t.treatment_type_code\nFROM Professionals p\nJOIN Treatments t ON p.professional_id = t.professional_id;\n```",
-                "predict_sql": "SELECT p.professional_id, p.first_name, t.treatment_type_codeFROM Professionals pJOIN Treatments t ON p.professional_id = t.professional_id",
+                "predict_sql": "SELECT p.professional_id, p.first_name, t.treatment_type_code FROM Professionals p JOIN Treatments t ON p.professional_id = t.professional_id;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11927,7 +11927,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Likes",
                 "predict": "```sql\nSELECT COUNT(*) FROM Likes;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Likes",
+                "predict_sql": "SELECT COUNT(*) FROM Likes;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -11970,7 +11970,7 @@
                 "text": "",
                 "query": "SELECT student_id FROM friend where friend_id = 1689",
                 "predict": "SELECT student_id FROM Friend WHERE friend_id = 1689;",
-                "predict_sql": "SELECT student_id FROM Friend WHERE friend_id = 1689",
+                "predict_sql": "SELECT student_id FROM Friend WHERE friend_id = 1689;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -12020,7 +12020,7 @@
                 "text": "",
                 "query": "SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id HAVING count(*)  =  2",
                 "predict": "```sql\nSELECT DISTINCT s.first_name, s.middle_name, s.last_name\nFROM Students s\nJOIN Student_Enrolment se ON s.student_id = se.student_id\nGROUP BY s.student_id, se.semester_id\nHAVING COUNT(DISTINCT se.degree_program_id) = 2;\n```",
-                "predict_sql": "SELECT DISTINCT s.first_name, s.middle_name, s.last_nameFROM Students sJOIN Student_Enrolment se ON s.student_id = se.student_idGROUP BY s.student_id, se.semester_idHAVING COUNT(DISTINCT se.degree_program_id) = 2",
+                "predict_sql": "SELECT DISTINCT s.first_name, s.middle_name, s.last_name FROM Students s JOIN Student_Enrolment se ON s.student_id = se.student_id GROUP BY s.student_id, se.semester_id HAVING COUNT(DISTINCT se.degree_program_id) = 2;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -12048,7 +12048,7 @@
                 "text": "",
                 "query": "SELECT email_address FROM Students where student_id = 4",
                 "predict": "```sql\nSELECT email_address FROM Students WHERE student_id = 4;\n```",
-                "predict_sql": "SELECT email_address FROM Students WHERE student_id = 4",
+                "predict_sql": "SELECT email_address FROM Students WHERE student_id = 4;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -12147,7 +12147,7 @@
                 "text": "",
                 "query": "SELECT count(Record_Company) FROM orchestra ",
                 "predict": "```sql\nSELECT COUNT(DISTINCT Record_Company) FROM orchestra;\n```",
-                "predict_sql": "SELECT COUNT(DISTINCT Record_Company) FROM orchestra",
+                "predict_sql": "SELECT COUNT(DISTINCT Record_Company) FROM orchestra;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -12268,7 +12268,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T2.Airline  =  T1.uid WHERE T1.Airline  =  \"United Airlines\" AND T2.DestAirport  =  \"ASY\"",
                 "predict": "```sql\nSELECT COUNT(*) \nFROM flights \nJOIN airlines ON flights.Airline = airlines.uid \nWHERE airlines.Airline = 'United Airlines' AND flights.DestAirport = 'ASY';\n```",
-                "predict_sql": "SELECT COUNT(*) FROM flights JOIN airlines ON flights.Airline = airlines.uid WHERE airlines.Airline = 'United Airlines' AND flights.DestAirport = 'ASY'",
+                "predict_sql": "SELECT COUNT(*)  FROM flights  JOIN airlines ON flights.Airline = airlines.uid  WHERE airlines.Airline = 'United Airlines' AND flights.DestAirport = 'ASY';",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -12375,7 +12375,7 @@
                 "text": "",
                 "query": "SELECT T1.cylinders FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId WHERE T2.Model = 'volvo' ORDER BY T1.accelerate ASC LIMIT 1;",
                 "predict": "SELECT T1.cylinders FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId WHERE T2.Model = 'volvo' ORDER BY T1.accelerate ASC LIMIT 1;",
-                "predict_sql": "SELECT T1.cylinders FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId WHERE T2.Model = 'volvo' ORDER BY T1.accelerate ASC LIMIT 1",
+                "predict_sql": "SELECT T1.cylinders FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId WHERE T2.Model = 'volvo' ORDER BY T1.accelerate ASC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -12410,7 +12410,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM Highschooler ",
                 "predict": "```sql\nSELECT COUNT(*) FROM Highschooler;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM Highschooler",
+                "predict_sql": "SELECT COUNT(*) FROM Highschooler;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -12487,7 +12487,7 @@
                 "text": "",
                 "query": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.mpg DESC LIMIT 1;",
                 "predict": "```sql\nSELECT Model, MAX(MPG) AS MaxMPG\nFROM car_names\nJOIN cars_data ON car_names.Make = cars_data.Make\nGROUP BY Model\nORDER BY MaxMPG DESC\nLIMIT 1;\n```",
-                "predict_sql": "SELECT Model, MAX(MPG) AS MaxMPGFROM car_namesJOIN cars_data ON car_names.Make = cars_data.MakeGROUP BY ModelORDER BY MaxMPG DESCLIMIT 1",
+                "predict_sql": "SELECT Model, MAX(MPG) AS MaxMPG FROM car_names JOIN cars_data ON car_names.Make = cars_data.Make GROUP BY Model ORDER BY MaxMPG DESC LIMIT 1;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
@@ -12521,7 +12521,7 @@
                 "text": "",
                 "query": "SELECT count(*) FROM players ",
                 "predict": "```sql\nSELECT COUNT(*) FROM players;\n```",
-                "predict_sql": "SELECT COUNT(*) FROM players",
+                "predict_sql": "SELECT COUNT(*) FROM players;",
                 "predict_type": "answerable",
                 "RQS": "N/A"
             },
