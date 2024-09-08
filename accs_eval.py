@@ -596,6 +596,9 @@ gold_counts = defaultdict(int)
 predict_counts = defaultdict(int)
 correct_counts = defaultdict(int)
 
+turn_qm_counts = defaultdict(int)
+turn_total_counts = defaultdict(int)
+
 # 遍历每个元素
 for element in tqdm(data):
     print("_________________________")
@@ -606,6 +609,10 @@ for element in tqdm(data):
     iaccs = True
     imatch = True
     for i in range(len(turns) - 1):
+        turn_number = (i + 1) // 2  # 计算当前的turn数
+        if turns[i].get('predict_type','') == 'answerable':
+            turn_total_counts[turn_number] += 1  # 统计总数
+
         if  turns[i].get('RQS','N/A') != 'N/A':
                 predict_type = turns[i].get('predict_type','answerable')
                 if predict_type != 'answerable':
@@ -642,9 +649,9 @@ for element in tqdm(data):
                 try:
                     print("Question:"+turns[i].get('text',''))
                     if qm("datasets/cosql_dataset/database",turns[i+1].get('query',''), turns[i+1].get('predict_sql',''), db_name):
-                        
                         qm_count += 1
                         accs += 1
+                        turn_qm_counts[turn_number] += 1 
                         print("\033[92mACCS+1\033[0m")
                     else:
                         iaccs = False
@@ -685,6 +692,7 @@ for element in tqdm(data):
         print("\033[92mIM+1\033[0m")
         im_count += 1
 
+# 分析结果
 print("_____________________________________")
 
 percentage2 = (accs / allqa) * 100
@@ -694,7 +702,8 @@ percentage4 = (qm_count / allsqlqa) * 100
 percentage5 = (error_count / allsqla) * 100
 percentage6 = (im_count / allturn) * 100
 
-print("Result")
+# 打印结果标题
+print("Result Analysis")
 print("_____________________________________")
 print("| Metric | Count | Total | Percentage |")
 print("|--------|-------|-------|------------|")
@@ -708,11 +717,12 @@ print(f"| IM     | {im_count:<5} | {allturn:<5} | {percentage6:.1f}%      |")
 print(f"| RQS    | {RQS_sum:<5} | {RQS_count:<5} | {RQS_sum/RQS_count:.1f}      |")
 print("-------------------------------------")
 
-
 # 打印分类的精确率、召回率和准确率
 categories = ['answerable', 'unanswerable', 'ambiguous', 'improper']
 
-print("_________________________________________________")
+# 打印分类分析标题
+print("Category Analysis")
+print("_______________________________________")
 print("| Category       | Precision | Recall |")
 print("|----------------|-----------|--------|")
 
@@ -720,8 +730,29 @@ for category in categories:
     precision, recall = calculate_metrics(correct_counts[category], gold_counts[category], predict_counts[category])
     print(f"| {category.capitalize():<14} | {precision*100:.1f}%    | {recall*100:.1f}%  |")
 
-print("_________________________________________________")
+print("_______________________________________")
 
+# 打印每轮的QM统计
+print("Turn-wise QM Statistics")
+print("_____________________________________")
+print("| Turn  | QM Count | Total | Percentage |")
+print("|-------|----------|-------|------------|")
 
-print("For more details, please refer to: https://github.com/mcxiaoxiao/MMSQL")
+for turn in sorted(turn_total_counts.keys()):
+    qm_count = turn_qm_counts[turn]
+    total_count = turn_total_counts[turn]
+    percentage = (qm_count / total_count) * 100 if total_count > 0 else 0
+    print(f"| {turn:<5} | {qm_count:<8} | {total_count:<5} | {percentage:.1f}%      |")
+
+# 打印4以上的turn的统计
+qm_count_5plus = sum(count for turn, count in turn_qm_counts.items() if turn > 4)
+total_count_5plus = sum(count for turn, count in turn_total_counts.items() if turn > 4)
+percentage_5plus = (qm_count_5plus / total_count_5plus) * 100 if total_count_5plus > 0 else 0
+print(f"| >4    | {qm_count_5plus:<8} | {total_count_5plus:<5} | {percentage_5plus:.1f}%      |")
+
+print("_____________________________________")
+
+# 打印感谢信息
+print("We appreciate your interest! For more details and if you have any questions, please refer to: https://github.com/mcxiaoxiao/MMSQL")
+
 print("-------------------------------------")
