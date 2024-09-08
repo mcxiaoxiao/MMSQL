@@ -1,0 +1,21 @@
+nohup: ignoring input
+2024-09-07 20:55:59.041 | INFO     | open_source_llm_request:<module>:105 - Loading model from: /mnt/nvme1n1p2/share/hf-models/codegemma-7b-it
+2024-09-07 20:55:59.041 | INFO     | open_source_llm_request:<module>:106 - adapter_name_or_path: None
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/gzm/llm_trainer/script/chat/mmsql/llm_generation.py", line 17, in <module>
+    from open_source_llm_request import request_llm
+  File "/home/gzm/llm_trainer/script/chat/mmsql/open_source_llm_request.py", line 107, in <module>
+    model = ModelUtils.load_model(
+  File "/home/gzm/llm_trainer/script/chat/mmsql/../../../component/utils.py", line 24, in load_model
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/home/gzm/anaconda3/lib/python3.9/site-packages/transformers/models/auto/auto_factory.py", line 561, in from_pretrained
+    return model_class.from_pretrained(
+  File "/home/gzm/anaconda3/lib/python3.9/site-packages/transformers/modeling_utils.py", line 3502, in from_pretrained
+    ) = cls._load_pretrained_model(
+  File "/home/gzm/anaconda3/lib/python3.9/site-packages/transformers/modeling_utils.py", line 3903, in _load_pretrained_model
+    state_dict = load_state_dict(shard_file)
+  File "/home/gzm/anaconda3/lib/python3.9/site-packages/transformers/modeling_utils.py", line 505, in load_state_dict
+    with safe_open(checkpoint_file, framework="pt") as f:
+FileNotFoundError: No such file or directory: "/mnt/nvme1n1p2/share/hf-models/codegemma-7b-it/model-00001-of-00004.safetensors"
+srun: error: ps: task 0: Exited with exit code 1

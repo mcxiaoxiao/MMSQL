@@ -89,8 +89,8 @@ from component.template import template_dict
 # template_name = 'qwen'
 #  adapter_name_or_path = None
 
-model_name_or_path = '/mnt/nvme1n1p2/share/hf-models/llama-3-sqlcoder-8b'
-template_name = 'llama3'
+model_name_or_path = '/mnt/nvme1n1p2/share/hf-models/CodeLlama-7b-Instruct-hf'
+template_name = 'mistral'
 adapter_name_or_path = None
 
 template = template_dict[template_name]
