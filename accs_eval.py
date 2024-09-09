@@ -421,10 +421,10 @@ def eval_exec_match(db_path,db, p_str, g_str):
 
 
     with ThreadPoolExecutor(max_workers=1) as executor:
-        # 执行第一个查询
+
         future = executor.submit(execute_query, db, p_str)
         try:
-            p_res = future.result(timeout=10)  # 设置超时时间为10秒
+            p_res = future.result(timeout=10) 
         except TimeoutError:
             print("操作超时")
             return False
@@ -432,10 +432,10 @@ def eval_exec_match(db_path,db, p_str, g_str):
             print(f"执行出错: {e}")
             return False
             
-        # 执行第二个查询
+
         future = executor.submit(execute_query, db, g_str)
         try:
-            q_res = future.result(timeout=10)  # 设置超时时间为10秒
+            q_res = future.result(timeout=10) 
         except TimeoutError:
             print("操作超时")
             return False
@@ -535,6 +535,17 @@ class Evaluator:
 evaluator = Evaluator()
 
 
+def parse_sql(predict_text):
+    select_pos = predict_text.upper().find('SELECT')
+    colon_pos = predict_text.find(';', select_pos)
+    if select_pos != -1 and colon_pos != -1:
+        predict_sql = predict_text[select_pos:colon_pos].replace('\n',' ')
+    elif select_pos != -1:
+        predict_sql = predict_text[select_pos:].replace('\n',' ')
+    else:
+        predict_sql = ""
+    return predict_sql
+
 def calculate_metrics(correct, total_gold, total_pred):
     precision = correct / total_pred if total_pred > 0 else 0
     recall = correct / total_gold if total_gold > 0 else 0
@@ -573,7 +584,7 @@ def qm(db_path,p_str,g_str,db):
 parser = argparse.ArgumentParser(description='evaluation of AccS. Input JSON file path.')
 parser.add_argument('json_file_path', type=str, help='Path to the JSON file')
 
-# 解析命令行参数
+
 args = parser.parse_args()
 
 
@@ -599,20 +610,28 @@ correct_counts = defaultdict(int)
 turn_qm_counts = defaultdict(int)
 turn_total_counts = defaultdict(int)
 
-# 遍历每个元素
+AmbA = 0
+AmbA_count = 0
+AmbClaA = 0
+AmbClaA_count = 0
+
+
+
+
+
 for element in tqdm(data):
     print("_________________________")
     db_name = element.get('db_name')
     turns = element.get('turns', [])
-    # 遍历每个元素的turns数组
+
     allturn += 1
     iaccs = True
     imatch = True
     for i in range(len(turns) - 1):
-        turn_number = (i) // 2  # 计算当前的turn数
+        turn_number = (i) // 2 
         if turns[i].get('type','') == 'answerable':
-            # print(str(turn_number)+"总数加一")
-            turn_total_counts[turn_number+1] += 1  # 统计总数
+
+            turn_total_counts[turn_number+1] += 1  
 
         if  turns[i].get('RQS','N/A') != 'N/A':
                 predict_type = turns[i].get('predict_type','answerable')
@@ -644,16 +663,34 @@ for element in tqdm(data):
             if predict_type == 'answerable':
                 allsqla += 1
 
+            if gold_type == 'ambiguous' and predict_type == 'answerable':      
+                AmbA_count += 1
+                try:
+                    print("AMBA")
+                    ambiguous_ans = parse_sql(turns[i+1].get('predict',''))
+                    print(ambiguous_ans)
+                    if qm("datasets/cosql_dataset/database",turns[i+3].get('query',''), ambiguous_ans, db_name):
+                        AmbA += 1
+                        print("\033[92mAmbA+1\033[0m")
+                except Exception as e:
+                    print("\033[91mAmbA error\033[0m")
+                    print(e)
+            
+
             
 
             if gold_type == predict_type and predict_type == 'answerable':
+                if i-2 >= 0 and turns[i-2].get('type','') == 'ambiguous':
+                    AmbClaA_count += 1
                 try:
                     print("Question:"+turns[i].get('text',''))
                     if qm("datasets/cosql_dataset/database",turns[i+1].get('query',''), turns[i+1].get('predict_sql',''), db_name):
                         qm_count += 1
                         accs += 1
-                        # print(str(turn_number+1)+"加一")
                         turn_qm_counts[turn_number+1] += 1 
+                        if i-2 >= 0 and turns[i-2].get('type','') == 'ambiguous':
+                            AmbClaA += 1
+                            print("\033[92mAmbClaA+1\033[0m")
                         print("\033[92mACCS+1\033[0m")
                     else:
                         iaccs = False
@@ -694,7 +731,7 @@ for element in tqdm(data):
         print("\033[92mIM+1\033[0m")
         im_count += 1
 
-# 分析结果
+
 print("_____________________________________")
 
 percentage2 = (accs / allqa) * 100
@@ -704,8 +741,8 @@ percentage4 = (qm_count / allsqlqa) * 100
 percentage5 = (error_count / allsqla) * 100
 percentage6 = (im_count / allturn) * 100
 
-# 打印结果标题
-print("Result Analysis")
+
+print("A. Overall Result Analysis")
 print("_____________________________________")
 print("| Metric | Count | Total | Percentage |")
 print("|--------|-------|-------|------------|")
@@ -719,11 +756,11 @@ print(f"| IM     | {im_count:<5} | {allturn:<5} | {percentage6:.1f}%      |")
 print(f"| RQS    | {RQS_sum:<5} | {RQS_count:<5} | {RQS_sum/RQS_count:.1f}      |")
 print("-------------------------------------")
 
-# 打印分类的精确率、召回率和准确率
+
 categories = ['answerable', 'unanswerable', 'ambiguous', 'improper']
 
-# 打印分类分析标题
-print("Category Analysis")
+
+print("B. Category Analysis")
 print("_______________________________________")
 print("| Category       | Precision | Recall |")
 print("|----------------|-----------|--------|")
@@ -734,19 +771,19 @@ for category in categories:
 
 print("_______________________________________")
 
-# 打印每轮的QM统计
-print("Turn-wise QM Statistics")
+
+print("C. Turn-wise QM Statistics")
 print("_____________________________________")
 print("| Turn  | QM Count | Total | Percentage |")
 print("|-------|----------|-------|------------|")
 
 for turn in sorted(turn_total_counts.keys()):
-    qm_count = turn_qm_counts[turn]
+    qm_count_t = turn_qm_counts[turn]
     total_count = turn_total_counts[turn]
-    percentage = (qm_count / total_count) * 100 if total_count > 0 else 0
-    print(f"| {turn:<5} | {qm_count:<8} | {total_count:<5} | {percentage:.1f}%      |")
+    percentage = (qm_count_t / total_count) * 100 if total_count > 0 else 0
+    print(f"| {turn:<5} | {qm_count_t:<8} | {total_count:<5} | {percentage:.1f}%      |")
 
-# 打印4以上的turn的统计
+
 qm_count_5plus = sum(count for turn, count in turn_qm_counts.items() if turn > 4)
 total_count_5plus = sum(count for turn, count in turn_total_counts.items() if turn > 4)
 percentage_5plus = (qm_count_5plus / total_count_5plus) * 100 if total_count_5plus > 0 else 0
@@ -754,7 +791,23 @@ print(f"| >4    | {qm_count_5plus:<8} | {total_count_5plus:<5} | {percentage_5pl
 
 print("_____________________________________")
 
-# 打印感谢信息
-print("We appreciate your interest! For more details and if you have any questions, please refer to: https://github.com/mcxiaoxiao/MMSQL")
+print("D. Answerable QA vs. Ambiguous QA turns QM Analysis")
+print("___________________________________________________")
+print("| Metric             | Count | Total | Percentage |")
+print("|--------------------|-------|-------|------------|")
+print(f"| Ans.Q+ans          | {qm_count:<5} | {allsqlqa:<5} | {percentage4:.1f}%      |")
+print(f"| Amb.Q+ans          | {AmbA:<5} | {AmbA_count:<5} | {(AmbA/AmbA_count)*100:.1f}%      |")
+print(f"| Amb.Q+clarify+ans  | {AmbClaA_count:<5} | {allturn:<5} | {(AmbClaA_count/allturn)*100:.1f}%      |")
+print("___________________________________________________")
 
-print("-------------------------------------")
+
+
+
+
+
+import pyfiglet
+
+ascii_art = pyfiglet.figlet_format("MMSQL")
+print(ascii_art)
+
+print("We appreciate your interest! For more details and if you have any questions, please refer to: https://github.com/mcxiaoxiao/MMSQL")
