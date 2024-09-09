@@ -609,9 +609,10 @@ for element in tqdm(data):
     iaccs = True
     imatch = True
     for i in range(len(turns) - 1):
-        turn_number = (i + 1) // 2  # 计算当前的turn数
-        if turns[i].get('predict_type','') == 'answerable':
-            turn_total_counts[turn_number] += 1  # 统计总数
+        turn_number = (i) // 2  # 计算当前的turn数
+        if turns[i].get('type','') == 'answerable':
+            # print(str(turn_number)+"总数加一")
+            turn_total_counts[turn_number+1] += 1  # 统计总数
 
         if  turns[i].get('RQS','N/A') != 'N/A':
                 predict_type = turns[i].get('predict_type','answerable')
@@ -651,7 +652,8 @@ for element in tqdm(data):
                     if qm("datasets/cosql_dataset/database",turns[i+1].get('query',''), turns[i+1].get('predict_sql',''), db_name):
                         qm_count += 1
                         accs += 1
-                        turn_qm_counts[turn_number] += 1 
+                        # print(str(turn_number+1)+"加一")
+                        turn_qm_counts[turn_number+1] += 1 
                         print("\033[92mACCS+1\033[0m")
                     else:
                         iaccs = False
