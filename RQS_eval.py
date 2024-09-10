@@ -171,13 +171,13 @@ def process_turns(file_path, output_path):
                         else:
                             next_turn['predict_type'] = 'not answerable'
                             # Ask LLM, Get categorized and RQS scored based on database, questions, answers, gold answer
-                            if turns[i].get('text', '').lower() == "thanks!":
-                                print("Direct greeting. SKIP")
-                                type_ai = "improper"
-                                rqs_ai = 10
-                                rationale_ai = "Direct greeting"
-                            else:
-                                type_ai, rqs_ai, rationale_ai = ask_ai(db_name,turns[i].get('text', ''),predict_text,next_turn.get('text', ''),turns[i].get('type', '')) 
+                            # if turns[i].get('text', '').lower() == "thanks!":
+                            #     print("Direct greeting. SKIP")
+                            #     type_ai = "improper"
+                            #     rqs_ai = 10
+                            #     rationale_ai = "Direct greeting"
+                            # else:
+                            type_ai, rqs_ai, rationale_ai = ask_ai(db_name,turns[i].get('text', ''),predict_text,next_turn.get('text', ''),turns[i].get('type', '')) 
                             next_turn['predict_type'] = type_ai
                             next_turn['RQS'] = rqs_ai
                             next_turn['RQS_Rationale'] = rationale_ai

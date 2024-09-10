@@ -635,16 +635,22 @@ for element in tqdm(data):
 
         if  turns[i].get('RQS','N/A') != 'N/A':
                 predict_type = turns[i].get('predict_type','answerable')
+                gold_type = turns[i-1].get('type','')
+                print("RQS Gold Type:"+str(gold_type))
+                print("RQS Predict Type:"+str(predict_type))
                 if predict_type != 'answerable':
                     RQS_count += 1
-                    RQS_sum += int(turns[i].get('RQS'))
-                    print("RQS:"+str(turns[i].get('RQS')))
+                    RQS = 0
+                    if predict_type == gold_type:
+                        RQS = turns[i].get('RQS')
+                    RQS_sum += int(RQS)
+                    print("RQS:"+str(RQS))
         if i%2 == 0:
             print("\n turn:"+str((i+1)//2))
         if turns[i].get('isuser'):
             allqa+=1
             # print(turns[i]['text'])
-            gold_type = turns[i].get('type',[])
+            gold_type = turns[i].get('type','')
             predict_type = turns[i+1].get('predict_type','answerable')
             if len(gold_type) == 0:
                 gold_type ='answerable'
@@ -753,7 +759,7 @@ print(f"| EM     | {em_count:<5} | {allsqlqa:<5} | {percentage3:.1f}%      |")
 print(f"| QM     | {qm_count:<5} | {allsqlqa:<5} | {percentage4:.1f}%      |")
 print(f"| ERROR  | {error_count:<5} | {allsqla:<5} | {percentage5:.1f}%      |")
 print(f"| IM     | {im_count:<5} | {allturn:<5} | {percentage6:.1f}%      |")
-print(f"| RQS    | {RQS_sum:<5} | {RQS_count:<5} | {RQS_sum/RQS_count:.1f}      |")
+print(f"| RQS    | {RQS_sum:<5} | {RQS_count:<5} | {RQS_sum/RQS_count:.2f}      |")
 print("-------------------------------------")
 
 

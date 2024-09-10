@@ -1763,9 +1763,9 @@
                 "predict": "Unanswerable. The database does not contain information about the duration of each singer's performance at each stadium. \n",
                 "predict_sql": "",
                 "predict_type": "unanswerable",
-                "RQS": 10,
-                "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human_avg": 10
+                "RQS": 9,
+                "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 1, 'Utility': 2}",
+                "RQS_human_avg": 7
             },
             {
                 "isuser": true,
@@ -8714,7 +8714,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human_avg": 10
+                "RQS_human_avg": 4
             },
             {
                 "isuser": true,
@@ -8960,7 +8960,7 @@
                 "predict_type": "unanswerable",
                 "RQS": 10,
                 "RQS_Rationale": "{'Relevance': 2, 'Clarity': 2, 'Completeness': 2, 'Accuracy': 2, 'Utility': 2}",
-                "RQS_human_avg": 10
+                "RQS_human_avg": 9
             },
             {
                 "isuser": true,
