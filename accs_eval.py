@@ -615,6 +615,9 @@ AmbA_count = 0
 AmbClaA = 0
 AmbClaA_count = 0
 
+rqs_sums = defaultdict(int)
+rqs_counts = defaultdict(int)
+
 
 
 
@@ -645,6 +648,9 @@ for element in tqdm(data):
                         RQS = turns[i].get('RQS')
                     RQS_sum += int(RQS)
                     print("RQS:"+str(RQS))
+                    if gold_type in ['unanswerable', 'ambiguous', 'improper']:
+                        rqs_sums[gold_type] += int(RQS)
+                        rqs_counts[gold_type] += 1
         if i%2 == 0:
             print("\n turn:"+str((i+1)//2))
         if turns[i].get('isuser'):
@@ -807,7 +813,19 @@ print(f"| Amb.Q+clarify+ans  | {AmbClaA_count:<5} | {allturn:<5} | {(AmbClaA_cou
 print("___________________________________________________")
 
 
+print("E. RQS Averages by Category")
+print("________________________________")
+print("| Category       | Average RQS |")
+print("|----------------|-------------|")
 
+for category in ['unanswerable', 'ambiguous', 'improper']:
+    if rqs_counts[category] > 0:
+        avg_rqs = rqs_sums[category] / rqs_counts[category]
+        print(f"| {category.capitalize():<14} | {avg_rqs:.2f}        |")
+    else:
+        print(f"| {category.capitalize():<14} | N/A         |")
+
+print("________________________________")
 
 
 
