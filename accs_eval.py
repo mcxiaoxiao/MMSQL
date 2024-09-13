@@ -361,6 +361,7 @@ def count_others(sql):
 
     return count
 # Define the exception you want to raise when the timeout occurs
+
 class TimeoutException(Exception):
     pass
 
@@ -393,7 +394,15 @@ def execute_query(db, query):
             conn.close()
     return result
 
+def calculate_metrics(correct, gold, predict):
+    precision = correct / predict if predict > 0 else 0
+    recall = correct / gold if gold > 0 else 0
+    return precision, recall
 
+def calculate_f1(precision, recall):
+    if precision + recall == 0:
+        return 0
+    return 2 * (precision * recall) / (precision + recall)
 
 def eval_exec_match(db_path,db, p_str, g_str):
     p_str = p_str.lower()
@@ -773,19 +782,26 @@ categories = ['answerable', 'unanswerable', 'ambiguous', 'improper']
 
 
 print("B. Category Analysis")
-print("_______________________________________")
-print("| Category       | Precision | Recall |")
-print("|----------------|-----------|--------|")
+print("__________________________________________________")
+print("| Category       | Precision | Recall | F1 Score |")
+print("|----------------|-----------|--------|----------|")
+
+f1_scores = []
 
 for category in categories:
     precision, recall = calculate_metrics(correct_counts[category], gold_counts[category], predict_counts[category])
-    print(f"| {category.capitalize():<14} | {precision*100:.1f}%    | {recall*100:.1f}%  |")
+    f1 = calculate_f1(precision, recall)
+    f1_scores.append(f1)
+    print(f"| {category.capitalize():<14} | {precision*100:.1f}%    | {recall*100:.1f}%  | {f1*100:.1f}%  |")
 
-print("_______________________________________")
+average_f1 = sum(f1_scores) / len(f1_scores)
+print("__________________________________________________")
+print(f"| {'Average F1':<14} | {'':<9} | {'':<6} | {average_f1*100:.1f}%  |")
+print("__________________________________________________")
 
 
 print("C. Turn-wise QM Statistics")
-print("_____________________________________")
+print("_________________________________________")
 print("| Turn  | QM Count | Total | Percentage |")
 print("|-------|----------|-------|------------|")
 
@@ -801,7 +817,7 @@ total_count_5plus = sum(count for turn, count in turn_total_counts.items() if tu
 percentage_5plus = (qm_count_5plus / total_count_5plus) * 100 if total_count_5plus > 0 else 0
 print(f"| >4    | {qm_count_5plus:<8} | {total_count_5plus:<5} | {percentage_5plus:.1f}%      |")
 
-print("_____________________________________")
+print("_________________________________________")
 
 print("D. Answerable QA vs. Ambiguous QA turns QM Analysis")
 print("___________________________________________________")
