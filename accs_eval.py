@@ -435,10 +435,10 @@ def eval_exec_match(db_path,db, p_str, g_str):
         try:
             p_res = future.result(timeout=10) 
         except TimeoutError:
-            print("操作超时")
+            print("Timeout")
             return False
         except Exception as e:
-            print(f"执行出错: {e}")
+            print(f"SQL ERROR: {e}")
             return False
             
 
@@ -446,10 +446,10 @@ def eval_exec_match(db_path,db, p_str, g_str):
         try:
             q_res = future.result(timeout=10) 
         except TimeoutError:
-            print("操作超时")
+            print("Timeout")
             return False
         except Exception as e:
-            print(f"执行出错: {e}")
+            print(f"SQL ERROR: {e}")
             return False
 
     def res_map(res, val_units):
@@ -634,6 +634,7 @@ rqs_counts = defaultdict(int)
 for element in tqdm(data):
     print("_________________________")
     db_name = element.get('db_name')
+    print("DB Name:"+db_name)
     turns = element.get('turns', [])
 
     allturn += 1
@@ -705,7 +706,7 @@ for element in tqdm(data):
                     AmbClaA_count += 1
                 try:
                     print("Question:"+turns[i].get('text',''))
-                    if qm("datasets/cosql_dataset/database",turns[i+1].get('query',''), turns[i+1].get('predict_sql',''), db_name):
+                    if qm("datasets/cosql_dataset/database", turns[i+1].get('predict_sql',''),turns[i+1].get('query',''), db_name):
                         qm_count += 1
                         accs += 1
                         turn_qm_counts[turn_number+1] += 1 
@@ -733,7 +734,7 @@ for element in tqdm(data):
                     if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict_sql',''), turns[i+1].get('query','')):
                         em_count += 1
                 except Exception as e:
-                    # print("EM error")
+                    print("\033[91mEM error\033[0m")
                     print(e)
             if gold_type == predict_type and predict_type != 'answerable':
                 print("Question:"+turns[i].get('text',''))
