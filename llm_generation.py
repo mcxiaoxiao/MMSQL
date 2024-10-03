@@ -4,7 +4,8 @@ llm_generation.py
 This script generates responses using the Large Language Model (LLM) based on the test dataset "MMSQL_test.json".
 
 Usage:
-    python llm_generation.py outputs/llm_responses.json
+    1. You need to choose one of the api's or hf's "request_llm" function at line 19-20. 
+    2. python llm_generation.py outputs/llm_responses.json
 
 Arguments:
     --output: Path to the output JSON file where the LLM responses will be saved.
@@ -13,9 +14,11 @@ Arguments:
 # Import the functions from /tools
 import math
 import os
-# from hf_open_source_llm_request import request_llm
-from open_source_llm_request import request_llm
+
+# You need to choose one of the api's or hf's "request_llm" function here. 
+# from tools.hf_open_source_llm_request import request_llm
 # from tools.api_request import request_gpt as request_llm
+
 from tools.db_detail import db_getdesc
 from tools.sql_execute import sqlite_execute as execute
 import threading

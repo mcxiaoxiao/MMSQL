@@ -4,7 +4,8 @@ llm_generation.py
 This script generates responses using the Large Language Model (LLM) based on the test dataset "MMSQL_test.json".
 
 Usage:
-    python llm_generation.py --output outputs/llm_responses.json
+    1. You need to choose one of the api's or hf's "request_llm" function at line 19-20. 
+    2. python llm_generation.py outputs/llm_responses.json
 
 Arguments:
     --output: Path to the output JSON file where the LLM responses will be saved.
@@ -13,7 +14,11 @@ Arguments:
 # Import the functions from /tools
 import math
 import os
-from tools.api_request import request_gemini as request_llm
+
+# You need to choose one of the api's or hf's "request_llm" function here. 
+# from tools.hf_open_source_llm_request import request_llm
+# from tools.api_request import request_gpt as request_llm
+
 from tools.db_detail import db_getdesc
 from tools.sql_execute import sqlite_execute as execute
 import threading
@@ -46,7 +51,7 @@ def get_system(db_name):
     # Get db schema prompt
     description = db_getdesc(db_name)
     column_example = get_example(db_name)
-    question = "Database schema:\n" + description + "\nExamples for each table:"+ column_example + "\nBased on the provided information, if the user's question cannot be accurately answered with an SQL query, indicate whether the question is ambiguous(Problem is not enough to generate SQL with sure tables and columns) or unanswerable(Unable to answer questions based on database information) and explain why. If the question is answerable, output only SQL query without additional content."
+    question = "Database schema:\n" + description + "\nExamples for each table:"+ column_example + "\nBased on the provided information, if the user's question cannot be accurately answered with an SQL query, indicate whether the question is ambiguous(Problem is not enough to generate SQL with sure tables and columns) or unanswerable(Unable to answer questions based on database information) and explain to user why. If the question is answerable, output only SQL query without additional content. Answer normally if it's an everyday question"
     return question
 
 def process_json_part(data, output_file):
@@ -66,8 +71,8 @@ def process_json_part(data, output_file):
                     # print(messages)
                     llm_response = request_llm(messages)
                     # llm record
-                    # print("\nLLM Response:")
-                    # print(llm_response)
+                    print("\nLLM Response:")
+                    print(llm_response)
                     item['turns'][index+1]['predict'] = llm_response
                     # update messages
                     g_ans = ""
@@ -100,8 +105,8 @@ def process_json_part(data, output_file):
                 json.dump(items, f, indent=4)
                 f.write('\n') 
 
-def process_json_multithreaded(input_file, output_file, num_threads=20):
-    with open(input_file, 'r') as f:
+def process_json_multithreaded(input_file, output_file, num_threads=1):
+    with  open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
     # split
     data_parts = []
