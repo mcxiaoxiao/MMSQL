@@ -1,9 +1,9 @@
 # MMSQL: Advancing Multi-turn Text-to-SQL Evaluation with Comprehensive Dialogue Datasets and Large Language Models
 
-This repository contains the scripts and code used for the experiments in the "Evaluating and Enhancing Large Language Models for Complex Multi-Turn Text-to-SQL Conversations" paper. The repository is structured to ensure the reproducibility of the experiments and includes scripts, notebooks, and data outputs.
+This repository contains the scripts and code used for the experiments in the "Evaluating and Enhancing Large Language Models for Complex Multi-Turn Text-to-SQL Conversations" paper. The repository is structured to ensure the reproducibility of the experiments and includes scripts, notebooks, test suit, and data outputs.
 
 ## Directory Structure
-- `\datasets`: MMSQL test set `MMSQL_test.json`, MMSQL train set `MMSQL_train.json`, CoSQL dataset (Our sets based on it) `cosql_dataset`.
+- `\datasets`: MMSQL test set `MMSQL_test.json`, MMSQL train set `MMSQL_train.json`, CoSQL dataset (Our dataset based on its databases) `cosql_dataset` You can download it [here](https://drive.google.com/uc?export=download&id=1Y3ydpFiQQ3FC0bzdfy3groV95O_f1nXF).
 - `llm_generation.py`: Script responsible for generating responses using the LLM.
 - `RQS_eval.py`: Script for evaluating responses using GPT-4o-mini to score RQS and label the response types.
 - `ACCS_eval.py`: Script for calculating several metrics including ACCS, IACCS, EM, QM, ERROR...
