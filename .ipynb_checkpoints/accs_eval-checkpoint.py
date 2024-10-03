@@ -1,16 +1,16 @@
 """
 accs_eval.py
 
-This script calculates several metrics from the output JSON files, including ACCS, IACCS, EM, QM, and ERROR.
+This script calculates several metrics from the output JSON files, including base metric (e.g. ACCS, IACCS, EM, QM...) and analytical results.
 
 Usage:
-    python accs_eval.py "outputs/rqs_gemini-1-Copy1.5-flash-llm.json"
+    python accs_eval.py outputs/gpt_gemini-1-Copy1.5-flash-llm.json
 
 Arguments:
     --input: Path to the input JSON file containing the LLM responses.
 """
 
-
+from collections import defaultdict
 import json
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
@@ -361,6 +361,7 @@ def count_others(sql):
 
     return count
 # Define the exception you want to raise when the timeout occurs
+
 class TimeoutException(Exception):
     pass
 
@@ -393,7 +394,15 @@ def execute_query(db, query):
             conn.close()
     return result
 
+def calculate_metrics(correct, gold, predict):
+    precision = correct / predict if predict > 0 else 0
+    recall = correct / gold if gold > 0 else 0
+    return precision, recall
 
+def calculate_f1(precision, recall):
+    if precision + recall == 0:
+        return 0
+    return 2 * (precision * recall) / (precision + recall)
 
 def eval_exec_match(db_path,db, p_str, g_str):
     p_str = p_str.lower()
@@ -421,26 +430,26 @@ def eval_exec_match(db_path,db, p_str, g_str):
 
 
     with ThreadPoolExecutor(max_workers=1) as executor:
-        # 执行第一个查询
+
         future = executor.submit(execute_query, db, p_str)
         try:
-            p_res = future.result(timeout=10)  # 设置超时时间为10秒
+            p_res = future.result(timeout=10) 
         except TimeoutError:
-            print("操作超时")
+            print("Timeout")
             return False
         except Exception as e:
-            print(f"执行出错: {e}")
+            print(f"SQL ERROR: {e}")
             return False
             
-        # 执行第二个查询
+
         future = executor.submit(execute_query, db, g_str)
         try:
-            q_res = future.result(timeout=10)  # 设置超时时间为10秒
+            q_res = future.result(timeout=10) 
         except TimeoutError:
-            print("操作超时")
+            print("Timeout")
             return False
         except Exception as e:
-            print(f"执行出错: {e}")
+            print(f"SQL ERROR: {e}")
             return False
 
     def res_map(res, val_units):
@@ -535,12 +544,30 @@ class Evaluator:
 evaluator = Evaluator()
 
 
+def parse_sql(predict_text):
+    select_pos = predict_text.upper().find('SELECT')
+    colon_pos = predict_text.find(';', select_pos)
+    if select_pos != -1 and colon_pos != -1:
+        predict_sql = predict_text[select_pos:colon_pos].replace('\n',' ')
+    elif select_pos != -1:
+        predict_sql = predict_text[select_pos:].replace('\n',' ')
+    else:
+        predict_sql = ""
+    return predict_sql
 
+def calculate_metrics(correct, total_gold, total_pred):
+    precision = correct / total_pred if total_pred > 0 else 0
+    recall = correct / total_gold if total_gold > 0 else 0
+    return precision, recall
 
 
 def qm(db_path,p_str,g_str,db):
+    # print("Initial Gold SQL:"+g_str)
     p_str = p_str.lower()
     g_str = g_str.lower()
+    p_str = p_str.replace("```","")
+    p_str = p_str.replace(";","")
+    g_str = g_str.replace("```","")
     p_str = p_str.replace("`","'")
     p_str = p_str.replace("▁"," ")
     split_index = p_str.find('=')
@@ -566,7 +593,7 @@ def qm(db_path,p_str,g_str,db):
 parser = argparse.ArgumentParser(description='evaluation of AccS. Input JSON file path.')
 parser.add_argument('json_file_path', type=str, help='Path to the JSON file')
 
-# 解析命令行参数
+
 args = parser.parse_args()
 
 
@@ -574,6 +601,7 @@ with open(args.json_file_path, 'r', encoding='utf-8') as file:
     data = json.load(file)
 
 qm_count = 0
+im_count = 0
 allsqlqa = 0
 allsqla = 0
 em_count = 0
@@ -581,21 +609,64 @@ accs = 0
 allqa = 0
 iaccs_count = 0 
 allturn = 0
-# 遍历每个元素
+RQS_count = 0
+RQS_sum = 0
+
+gold_counts = defaultdict(int)
+predict_counts = defaultdict(int)
+correct_counts = defaultdict(int)
+
+turn_qm_counts = defaultdict(int)
+turn_total_counts = defaultdict(int)
+
+AmbA = 0
+AmbA_count = 0
+AmbClaA = 0
+AmbClaA_count = 0
+
+rqs_sums = defaultdict(int)
+rqs_counts = defaultdict(int)
+
+
+
+
+
 for element in tqdm(data):
     print("_________________________")
     db_name = element.get('db_name')
+    print("DB Name:"+db_name)
     turns = element.get('turns', [])
-    # 遍历每个元素的turns数组
+
     allturn += 1
     iaccs = True
+    imatch = True
     for i in range(len(turns) - 1):
+        turn_number = (i) // 2 
+        if turns[i].get('type','') == 'answerable':
+
+            turn_total_counts[turn_number+1] += 1  
+
+        if  turns[i].get('RQS','N/A') != 'N/A':
+                predict_type = turns[i].get('predict_type','answerable')
+                gold_type = turns[i-1].get('type','')
+                print("RQS Gold Type:"+str(gold_type))
+                print("RQS Predict Type:"+str(predict_type))
+                if predict_type != 'answerable':
+                    RQS_count += 1
+                    RQS = 0
+                    if predict_type == gold_type:
+                        RQS = turns[i].get('RQS')
+                    RQS_sum += int(RQS)
+                    print("RQS:"+str(RQS))
+                    if gold_type in ['unanswerable', 'ambiguous', 'improper']:
+                        rqs_sums[gold_type] += int(RQS)
+                        rqs_counts[gold_type] += 1
         if i%2 == 0:
             print("\n turn:"+str((i+1)//2))
         if turns[i].get('isuser'):
             allqa+=1
             # print(turns[i]['text'])
-            gold_type = turns[i].get('type',[])
+            gold_type = turns[i].get('type','')
             predict_type = turns[i+1].get('predict_type','answerable')
             if len(gold_type) == 0:
                 gold_type ='answerable'
@@ -603,39 +674,74 @@ for element in tqdm(data):
                 predict_type = 'answerable'
             print("Gold Type:"+str(gold_type))
             print("Predict Type:"+str(predict_type))
-            # print("gold   :"+gold_type)
-            # print("predict:"+predict_type)
             
+            gold_counts[gold_type] += 1
+            predict_counts[predict_type] += 1
+            if gold_type == predict_type:
+                correct_counts[gold_type] += 1
+
             if gold_type == 'answerable':
                 allsqlqa += 1
             if predict_type == 'answerable':
                 allsqla += 1
+
+            if gold_type == 'ambiguous' and predict_type == 'answerable':      
+                AmbA_count += 1
+                try:
+                    print("AMBA")
+                    ambiguous_ans = parse_sql(turns[i+1].get('predict',''))
+                    print(ambiguous_ans)
+                    if qm("datasets/cosql_dataset/database",turns[i+3].get('query',''), ambiguous_ans, db_name):
+                        AmbA += 1
+                        print("\033[92mAmbA+1\033[0m")
+                except Exception as e:
+                    print("\033[91mAmbA error\033[0m")
+                    print(e)
+            
+
+            
+
             if gold_type == predict_type and predict_type == 'answerable':
+                if i-2 >= 0 and turns[i-2].get('type','') == 'ambiguous':
+                    AmbClaA_count += 1
                 try:
                     print("Question:"+turns[i].get('text',''))
-                    if qm("datasets/cosql_dataset/database",turns[i+1].get('query',''), turns[i+1].get('predict_sql',''), db_name):
-                        # print("QM\n")
+                    if qm("datasets/cosql_dataset/database", turns[i+1].get('predict_sql',''),turns[i+1].get('query',''), db_name):
                         qm_count += 1
                         accs += 1
+                        turn_qm_counts[turn_number+1] += 1 
+                        if i-2 >= 0 and turns[i-2].get('type','') == 'ambiguous':
+                            AmbClaA += 1
+                            print("\033[92mAmbClaA+1\033[0m")
                         print("\033[92mACCS+1\033[0m")
                     else:
                         iaccs = False
+                        imatch = False
+                        print("QM nok\n")
                         print("\033[91mIACCS failed\033[0m")
-                except:
+                except Exception as e:
+                    print("\033[91mQM error\033[0m")
+                    # print(turns[i+1].get('query',''))
+                    # print(turns[i+1].get('predict_sql',''))
+                    print(e)
+                    
                     accs += 0
                     iaccs = False
+                    imatch = False
                     print("\033[91mIACCS failed\033[0m")
                 try:
                     
                     if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict_sql',''), turns[i+1].get('query','')):
                         em_count += 1
                 except Exception as e:
-                    # print("EM error")
+                    print("\033[91mEM error\033[0m")
                     print(e)
             if gold_type == predict_type and predict_type != 'answerable':
                 print("Question:"+turns[i].get('text',''))
                 accs += 1
                 print("\033[92mACCS+1\033[0m")
+            if gold_type == 'answerable' and predict_type != 'answerable':
+                imatch = False
             if gold_type != predict_type:
                 iaccs = False
                 print("\033[91mIACCS failed\033[0m")
@@ -643,6 +749,10 @@ for element in tqdm(data):
     if iaccs:
         print("\033[92mIACCS+1\033[0m")
         iaccs_count += 1
+    if imatch:
+        print("\033[92mIM+1\033[0m")
+        im_count += 1
+
 
 print("_____________________________________")
 
@@ -651,8 +761,10 @@ percentage2_iaccs = (iaccs_count / allturn) * 100
 percentage3 = (em_count / allsqlqa) * 100
 percentage4 = (qm_count / allsqlqa) * 100
 percentage5 = (error_count / allsqla) * 100
+percentage6 = (im_count / allturn) * 100
 
-print("Result")
+
+print("A. Overall Result Analysis")
 print("_____________________________________")
 print("| Metric | Count | Total | Percentage |")
 print("|--------|-------|-------|------------|")
@@ -662,6 +774,81 @@ print(f"| IACCS  | {iaccs_count:<5} | {allturn:<5} | {percentage2_iaccs:.1f}%   
 print(f"| EM     | {em_count:<5} | {allsqlqa:<5} | {percentage3:.1f}%      |")
 print(f"| QM     | {qm_count:<5} | {allsqlqa:<5} | {percentage4:.1f}%      |")
 print(f"| ERROR  | {error_count:<5} | {allsqla:<5} | {percentage5:.1f}%      |")
-
+print(f"| IM     | {im_count:<5} | {allturn:<5} | {percentage6:.1f}%      |")
+print(f"| RQS    | {RQS_sum:<5} | {RQS_count:<5} | {RQS_sum/RQS_count:.2f}      |")
 print("-------------------------------------")
-print("For more details, please refer to: https://github.com/mcxiaoxiao/MMSQL")
+
+
+categories = ['answerable', 'unanswerable', 'ambiguous', 'improper']
+
+
+print("B. Category Analysis")
+print("__________________________________________________")
+print("| Category       | Precision | Recall | F1 Score |")
+print("|----------------|-----------|--------|----------|")
+
+f1_scores = []
+
+for category in categories:
+    precision, recall = calculate_metrics(correct_counts[category], gold_counts[category], predict_counts[category])
+    f1 = calculate_f1(precision, recall)
+    f1_scores.append(f1)
+    print(f"| {category.capitalize():<14} | {precision*100:.1f}%    | {recall*100:.1f}%  | {f1*100:.1f}%  |")
+
+average_f1 = sum(f1_scores) / len(f1_scores)
+print("__________________________________________________")
+print(f"| {'Average F1':<14} | {'':<9} | {'':<6} | {average_f1*100:.1f}%  |")
+print("__________________________________________________")
+
+
+print("C. Turn-wise QM Statistics")
+print("_________________________________________")
+print("| Turn  | QM Count | Total | Percentage |")
+print("|-------|----------|-------|------------|")
+
+for turn in sorted(turn_total_counts.keys()):
+    qm_count_t = turn_qm_counts[turn]
+    total_count = turn_total_counts[turn]
+    percentage = (qm_count_t / total_count) * 100 if total_count > 0 else 0
+    print(f"| {turn:<5} | {qm_count_t:<8} | {total_count:<5} | {percentage:.1f}%      |")
+
+
+qm_count_5plus = sum(count for turn, count in turn_qm_counts.items() if turn > 4)
+total_count_5plus = sum(count for turn, count in turn_total_counts.items() if turn > 4)
+percentage_5plus = (qm_count_5plus / total_count_5plus) * 100 if total_count_5plus > 0 else 0
+print(f"| >4    | {qm_count_5plus:<8} | {total_count_5plus:<5} | {percentage_5plus:.1f}%      |")
+
+print("_________________________________________")
+
+print("D. Answerable QA vs. Ambiguous QA turns QM Analysis")
+print("___________________________________________________")
+print("| Metric             | Count | Total | Percentage |")
+print("|--------------------|-------|-------|------------|")
+print(f"| Ans.Q+ans          | {qm_count:<5} | {allsqlqa:<5} | {percentage4:.1f}%      |")
+print(f"| Amb.Q+ans          | {AmbA:<5} | {AmbA_count:<5} | {(AmbA/AmbA_count)*100:.1f}%      |")
+print(f"| Amb.Q+clarify+ans  | {AmbClaA_count:<5} | {allturn:<5} | {(AmbClaA_count/allturn)*100:.1f}%      |")
+print("___________________________________________________")
+
+
+print("E. RQS Averages by Category")
+print("________________________________")
+print("| Category       | Average RQS |")
+print("|----------------|-------------|")
+
+for category in ['unanswerable', 'ambiguous', 'improper']:
+    if rqs_counts[category] > 0:
+        avg_rqs = rqs_sums[category] / rqs_counts[category]
+        print(f"| {category.capitalize():<14} | {avg_rqs:.2f}        |")
+    else:
+        print(f"| {category.capitalize():<14} | N/A         |")
+
+print("________________________________")
+
+
+
+import pyfiglet
+
+ascii_art = pyfiglet.figlet_format("MMSQL")
+print(ascii_art)
+
+print("We appreciate your interest! For more details and if you have any questions, please refer to: https://github.com/mcxiaoxiao/MMSQL")

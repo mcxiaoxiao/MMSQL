@@ -1,7 +1,7 @@
 """
 accs_eval.py
 
-This script calculates several metrics from the output JSON files, including ACCS, IACCS, EM, QM, and ERROR.
+This script calculates several metrics from the output JSON files, including base metric (e.g. ACCS, IACCS, EM, QM...) and analytical results.
 
 Usage:
     python accs_eval.py outputs/gpt_gemini-1-Copy1.5-flash-llm.json
