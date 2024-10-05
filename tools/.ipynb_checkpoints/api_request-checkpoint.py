@@ -5,7 +5,7 @@ import random
 import google.generativeai as genai
 # Set API key
 OPENAI_API_KEY = 'sk-proj-1JRQ9SkU0gSRKsBoCyD1T3BlbkFJSQ44FoEjAHN05t7FrryD'
-OPENAI_MODEL_NAME = "gpt-4-turbo"
+OPENAI_MODEL_NAME = "gpt-4o-mini"
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 GEMINI_API_KEYS = [
@@ -30,7 +30,7 @@ def transform_messages_for_gemini(messages):
 
 def request_gpt(messages):
     print("request "+ OPENAI_MODEL_NAME)
-    for attempt in range(5):  # Retry up to 5 times
+    for attempt in range(10):  # Retry up to 10 times
         try:
             response = client.chat.completions.create(
                 model=OPENAI_MODEL_NAME,
@@ -41,10 +41,10 @@ def request_gpt(messages):
             return response_message
         except Exception as e:
             print(e)
-            if attempt < 4:  # Don't wait after the last attempt
-                time.sleep(10)  # Wait for 10 seconds before retrying
+            if attempt < 9:  # Don't wait after the last attempt
+                time.sleep(5)  # Wait for 5 seconds before retrying
             else:
-                print(f"An error occurred with GPT request after 5 attempts: {e}")
+                print(f"An error occurred with GPT request after 10 attempts: {e}")
                 return "failed"
 
 def request_gemini(messages):   

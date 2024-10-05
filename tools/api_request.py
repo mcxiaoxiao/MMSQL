@@ -13,7 +13,7 @@ GEMINI_API_KEYS = [
     "AIzaSyDfFuhj-UgJxC2ThsAgPYPhKyjFaPHqJ1M",
     "AIzaSyAWaTmfp7pCPcxpZln7EfzyZlkrIGltZfw",
     "AIzaSyC5FBoMFzNWvsz7FlnexrmdLFoHWed4LTc"]
-GEMINI_MODEL_NAME = "gemini-1.0-pro"
+GEMINI_MODEL_NAME = "gemini-1.5-flash"
 ge_model = genai.GenerativeModel(GEMINI_MODEL_NAME)
 
 def transform_messages_for_gemini(messages):
