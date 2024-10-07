@@ -7,7 +7,8 @@ class Agent:
         self.name = name
 
     def process_input(self, input_data):
-        raise NotImplementedError("Each agent must implement the process_input method.")
+        llm_response = self.request_llm(input_data['sys_prompt'],input_data['usr_prompt'])
+        return llm_response
 
     # Agent Tools
     
@@ -24,12 +25,13 @@ class Agent:
 
     
     def extract_json_from_string(self, text):
-          start = text.find('{')
-          end = text.find('}', start)
-          if start != -1 and end != -1:
+        start = text.find('{')
+        end = text.find('}', start)
+        if start != -1 and end != -1:
             try:
+              print(text[start:end + 1])
               return json.loads(text[start:end + 1])
             except json.JSONDecodeError:
               return None
-          return None
+        return None
         
