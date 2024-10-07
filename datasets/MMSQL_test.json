@@ -44,13 +44,13 @@
       },
       {
         "isuser": true,
-        "text": "Which companies have three or more models?",
+        "text": "Which companies have three or more models? list the count and the maker's full name.",
         "type": "answerable"
       },
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT Count(*) ,  T2.FullName ,  T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;"
+        "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;"
       },
       {
         "isuser": true,
