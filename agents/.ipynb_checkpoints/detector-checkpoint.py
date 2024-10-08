@@ -30,5 +30,5 @@ class Detector(Agent):
             
         llm_response = self.request_llm(sys_prompt,usr_prompt)
         if llm_response.lower() == "yes":
-            llm_response = "Yes"
+            llm_response = "YES"
         return f"{llm_response}"

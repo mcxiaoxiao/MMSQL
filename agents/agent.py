@@ -30,8 +30,10 @@ class Agent:
         if start != -1 and end != -1:
             try:
               print(text[start:end + 1])
-              return json.loads(text[start:end + 1])
-            except json.JSONDecodeError:
+                 
+              return json.loads(json.dumps(eval(text[start:end + 1])))
+            except json.JSONDecodeError  as e:
+              print(f"JSON ERROR {e}")
               return None
         return None
         

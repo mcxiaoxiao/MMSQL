@@ -46,8 +46,10 @@ def schema_select(dbname, table_config):
     column_names = result[0]["column_names"]
     column_types = result[0]["column_types"]
     primarys = result[0]["primary_keys"]
+    foreign_keys = result[0]["foreign_keys"]
 
     desc = ""
+    columns_selected = []
     for table_index, table_name in enumerate(table_names_original):
 
         
@@ -70,7 +72,7 @@ def schema_select(dbname, table_config):
                     sql_get_eg = f"SELECT DISTINCT {column_value[1]} FROM {table_name} LIMIT 3;"
                     examples_raw = sql_evoke(sql_get_eg, dbname)
                     examples = ", ".join([str(row[0]) for row in examples_raw])
-
+                    columns_selected.append(column_index)
                     desc += (
                         '('
                         + column_value[1]
@@ -83,6 +85,21 @@ def schema_select(dbname, table_config):
                         + examples
                         + "),\n"
                     )
-            desc = desc.rstrip("|") + "]\n"
 
+            desc = desc.rstrip("|") + "]\n"
+            
+    # print(foreign_keys,columns_selected)
+    matching_sublists = [
+        sublist for sublist in foreign_keys if sum(item in columns_selected for item in sublist) == 2
+    ]
+    column_names_selected = [[column_names_original[i] for i in sublist] for sublist in matching_sublists]
+    result = []
+    for sublist in column_names_selected:
+        new_sublist = [[table_names_original[item[0]], item[1]] for item in sublist]
+        result.append(new_sublist)
+    FK_output = "Foreign keys:\n"
+    for sublist in result:
+        text = " = ".join([f"{item[0]}.{item[1]}" for item in sublist])
+        FK_output += text + "\n"
+    desc = desc + FK_output
     return desc
