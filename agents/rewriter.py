@@ -91,7 +91,6 @@ Here is a new example, please start answering:
             "text": json_object.get('answer') or json_object.get('rewritten')
         }
         else:
-            
             print(llm_ans)
             print("No valid JSON object found.")
             
