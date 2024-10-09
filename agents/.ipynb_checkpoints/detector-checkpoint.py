@@ -13,10 +13,10 @@ class Detector(Agent):
 [DB_ID] {input_data["db_desc"]}
 [Schema] 
 {input_data["mini_schema"]}
-
 [Question]
-
 {input_data["question"]}
+[Evidence]
+{input_data["evidence"]}
 """
         else:
             usr_prompt = f"""
@@ -26,9 +26,16 @@ class Detector(Agent):
 {input_data["mini_schema"]}
 [Question]
 {input_data["question"]}
+[Evidence]
+{input_data["evidence"]}
             """
             
         llm_response = self.request_llm(sys_prompt,usr_prompt)
-        if llm_response.lower() == "yes":
-            llm_response = "YES"
-        return f"{llm_response}"
+        llm_lower = llm_response.lower()
+        llm_lower = llm_lower.strip()
+        llm_lower = llm_lower.replace("\n", "")
+        # print("llm_lower" + llm_lower)
+        if llm_lower == "yes":
+            return f"YES"
+        else:
+            return f"{llm_response}"

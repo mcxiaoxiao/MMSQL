@@ -18,7 +18,7 @@ class Rewriter(Agent):
         json_string_2 = json.dumps(data)
         
         usr_prompt = f"""[Instruction] 你需要根据evidence和previous QA及current question提炼出当前系统需要解答的完整问题作为输入，如果该问题有任何可能可以通过查询数据库来解答则improper为NO如果无关则YES The output should be in JSON format.
-[Requirements] 你需要把整合全部信息整合成一个信息完整的问题使得系统可以仅根据该问题回答。json字段分为improper:""(YES/NO)rewritten:""(rewritten question)如果是no则输出整合后的问题，如果是yes则输出直接回答
+[Requirements] 你需要把整合全部信息整合成一个信息完整的问题使得系统可以仅根据该问题回答。json字段分为improper:""(YES/NO)rewritten:""(rewritten question)如果是no则输出整合后的问题，如果是yes则输出直接回答,你不用校验问题是否和数据库内容相关只是判断问题是否可能与数据库里的信息有哪怕一点点关系
 [Previous QA]
 Q: Do you know the name of the student with ID 1? A: SELECT name FROM students WHERE id = 1; Result:['Timmy']
 Q: ok, how about id 2? A: SELECT name FROM students WHERE id = 1; A: SELECT name FROM students WHERE id = 2; Result:['Biden']

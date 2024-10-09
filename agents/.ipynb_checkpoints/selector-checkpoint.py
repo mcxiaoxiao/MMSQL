@@ -67,6 +67,8 @@ Here is a new example, please start answering:
 {input_data["db_exam"]}
 [Question]
 {input_data["question"]}
+[Evidence]
+{input_data["evidence"]}
 [Answer]
         """
         

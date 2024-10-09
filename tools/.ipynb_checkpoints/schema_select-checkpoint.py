@@ -59,7 +59,7 @@ def schema_select(dbname, table_config):
             if table_config[table_name] == "drop_all":
                 continue
 
-            desc += "Table:" + table_name + "\n[\n"
+            desc += "Table:" + table_name + "\n["
 
             for column_index, column_value in enumerate(column_names_original):
                 if (column_value[0] == table_index
@@ -75,14 +75,14 @@ def schema_select(dbname, table_config):
                     desc += (
                         '('
                         + column_value[1]
-                        + ":"
+                        + ", "
                         + column_names[column_index][1]
                         + " type:"
                         + column_types[column_index]
                         + isp
-                        + " Value examples:"
+                        + ". Value examples:"
                         + examples
-                        + "),\n"
+                        + "),"
                     )
 
             desc = desc.rstrip("|") + "]\n"
