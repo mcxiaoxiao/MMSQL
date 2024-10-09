@@ -87,7 +87,7 @@ Decompose the question into subquestions, considering [Constraints], and generat
             last_sql_code = matches[-1].strip()
  
         
-        result, executable, log = sql_evoke("SELECT * FROM userss",input_data["db_name"])
+        result, executable, log = sql_evoke(last_sql_code,input_data["db_name"])
 
         # print(executable, result, log)
         

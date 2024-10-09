@@ -8,17 +8,21 @@ class Selector(Agent):
     
     
     def select(self, input_data):
+
+        data = {"continents": "drop_all", "countries": "drop_all", "car_makers": ["Id", "FullName"], "model_list": "keep_all",  "cars_data": "drop_all"}
+        json_string_1 = json.dumps(data)
+        
         sys_prompt = """
         As an experienced and professional database administrator, your task is to analyze a user question and a database schema to provide relevant information. The database schema consists of table descriptions table examples, each containing multiple column descriptions. Your goal is to identify any possible tables and columns based on the user question and evidence provided.
         """
         usr_prompt = f"""[Instruction] 1. Discard any table schema unrelated to the user question and evidence. 2. Sort the columns in each relevant table in descending order of relevance and keep the top 6 columns. 3. Ensure that at least 3 tables are included in the final output JSON. 4. The output should be in JSON format.
-[Requirements] 1. If a table has less than or equal to 3 columns, mark it as "keep_all". 2. If a table is completely irrelevant to the user question and evidence, mark it as "drop_all". 3. Prioritize the columns in each relevant table based on their relevance.
+[Requirements] 1. If a table has less than or equal to 10 columns, mark it as "keep_all" you dont need to select. 2. If a table is completely irrelevant to the user question and evidence, mark it as "drop_all". 3. Prioritize the columns in each relevant table based on their relevance.
 Here is a typical example:
 [DB_ID] car_1
 [Schema] 
 continents(ContId:cont id type:number PRIMARY KEY|Continent:continent type:text|)
 countries(CountryId:country id type:number PRIMARY KEY|CountryName:country name type:text|Continent:continent type:number|)
-car_makers(Id:id type:number PRIMARY KEY|Maker:maker type:text|FullName:full name type:text|Country:country type:text|)
+car_makers(Id:id type:number PRIMARY KEY|Maker:maker type:text|FullName:full name type:text|Country:country type:text|A 11:country type:text|A 12:country type:text|A 13:country type:text|A 14:country type:text|A 15:country type:text|A 16:country type:text|A 17:country type:text|A 18:country type:text|)
 model_list(ModelId:model id type:number PRIMARY KEY|Maker:maker type:number|Model:model type:text|)
 car_names(MakeId:make id type:number PRIMARY KEY|Model:model type:text|Make:make type:text|)
 cars_data(Id:id type:number PRIMARY KEY|MPG:mpg type:text|Cylinders:cylinders type:number|Edispl:edispl type:number|Horsepower:horsepower type:text|Weight:weight type:number|Accelerate:accelerate type:number|Year:year type:number|)
@@ -57,7 +61,7 @@ maker's full name
 companies
 three or more models
 Therefore we can select the related database schema based on these entities with Evidence
-{str({"continents": "drop_all", "countries": "drop_all", "car_makers": ["Id", "FullName"], "model_list": "keep_all",  "cars_data": "drop_all"})}
+{json_string_1}
 Question Solved. 
 ========== 
 Here is a new example, please start answering:
