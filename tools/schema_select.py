@@ -68,7 +68,6 @@ def schema_select(dbname, table_config):
                     )):
                     isp = " PRIMARY KEY" if column_index in primarys else ""
                     
-                    # 获取当前列的 example 数据
                     sql_get_eg = f"SELECT DISTINCT {column_value[1]} FROM {table_name} LIMIT 3;"
                     examples_raw = sql_evoke(sql_get_eg, dbname)
                     examples = ", ".join([str(row[0]) for row in examples_raw])
