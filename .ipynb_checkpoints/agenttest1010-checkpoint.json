@@ -1,0 +1,1221 @@
+[
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What is the most popular car color?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "This question cannot be answered because the provided database schema does not contain any information about car colors. Without a table or column that stores data on the color of cars, it is impossible to determine or list the most popular car color.",
+                "predict": "The question is unanswerable. The database schema does not contain information about car colors. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the most popular car color in the car_1 database?"
+                },
+                "Selector": "Table:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:1, 2, 3),(MPG, mpg type:text. Value examples:18, 15, 16),(Cylinders, cylinders type:number. Value examples:8, 4, 6),(Edispl, edispl type:number. Value examples:307.0, 350.0, 318.0),(Horsepower, horsepower type:text. Value examples:130, 165, 150),(Weight, weight type:number. Value examples:3504, 3693, 3436),(Accelerate, accelerate type:number. Value examples:12.0, 11.5, 11.0),(Year, year type:number. Value examples:1970, 1971, 1972),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about car colors. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many car models are produced by each maker? List the count and the maker full name.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;",
+                "predict": "SELECT T2.FullName, T1.ModelCount FROM (     SELECT Maker, COUNT(ModelId) AS ModelCount     FROM model_list     GROUP BY Maker ) AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "For each car maker, please provide the count of car models they produce and the full name of the maker."
+                },
+                "Selector": "Table:car_makers\n[(Id, id type:number PRIMARY KEY. Value examples:1, 2, 3),(FullName, full name type:text. Value examples:American Motor Company, Volkswagen, BMW),]\nTable:model_list\n[(ModelId, model id type:number PRIMARY KEY. Value examples:1, 2, 3),(Maker, maker type:number. Value examples:1, 2, 3),]\nForeign keys:\nmodel_list.Maker = car_makers.Id\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "American Motor Company",
+                            1
+                        ],
+                        [
+                            "Volkswagen",
+                            2
+                        ],
+                        [
+                            "BMW",
+                            1
+                        ],
+                        [
+                            "General Motors",
+                            5
+                        ],
+                        [
+                            "Ford Motor Company",
+                            3
+                        ],
+                        [
+                            "Chrysler",
+                            4
+                        ],
+                        [
+                            "Citroen",
+                            1
+                        ],
+                        [
+                            "Nissan Motors",
+                            2
+                        ],
+                        [
+                            "Fiat",
+                            1
+                        ],
+                        [
+                            "Honda",
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT T2.FullName, T1.ModelCount FROM (     SELECT Maker, COUNT(ModelId) AS ModelCount     FROM model_list     GROUP BY Maker ) AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Which models are the most popular?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) desc limit 1;",
+                "predict": "The question is unanswerable. The database schema contains information about car models and makes, but it doesn't have any information about popularity. To answer the question, you would need a table with data on car sales, registrations, or other metrics that indicate popularity. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Which car models are the most popular?"
+                },
+                "Selector": "Table:model_list\n[(Maker, maker type:number. Value examples:1, 2, 3),(Model, model type:text. Value examples:amc, audi, bmw),]\nTable:car_names\n[(Model, model type:text. Value examples:chevrolet, buick, plymouth),(Make, make type:text. Value examples:chevrolet chevelle malibu, buick skylark 320, plymouth satellite),]\nForeign keys:\ncar_names.Model = model_list.Model\n",
+                "Detector": "The question is unanswerable. The database schema contains information about car models and makes, but it doesn't have any information about popularity. To answer the question, you would need a table with data on car sales, registrations, or other metrics that indicate popularity. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How about the least?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) limit 1;",
+                "predict": "The question is unanswerable.  The database schema does not contain information about car popularity. To answer this question, you would need a table with information on sales figures or other metrics that indicate popularity. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Which models are the least popular?"
+                },
+                "Selector": "Table:model_list\n[(Maker, maker type:number. Value examples:1, 2, 3),(Model, model type:text. Value examples:amc, audi, bmw),]\nTable:car_names\n[(Model, model type:text. Value examples:chevrolet, buick, plymouth),(Make, make type:text. Value examples:chevrolet chevelle malibu, buick skylark 320, plymouth satellite),]\nTable:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:1, 2, 3),(MPG, mpg type:text. Value examples:18, 15, 16),(Cylinders, cylinders type:number. Value examples:8, 4, 6),(Edispl, edispl type:number. Value examples:307.0, 350.0, 318.0),(Horsepower, horsepower type:text. Value examples:130, 165, 150),(Weight, weight type:number. Value examples:3504, 3693, 3436),]\nForeign keys:\ncar_names.Model = model_list.Model\n",
+                "Detector": "The question is unanswerable.  The database schema does not contain information about car popularity. To answer this question, you would need a table with information on sales figures or other metrics that indicate popularity. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Which companies have three or more models? list the count and the maker's full name.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;",
+                "predict": "SELECT T2.FullName, T1.ModelCount FROM (     SELECT Maker, COUNT(ModelId) AS ModelCount     FROM model_list     GROUP BY Maker     HAVING COUNT(ModelId) >= 3 ) AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id;",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Which car makers have three or more models? List the count and the maker's full name."
+                },
+                "Selector": "Table:car_makers\n[(Id, id type:number PRIMARY KEY. Value examples:1, 2, 3),(Maker, maker type:text. Value examples:amc, volkswagen, bmw),(FullName, full name type:text. Value examples:American Motor Company, Volkswagen, BMW),(Country, country type:text. Value examples:1, 2, 3),]\nTable:model_list\n[(ModelId, model id type:number PRIMARY KEY. Value examples:1, 2, 3),(Maker, maker type:number. Value examples:1, 2, 3),(Model, model type:text. Value examples:amc, audi, bmw),]\nForeign keys:\nmodel_list.Maker = car_makers.Id\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "General Motors",
+                            5
+                        ],
+                        [
+                            "Ford Motor Company",
+                            3
+                        ],
+                        [
+                            "Chrysler",
+                            4
+                        ]
+                    ],
+                    "sql": "SELECT T2.FullName, T1.ModelCount FROM (     SELECT Maker, COUNT(ModelId) AS ModelCount     FROM model_list     GROUP BY Maker     HAVING COUNT(ModelId) >= 3 ) AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id;",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Welcome goodbye!",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 0
+    },
+    {
+        "db_name": "cre_Doc_Template_Mgt",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Hi!  Can you tell me how many unique template IDs there are?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(distinct template_id) FROM Documents ",
+                "predict": "SELECT COUNT(DISTINCT Template_ID) FROM Templates",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many unique template IDs are there in the 'Templates' table of the 'cre_Doc_Template_Mgt' database?"
+                },
+                "Selector": "Table:Templates\n[(Template_ID, template id type:number PRIMARY KEY. Value examples:0, 1, 4),(Version_Number, version number type:number. Value examples:5, 9, 4),(Template_Type_Code, template type code type:text. Value examples:PP, BK, PPT),(Date_Effective_From, date effective from type:time. Value examples:2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49),(Date_Effective_To, date effective to type:time. Value examples:2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52),(Template_Details, template details type:text. Value examples:),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            20
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT Template_ID) FROM Templates",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many of those 12 template IDs are used by more than one document?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(template_id) FROM Documents GROUP BY template_id HAVING count(*)  >  1",
+                "predict": "Yes. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many of the 12 unique template IDs are used by more than one document?"
+                },
+                "Selector": "Table:Templates\n[(Template_ID, template id type:number PRIMARY KEY. Value examples:0, 1, 4),(Template_Type_Code, template type code type:text. Value examples:PP, BK, PPT),]\nTable:Documents\n[(Document_ID, document id type:number PRIMARY KEY. Value examples:0, 1, 3),(Template_ID, template id type:number. Value examples:7, 25, 6),]\nForeign keys:\nDocuments.Template_ID = Templates.Template_ID\n",
+                "Detector": "Yes. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Great!  Can you show me the corresponding document that used each of those template IDs on the list you just provided me?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_id FROM Documents GROUP BY template_id HAVING count(*)  >  1",
+                "predict": "SELECT * FROM Documents WHERE Template_ID IN (SELECT Template_ID FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1)",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you show me the documents that use the template IDs that appear more than once in the Documents table?"
+                },
+                "Selector": "Table:Templates\n[(Template_ID, template id type:number PRIMARY KEY. Value examples:0, 1, 4),(Version_Number, version number type:number. Value examples:5, 9, 4),(Template_Type_Code, template type code type:text. Value examples:PP, BK, PPT),(Date_Effective_From, date effective from type:time. Value examples:2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49),(Date_Effective_To, date effective to type:time. Value examples:2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52),(Template_Details, template details type:text. Value examples:),]\nTable:Documents\n[(Document_ID, document id type:number PRIMARY KEY. Value examples:0, 1, 3),(Template_ID, template id type:number. Value examples:7, 25, 6),(Document_Name, document name type:text. Value examples:Introduction of OS, Understanding DB, Summer Show),(Document_Description, document description type:text. Value examples:n, y, u),(Other_Details, other details type:text. Value examples:None),]\nForeign keys:\nDocuments.Template_ID = Templates.Template_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1,
+                            25,
+                            "Understanding DB",
+                            "y",
+                            null
+                        ],
+                        [
+                            80,
+                            14,
+                            "Welcome to NY",
+                            "h",
+                            null
+                        ],
+                        [
+                            82,
+                            11,
+                            "Data base",
+                            "w",
+                            null
+                        ],
+                        [
+                            3830,
+                            14,
+                            "Do not panic",
+                            "k",
+                            null
+                        ],
+                        [
+                            16514113,
+                            25,
+                            "A history of Arts",
+                            "h",
+                            null
+                        ],
+                        [
+                            385906526,
+                            11,
+                            "About Korea",
+                            "b",
+                            null
+                        ]
+                    ],
+                    "sql": "SELECT * FROM Documents WHERE Template_ID IN (SELECT Template_ID FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1)",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "After that, how can I ensure that the documents are properly archived and easily accessible for future reference?",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "To ensure that the documents are properly archived and easily accessible for future reference, you should label each document with the corresponding template ID, store them in clearly marked folders, organize the folders in a logical order within the filing cabinet, and maintain a digital index or catalog that records the location and details of each document.",
+                "query": "",
+                "predict": "To ensure proper archiving and accessibility of documents, consider implementing a robust document management system. This system should allow for organized storage, version control, and easy retrieval of documents. Additionally, establish clear policies and procedures for document archiving, including retention periods and access controls. Regularly review and update these policies to ensure they remain effective and meet evolving needs.",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "To ensure proper archiving and accessibility of documents, consider implementing a robust document management system. This system should allow for organized storage, version control, and easy retrieval of documents. Additionally, establish clear policies and procedures for document archiving, including retention periods and access controls. Regularly review and update these policies to ensure they remain effective and meet evolving needs."
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 1
+    },
+    {
+        "db_name": "student_transcripts_tracking",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Find the first name of the students who permanently live in the country Haiti.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.first_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.permanent_address_id  =  T2.address_id WHERE T2.country  =  'Haiti' ",
+                "predict": "The question is unanswerable. The database schema does not contain information about the country associated with each address. You need to provide the country information for each address in the Addresses table to answer this question. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the first names of the students who permanently live in Haiti?"
+                },
+                "Selector": "Table:Addresses\n[(address_id, address id type:number PRIMARY KEY. Value examples:1, 2, 3),(line_1, line 1 type:text. Value examples:2294 Grant Square Apt. 235, 3999 Aufderhar Ways Suite 593, 67942 Carlotta Ferry Apt. 686),(line_2, line 2 type:text. Value examples:Apt. 370, Apt. 388, Apt. 583),(line_3, line 3 type:text. Value examples:None),(city, city type:text. Value examples:Port Chelsea, Lake Laishafurt, Goodwinhaven),(country, country type:text. Value examples:Iceland, Burundi, Saudi Arabia),]\nTable:Students\n[(student_id, student id type:number PRIMARY KEY. Value examples:1, 2, 3),(permanent_address_id, permanent address id type:number. Value examples:15, 5, 11),(first_name, first name type:text. Value examples:Timmothy, Hobart, Warren),]\nForeign keys:\nStudents.permanent_address_id = Addresses.address_id\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about the country associated with each address. You need to provide the country information for each address in the Addresses table to answer this question. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Please also find the first name of the students who have the cell phone number 09700166582",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT first_name FROM Students WHERE cell_mobile_number = '09700166582'",
+                "predict": "SELECT first_name FROM Students WHERE cell_mobile_number = '09700166582'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Find the first name of the students who have the cell phone number 09700166582."
+                },
+                "Selector": "Table:Students\n[(first_name, first name type:text. Value examples:Timmothy, Hobart, Warren),(cell_mobile_number, cell mobile number type:text. Value examples:(096)889-8954x524, 1-009-710-5151, 07661787471),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Jarvis"
+                        ]
+                    ],
+                    "sql": "SELECT first_name FROM Students WHERE cell_mobile_number = '09700166582'",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Can you show me the last name and address for him?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you want his current address or the permanent address?",
+                "query": "",
+                "predict": "SELECT last_name, line_1, line_2, city, zip_postcode, state_province_county, country FROM Students AS T1 INNER JOIN Addresses AS T2 ON T1.current_address_id = T2.address_id WHERE T1.cell_mobile_number = '09700166582'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you show me the last name and address for the student with cell phone number 09700166582?"
+                },
+                "Selector": "Table:Addresses\n[(line_1, line 1 type:text. Value examples:2294 Grant Square Apt. 235, 3999 Aufderhar Ways Suite 593, 67942 Carlotta Ferry Apt. 686),(line_2, line 2 type:text. Value examples:Apt. 370, Apt. 388, Apt. 583),(city, city type:text. Value examples:Port Chelsea, Lake Laishafurt, Goodwinhaven),(zip_postcode, zip postcode type:text. Value examples:148, 943, 541),(state_province_county, state province county type:text. Value examples:Virginia, Kentucky, Kansas),(country, country type:text. Value examples:Iceland, Burundi, Saudi Arabia),]\nTable:Students\n[(current_address_id, current address id type:number. Value examples:10, 12, 9),(permanent_address_id, permanent address id type:number. Value examples:15, 5, 11),(first_name, first name type:text. Value examples:Timmothy, Hobart, Warren),(middle_name, middle name type:text. Value examples:Anna, Lorenz, Violet),(last_name, last name type:text. Value examples:Ward, Balistreri, Gleichner),(cell_mobile_number, cell mobile number type:text. Value examples:(096)889-8954x524, 1-009-710-5151, 07661787471),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Carroll",
+                            "193 Marlin Brook",
+                            "Apt. 406",
+                            "Herzoghaven",
+                            "068",
+                            "Arkansas",
+                            "Cook Islands"
+                        ]
+                    ],
+                    "sql": "SELECT last_name, line_1, line_2, city, zip_postcode, state_province_county, country FROM Students AS T1 INNER JOIN Addresses AS T2 ON T1.current_address_id = T2.address_id WHERE T1.cell_mobile_number = '09700166582'",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "current address please",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.last_name, T2.* FROM Students as T1 join addresses as T2 on T1.current_address_id = T2.address_id WHERE T1.cell_mobile_number = '09700166582'",
+                "predict": "No. The database schema does not include a student's cell phone number. You need to provide the student's first name and last name to find their current address. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the current address of the student with cell phone number 09700166582?"
+                },
+                "Selector": "Table:Addresses\n[(address_id, address id type:number PRIMARY KEY. Value examples:1, 2, 3),(line_1, line 1 type:text. Value examples:2294 Grant Square Apt. 235, 3999 Aufderhar Ways Suite 593, 67942 Carlotta Ferry Apt. 686),(line_2, line 2 type:text. Value examples:Apt. 370, Apt. 388, Apt. 583),(line_3, line 3 type:text. Value examples:None),(city, city type:text. Value examples:Port Chelsea, Lake Laishafurt, Goodwinhaven),(zip_postcode, zip postcode type:text. Value examples:148, 943, 541),(state_province_county, state province county type:text. Value examples:Virginia, Kentucky, Kansas),(country, country type:text. Value examples:Iceland, Burundi, Saudi Arabia),(other_address_details, other address details type:text. Value examples:None),]\nTable:Students\n[(current_address_id, current address id type:number. Value examples:10, 12, 9),(first_name, first name type:text. Value examples:Timmothy, Hobart, Warren),(last_name, last name type:text. Value examples:Ward, Balistreri, Gleichner),(cell_mobile_number, cell mobile number type:text. Value examples:(096)889-8954x524, 1-009-710-5151, 07661787471),]\nForeign keys:\nStudents.current_address_id = Addresses.address_id\n",
+                "Detector": "No. The database schema does not include a student's cell phone number. You need to provide the student's first name and last name to find their current address. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Ok. Can you also give me his email address?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT email_address FROM Students where cell_mobile_number = '09700166582'",
+                "predict": "SELECT email_address FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the email address of the student with cell phone number 09700166582?"
+                },
+                "Selector": "Table:Students\n[(student_id, student id type:number PRIMARY KEY. Value examples:1, 2, 3),(first_name, first name type:text. Value examples:Timmothy, Hobart, Warren),(last_name, last name type:text. Value examples:Ward, Balistreri, Gleichner),(cell_mobile_number, cell mobile number type:text. Value examples:(096)889-8954x524, 1-009-710-5151, 07661787471),(email_address, email address type:text. Value examples:erwin.zboncak@example.com, swift.kolby@example.com, johns.unique@example.net),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "jillian26@example.net"
+                        ]
+                    ],
+                    "sql": "SELECT email_address FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Send him an email , please.",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Sorry , I am an AI and cannot send emails directly. However, you can use this email address jillian26@example.net to contact the person yourself. If you need help drafting an email, feel free to ask!",
+                "query": "",
+                "predict": "The question is unanswerable. The database schema does not contain information about student email addresses. You need to provide a different question or update the database schema to include student email addresses. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Send an email to Jarvis Carroll at jillian26@example.net"
+                },
+                "Selector": "Table:Addresses\n[(address_id, address id type:number PRIMARY KEY. Value examples:1, 2, 3),(line_1, line 1 type:text. Value examples:2294 Grant Square Apt. 235, 3999 Aufderhar Ways Suite 593, 67942 Carlotta Ferry Apt. 686),(line_2, line 2 type:text. Value examples:Apt. 370, Apt. 388, Apt. 583),(line_3, line 3 type:text. Value examples:None),(city, city type:text. Value examples:Port Chelsea, Lake Laishafurt, Goodwinhaven),(zip_postcode, zip postcode type:text. Value examples:148, 943, 541),(state_province_county, state province county type:text. Value examples:Virginia, Kentucky, Kansas),(country, country type:text. Value examples:Iceland, Burundi, Saudi Arabia),(other_address_details, other address details type:text. Value examples:None),]\nTable:Courses\n[(course_id, course id type:number PRIMARY KEY. Value examples:1, 2, 3),(course_name, course name type:text. Value examples:ds, math, os),(course_description, course description type:text. Value examples:p, q, v),(other_details, other details type:text. Value examples:None),]\nTable:Departments\n[(department_id, department id type:number PRIMARY KEY. Value examples:1, 2, 3),(department_name, department name type:text. Value examples:computer science, history, art),(department_description, department description type:text. Value examples:error, nostrum, aliquam),(other_details, other details type:text. Value examples:None),]\nTable:Degree_Programs\n[(degree_program_id, degree program id type:number PRIMARY KEY. Value examples:1, 2, 3),(department_id, department id type:number. Value examples:13, 2, 8),(degree_summary_name, degree summary name type:text. Value examples:Master, Bachelor, PHD),(degree_summary_description, degree summary description type:text. Value examples:architecto, cumque, placeat),(other_details, other details type:text. Value examples:None),]\nTable:Sections\n[(section_id, section id type:number PRIMARY KEY. Value examples:1, 2, 3),(course_id, course id type:number. Value examples:9, 2, 8),(section_name, section name type:text. Value examples:a, b, c),(section_description, section description type:text. Value examples:non, voluptatem, qui),(other_details, other details type:text. Value examples:None),]\nTable:Semesters\n[(semester_id, semester id type:number PRIMARY KEY. Value examples:1, 2, 3),(semester_name, semester name type:text. Value examples:spring 2010, summer 2010, fall 2010),(semester_description, semester description type:text. Value examples:x, g, w),(other_details, other details type:text. Value examples:None),]\nTable:Students\n[(first_name, first name type:text. Value examples:Timmothy, Hobart, Warren),(last_name, last name type:text. Value examples:Ward, Balistreri, Gleichner),(email_address, email address type:text. Value examples:erwin.zboncak@example.com, swift.kolby@example.com, johns.unique@example.net),]\nForeign keys:\nDegree_Programs.department_id = Departments.department_id\nSections.course_id = Courses.course_id\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about student email addresses. You need to provide a different question or update the database schema to include student email addresses. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 2
+    },
+    {
+        "db_name": "concert_singer",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "what is the name of the stadium that does not have a concert in year 2014?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014",
+                "predict": "SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT DISTINCT Stadium_ID FROM concert WHERE Year = '2014')",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the names of the stadiums that did not have a concert in 2014?"
+                },
+                "Selector": "Table:stadium\n[(Stadium_ID, stadium id type:number PRIMARY KEY. Value examples:1, 2, 3),(Location, location type:text. Value examples:Raith Rovers, Ayr United, East Fife),(Name, name type:text. Value examples:Stark's Park, Somerset Park, Bayview Stadium),(Capacity, capacity type:number. Value examples:10104, 11998, 2000),(Highest, highest type:number. Value examples:4812, 2363, 1980),(Lowest, lowest type:number. Value examples:1294, 1057, 533),]\nTable:concert\n[(concert_ID, concert id type:number PRIMARY KEY. Value examples:1, 2, 3),(concert_Name, concert name type:text. Value examples:Auditions, Super bootcamp, Home Visits),(Theme, theme type:text. Value examples:Free choice, Free choice 2, Bleeding Love),(Stadium_ID, stadium id type:text. Value examples:1, 2, 10),(Year, year type:text. Value examples:2014, 2015),]\nForeign keys:\nconcert.Stadium_ID = stadium.Stadium_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Bayview Stadium"
+                        ],
+                        [
+                            "Hampden Park"
+                        ],
+                        [
+                            "Forthbank Stadium"
+                        ],
+                        [
+                            "Gayfield Park"
+                        ],
+                        [
+                            "Recreation Park"
+                        ],
+                        [
+                            "Balmoor"
+                        ]
+                    ],
+                    "sql": "SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT DISTINCT Stadium_ID FROM concert WHERE Year = '2014')",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "what is the capacity of Balmoor?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select Capacity from stadium where name = 'Balmoor'",
+                "predict": "The question cannot be answered. The database schema does not contain information about the stadium called Balmoor. You need to provide the stadium name in the database. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the capacity of the stadium called Balmoor?"
+                },
+                "Selector": "Table:stadium\n[(Stadium_ID, stadium id type:number PRIMARY KEY. Value examples:1, 2, 3),(Location, location type:text. Value examples:Raith Rovers, Ayr United, East Fife),(Name, name type:text. Value examples:Stark's Park, Somerset Park, Bayview Stadium),(Capacity, capacity type:number. Value examples:10104, 11998, 2000),(Highest, highest type:number. Value examples:4812, 2363, 1980),(Lowest, lowest type:number. Value examples:1294, 1057, 533),]\nForeign keys:\n",
+                "Detector": "The question cannot be answered. The database schema does not contain information about the stadium called Balmoor. You need to provide the stadium name in the database. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "what is the theme of Balmoor?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select T2.Theme from stadium as T1 join concert as T2 on T1.Stadium_ID = T2.Stadium_ID where T1.Name = 'Balmoor'",
+                "predict": "The question is unanswerable. The database schema does not contain information about stadium themes. You would need to provide a different database or additional information about stadium themes. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the theme of the Balmoor stadium?"
+                },
+                "Selector": "Table:stadium\n[(Stadium_ID, stadium id type:number PRIMARY KEY. Value examples:1, 2, 3),(Location, location type:text. Value examples:Raith Rovers, Ayr United, East Fife),(Name, name type:text. Value examples:Stark's Park, Somerset Park, Bayview Stadium),(Capacity, capacity type:number. Value examples:10104, 11998, 2000),(Highest, highest type:number. Value examples:4812, 2363, 1980),(Lowest, lowest type:number. Value examples:1294, 1057, 533),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about stadium themes. You would need to provide a different database or additional information about stadium themes. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Cool! good theme.",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Yes, the theme 'Happy Tonight' for Balmoor is indeed very cool!",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 3
+    },
+    {
+        "db_name": "dog_kennels",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "how many female dogs have gone through treatment ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )",
+                "predict": "Yes. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many female dogs have received treatment?"
+                },
+                "Selector": "Table:Dogs\n[(dog_id, dog id type:number PRIMARY KEY. Value examples:1, 2, 3),(gender, gender type:text. Value examples:1, 0),]\nTable:Treatments\n[(dog_id, dog id type:number. Value examples:14, 4, 2),]\nForeign keys:\nTreatments.dog_id = Dogs.dog_id\n",
+                "Detector": "Yes. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "what are their ages",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT age FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )",
+                "predict": "SELECT T1.age FROM Dogs AS T1 INNER JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T1.gender = 1",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the ages of the female dogs that have gone through treatment?"
+                },
+                "Selector": "Table:Dogs\n[(dog_id, dog id type:number PRIMARY KEY. Value examples:1, 2, 3),(age, age type:text. Value examples:6, 9, 8),(gender, gender type:text. Value examples:1, 0),(date_adopted, date adopted type:time. Value examples:2018-03-06 16:32:11, 2018-03-25 08:12:51, 2018-03-07 21:45:43),(date_departed, date departed type:time. Value examples:2018-03-25 06:58:44, 2018-03-25 02:11:32, 2018-03-25 10:25:46),]\nTable:Treatments\n[(dog_id, dog id type:number. Value examples:14, 4, 2),]\nForeign keys:\nTreatments.dog_id = Dogs.dog_id\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "1"
+                        ],
+                        [
+                            "1"
+                        ],
+                        [
+                            "2"
+                        ],
+                        [
+                            "6"
+                        ]
+                    ],
+                    "sql": "SELECT T1.age FROM Dogs AS T1 INNER JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T1.gender = 1",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "what is the highest weight of age 2",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT weight FROM Dogs WHERE age=2 ORDER BY weight DESC LIMIT 1",
+                "predict": "The question is unanswerable. The database schema does not contain information about the age of the dogs in years. You need to clarify the question by specifying how to determine the age of the dogs. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the highest weight of dogs that are 2 years old and have been treated?"
+                },
+                "Selector": "Table:Dogs\n[(dog_id, dog id type:number PRIMARY KEY. Value examples:1, 2, 3),(age, age type:text. Value examples:6, 9, 8),(weight, weight type:text. Value examples:7.57, 1.72, 8.04),(date_arrived, date arrived type:time. Value examples:2017-09-08 20:10:13, 2017-12-22 05:02:02, 2017-06-25 10:14:05),(date_adopted, date adopted type:time. Value examples:2018-03-06 16:32:11, 2018-03-25 08:12:51, 2018-03-07 21:45:43),(date_departed, date departed type:time. Value examples:2018-03-25 06:58:44, 2018-03-25 02:11:32, 2018-03-25 10:25:46),]\nTable:Treatments\n[(treatment_id, treatment id type:number PRIMARY KEY. Value examples:1, 2, 3),(dog_id, dog id type:number. Value examples:14, 4, 2),(professional_id, professional id type:number. Value examples:9, 10, 4),(treatment_type_code, treatment type code type:text. Value examples:WALK, VAC, EXAM),(date_of_treatment, date of treatment type:time. Value examples:2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23),(cost_of_treatment, cost of treatment type:number. Value examples:567, 147, 429),]\nForeign keys:\nTreatments.dog_id = Dogs.dog_id\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about the age of the dogs in years. You need to clarify the question by specifying how to determine the age of the dogs. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "No problem. Anything more you'd like to ask?",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "No, Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Good bye.",
+                "query": "",
+                "predict": "No problem. Anything more you'd like to ask?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "No problem. Anything more you'd like to ask?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 4
+    },
+    {
+        "db_name": "course_teach",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How many teachers are there?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT COUNT(*) FROM teacher",
+                "predict": "The question is unanswerable. The database schema provided does not include a table named 'course_teach'.  Please clarify the database name or provide the correct schema. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many teachers are there in the 'course_teach' database?"
+                },
+                "Selector": "Table:teacher\n[(Teacher_ID, teacher id type:number PRIMARY KEY. Value examples:1, 2, 3),(Name, name type:text. Value examples:Joseph Huts, Gustaaf Deloor, Vicente Carretero),(Age, age type:text. Value examples:32, 29, 26),(Hometown, hometown type:text. Value examples:Blackrod Urban District, Bolton County Borough, Farnworth Municipal Borough),]\nTable:course_arrange\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:2, 3, 4),(Teacher_ID, teacher id type:number. Value examples:5, 3, 2),(Grade, grade type:number. Value examples:1, 3, 5),]\nForeign keys:\ncourse_arrange.Teacher_ID = teacher.Teacher_ID\n",
+                "Detector": "The question is unanswerable. The database schema provided does not include a table named 'course_teach'.  Please clarify the database name or provide the correct schema. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many courses do you have?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT COUNT(*) FROM course_arrange",
+                "predict": "The question is unanswerable. The database schema does not include a table named 'course_teach'.  Please clarify the database name or provide the correct table name. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many courses are there in the 'course_teach' database?"
+                },
+                "Selector": "Table:course\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:1, 2, 3),(Staring_Date, staring date type:text. Value examples:5 May, 6 May, 7 May),(Course, course type:text. Value examples:Language Arts, Math, Science),]\nTable:course_arrange\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:2, 3, 4),(Teacher_ID, teacher id type:number. Value examples:5, 3, 2),(Grade, grade type:number. Value examples:1, 3, 5),]\nForeign keys:\ncourse_arrange.Course_ID = course.Course_ID\n",
+                "Detector": "The question is unanswerable. The database schema does not include a table named 'course_teach'.  Please clarify the database name or provide the correct table name. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Can you tell me the names of teachers and the number of courses they teach?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T2.Name , COUNT(*) FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T2.Name",
+                "predict": "SELECT T1.Name, T2.Number_of_Courses FROM teacher AS T1 INNER JOIN (     SELECT T2.Teacher_ID, COUNT(T1.Course_ID) AS Number_of_Courses     FROM course AS T1     INNER JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID     GROUP BY T2.Teacher_ID ) AS T2 ON T1.Teacher_ID = T2.Teacher_ID",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Please list the names of all teachers and the number of courses they teach."
+                },
+                "Selector": "Table:course\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:1, 2, 3),(Course, course type:text. Value examples:Language Arts, Math, Science),]\nTable:teacher\n[(Teacher_ID, teacher id type:number PRIMARY KEY. Value examples:1, 2, 3),(Name, name type:text. Value examples:Joseph Huts, Gustaaf Deloor, Vicente Carretero),]\nTable:course_arrange\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:2, 3, 4),(Teacher_ID, teacher id type:number. Value examples:5, 3, 2),(Grade, grade type:number. Value examples:1, 3, 5),]\nForeign keys:\ncourse_arrange.Teacher_ID = teacher.Teacher_ID\ncourse_arrange.Course_ID = course.Course_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Gustaaf Deloor",
+                            1
+                        ],
+                        [
+                            "Vicente Carretero",
+                            1
+                        ],
+                        [
+                            "Kearsley Brown",
+                            1
+                        ],
+                        [
+                            "Anne Walker",
+                            2
+                        ],
+                        [
+                            "Lucy Wong",
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT T1.Name, T2.Number_of_Courses FROM teacher AS T1 INNER JOIN (     SELECT T2.Teacher_ID, COUNT(T1.Course_ID) AS Number_of_Courses     FROM course AS T1     INNER JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID     GROUP BY T2.Teacher_ID ) AS T2 ON T1.Teacher_ID = T2.Teacher_ID",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Sure. Can you tell me the age of each teacher?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name , age FROM teacher",
+                "predict": "SELECT Age FROM teacher",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the ages of all the teachers?"
+                },
+                "Selector": "Table:teacher\n[(Teacher_ID, teacher id type:number PRIMARY KEY. Value examples:1, 2, 3),(Name, name type:text. Value examples:Joseph Huts, Gustaaf Deloor, Vicente Carretero),(Age, age type:text. Value examples:32, 29, 26),(Hometown, hometown type:text. Value examples:Blackrod Urban District, Bolton County Borough, Farnworth Municipal Borough),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "32"
+                        ],
+                        [
+                            "29"
+                        ],
+                        [
+                            "26"
+                        ],
+                        [
+                            "33"
+                        ],
+                        [
+                            "45"
+                        ],
+                        [
+                            "41"
+                        ],
+                        [
+                            "39"
+                        ]
+                    ],
+                    "sql": "SELECT Age FROM teacher",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What is the email address of each teacher?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "This question cannot be answered because the database schema provided does not include a field for the email addresses of the teachers.",
+                "query": "",
+                "predict": "The question is unanswerable. The database schema does not include email addresses for teachers. You would need to provide a schema that includes email addresses for teachers to answer this question. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the email addresses of all the teachers?"
+                },
+                "Selector": "Table:teacher\n[(Teacher_ID, teacher id type:number PRIMARY KEY. Value examples:1, 2, 3),(Name, name type:text. Value examples:Joseph Huts, Gustaaf Deloor, Vicente Carretero),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not include email addresses for teachers. You would need to provide a schema that includes email addresses for teachers to answer this question. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 5
+    },
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Which horsepower is higher?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Can you please clarify your question?",
+                "query": "",
+                "predict": "Please provide the car models you want to compare. For example, you could ask 'Which horsepower is higher, the Ford Mustang or the Chevrolet Camaro?'",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "Please provide the car models you want to compare. For example, you could ask 'Which horsepower is higher, the Ford Mustang or the Chevrolet Camaro?'"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "what is the highest horsepower on the table?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Horsepower FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1",
+                "predict": "SELECT MAX(CAST(Horsepower AS REAL)) FROM cars_data",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the highest horsepower value in the 'cars_data' table?"
+                },
+                "Selector": "Table:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:1, 2, 3),(MPG, mpg type:text. Value examples:18, 15, 16),(Cylinders, cylinders type:number. Value examples:8, 4, 6),(Edispl, edispl type:number. Value examples:307.0, 350.0, 318.0),(Horsepower, horsepower type:text. Value examples:130, 165, 150),(Weight, weight type:number. Value examples:3504, 3693, 3436),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            230.0
+                        ]
+                    ],
+                    "sql": "SELECT MAX(CAST(Horsepower AS REAL)) FROM cars_data",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "how many cars data on the table?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM CARS_DATA",
+                "predict": "SELECT COUNT(*) FROM cars_data",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many rows are in the CARS_DATA table?"
+                },
+                "Selector": "Table:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:1, 2, 3),(MPG, mpg type:text. Value examples:18, 15, 16),(Cylinders, cylinders type:number. Value examples:8, 4, 6),(Edispl, edispl type:number. Value examples:307.0, 350.0, 318.0),(Horsepower, horsepower type:text. Value examples:130, 165, 150),(Weight, weight type:number. Value examples:3504, 3693, 3436),(Accelerate, accelerate type:number. Value examples:12.0, 11.5, 11.0),(Year, year type:number. Value examples:1970, 1971, 1972),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            406
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM cars_data",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "how many cylinders?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT sum(cylinders) FROM CARS_DATA",
+                "predict": "SELECT COUNT(DISTINCT Cylinders) FROM cars_data",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many cylinders are there in the CARS_DATA table?"
+                },
+                "Selector": "Table:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:1, 2, 3),(MPG, mpg type:text. Value examples:18, 15, 16),(Cylinders, cylinders type:number. Value examples:8, 4, 6),(Edispl, edispl type:number. Value examples:307.0, 350.0, 318.0),(Horsepower, horsepower type:text. Value examples:130, 165, 150),(Weight, weight type:number. Value examples:3504, 3693, 3436),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            5
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT Cylinders) FROM cars_data",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            }
+        ],
+        "id": 6
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "I want to know the average population of all cities please",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(Population) FROM city",
+                "predict": "SELECT CAST(SUM(Population) AS REAL) / COUNT(*) FROM city",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the average population of all cities in the world_1 database?"
+                },
+                "Selector": "Table:city\n[(ID, id type:number PRIMARY KEY. Value examples:129, 1, 2),(Name, name type:text. Value examples:Kabul, Qandahar, Herat),(CountryCode, country code type:text. Value examples:ABW, AFG, AGO),(District, district type:text. Value examples:Kabol, Qandahar, Herat),(Population, population type:number. Value examples:1780000, 237500, 186800),]\nTable:sqlite_sequence\n[(name, name type:text. Value examples:city),(seq, seq type:text. Value examples:4079),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            350468.22358421184
+                        ]
+                    ],
+                    "sql": "SELECT CAST(SUM(Population) AS REAL) / COUNT(*) FROM city",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "And which districts have cities with populations greater than the average?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT District FROM city WHERE Population  >  (SELECT avg(Population) FROM city)",
+                "predict": "SELECT DISTINCT District FROM city WHERE Population > (SELECT AVG(Population) FROM city)",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the districts that have cities with populations greater than the average population of all cities?"
+                },
+                "Selector": "Table:city\n[(ID, id type:number PRIMARY KEY. Value examples:129, 1, 2),(Name, name type:text. Value examples:Kabul, Qandahar, Herat),(CountryCode, country code type:text. Value examples:ABW, AFG, AGO),(District, district type:text. Value examples:Kabol, Qandahar, Herat),(Population, population type:number. Value examples:1780000, 237500, 186800),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Kabol"
+                        ],
+                        [
+                            "Noord-Holland"
+                        ],
+                        [
+                            "Zuid-Holland"
+                        ],
+                        [
+                            "Alger"
+                        ],
+                        [
+                            "Oran"
+                        ],
+                        [
+                            "Constantine"
+                        ],
+                        [
+                            "Luanda"
+                        ],
+                        [
+                            "Dubai"
+                        ],
+                        [
+                            "Abu Dhabi"
+                        ],
+                        [
+                            "Distrito Federal"
+                        ]
+                    ],
+                    "sql": "SELECT DISTINCT District FROM city WHERE Population > (SELECT AVG(Population) FROM city)",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Within these districts, how many cities does each have with a population greater than the average?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) ,  District FROM city WHERE Population  >  (SELECT avg(Population) FROM city) GROUP BY District",
+                "predict": "SELECT District, COUNT(*) FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District;",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "For each district that has cities with populations greater than the average, how many cities does each district have?"
+                },
+                "Selector": "Table:city\n[(ID, id type:number PRIMARY KEY. Value examples:129, 1, 2),(Name, name type:text. Value examples:Kabul, Qandahar, Herat),(CountryCode, country code type:text. Value examples:ABW, AFG, AGO),(District, district type:text. Value examples:Kabol, Qandahar, Herat),(Population, population type:number. Value examples:1780000, 237500, 186800),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Abidjan",
+                            1
+                        ],
+                        [
+                            "Abu Dhabi",
+                            1
+                        ],
+                        [
+                            "Adana",
+                            1
+                        ],
+                        [
+                            "Addis Abeba",
+                            1
+                        ],
+                        [
+                            "Aden",
+                            1
+                        ],
+                        [
+                            "Aguascalientes",
+                            1
+                        ],
+                        [
+                            "Ahal",
+                            1
+                        ],
+                        [
+                            "Aichi",
+                            2
+                        ],
+                        [
+                            "Alagoas",
+                            1
+                        ],
+                        [
+                            "Alberta",
+                            2
+                        ]
+                    ],
+                    "sql": "SELECT District, COUNT(*) FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District;",
+                    "executable": true,
+                    "log": ""
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What does 'Abu Dhabi' mean in Arabic?",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "In Arabic, 'Abu Dhabi' translates to 'Father of the Gazelle' in Arabic. 'Abu' means 'father' and 'Dhabi' refers to a type of gazelle. The name is believed to originate from the abundance of gazelles in the area.",
+                "query": "",
+                "predict": "I'm sorry, I can't answer that question. I don't have access to information about Arabic translations.",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "I'm sorry, I can't answer that question. I don't have access to information about Arabic translations."
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 7
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can you list all nations whose government is US territory?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name FROM country WHERE GovernmentForm  =  \"US Territory\"",
+                "predict": "The question is unanswerable. The database schema does not contain information about which countries are US territories. To answer the question, you would need to provide a database with information about US territories. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "List all countries that are US territories."
+                },
+                "Selector": "Table:country\n[(Code, code type:text PRIMARY KEY. Value examples:ABW, AFG, AGO),(Name, name type:text. Value examples:Aruba, Afghanistan, Angola),(Continent, continent type:text. Value examples:North America, Asia, Africa),(Region, region type:text. Value examples:Caribbean, Southern and Central Asia, Central Africa),(GovernmentForm, government form type:text. Value examples:Nonmetropolitan Territory of The Netherlands, Islamic Emirate, Republic),(HeadOfState, head of state type:text. Value examples:Beatrix, Mohammad Omar, Jos\u00e9 Eduardo dos Santos),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about which countries are US territories. To answer the question, you would need to provide a database with information about US territories. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Hmm, I also want to know their GNP and population.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT GNP, population FROM country WHERE GovernmentForm  =  \"US Territory\"",
+                "predict": "The database does not contain information about American Samoa, Guam, and Virgin Islands, U.S.  Please provide a database that includes information about these territories. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you list the GNP and population of American Samoa, Guam, and Virgin Islands, U.S.?"
+                },
+                "Selector": "Table:country\n[(Code, code type:text PRIMARY KEY. Value examples:ABW, AFG, AGO),(Name, name type:text. Value examples:Aruba, Afghanistan, Angola),(Population, population type:number. Value examples:103000, 22720000, 12878000),(GNP, gnp type:number. Value examples:828.0, 5976.0, 6648.0),]\nForeign keys:\n",
+                "Detector": "The database does not contain information about American Samoa, Guam, and Virgin Islands, U.S.  Please provide a database that includes information about these territories. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How is GNP typically calculated?",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "GNP (Gross National Product) is typically calculated by first determining the Gross Domestic Product (GDP), which is the total market value of all final goods and services produced within a country during a specific period, usually a year. This includes consumption, investment, government spending, and net exports (exports minus imports). Next, you add the net income from abroad, which is the total income earned by residents from overseas investments and other sources minus the total income earned by foreign residents from domestic investments and other sources. By combining these two components, you get the GNP. In essence, GNP equals GDP plus the net income from abroad. For example, if a country has a GDP of $1,000 billion, and its residents earn $50 billion from abroad while foreign residents earn $30 billion from the country, then the GNP would be $1,020 billion.",
+                "query": "",
+                "predict": "GNP (Gross National Product) is the total market value of all final goods and services produced by a country's residents in a given period, typically a year. It includes income earned by citizens and businesses abroad, but excludes income earned by foreigners within the country. GNP is calculated by adding up the value of all goods and services produced in a country, including those produced by foreign-owned companies. It is also calculated by adding up the income earned by all residents of a country, including income earned abroad. GNP is a measure of a country's economic output and is often used to compare the economic performance of different countries.",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "GNP (Gross National Product) is the total market value of all final goods and services produced by a country's residents in a given period, typically a year. It includes income earned by citizens and businesses abroad, but excludes income earned by foreigners within the country. GNP is calculated by adding up the value of all goods and services produced in a country, including those produced by foreign-owned companies. It is also calculated by adding up the income earned by all residents of a country, including income earned abroad. GNP is a measure of a country's economic output and is often used to compare the economic performance of different countries."
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "OK, please find out the average GNP and total population of those nations.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(GNP) ,  sum(population) FROM country WHERE GovernmentForm  =  \"US Territory\"",
+                "predict": "The question is unanswerable. The database schema does not contain information about which countries are US territories. You would need to provide a list of US territories or modify the database schema to include this information. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the average GNP and total population of nations whose government is US territory?"
+                },
+                "Selector": "Table:country\n[(Population, population type:number. Value examples:103000, 22720000, 12878000),(GNP, gnp type:number. Value examples:828.0, 5976.0, 6648.0),(GovernmentForm, government form type:text. Value examples:Nonmetropolitan Territory of The Netherlands, Islamic Emirate, Republic),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about which countries are US territories. You would need to provide a list of US territories or modify the database schema to include this information. \n",
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 8
+    }
+]

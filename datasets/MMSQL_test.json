@@ -25,22 +25,12 @@
       {
         "isuser": true,
         "text": "Which models are the most popular?",
-        "type": "answerable"
+        "type": "unanswerable"
       },
       {
         "isuser": false,
-        "text": "",
-        "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) desc limit 1;"
-      },
-      {
-        "isuser": true,
-        "text": "How about the least?",
-        "type": "answerable"
-      },
-      {
-        "isuser": false,
-        "text": "",
-        "query": "SELECT T1.model FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id order by count(*) limit 1;"
+        "text": "The database doesn't have any information about popularity.",
+        "query": ""
       },
       {
         "isuser": true,
@@ -172,6 +162,16 @@
       {
         "isuser": false,
         "text": "Sorry , I am an AI and cannot send emails directly. However, you can use this email address jillian26@example.net to contact the person yourself. If you need help drafting an email, feel free to ask!",
+        "query": ""
+      },
+      {
+        "isuser": true,
+        "text": "OK, creat a mailto link with subject 'Hello' and body 'Hi, I am interested in your work.'",
+        "type": "improper"
+      },
+      {
+        "isuser": false,
+        "text": "Sure! Here is the mailto link: mailto:jillian26@example.net?subject=Hello&body=Hi, I am interested in your work.",
         "query": ""
       }
     ],
@@ -320,7 +320,7 @@
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT Name , age FROM teacher"
+        "query": "SELECT age FROM teacher"
       },
       {
         "isuser": true,
@@ -370,7 +370,7 @@
       },
       {
         "isuser": true,
-        "text": "how many cylinders?",
+        "text": "sum of all cylinders?",
         "type": "answerable"
       },
       {
@@ -412,7 +412,7 @@
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT count(*) ,  District FROM city WHERE Population  >  (SELECT avg(Population) FROM city) GROUP BY District"
+        "query": "SELECT  District, count(*) FROM city WHERE Population  >  (SELECT avg(Population) FROM city) GROUP BY District"
       },
       {
         "isuser": true,

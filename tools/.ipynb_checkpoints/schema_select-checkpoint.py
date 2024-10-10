@@ -80,9 +80,9 @@ def schema_select(dbname, table_config):
                         + " type:"
                         + column_types[column_index]
                         + isp
-                        + ". Value examples:"
+                        + ". Value examples:["
                         + examples
-                        + "),"
+                        + "]),"
                     )
 
             desc = desc.rstrip("|") + "]\n"

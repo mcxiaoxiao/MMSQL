@@ -4,7 +4,7 @@ import time
 import random
 import google.generativeai as genai
 # Set API key
-OPENAI_API_KEY = 'sk-proj-1JRQ9SkU0gSRKsBoCyD1T3BlbkFJSQ44FoEjAHN05t7FrryD'
+OPENAI_API_KEY = 'your api key'
 OPENAI_MODEL_NAME = "gpt-4o-mini"
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -66,7 +66,29 @@ def request_gemini(messages):
                 "text": messages[0]['content']
             }]
         },
-        "contents": new_messages
+        "contents": new_messages,
+        "safetySettings":[
+        {
+            "category": "HARM_CATEGORY_HATE_SPEECH",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "threshold": "BLOCK_NONE",
+        },
+        {
+            "category": "HARM_CATEGORY_HARASSMENT",
+            "threshold": "BLOCK_NONE",
+        },
+        ]
     }
     
     max_retries = 50
@@ -78,12 +100,11 @@ def request_gemini(messages):
             GEMINI_API_KEY = random.choice(GEMINI_API_KEYS)
             url = "https://generativelanguage.googleapis.com/v1beta/models/"+GEMINI_MODEL_NAME+":generateContent?key="+ GEMINI_API_KEY
             response = requests.post(url, headers=headers, json=data,timeout = 30)
-            
             if response.status_code == 200:
                 break
             else:
                 print(response.text) 
-                print(GEMINI_API_KEY)
+                # print(GEMINI_API_KEY)
                 retry_count += 1
                 time.sleep(5) 
         except Exception as e:
@@ -91,6 +112,7 @@ def request_gemini(messages):
     
     if response is not None and response.status_code == 200:
         response_json = response.json()
+        # print(response_json)
         print("\033[92mSuccess: Operation completed after {} retries\033[0m".format(retry_count))
         generated_text = response_json.get('candidates', [{}])[0].get('content', {}).get('parts', [{}])[0].get('text', '')
         return generated_text

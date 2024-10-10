@@ -20,7 +20,7 @@ class Detector(Agent):
 """
         else:
             usr_prompt = f"""
-根据数据库schema和问题判断问题是否能被准确的回答，如果不能则告知用户为什么不能，需要用户澄清些什么，如果可以回答的话则输出Yes即可
+根据数据库schema和问题判断问题是否能被准确的回答，如果不能则告知用户为什么不能；用户提问的字段是否已经指明是哪个字段无可歧义，如果有歧义则也要求澄清，如果可以回答的话则输出Yes即可
 [DB_ID] {input_data["db_name"]}
 [Schema] 
 {input_data["mini_schema"]}
@@ -35,7 +35,7 @@ class Detector(Agent):
         llm_lower = llm_lower.strip()
         llm_lower = llm_lower.replace("\n", "")
         # print("llm_lower" + llm_lower)
-        if llm_lower == "yes":
+        if llm_lower == "yes" or llm_lower == "yes.":
             return f"YES"
         else:
             return f"{llm_response}"

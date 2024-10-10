@@ -20,17 +20,18 @@ class Decomposer(Agent):
         As an experienced and professional database administrator, your task is to decompose the question into subquestions to generate SQL step-by-step.
         """
 
-        usr_prompt = f"""Given a [Database schema] description, a knowledge [Evidence] and the [Question], you need to use valid SQLite and understand the database and knowledge, and then decompose the question into subquestions for text-to-SQL generation. When generating SQL, we should always consider constraints: 
+        usr_prompt = f"""Given a [Database schema] description, a knowledge [Evidence] and the [Question], you need to use valid SQLite and understand the database and knowledge, and then decompose the question into subquestions for text-to-SQL generation.(Column's output should be in the same order as in the question. Value examples represent data samples and not all data.) When generating SQL, we should always consider constraints: 
 [Constraints] 
 - In ‘SELECT <column>‘, just select needed columns in the [Question] without any unnecessary column or value - In ‘FROM <table>‘ or ‘JOIN <table>‘, do not include unnecessary table 
 - If use max or min func, ‘JOIN <table>‘ FIRST, THEN use ‘SELECT MAX(<column>)‘ or ‘SELECT MIN(<column>)‘ 
 - If [Value examples] of <column> has ’None’ or None, use ‘JOIN <table>‘ or ‘WHERE <column> is NOT NULL‘ is better 
 - If use ‘ORDER BY <column> ASC|DESC‘, add ‘GROUP BY <column>‘ before to select distinct values 
 ==========
+[DB_ID] School
 [Database schema] 
 Table: frpm [ (CDSCode, CDSCode. Value examples: [’01100170109835’, ’01100170112607’].), (Charter School (Y/N), Charter School (Y/N). Value examples: [1, 0, None]. And 0: N;. 1: Y), (Enrollment (Ages 5-17), Enrollment (Ages 5-17). Value examples: [5271.0, 4734.0].), (Free Meal Count (Ages 5-17), Free Meal Count (Ages 5-17). Value examples: [3864.0, 2637.0] And eligible free rate = Free Meal Count / Enrollment) ] 
 # Table: satscores [ (cds, California Department Schools. Value examples: [’10101080000000’, ’10101080109991’].), (sname, school name. Value examples: [’None’, ’Middle College High’, ’John F. Kennedy High’, ’Independence High’, ’Foothill High’].), (NumTstTakr, Number of Test Takers in this school. Value examples: [24305, 4942, 1, 0, 280]. And number of test takers in each school), (AvgScrMath, average scores in Math. Value examples: [699, 698, 289, None, 492]. And average scores in Math), (NumGE1500, Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500. Value examples: [5837, 2125, 0, None, 191]. And Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500. . commonsense evidence:. . Excellence Rate = NumGE1500 / NumTstTakr) ] 
-
+Foreign keys:
 frpm.CDSCode = satscores.cds
 
 [Question]
@@ -47,11 +48,12 @@ SQL ```sql SELECT T2.‘sname‘ FROM frpm AS T1 INNER JOIN satscores AS T2 ON T
 
 Question Solved. 
 ========== 
+[DB_ID] Salary
 [Database schema]
 # Table: account [ (account_id, the id of the account. Value examples: [11382, 11362, 2, 1, 2367].), (district_id, location of branch. Value examples: [77, 76, 2, 1, 39].), (frequency, frequency of the acount. Value examples: [’POPLATEK MESICNE’, ’POPLATEK TYDNE’, ’POPLATEK PO OBRATU’].), (date, the creation date of the account. Value examples: [’1997-12-29’, ’1997-12-28’].) ] 
 # Table: client [ (client_id, the unique number. Value examples: [13998, 13971, 2, 1, 2839].), (gender, gender. Value examples: [’M’, ’F’]. And F:female . M:male ), (birth_date, birth date. Value examples: [’1987-09-27’, ’1986-08-13’].), (district_id, location of branch. Value examples: [77, 76, 2, 1, 39].) ]
 # Table: district [ (district_id, location of branch. Value examples: [77, 76, 2, 1, 39].), (A4, number of inhabitants . Value examples: [’95907’, ’95616’, ’94812’].), (A11, average salary. Value examples: [12541, 11277, 8114].) ] 
-
+Foreign keys:
 account.district_id = district.district_id client.district_id = district.district_id
 
 [Question]
@@ -70,6 +72,7 @@ SQL ```sql SELECT T1.‘gender‘ FROM client AS T1 INNER JOIN district AS T2 ON
 
 Question Solved.
 ==========
+[DB_ID] {input_data["db_name"]}
 [Database schema]
 {input_data["mini_schema"]}
 [Question]
@@ -95,7 +98,8 @@ Decompose the question into subquestions, considering [Constraints], and generat
             "result": result,
             "sql": last_sql_code.replace('\n',' ').replace("\"","'"),
             "executable": executable,
-            "log": log
+            "log": log,
+            "process": llm_ans
         }
         
         return output
