@@ -20,12 +20,14 @@ class Decomposer(Agent):
         As an experienced and professional database administrator, your task is to decompose the question into subquestions to generate SQL step-by-step.
         """
 
-        usr_prompt = f"""Given a [Database schema] description, a knowledge [Evidence] and the [Question], you need to use valid SQLite and understand the database and knowledge, and then decompose the question into subquestions for text-to-SQL generation.(Column's output should be in the same order as in the question. Value examples represent data samples and not all data.) When generating SQL, we should always consider constraints: 
+        usr_prompt = f"""Given a [Database schema] description, a knowledge [Evidence] and the [Question], you need to use valid SQLite and understand the database and knowledge, and then decompose the question into subquestions for text-to-SQL generation.  When generating SQL, we should always consider constraints: 
 [Constraints] 
 - In ‘SELECT <column>‘, just select needed columns in the [Question] without any unnecessary column or value - In ‘FROM <table>‘ or ‘JOIN <table>‘, do not include unnecessary table 
 - If use max or min func, ‘JOIN <table>‘ FIRST, THEN use ‘SELECT MAX(<column>)‘ or ‘SELECT MIN(<column>)‘ 
 - If [Value examples] of <column> has ’None’ or None, use ‘JOIN <table>‘ or ‘WHERE <column> is NOT NULL‘ is better 
 - If use ‘ORDER BY <column> ASC|DESC‘, add ‘GROUP BY <column>‘ before to select distinct values 
+[Attention]
+Column's order in SELECT part should be in the same order as in the question. For example, if the question asks for count and name, then the SQL has to select count and then name. Value examples represent data samples and not all data.
 ==========
 [DB_ID] School
 [Database schema] 
@@ -98,7 +100,7 @@ Decompose the question into subquestions, considering [Constraints], and generat
             "result": result,
             "sql": last_sql_code.replace('\n',' ').replace("\"","'"),
             "executable": executable,
-            "log": log,
+            "log": str(log),
             "process": llm_ans
         }
         

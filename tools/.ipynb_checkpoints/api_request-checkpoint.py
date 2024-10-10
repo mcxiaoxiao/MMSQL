@@ -42,7 +42,7 @@ def request_gpt(messages):
         except Exception as e:
             print(e)
             if attempt < 9:  # Don't wait after the last attempt
-                time.sleep(5)  # Wait for 5 seconds before retrying
+                time.sleep(2)  # Wait for 5 seconds before retrying
             else:
                 print(f"An error occurred with GPT request after 10 attempts: {e}")
                 return "failed"
@@ -106,7 +106,7 @@ def request_gemini(messages):
                 print(response.text) 
                 # print(GEMINI_API_KEY)
                 retry_count += 1
-                time.sleep(5) 
+                time.sleep(2) 
         except Exception as e:
             print(e)
     

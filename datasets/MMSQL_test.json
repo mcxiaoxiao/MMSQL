@@ -34,13 +34,13 @@
       },
       {
         "isuser": true,
-        "text": "Which companies have three or more models? list the count and the maker's full name.",
+        "text": "Which companies have three or more models? list the maker's full name and the count.",
         "type": "answerable"
       },
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;"
+        "query": "SELECT  T2.FullName, Count(*)  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;"
       },
       {
         "isuser": true,
@@ -488,17 +488,7 @@
       },
       {
         "isuser": true,
-        "text": "what is the local name ",
-        "type": "ambiguous"
-      },
-      {
-        "isuser": false,
-        "text": "Did you mean to ask for all local names in country table?",
-        "query": ""
-      },
-      {
-        "isuser": true,
-        "text": "yes ",
+        "text": "give me all all local names",
         "type": "answerable"
       },
       {
@@ -600,7 +590,7 @@
       },
       {
         "isuser": true,
-        "text": "what is the model name of the id 2?",
+        "text": "all information of id 2",
         "type": "ambiguous"
       },
       {
@@ -610,18 +600,13 @@
       },
       {
         "isuser": true,
-        "text": "carmaker?",
+        "text": "YES car",
         "type": "answerable"
       },
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT Model FROM car_names WHERE MakeId=2"
-      },
-      {
-        "isuser": true,
-        "text": "Thanks!",
-        "type": "improper"
+        "query": "SELECT * FROM car_names WHERE MakeId=2"
       }
     ],
     "id": 11
@@ -697,7 +682,7 @@
       },
       {
         "isuser": true,
-        "text": "which one is the most expensive?",
+        "text": "the most expensive treatment's name?",
         "type": "answerable"
       },
       {
@@ -800,7 +785,7 @@
       {
         "isuser": true,
         "text": "what is the airport code for the city abilene",
-        "type": "ambiguous"
+        "type": "answerable"
       },
       {
         "isuser": false,
@@ -6262,7 +6247,7 @@
     "turns": [
       {
         "isuser": true,
-        "text": "Find Flight from CVO to SNA",
+        "text": "Find Flight No from CVO to SNA",
         "type": "answerable"
       },
       {
@@ -6476,13 +6461,13 @@
       },
       {
         "isuser": true,
-        "text": "Can you please only show those countries with a population of 80000 in the table?",
+        "text": "Can you please only show those countries with a population more than 80000 in the table?",
         "type": "answerable"
       },
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT Name FROM country WHERE continent  =  \"Europe\" AND Population  =  \"80000\""
+        "query": "SELECT Name FROM country WHERE continent  =  \"Europe\" AND Population  >  \"80000\""
       },
       {
         "isuser": true,

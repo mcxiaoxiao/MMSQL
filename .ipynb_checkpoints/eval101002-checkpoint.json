@@ -1,0 +1,2791 @@
+[
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What is the most popular car color?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "This question cannot be answered because the provided database schema does not contain any information about car colors. Without a table or column that stores data on the color of cars, it is impossible to determine or list the most popular car color.",
+                "predict": "The question is unanswerable. The database schema does not contain information about car colors. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the most popular car color in the car_1 database?"
+                },
+                "Selector": "Table:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(MPG, mpg type:text. Value examples:[18, 15, 16]),(Cylinders, cylinders type:number. Value examples:[8, 4, 6]),(Edispl, edispl type:number. Value examples:[307.0, 350.0, 318.0]),(Horsepower, horsepower type:text. Value examples:[130, 165, 150]),(Weight, weight type:number. Value examples:[3504, 3693, 3436]),(Accelerate, accelerate type:number. Value examples:[12.0, 11.5, 11.0]),(Year, year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about car colors. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant and addresses the question adequately. It correctly identifies that the database lacks information about car colors.\nClarity: 2 - The response is very clear and easy to understand. It is concise and straightforward.\nCompleteness: 2 - The response thoroughly addresses all aspects of the question. It provides a clear explanation for why the question cannot be answered.\nAccuracy: 2 - The response is completely accurate. The database schema does not contain information about car colors.\nUtility: 2 - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question. It provides a helpful explanation for why the question cannot be answered."
+            },
+            {
+                "isuser": true,
+                "text": "How many car models are produced by each maker? List the count and the maker full name.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;",
+                "predict": "SELECT T2.FullName, COUNT(T1.ModelId) FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id GROUP BY T1.Maker",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many car models are produced by each car maker? List the count and the maker's full name."
+                },
+                "Selector": "Table:car_makers\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(FullName, full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),]\nTable:model_list\n[(ModelId, model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Maker, maker type:number. Value examples:[1, 2, 3]),]\nForeign keys:\nmodel_list.Maker = car_makers.Id\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "American Motor Company",
+                            1
+                        ],
+                        [
+                            "Volkswagen",
+                            2
+                        ],
+                        [
+                            "BMW",
+                            1
+                        ],
+                        [
+                            "General Motors",
+                            5
+                        ],
+                        [
+                            "Ford Motor Company",
+                            3
+                        ],
+                        [
+                            "Chrysler",
+                            4
+                        ],
+                        [
+                            "Citroen",
+                            1
+                        ],
+                        [
+                            "Nissan Motors",
+                            2
+                        ],
+                        [
+                            "Fiat",
+                            1
+                        ],
+                        [
+                            "Honda",
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT T2.FullName, COUNT(T1.ModelId) FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id GROUP BY T1.Maker",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Count the number of car models produced by each car maker.\nSQL ```sql SELECT T1.Maker, COUNT(T2.ModelId) FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id GROUP BY T1.Maker```\nSubquestion 2: List the count and the maker's full name.\nSQL ```sql SELECT T2.FullName, COUNT(T1.ModelId) FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id GROUP BY T1.Maker```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT T2.FullName, COUNT(T1.ModelId) FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id GROUP BY T1.Maker",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Which models are the most popular?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "The database doesn't have any information about popularity.",
+                "query": "",
+                "predict": "The question is unanswerable. The database schema does not contain information about car popularity. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Which car models are the most popular?"
+                },
+                "Selector": "Table:model_list\n[(Maker, maker type:number. Value examples:[1, 2, 3]),(Model, model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[(Model, model type:text. Value examples:[chevrolet, buick, plymouth]),(Make, make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\ncar_names.Model = model_list.Model\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about car popularity. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant and addresses the question adequately. It correctly identifies that the database lacks information about car popularity.\nClarity: 2 - The response is very clear and easy to understand. It is concise and straightforward.\nCompleteness: 2 - The response thoroughly addresses all aspects of the question. It provides a clear explanation for why the question cannot be answered.\nAccuracy: 2 - The response is completely accurate. The database schema does not contain information about car popularity.\nUtility: 2 - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question. It provides a helpful explanation for why the question cannot be answered."
+            },
+            {
+                "isuser": true,
+                "text": "Which companies have three or more models? list the count and the maker's full name.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Count(*) ,  T2.FullName  FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id having count(*) >=3;",
+                "predict": "SELECT T1.FullName, COUNT(T2.ModelId) AS model_count FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker GROUP BY T1.Maker HAVING COUNT(T2.ModelId) >= 3",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Which car makers have three or more models? List the count and the maker's full name."
+                },
+                "Selector": "Table:car_makers\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Maker, maker type:text. Value examples:[amc, volkswagen, bmw]),(FullName, full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),(Country, country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[(ModelId, model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Maker, maker type:number. Value examples:[1, 2, 3]),(Model, model type:text. Value examples:[amc, audi, bmw]),]\nForeign keys:\nmodel_list.Maker = car_makers.Id\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Chrysler",
+                            4
+                        ],
+                        [
+                            "Ford Motor Company",
+                            3
+                        ],
+                        [
+                            "General Motors",
+                            5
+                        ]
+                    ],
+                    "sql": "SELECT T1.FullName, COUNT(T2.ModelId) AS model_count FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker GROUP BY T1.Maker HAVING COUNT(T2.ModelId) >= 3",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Count the number of models for each car maker.\nSQL ```sql SELECT T1.Maker, COUNT(T2.ModelId) AS model_count FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker GROUP BY T1.Maker```\nSubquestion 2: Filter the results to include only car makers with three or more models.\nSQL ```sql SELECT T1.Maker, COUNT(T2.ModelId) AS model_count FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker GROUP BY T1.Maker HAVING COUNT(T2.ModelId) >= 3```\nSubquestion 3: Select the maker's full name instead of the maker ID.\nSQL ```sql SELECT T1.FullName, COUNT(T2.ModelId) AS model_count FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker GROUP BY T1.Maker HAVING COUNT(T2.ModelId) >= 3```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT T1.FullName, COUNT(T2.ModelId) AS model_count FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker GROUP BY T1.Maker HAVING COUNT(T2.ModelId) >= 3",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Welcome goodbye!",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 points (The response is a polite and relevant greeting, though not directly related to the database information). \nClarity: 2 points (The response is clear and easy to understand). \nCompleteness: 2 points (The response is complete in the sense that it acknowledges the user's statement). \nAccuracy: 2 points (The response is accurate in its politeness and intent). \nUtility: 2 points (The response is useful in acknowledging the user's statement and offering further assistance)."
+            }
+        ],
+        "id": 0
+    },
+    {
+        "db_name": "cre_Doc_Template_Mgt",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Hi!  Can you tell me how many unique template IDs there are?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(distinct template_id) FROM Documents ",
+                "predict": "SELECT COUNT(DISTINCT Template_ID) FROM Templates",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many unique template IDs are there in the 'cre_Doc_Template_Mgt' database?"
+                },
+                "Selector": "Table:Templates\n[(Template_ID, template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),(Version_Number, version number type:number. Value examples:[5, 9, 4]),(Template_Type_Code, template type code type:text. Value examples:[PP, BK, PPT]),(Date_Effective_From, date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),(Date_Effective_To, date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),(Template_Details, template details type:text. Value examples:[]),]\nTable:Documents\n[(Document_ID, document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),(Template_ID, template id type:number. Value examples:[7, 25, 6]),(Document_Name, document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),(Document_Description, document description type:text. Value examples:[n, y, u]),(Other_Details, other details type:text. Value examples:[None]),]\nForeign keys:\nDocuments.Template_ID = Templates.Template_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            20
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT Template_ID) FROM Templates",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: How many unique template IDs are there in the 'cre_Doc_Template_Mgt' database? \nSQL ```sql SELECT COUNT(DISTINCT Template_ID) FROM Templates```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT COUNT(DISTINCT Template_ID) FROM Templates",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "How many of those 12 template IDs are used by more than one document?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(template_id) FROM Documents GROUP BY template_id HAVING count(*)  >  1",
+                "predict": "SELECT COUNT(DISTINCT Template_ID) FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many of the 12 unique template IDs are used by more than one document?"
+                },
+                "Selector": "Table:Templates\n[(Template_ID, template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),(Template_Type_Code, template type code type:text. Value examples:[PP, BK, PPT]),]\nTable:Documents\n[(Document_ID, document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),(Template_ID, template id type:number. Value examples:[7, 25, 6]),]\nForeign keys:\nDocuments.Template_ID = Templates.Template_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1
+                        ],
+                        [
+                            1
+                        ],
+                        [
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT Template_ID) FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the template IDs that are used by more than one document.\nSQL ```sql SELECT Template_ID FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1```\nSubquestion 2: Count the number of unique template IDs that are used by more than one document.\nSQL ```sql SELECT COUNT(DISTINCT Template_ID) FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT COUNT(DISTINCT Template_ID) FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Great!  Can you show me the corresponding document that used each of those template IDs on the list you just provided me?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_id FROM Documents GROUP BY template_id HAVING count(*)  >  1",
+                "predict": "SELECT * FROM Documents WHERE Template_ID IN (SELECT Template_ID FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1)",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you show me the documents that use the template IDs that appear more than once in the Documents table?"
+                },
+                "Selector": "Table:Templates\n[(Template_ID, template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),(Version_Number, version number type:number. Value examples:[5, 9, 4]),(Template_Type_Code, template type code type:text. Value examples:[PP, BK, PPT]),(Date_Effective_From, date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),(Date_Effective_To, date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),(Template_Details, template details type:text. Value examples:[]),]\nTable:Documents\n[(Document_ID, document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),(Template_ID, template id type:number. Value examples:[7, 25, 6]),(Document_Name, document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),(Document_Description, document description type:text. Value examples:[n, y, u]),(Other_Details, other details type:text. Value examples:[None]),]\nForeign keys:\nDocuments.Template_ID = Templates.Template_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1,
+                            25,
+                            "Understanding DB",
+                            "y",
+                            null
+                        ],
+                        [
+                            80,
+                            14,
+                            "Welcome to NY",
+                            "h",
+                            null
+                        ],
+                        [
+                            82,
+                            11,
+                            "Data base",
+                            "w",
+                            null
+                        ],
+                        [
+                            3830,
+                            14,
+                            "Do not panic",
+                            "k",
+                            null
+                        ],
+                        [
+                            16514113,
+                            25,
+                            "A history of Arts",
+                            "h",
+                            null
+                        ],
+                        [
+                            385906526,
+                            11,
+                            "About Korea",
+                            "b",
+                            null
+                        ]
+                    ],
+                    "sql": "SELECT * FROM Documents WHERE Template_ID IN (SELECT Template_ID FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1)",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the template IDs that appear more than once in the Documents table.\nSQL ```sql SELECT Template_ID FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1```\nSubquestion 2: Show the documents that use the template IDs from the previous subquestion.\nSQL ```sql SELECT * FROM Documents WHERE Template_ID IN (SELECT Template_ID FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1)```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT * FROM Documents WHERE Template_ID IN (SELECT Template_ID FROM Documents GROUP BY Template_ID HAVING COUNT(*) > 1)",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "After that, how can I ensure that the documents are properly archived and easily accessible for future reference?",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "To ensure that the documents are properly archived and easily accessible for future reference, you should label each document with the corresponding template ID, store them in clearly marked folders, organize the folders in a logical order within the filing cabinet, and maintain a digital index or catalog that records the location and details of each document.",
+                "query": "",
+                "predict": "To ensure proper archiving and accessibility of documents, consider implementing a robust document management system. This system should allow for organized storage, version control, and easy retrieval of documents. Additionally, establish clear policies and procedures for document archiving, including retention periods and access controls. Regularly review and update these policies to ensure they remain effective and meet evolving needs.",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "To ensure proper archiving and accessibility of documents, consider implementing a robust document management system. This system should allow for organized storage, version control, and easy retrieval of documents. Additionally, establish clear policies and procedures for document archiving, including retention periods and access controls. Regularly review and update these policies to ensure they remain effective and meet evolving needs."
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 7,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant to the question, addressing the need for proper archiving and accessibility. \nClarity: 2 - The response is clear and easy to understand, using straightforward language to explain the concepts. \nCompleteness: 1 - The response covers the general idea of document management systems but lacks specific details on how to implement them within the context of the given database schema. \nAccuracy: 2 - The response is accurate in its description of document management systems and their benefits. \nUtility: 1 - The response somewhat meets the user's needs by providing general advice but doesn't offer concrete steps tailored to the database structure. It doesn't explain how to integrate the suggested solutions with the existing database."
+            }
+        ],
+        "id": 1
+    },
+    {
+        "db_name": "student_transcripts_tracking",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Find the first name of the students who permanently live in the country Haiti.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.first_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.permanent_address_id  =  T2.address_id WHERE T2.country  =  'Haiti' ",
+                "predict": "The question is unanswerable. The database schema does not contain information about the country of residence for addresses. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the first names of the students who permanently live in Haiti?"
+                },
+                "Selector": "Table:Addresses\n[(address_id, address id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(line_1, line 1 type:text. Value examples:[2294 Grant Square Apt. 235, 3999 Aufderhar Ways Suite 593, 67942 Carlotta Ferry Apt. 686]),(line_2, line 2 type:text. Value examples:[Apt. 370, Apt. 388, Apt. 583]),(line_3, line 3 type:text. Value examples:[None]),(city, city type:text. Value examples:[Port Chelsea, Lake Laishafurt, Goodwinhaven]),(country, country type:text. Value examples:[Iceland, Burundi, Saudi Arabia]),]\nTable:Students\n[(student_id, student id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(permanent_address_id, permanent address id type:number. Value examples:[15, 5, 11]),(first_name, first name type:text. Value examples:[Timmothy, Hobart, Warren]),]\nForeign keys:\nStudents.permanent_address_id = Addresses.address_id\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about the country of residence for addresses. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response correctly identifies that the question cannot be answered from the given database schema. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 2 - The response fully addresses the question by explaining why it is unanswerable. \nAccuracy: 2 - The response is accurate in stating that the database schema lacks the necessary information. \nUtility: 2 - The response meets the user's needs by providing a clear explanation of why the question cannot be answered."
+            },
+            {
+                "isuser": true,
+                "text": "Please also find the first name of the students who have the cell phone number 09700166582",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT first_name FROM Students WHERE cell_mobile_number = '09700166582'",
+                "predict": "SELECT first_name FROM Students WHERE cell_mobile_number = '09700166582'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Find the first name of the students who have the cell phone number 09700166582."
+                },
+                "Selector": "Table:Students\n[(first_name, first name type:text. Value examples:[Timmothy, Hobart, Warren]),(cell_mobile_number, cell mobile number type:text. Value examples:[(096)889-8954x524, 1-009-710-5151, 07661787471]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Jarvis"
+                        ]
+                    ],
+                    "sql": "SELECT first_name FROM Students WHERE cell_mobile_number = '09700166582'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the first name of the students who have the cell phone number 09700166582. \nSQL ```sql SELECT first_name FROM Students WHERE cell_mobile_number = '09700166582'```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT first_name FROM Students WHERE cell_mobile_number = '09700166582'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Can you show me the last name and address for him?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you want his current address or the permanent address?",
+                "query": "",
+                "predict": "SELECT (SELECT last_name FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')), line_1, line_2, city, zip_postcode, state_province_county, country FROM Addresses WHERE address_id = (SELECT current_address_id FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582'))",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you show me the last name and address for the student with cell phone number 09700166582?"
+                },
+                "Selector": "Table:Addresses\n[(line_1, line 1 type:text. Value examples:[2294 Grant Square Apt. 235, 3999 Aufderhar Ways Suite 593, 67942 Carlotta Ferry Apt. 686]),(line_2, line 2 type:text. Value examples:[Apt. 370, Apt. 388, Apt. 583]),(city, city type:text. Value examples:[Port Chelsea, Lake Laishafurt, Goodwinhaven]),(zip_postcode, zip postcode type:text. Value examples:[148, 943, 541]),(state_province_county, state province county type:text. Value examples:[Virginia, Kentucky, Kansas]),(country, country type:text. Value examples:[Iceland, Burundi, Saudi Arabia]),]\nTable:Students\n[(current_address_id, current address id type:number. Value examples:[10, 12, 9]),(permanent_address_id, permanent address id type:number. Value examples:[15, 5, 11]),(first_name, first name type:text. Value examples:[Timmothy, Hobart, Warren]),(middle_name, middle name type:text. Value examples:[Anna, Lorenz, Violet]),(last_name, last name type:text. Value examples:[Ward, Balistreri, Gleichner]),(cell_mobile_number, cell mobile number type:text. Value examples:[(096)889-8954x524, 1-009-710-5151, 07661787471]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Carroll",
+                            "193 Marlin Brook",
+                            "Apt. 406",
+                            "Herzoghaven",
+                            "068",
+                            "Arkansas",
+                            "Cook Islands"
+                        ]
+                    ],
+                    "sql": "SELECT (SELECT last_name FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')), line_1, line_2, city, zip_postcode, state_province_county, country FROM Addresses WHERE address_id = (SELECT current_address_id FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582'))",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the student ID of the student with cell phone number 09700166582.\nSQL: ```sql SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582'```\n\nSubquestion 2: Find the last name of the student with the student ID found in the previous step.\nSQL: ```sql SELECT last_name FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')```\n\nSubquestion 3: Find the current address ID of the student with the student ID found in the previous step.\nSQL: ```sql SELECT current_address_id FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')```\n\nSubquestion 4: Find the address details for the current address ID found in the previous step.\nSQL: ```sql SELECT line_1, line_2, city, zip_postcode, state_province_county, country FROM Addresses WHERE address_id = (SELECT current_address_id FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582'))```\n\nSubquestion 5: Combine the last name and address details found in the previous steps.\nSQL: ```sql SELECT (SELECT last_name FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')), line_1, line_2, city, zip_postcode, state_province_county, country FROM Addresses WHERE address_id = (SELECT current_address_id FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582'))```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT (SELECT last_name FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')), line_1, line_2, city, zip_postcode, state_province_county, country FROM Addresses WHERE address_id = (SELECT current_address_id FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582'))",
+                "predict_type": "answerable",
+                "RQS": 0
+            },
+            {
+                "isuser": true,
+                "text": "current address please",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.last_name, T2.* FROM Students as T1 join addresses as T2 on T1.current_address_id = T2.address_id WHERE T1.cell_mobile_number = '09700166582'",
+                "predict": "SELECT S.last_name, A.line_1, A.line_2, A.line_3, A.city, A.zip_postcode, A.state_province_county, A.country, A.other_address_details FROM Students AS S JOIN Addresses AS A ON S.current_address_id = A.address_id WHERE S.cell_mobile_number = '09700166582'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Please show me the last name and current address for the student with cell phone number 09700166582."
+                },
+                "Selector": "Table:Addresses\n[(address_id, address id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(line_1, line 1 type:text. Value examples:[2294 Grant Square Apt. 235, 3999 Aufderhar Ways Suite 593, 67942 Carlotta Ferry Apt. 686]),(line_2, line 2 type:text. Value examples:[Apt. 370, Apt. 388, Apt. 583]),(line_3, line 3 type:text. Value examples:[None]),(city, city type:text. Value examples:[Port Chelsea, Lake Laishafurt, Goodwinhaven]),(zip_postcode, zip postcode type:text. Value examples:[148, 943, 541]),(state_province_county, state province county type:text. Value examples:[Virginia, Kentucky, Kansas]),(country, country type:text. Value examples:[Iceland, Burundi, Saudi Arabia]),(other_address_details, other address details type:text. Value examples:[None]),]\nTable:Students\n[(current_address_id, current address id type:number. Value examples:[10, 12, 9]),(last_name, last name type:text. Value examples:[Ward, Balistreri, Gleichner]),(cell_mobile_number, cell mobile number type:text. Value examples:[(096)889-8954x524, 1-009-710-5151, 07661787471]),]\nForeign keys:\nStudents.current_address_id = Addresses.address_id\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Carroll",
+                            "193 Marlin Brook",
+                            "Apt. 406",
+                            null,
+                            "Herzoghaven",
+                            "068",
+                            "Arkansas",
+                            "Cook Islands",
+                            null
+                        ]
+                    ],
+                    "sql": "SELECT S.last_name, A.line_1, A.line_2, A.line_3, A.city, A.zip_postcode, A.state_province_county, A.country, A.other_address_details FROM Students AS S JOIN Addresses AS A ON S.current_address_id = A.address_id WHERE S.cell_mobile_number = '09700166582'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the student's current address ID based on their cell phone number.\nSQL: ```sql SELECT current_address_id FROM Students WHERE cell_mobile_number = '09700166582'```\n\nSubquestion 2: Find the student's last name and current address using the address ID from the previous subquestion.\nSQL: ```sql SELECT S.last_name, A.line_1, A.line_2, A.line_3, A.city, A.zip_postcode, A.state_province_county, A.country, A.other_address_details FROM Students AS S JOIN Addresses AS A ON S.current_address_id = A.address_id WHERE S.cell_mobile_number = '09700166582'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT S.last_name, A.line_1, A.line_2, A.line_3, A.city, A.zip_postcode, A.state_province_county, A.country, A.other_address_details FROM Students AS S JOIN Addresses AS A ON S.current_address_id = A.address_id WHERE S.cell_mobile_number = '09700166582'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Ok. Can you also give me his email address?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT email_address FROM Students where cell_mobile_number = '09700166582'",
+                "predict": "SELECT email_address FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you give me the email address of the student with cell phone number 09700166582?"
+                },
+                "Selector": "Table:Students\n[(student_id, student id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(first_name, first name type:text. Value examples:[Timmothy, Hobart, Warren]),(last_name, last name type:text. Value examples:[Ward, Balistreri, Gleichner]),(cell_mobile_number, cell mobile number type:text. Value examples:[(096)889-8954x524, 1-009-710-5151, 07661787471]),(email_address, email address type:text. Value examples:[erwin.zboncak@example.com, swift.kolby@example.com, johns.unique@example.net]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "jillian26@example.net"
+                        ]
+                    ],
+                    "sql": "SELECT email_address FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the student_id of the student with cell phone number 09700166582.\nSQL ```sql SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582'```\nSubquestion 2: Find the email address of the student with student_id from the previous subquestion.\nSQL ```sql SELECT email_address FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT email_address FROM Students WHERE student_id = (SELECT student_id FROM Students WHERE cell_mobile_number = '09700166582')",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Send him an email , please.",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Sorry , I am an AI and cannot send emails directly. However, you can use this email address jillian26@example.net to contact the person yourself. If you need help drafting an email, feel free to ask!",
+                "query": "",
+                "predict": "I can't send an email for you. I can only provide you with the email address. You can use this email address to send an email to Jarvis: jillian26@example.net",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "I can't send an email for you. I can only provide you with the email address. You can use this email address to send an email to Jarvis: jillian26@example.net"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant and addresses the question adequately. It correctly identifies that the system cannot send emails and offers an alternative solution. \nClarity: 2 - The response is very clear and easy to understand. It is concise and straightforward. \nCompleteness: 2 - The response thoroughly addresses all aspects of the question. It acknowledges the user's request, explains why it cannot be fulfilled, and provides a suitable alternative. \nAccuracy: 2 - The response is completely accurate. It correctly states that the system cannot send emails and provides the correct email address. \nUtility: 2 - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question. It provides a helpful solution to the user's request and clarifies the limitations of the system."
+            },
+            {
+                "isuser": true,
+                "text": "OK, creat a mailto link with subject 'Hello' and body 'Hi, I am interested in your work.'",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Sure! Here is the mailto link: mailto:jillian26@example.net?subject=Hello&body=Hi, I am interested in your work.",
+                "query": "",
+                "predict": "mailto:jillian26@example.net?subject=Hello&body=Hi%2C%20I%20am%20interested%20in%20your%20work.",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "mailto:jillian26@example.net?subject=Hello&body=Hi%2C%20I%20am%20interested%20in%20your%20work."
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant and addresses the question adequately. It provides a mailto link with the requested subject and body.\nClarity: 2 - The response is very clear and easy to understand. It presents the mailto link in a straightforward manner.\nCompleteness: 2 - The response thoroughly addresses all aspects of the question. It provides a complete mailto link with the specified subject and body.\nAccuracy: 2 - The response is completely accurate. The mailto link is correctly formatted and includes the requested subject and body.\nUtility: 2 - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question. It provides a usable mailto link that the user can directly use to send an email."
+            }
+        ],
+        "id": 2
+    },
+    {
+        "db_name": "concert_singer",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "what is the name of the stadium that does not have a concert in year 2014?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014",
+                "predict": "SELECT Name FROM stadium WHERE Stadium_ID IN (SELECT Stadium_ID FROM stadium EXCEPT SELECT DISTINCT Stadium_ID FROM concert WHERE Year = '2014')",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the name of the stadium that does not have a concert in the year 2014?"
+                },
+                "Selector": "Table:stadium\n[(Stadium_ID, stadium id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Location, location type:text. Value examples:[Raith Rovers, Ayr United, East Fife]),(Name, name type:text. Value examples:[Stark's Park, Somerset Park, Bayview Stadium]),(Capacity, capacity type:number. Value examples:[10104, 11998, 2000]),(Highest, highest type:number. Value examples:[4812, 2363, 1980]),(Lowest, lowest type:number. Value examples:[1294, 1057, 533]),]\nTable:concert\n[(concert_ID, concert id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(concert_Name, concert name type:text. Value examples:[Auditions, Super bootcamp, Home Visits]),(Stadium_ID, stadium id type:text. Value examples:[1, 2, 10]),(Year, year type:text. Value examples:[2014, 2015]),]\nForeign keys:\nconcert.Stadium_ID = stadium.Stadium_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Stark's Park"
+                        ],
+                        [
+                            "Somerset Park"
+                        ],
+                        [
+                            "Bayview Stadium"
+                        ],
+                        [
+                            "Hampden Park"
+                        ],
+                        [
+                            "Forthbank Stadium"
+                        ],
+                        [
+                            "Gayfield Park"
+                        ],
+                        [
+                            "Recreation Park"
+                        ],
+                        [
+                            "Balmoor"
+                        ],
+                        [
+                            "Glebe Park"
+                        ]
+                    ],
+                    "sql": "SELECT Name FROM stadium WHERE Stadium_ID IN (SELECT Stadium_ID FROM stadium EXCEPT SELECT DISTINCT Stadium_ID FROM concert WHERE Year = '2014')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the Stadium_ID of stadiums that have concerts in 2014.\nSQL: ```sql SELECT DISTINCT Stadium_ID FROM concert WHERE Year = '2014'```\nSubquestion 2: Find the Stadium_ID of stadiums that do not have concerts in 2014.\nSQL: ```sql SELECT Stadium_ID FROM stadium EXCEPT SELECT DISTINCT Stadium_ID FROM concert WHERE Year = '2014'```\nSubquestion 3: Find the name of the stadium that does not have a concert in 2014.\nSQL: ```sql SELECT Name FROM stadium WHERE Stadium_ID IN (SELECT Stadium_ID FROM stadium EXCEPT SELECT DISTINCT Stadium_ID FROM concert WHERE Year = '2014')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Name FROM stadium WHERE Stadium_ID IN (SELECT Stadium_ID FROM stadium EXCEPT SELECT DISTINCT Stadium_ID FROM concert WHERE Year = '2014')",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "what is the capacity of Balmoor?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select Capacity from stadium where name = 'Balmoor'",
+                "predict": "No. The question cannot be answered because the stadium name \"Balmoor\" is not present in the database schema. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the capacity of the stadium Balmoor?"
+                },
+                "Selector": "Table:stadium\n[(Stadium_ID, stadium id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Location, location type:text. Value examples:[Raith Rovers, Ayr United, East Fife]),(Name, name type:text. Value examples:[Stark's Park, Somerset Park, Bayview Stadium]),(Capacity, capacity type:number. Value examples:[10104, 11998, 2000]),(Highest, highest type:number. Value examples:[4812, 2363, 1980]),(Lowest, lowest type:number. Value examples:[1294, 1057, 533]),]\nForeign keys:\n",
+                "Detector": "No. The question cannot be answered because the stadium name \"Balmoor\" is not present in the database schema. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "error",
+                "RQS": 0,
+                "RQS_Rationale": "error"
+            },
+            {
+                "isuser": true,
+                "text": "what is the theme of Balmoor?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select T2.Theme from stadium as T1 join concert as T2 on T1.Stadium_ID = T2.Stadium_ID where T1.Name = 'Balmoor'",
+                "predict": "The question is unanswerable. The database schema does not contain information about the theme of stadiums. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the theme of the Balmoor stadium?"
+                },
+                "Selector": "Table:stadium\n[(Stadium_ID, stadium id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Location, location type:text. Value examples:[Raith Rovers, Ayr United, East Fife]),(Name, name type:text. Value examples:[Stark's Park, Somerset Park, Bayview Stadium]),(Capacity, capacity type:number. Value examples:[10104, 11998, 2000]),(Highest, highest type:number. Value examples:[4812, 2363, 1980]),(Lowest, lowest type:number. Value examples:[1294, 1057, 533]),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about the theme of stadiums. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response correctly identifies that the question cannot be answered from the database. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 2 - The response fully addresses the question by explaining why it is unanswerable. \nAccuracy: 2 - The response is accurate as the database schema does not contain information about the theme of stadiums. \nUtility: 2 - The response meets the user's needs by providing a clear explanation of why the question cannot be answered."
+            },
+            {
+                "isuser": true,
+                "text": "Cool! good theme.",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Yes, the theme 'Happy Tonight' for Balmoor is indeed very cool!",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 4,
+                "RQS_Rationale": "Relevance: 0 - The response is completely irrelevant. The system fails to understand the user's intent and provides a generic response. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 0 - The response does not address the question at all. It does not acknowledge the user's statement about a theme. \nAccuracy: 2 - Not applicable. \nUtility: 0 - The response does not meet the user's needs. It fails to engage with the user's comment about a theme. "
+            }
+        ],
+        "id": 3
+    },
+    {
+        "db_name": "dog_kennels",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "how many female dogs have gone through treatment ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )",
+                "predict": "SELECT COUNT(DISTINCT T1.dog_id)  FROM Dogs AS T1  INNER JOIN Treatments AS T2  ON T1.dog_id = T2.dog_id  WHERE T1.gender = 1",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many female dogs have gone through treatment in the dog_kennels database?"
+                },
+                "Selector": "Table:Dogs\n[(dog_id, dog id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(gender, gender type:text. Value examples:[1, 0]),]\nTable:Treatments\n[(dog_id, dog id type:number. Value examples:[14, 4, 2]),]\nForeign keys:\nTreatments.dog_id = Dogs.dog_id\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            3
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT T1.dog_id)  FROM Dogs AS T1  INNER JOIN Treatments AS T2  ON T1.dog_id = T2.dog_id  WHERE T1.gender = 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the number of female dogs that have gone through treatment.\nSQL: ```sql\nSELECT COUNT(DISTINCT T1.dog_id) \nFROM Dogs AS T1 \nINNER JOIN Treatments AS T2 \nON T1.dog_id = T2.dog_id \nWHERE T1.gender = 1\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT COUNT(DISTINCT T1.dog_id)  FROM Dogs AS T1  INNER JOIN Treatments AS T2  ON T1.dog_id = T2.dog_id  WHERE T1.gender = 1",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "what are their ages",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT age FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )",
+                "predict": "SELECT T1.age FROM Dogs AS T1 INNER JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T1.gender = 0",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the ages of the female dogs that have gone through treatment?"
+                },
+                "Selector": "Table:Dogs\n[(dog_id, dog id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(age, age type:text. Value examples:[6, 9, 8]),(gender, gender type:text. Value examples:[1, 0]),(date_adopted, date adopted type:time. Value examples:[2018-03-06 16:32:11, 2018-03-25 08:12:51, 2018-03-07 21:45:43]),(date_departed, date departed type:time. Value examples:[2018-03-25 06:58:44, 2018-03-25 02:11:32, 2018-03-25 10:25:46]),]\nTable:Treatments\n[(dog_id, dog id type:number. Value examples:[14, 4, 2]),]\nForeign keys:\nTreatments.dog_id = Dogs.dog_id\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "4"
+                        ],
+                        [
+                            "5"
+                        ],
+                        [
+                            "4"
+                        ],
+                        [
+                            "9"
+                        ],
+                        [
+                            "8"
+                        ],
+                        [
+                            "9"
+                        ],
+                        [
+                            "9"
+                        ],
+                        [
+                            "4"
+                        ],
+                        [
+                            "9"
+                        ],
+                        [
+                            "2"
+                        ]
+                    ],
+                    "sql": "SELECT T1.age FROM Dogs AS T1 INNER JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T1.gender = 0",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the dog_id of female dogs that have gone through treatment.\nSQL: ```sql SELECT DISTINCT T1.dog_id FROM Dogs AS T1 INNER JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T1.gender = 0```\nSubquestion 2: What are the ages of the female dogs that have gone through treatment?\nSQL: ```sql SELECT T1.age FROM Dogs AS T1 INNER JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T1.gender = 0```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT T1.age FROM Dogs AS T1 INNER JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T1.gender = 0",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "what is the highest weight of age 2",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT weight FROM Dogs WHERE age=2 ORDER BY weight DESC LIMIT 1",
+                "predict": "SELECT MAX(CAST(weight AS REAL)) FROM Dogs WHERE age = '2'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the highest weight of dogs that are 2 years old?"
+                },
+                "Selector": "Table:Dogs\n[(dog_id, dog id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(breed_code, breed code type:text. Value examples:[ESK, BUL, HUS]),(size_code, size code type:text. Value examples:[LGE, MED, SML]),(name, name type:text. Value examples:[Kacey, Hipolito, Mavis]),(age, age type:text. Value examples:[6, 9, 8]),(weight, weight type:text. Value examples:[7.57, 1.72, 8.04]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            9.48
+                        ]
+                    ],
+                    "sql": "SELECT MAX(CAST(weight AS REAL)) FROM Dogs WHERE age = '2'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the highest weight of dogs that are 2 years old.\nSQL ```sql SELECT MAX(CAST(weight AS REAL)) FROM Dogs WHERE age = '2'```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT MAX(CAST(weight AS REAL)) FROM Dogs WHERE age = '2'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "No problem. Anything more you'd like to ask?",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is a polite and relevant greeting, acknowledging the user's thanks. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 2 - The response is complete as it provides a relevant greeting and a prompt for further interaction. \nAccuracy: 2 - The response is accurate as it is a simple and appropriate greeting. \nUtility: 2 - The response meets the user's needs by acknowledging their thanks and prompting for further interaction. It also explains the context of the question, which is a simple expression of gratitude."
+            },
+            {
+                "isuser": true,
+                "text": "No, Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Good bye.",
+                "query": "",
+                "predict": "No problem. Anything more you'd like to ask?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "No problem. Anything more you'd like to ask?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 9,
+                "RQS_Rationale": "Relevance: 2 points (The response is not relevant to the question, but it is a valid response to a user who is ending the conversation.)\nClarity: 2 points (The response is clear and easy to understand.)\nCompleteness: 2 points (The response is complete in the sense that it acknowledges the user's statement and attempts to continue the conversation.)\nAccuracy: 2 points (The response is accurate in that it does not contain any factual errors.)\nUtility: 1 point (The response somewhat meets the user's needs by acknowledging their statement, but it does not provide any useful information or insight.)"
+            }
+        ],
+        "id": 4
+    },
+    {
+        "db_name": "course_teach",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How many teachers are there?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT COUNT(*) FROM teacher",
+                "predict": "SELECT COUNT(*) FROM teacher",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many teachers are there in the course_teach database?"
+                },
+                "Selector": "Table:teacher\n[(Teacher_ID, teacher id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Name, name type:text. Value examples:[Joseph Huts, Gustaaf Deloor, Vicente Carretero]),(Age, age type:text. Value examples:[32, 29, 26]),(Hometown, hometown type:text. Value examples:[Blackrod Urban District, Bolton County Borough, Farnworth Municipal Borough]),]\nTable:course_arrange\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:[2, 3, 4]),(Teacher_ID, teacher id type:number. Value examples:[5, 3, 2]),(Grade, grade type:number. Value examples:[1, 3, 5]),]\nForeign keys:\ncourse_arrange.Teacher_ID = teacher.Teacher_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            7
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM teacher",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Count the number of teachers in the teacher table.\nSQL ```sql SELECT COUNT(*) FROM teacher```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT COUNT(*) FROM teacher",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "How many courses do you have?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT COUNT(*) FROM course_arrange",
+                "predict": "The question is unanswerable. The database schema does not include a table named 'course_teach'. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many courses are there in the 'course_teach' database?"
+                },
+                "Selector": "Table:course\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Staring_Date, staring date type:text. Value examples:[5 May, 6 May, 7 May]),(Course, course type:text. Value examples:[Language Arts, Math, Science]),]\nTable:course_arrange\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:[2, 3, 4]),(Teacher_ID, teacher id type:number. Value examples:[5, 3, 2]),(Grade, grade type:number. Value examples:[1, 3, 5]),]\nForeign keys:\ncourse_arrange.Course_ID = course.Course_ID\n",
+                "Detector": "The question is unanswerable. The database schema does not include a table named 'course_teach'. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant and addresses the question adequately. It correctly identifies that the question cannot be answered from the provided database schema.\nClarity: 2 - The response is very clear and easy to understand. It clearly states that the question is unanswerable and provides a reason.\nCompleteness: 2 - The response thoroughly addresses all aspects of the question. It provides a clear explanation for why the question cannot be answered.\nAccuracy: 2 - The response is completely accurate. The database schema does not include a table named 'course_teach'.\nUtility: 2 - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question. It provides a clear explanation for why the question cannot be answered."
+            },
+            {
+                "isuser": true,
+                "text": "Can you tell me the names of teachers and the number of courses they teach?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T2.Name , COUNT(*) FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T2.Name",
+                "predict": "SELECT T1.Name, COUNT(T2.Course_ID) FROM teacher AS T1 INNER JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T1.Teacher_ID",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you tell me the names of all teachers and the number of courses they teach?"
+                },
+                "Selector": "Table:course\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Course, course type:text. Value examples:[Language Arts, Math, Science]),]\nTable:teacher\n[(Teacher_ID, teacher id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Name, name type:text. Value examples:[Joseph Huts, Gustaaf Deloor, Vicente Carretero]),]\nTable:course_arrange\n[(Course_ID, course id type:number PRIMARY KEY. Value examples:[2, 3, 4]),(Teacher_ID, teacher id type:number. Value examples:[5, 3, 2]),(Grade, grade type:number. Value examples:[1, 3, 5]),]\nForeign keys:\ncourse_arrange.Teacher_ID = teacher.Teacher_ID\ncourse_arrange.Course_ID = course.Course_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Gustaaf Deloor",
+                            1
+                        ],
+                        [
+                            "Vicente Carretero",
+                            1
+                        ],
+                        [
+                            "Kearsley Brown",
+                            1
+                        ],
+                        [
+                            "Anne Walker",
+                            2
+                        ],
+                        [
+                            "Lucy Wong",
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT T1.Name, COUNT(T2.Course_ID) FROM teacher AS T1 INNER JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T1.Teacher_ID",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the number of courses each teacher teaches.\nSQL ```sql SELECT T2.Teacher_ID, COUNT(T1.Course_ID) FROM course_arrange AS T1 INNER JOIN teacher AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T2.Teacher_ID```\nSubquestion 2: List the names of all teachers and the number of courses they teach.\nSQL ```sql SELECT T1.Name, COUNT(T2.Course_ID) FROM teacher AS T1 INNER JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T1.Teacher_ID```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT T1.Name, COUNT(T2.Course_ID) FROM teacher AS T1 INNER JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T1.Teacher_ID",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Sure. Can you tell me the age of each teacher?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT age FROM teacher",
+                "predict": "SELECT Age FROM teacher",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you tell me the age of each teacher?"
+                },
+                "Selector": "Table:teacher\n[(Teacher_ID, teacher id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Name, name type:text. Value examples:[Joseph Huts, Gustaaf Deloor, Vicente Carretero]),(Age, age type:text. Value examples:[32, 29, 26]),(Hometown, hometown type:text. Value examples:[Blackrod Urban District, Bolton County Borough, Farnworth Municipal Borough]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "32"
+                        ],
+                        [
+                            "29"
+                        ],
+                        [
+                            "26"
+                        ],
+                        [
+                            "33"
+                        ],
+                        [
+                            "45"
+                        ],
+                        [
+                            "41"
+                        ],
+                        [
+                            "39"
+                        ]
+                    ],
+                    "sql": "SELECT Age FROM teacher",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Select the age of each teacher.\nSQL ```sql SELECT Age FROM teacher```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Age FROM teacher",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "What is the email address of each teacher?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "This question cannot be answered because the database schema provided does not include a field for the email addresses of the teachers.",
+                "query": "",
+                "predict": "The question is unanswerable. The database schema does not include email addresses for teachers. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the email addresses of all the teachers?"
+                },
+                "Selector": "Table:teacher\n[(Teacher_ID, teacher id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Name, name type:text. Value examples:[Joseph Huts, Gustaaf Deloor, Vicente Carretero]),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not include email addresses for teachers. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 points - The response is fully relevant and addresses the question adequately. It correctly identifies that the question cannot be answered from the provided database schema.\nClarity: 2 points - The response is very clear and easy to understand. It is concise and straightforward.\nCompleteness: 2 points - The response thoroughly addresses all aspects of the question. It explains why the question cannot be answered.\nAccuracy: 2 points - The response is completely accurate. It correctly states that the database schema does not include email addresses.\nUtility: 2 points - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question. It provides a clear explanation of why the question cannot be answered from the given data."
+            }
+        ],
+        "id": 5
+    },
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Which horsepower is higher?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Can you please clarify your question?",
+                "query": "",
+                "predict": "Please provide the car models you want to compare. For example, you could ask 'Which horsepower is higher, the Ford Mustang or the Chevrolet Camaro?'",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "Please provide the car models you want to compare. For example, you could ask 'Which horsepower is higher, the Ford Mustang or the Chevrolet Camaro?'"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "ambiguous",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant as it correctly identifies the ambiguity in the question and asks for clarification. \nClarity: 2 - The response is very clear and easy to understand. It provides a specific example to illustrate the required information. \nCompleteness: 2 - The response thoroughly addresses all aspects of the question by identifying the ambiguity and providing a solution. \nAccuracy: 2 - The response is completely accurate. It correctly identifies the need for additional information. \nUtility: 2 - The response excellently meets the user's needs by explaining the context of the question and providing a clear solution. It helps the user understand why the question is ambiguous and how to rephrase it for a meaningful answer."
+            },
+            {
+                "isuser": true,
+                "text": "what is the highest horsepower on the table?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Horsepower FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1",
+                "predict": "SELECT MAX(CAST(Horsepower AS REAL)) FROM cars_data",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the highest horsepower value in the 'cars_data' table?"
+                },
+                "Selector": "Table:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Edispl, edispl type:number. Value examples:[307.0, 350.0, 318.0]),(Horsepower, horsepower type:text. Value examples:[130, 165, 150]),(Weight, weight type:number. Value examples:[3504, 3693, 3436]),(Accelerate, accelerate type:number. Value examples:[12.0, 11.5, 11.0]),(Year, year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            230.0
+                        ]
+                    ],
+                    "sql": "SELECT MAX(CAST(Horsepower AS REAL)) FROM cars_data",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the highest horsepower value in the 'cars_data' table.\nSQL ```sql SELECT MAX(CAST(Horsepower AS REAL)) FROM cars_data```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT MAX(CAST(Horsepower AS REAL)) FROM cars_data",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "how many cars data on the table?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM CARS_DATA",
+                "predict": "SELECT COUNT(*) FROM cars_data",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many rows are in the CARS_DATA table?"
+                },
+                "Selector": "Table:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(MPG, mpg type:text. Value examples:[18, 15, 16]),(Cylinders, cylinders type:number. Value examples:[8, 4, 6]),(Edispl, edispl type:number. Value examples:[307.0, 350.0, 318.0]),(Horsepower, horsepower type:text. Value examples:[130, 165, 150]),(Weight, weight type:number. Value examples:[3504, 3693, 3436]),(Accelerate, accelerate type:number. Value examples:[12.0, 11.5, 11.0]),(Year, year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            406
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM cars_data",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: How many rows are in the CARS_DATA table? \nSQL ```sql SELECT COUNT(*) FROM cars_data```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT COUNT(*) FROM cars_data",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "sum of all cylinders?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT sum(cylinders) FROM CARS_DATA",
+                "predict": "SELECT SUM(Cylinders) FROM cars_data",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the sum of all cylinders in the CARS_DATA table?"
+                },
+                "Selector": "Table:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(MPG, mpg type:text. Value examples:[18, 15, 16]),(Cylinders, cylinders type:number. Value examples:[8, 4, 6]),(Edispl, edispl type:number. Value examples:[307.0, 350.0, 318.0]),(Horsepower, horsepower type:text. Value examples:[130, 165, 150]),(Weight, weight type:number. Value examples:[3504, 3693, 3436]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            2223
+                        ]
+                    ],
+                    "sql": "SELECT SUM(Cylinders) FROM cars_data",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the sum of all cylinders in the CARS_DATA table? \nSQL ```sql SELECT SUM(Cylinders) FROM cars_data```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT SUM(Cylinders) FROM cars_data",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            }
+        ],
+        "id": 6
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "I want to know the average population of all cities please",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(Population) FROM city",
+                "predict": "SELECT AVG(Population) FROM city",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the average population of all cities in the world_1 database?"
+                },
+                "Selector": "Table:city\n[(ID, id type:number PRIMARY KEY. Value examples:[129, 1, 2]),(Name, name type:text. Value examples:[Kabul, Qandahar, Herat]),(CountryCode, country code type:text. Value examples:[ABW, AFG, AGO]),(District, district type:text. Value examples:[Kabol, Qandahar, Herat]),(Population, population type:number. Value examples:[1780000, 237500, 186800]),]\nTable:sqlite_sequence\n[(name, name type:text. Value examples:[city]),(seq, seq type:text. Value examples:[4079]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            350468.22358421184
+                        ]
+                    ],
+                    "sql": "SELECT AVG(Population) FROM city",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Get the average population of all cities in the world_1 database. \nSQL ```sql SELECT AVG(Population) FROM city```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT AVG(Population) FROM city",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "And which districts have cities with populations greater than the average?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT District FROM city WHERE Population  >  (SELECT avg(Population) FROM city)",
+                "predict": "SELECT District FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Which districts have cities with populations greater than the average population of all cities?"
+                },
+                "Selector": "Table:city\n[(ID, id type:number PRIMARY KEY. Value examples:[129, 1, 2]),(Name, name type:text. Value examples:[Kabul, Qandahar, Herat]),(CountryCode, country code type:text. Value examples:[ABW, AFG, AGO]),(District, district type:text. Value examples:[Kabol, Qandahar, Herat]),(Population, population type:number. Value examples:[1780000, 237500, 186800]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Abidjan"
+                        ],
+                        [
+                            "Abu Dhabi"
+                        ],
+                        [
+                            "Adana"
+                        ],
+                        [
+                            "Addis Abeba"
+                        ],
+                        [
+                            "Aden"
+                        ],
+                        [
+                            "Aguascalientes"
+                        ],
+                        [
+                            "Ahal"
+                        ],
+                        [
+                            "Aichi"
+                        ],
+                        [
+                            "Alagoas"
+                        ],
+                        [
+                            "Alberta"
+                        ]
+                    ],
+                    "sql": "SELECT District FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the average population of all cities?\nSQL ```sql SELECT AVG(Population) FROM city```\nSubquestion 2: Which districts have cities with populations greater than the average population of all cities?\nSQL ```sql SELECT District FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT District FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Within these districts, how many cities does each have with a population greater than the average?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT  District, count(*) FROM city WHERE Population  >  (SELECT avg(Population) FROM city) GROUP BY District",
+                "predict": "SELECT District, COUNT(*) FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "For each of the districts with cities having populations greater than the average, how many cities does each district have?"
+                },
+                "Selector": "Table:city\n[(ID, id type:number PRIMARY KEY. Value examples:[129, 1, 2]),(Name, name type:text. Value examples:[Kabul, Qandahar, Herat]),(CountryCode, country code type:text. Value examples:[ABW, AFG, AGO]),(District, district type:text. Value examples:[Kabol, Qandahar, Herat]),(Population, population type:number. Value examples:[1780000, 237500, 186800]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Abidjan",
+                            1
+                        ],
+                        [
+                            "Abu Dhabi",
+                            1
+                        ],
+                        [
+                            "Adana",
+                            1
+                        ],
+                        [
+                            "Addis Abeba",
+                            1
+                        ],
+                        [
+                            "Aden",
+                            1
+                        ],
+                        [
+                            "Aguascalientes",
+                            1
+                        ],
+                        [
+                            "Ahal",
+                            1
+                        ],
+                        [
+                            "Aichi",
+                            2
+                        ],
+                        [
+                            "Alagoas",
+                            1
+                        ],
+                        [
+                            "Alberta",
+                            2
+                        ]
+                    ],
+                    "sql": "SELECT District, COUNT(*) FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the average population of cities?\nSQL ```sql SELECT AVG(Population) FROM city```\nSubquestion 2: List the districts with cities having populations greater than the average.\nSQL ```sql SELECT DISTINCT District FROM city WHERE Population > (SELECT AVG(Population) FROM city)```\nSubquestion 3: For each of the districts with cities having populations greater than the average, how many cities does each district have?\nSQL ```sql SELECT District, COUNT(*) FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT District, COUNT(*) FROM city WHERE Population > (SELECT AVG(Population) FROM city) GROUP BY District",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "What does 'Abu Dhabi' mean in Arabic?",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "In Arabic, 'Abu Dhabi' translates to 'Father of the Gazelle' in Arabic. 'Abu' means 'father' and 'Dhabi' refers to a type of gazelle. The name is believed to originate from the abundance of gazelles in the area.",
+                "query": "",
+                "predict": "I'm sorry, I can't answer that question. I don't have access to information about Arabic language translations.",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "I'm sorry, I can't answer that question. I don't have access to information about Arabic language translations."
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 4,
+                "RQS_Rationale": "Relevance: 0 - The response is completely irrelevant as it states it cannot answer the question. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 0 - The response does not address the question at all. \nAccuracy: 2 - Not applicable as the response does not provide any information. \nUtility: 0 - The response does not meet the user's needs and does not explain the context of the question."
+            }
+        ],
+        "id": 7
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can you list all nations whose government is US territory?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Name FROM country WHERE GovernmentForm  =  \"US Territory\"",
+                "predict": "The question is unanswerable. The database schema does not contain information about US territories. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you list all nations whose government is US territory?"
+                },
+                "Selector": "Table:country\n[(Code, code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),(Name, name type:text. Value examples:[Aruba, Afghanistan, Angola]),(GovernmentForm, government form type:text. Value examples:[Nonmetropolitan Territory of The Netherlands, Islamic Emirate, Republic]),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about US territories. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response correctly identifies that the question cannot be answered from the database. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 2 - The response fully addresses the question by explaining why it cannot be answered. \nAccuracy: 2 - The response is accurate as the database does not contain information about US territories. \nUtility: 2 - The response meets the user's needs by providing a clear explanation of why the question cannot be answered."
+            },
+            {
+                "isuser": true,
+                "text": "Hmm, I also want to know their GNP and population.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT GNP, population FROM country WHERE GovernmentForm  =  \"US Territory\"",
+                "predict": "The question is unanswerable. The database schema does not contain information about US territories. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can you list all nations whose government is US territory, and also show their GNP and population?"
+                },
+                "Selector": "Table:country\n[(Code, code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),(Name, name type:text. Value examples:[Aruba, Afghanistan, Angola]),(Population, population type:number. Value examples:[103000, 22720000, 12878000]),(GNP, gnp type:number. Value examples:[828.0, 5976.0, 6648.0]),(GovernmentForm, government form type:text. Value examples:[Nonmetropolitan Territory of The Netherlands, Islamic Emirate, Republic]),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about US territories. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 2,
+                "RQS_Rationale": "Relevance: 0 - The response is completely irrelevant. The question asks for GNP and population, but the response focuses on US territories, which are not mentioned in the question or database schema. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 0 - The response does not address the question at all. It provides an irrelevant answer. \nAccuracy: 0 - The response contains factually incorrect information. It claims the database schema does not contain information about US territories, which is not true. The schema does not contain information about US territories, but it does contain information about GNP and population. \nUtility: 0 - The response does not meet the user's needs or explain the context of the question. It provides an irrelevant and inaccurate answer."
+            },
+            {
+                "isuser": true,
+                "text": "How is GNP typically calculated?",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "GNP (Gross National Product) is typically calculated by first determining the Gross Domestic Product (GDP), which is the total market value of all final goods and services produced within a country during a specific period, usually a year. This includes consumption, investment, government spending, and net exports (exports minus imports). Next, you add the net income from abroad, which is the total income earned by residents from overseas investments and other sources minus the total income earned by foreign residents from domestic investments and other sources. By combining these two components, you get the GNP. In essence, GNP equals GDP plus the net income from abroad. For example, if a country has a GDP of $1,000 billion, and its residents earn $50 billion from abroad while foreign residents earn $30 billion from the country, then the GNP would be $1,020 billion.",
+                "query": "",
+                "predict": "Gross National Product (GNP) is the total market value of all final goods and services produced by a country's residents in a given period, typically a year. It includes income earned by residents from abroad, but excludes income earned by non-residents within the country. GNP is calculated by adding up the value of all goods and services produced in a country, including those produced by foreign-owned companies operating within the country. It also includes income earned by residents from abroad, such as wages, salaries, and profits. GNP is a measure of a country's economic output and is often used to compare the economic performance of different countries.",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "Gross National Product (GNP) is the total market value of all final goods and services produced by a country's residents in a given period, typically a year. It includes income earned by residents from abroad, but excludes income earned by non-residents within the country. GNP is calculated by adding up the value of all goods and services produced in a country, including those produced by foreign-owned companies operating within the country. It also includes income earned by residents from abroad, such as wages, salaries, and profits. GNP is a measure of a country's economic output and is often used to compare the economic performance of different countries."
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant and addresses the question adequately. It provides a definition of GNP and explains how it is calculated. \nClarity: 2 - The response is very clear and easy to understand. It uses simple language and provides a clear explanation of the concept. \nCompleteness: 2 - The response thoroughly addresses all aspects of the question. It provides a comprehensive explanation of how GNP is calculated. \nAccuracy: 2 - The response is completely accurate. It provides a correct and accurate explanation of how GNP is calculated. \nUtility: 2 - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question. It provides a clear and concise explanation of GNP and how it is calculated. \nThe question is not related to the database schema, so it is classified as improper."
+            },
+            {
+                "isuser": true,
+                "text": "OK, please find out the average GNP and total population of those nations.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT avg(GNP) ,  sum(population) FROM country WHERE GovernmentForm  =  \"US Territory\"",
+                "predict": "The question is unanswerable. The database schema does not contain information about US territories. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the average GNP and total population of nations whose government is US territory?"
+                },
+                "Selector": "Table:country\n[(Population, population type:number. Value examples:[103000, 22720000, 12878000]),(GNP, gnp type:number. Value examples:[828.0, 5976.0, 6648.0]),(GovernmentForm, government form type:text. Value examples:[Nonmetropolitan Territory of The Netherlands, Islamic Emirate, Republic]),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about US territories. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 2,
+                "RQS_Rationale": "Relevance: 0 - The response is completely irrelevant. The question asks for average GNP and total population, but the response focuses on US territories, which are not mentioned in the question or database schema. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 0 - The response does not address the question at all. It provides an irrelevant answer. \nAccuracy: 0 - The response is factually incorrect. The database schema does not contain information about US territories. \nUtility: 0 - The response does not meet the user's needs. It fails to provide the requested information and instead focuses on a non-existent issue. "
+            }
+        ],
+        "id": 8
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "give me the total surface area of the continent\n Asia ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT sum(SurfaceArea) FROM country WHERE Continent = \"Asia\"",
+                "predict": "SELECT SUM(SurfaceArea) FROM country WHERE Continent = 'Asia'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the total surface area of the continent Asia?"
+                },
+                "Selector": "Table:country\n[(Code, code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),(Continent, continent type:text. Value examples:[North America, Asia, Africa]),(SurfaceArea, surface area type:number. Value examples:[193.0, 652090.0, 1246700.0]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            31881005.0
+                        ]
+                    ],
+                    "sql": "SELECT SUM(SurfaceArea) FROM country WHERE Continent = 'Asia'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the surface area of all countries in Asia.\nSQL: ```sql\nSELECT SurfaceArea FROM country WHERE Continent = 'Asia'\n```\nSubquestion 2: Calculate the total surface area of all countries in Asia.\nSQL: ```sql\nSELECT SUM(SurfaceArea) FROM country WHERE Continent = 'Asia'\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT SUM(SurfaceArea) FROM country WHERE Continent = 'Asia'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "what is the local name ",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean to ask for all local names in country table?",
+                "query": "",
+                "predict": "SELECT LocalName FROM country WHERE Continent = 'Asia' ORDER BY SurfaceArea DESC LIMIT 1",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the local name of the country with the largest surface area in Asia?"
+                },
+                "Selector": "Table:country\n[(Name, name type:text. Value examples:[Aruba, Afghanistan, Angola]),(Continent, continent type:text. Value examples:[North America, Asia, Africa]),(SurfaceArea, surface area type:number. Value examples:[193.0, 652090.0, 1246700.0]),(LocalName, local name type:text. Value examples:[Aruba, Afganistan/Afqanestan, Angola]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Zhongquo"
+                        ]
+                    ],
+                    "sql": "SELECT LocalName FROM country WHERE Continent = 'Asia' ORDER BY SurfaceArea DESC LIMIT 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the country with the largest surface area in Asia.\nSQL ```sql SELECT Name FROM country WHERE Continent = 'Asia' ORDER BY SurfaceArea DESC LIMIT 1```\nSubquestion 2: What is the local name of the country with the largest surface area in Asia?\nSQL ```sql SELECT LocalName FROM country WHERE Continent = 'Asia' ORDER BY SurfaceArea DESC LIMIT 1```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT LocalName FROM country WHERE Continent = 'Asia' ORDER BY SurfaceArea DESC LIMIT 1",
+                "predict_type": "answerable",
+                "RQS": 0
+            },
+            {
+                "isuser": true,
+                "text": "yes ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT LocalName FROM country",
+                "predict": "SELECT 'LocalName' FROM country",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are all the local names in the country table?"
+                },
+                "Selector": "Table:country\n[(Code, code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),(Name, name type:text. Value examples:[Aruba, Afghanistan, Angola]),(Continent, continent type:text. Value examples:[North America, Asia, Africa]),(Region, region type:text. Value examples:[Caribbean, Southern and Central Asia, Central Africa]),(SurfaceArea, surface area type:number. Value examples:[193.0, 652090.0, 1246700.0]),(IndepYear, indepdent year type:number. Value examples:[None, 1919, 1975]),(Population, population type:number. Value examples:[103000, 22720000, 12878000]),(LifeExpectancy, life expectancy type:number. Value examples:[78.4, 45.9, 38.3]),(GNP, gnp type:number. Value examples:[828.0, 5976.0, 6648.0]),(GNPOld, gnp old type:number. Value examples:[793.0, None, 7984.0]),(LocalName, local name type:text. Value examples:[Aruba, Afganistan/Afqanestan, Angola]),(GovernmentForm, government form type:text. Value examples:[Nonmetropolitan Territory of The Netherlands, Islamic Emirate, Republic]),(HeadOfState, head of state type:text. Value examples:[Beatrix, Mohammad Omar, Jos\u00e9 Eduardo dos Santos]),(Capital, capital type:number. Value examples:[129, 1, 56]),(Code2, code2 type:text. Value examples:[AW, AF, AO]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "LocalName"
+                        ],
+                        [
+                            "LocalName"
+                        ],
+                        [
+                            "LocalName"
+                        ],
+                        [
+                            "LocalName"
+                        ],
+                        [
+                            "LocalName"
+                        ],
+                        [
+                            "LocalName"
+                        ],
+                        [
+                            "LocalName"
+                        ],
+                        [
+                            "LocalName"
+                        ],
+                        [
+                            "LocalName"
+                        ],
+                        [
+                            "LocalName"
+                        ]
+                    ],
+                    "sql": "SELECT 'LocalName' FROM country",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What are all the local names in the country table? \nSQL ```sql SELECT 'LocalName' FROM country```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT 'LocalName' FROM country",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "What is Aruba's code? ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Code FROM country WHERE Name = \"Aruba\"",
+                "predict": "SELECT Code FROM country WHERE Name = 'Aruba'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the code for Aruba?"
+                },
+                "Selector": "Table:country\n[(Code, code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),(Name, name type:text. Value examples:[Aruba, Afghanistan, Angola]),(Continent, continent type:text. Value examples:[North America, Asia, Africa]),(Region, region type:text. Value examples:[Caribbean, Southern and Central Asia, Central Africa]),(SurfaceArea, surface area type:number. Value examples:[193.0, 652090.0, 1246700.0]),(IndepYear, indepdent year type:number. Value examples:[None, 1919, 1975]),(Population, population type:number. Value examples:[103000, 22720000, 12878000]),(LifeExpectancy, life expectancy type:number. Value examples:[78.4, 45.9, 38.3]),(GNP, gnp type:number. Value examples:[828.0, 5976.0, 6648.0]),(GNPOld, gnp old type:number. Value examples:[793.0, None, 7984.0]),(LocalName, local name type:text. Value examples:[Aruba, Afganistan/Afqanestan, Angola]),(GovernmentForm, government form type:text. Value examples:[Nonmetropolitan Territory of The Netherlands, Islamic Emirate, Republic]),(HeadOfState, head of state type:text. Value examples:[Beatrix, Mohammad Omar, Jos\u00e9 Eduardo dos Santos]),(Capital, capital type:number. Value examples:[129, 1, 56]),(Code2, code2 type:text. Value examples:[AW, AF, AO]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "ABW"
+                        ]
+                    ],
+                    "sql": "SELECT Code FROM country WHERE Name = 'Aruba'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the code for Aruba.\nSQL ```sql SELECT Code FROM country WHERE Name = 'Aruba'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Code FROM country WHERE Name = 'Aruba'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            }
+        ],
+        "id": 9
+    },
+    {
+        "db_name": "concert_singer",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "what are the singers name on this list?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT name from singer",
+                "predict": "I need more information to answer your question. Please provide me with a list of singers.",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "I need more information to answer your question. Please provide me with a list of singers."
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 4,
+                "RQS_Rationale": "Relevance: 0 - The response is completely irrelevant as it does not provide any information related to the question. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 0 - The response does not address the question at all. \nAccuracy: 2 - Not applicable. \nUtility: 0 - The response does not meet the user's needs or explain the context of the question. It simply asks for more information without providing any context or explanation."
+            },
+            {
+                "isuser": true,
+                "text": "Joe Sharp song \"You\" was released in what year?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT song_release_year from singer where Name = \"Joe Sharp\" and Song_Name = \"You\"",
+                "predict": "SELECT Song_release_year FROM singer WHERE Name = 'Joe Sharp' AND Song_Name = 'You'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What year was Joe Sharp's song \"You\" released?"
+                },
+                "Selector": "Table:singer\n[(Name, name type:text. Value examples:[Joe Sharp, Timbaland, Justin Brown]),(Song_Name, song name type:text. Value examples:[You, Dangerous, Hey Oh]),(Song_release_year, song release year type:text. Value examples:[1992, 2008, 2013]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "1992"
+                        ]
+                    ],
+                    "sql": "SELECT Song_release_year FROM singer WHERE Name = 'Joe Sharp' AND Song_Name = 'You'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the release year of the song \"You\" by Joe Sharp.\nSQL: ```sql\nSELECT Song_release_year FROM singer WHERE Name = 'Joe Sharp' AND Song_Name = 'You'\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Song_release_year FROM singer WHERE Name = 'Joe Sharp' AND Song_Name = 'You'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "how many number of concert has Joe Sharp held?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id where T2.name = \"Joe Sharp\" GROUP BY T2.singer_id",
+                "predict": "SELECT COUNT(DISTINCT concert_ID) FROM singer_in_concert WHERE Singer_ID = (SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp')",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many concerts has Joe Sharp held?"
+                },
+                "Selector": "Table:singer\n[(Singer_ID, singer id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Name, name type:text. Value examples:[Joe Sharp, Timbaland, Justin Brown]),]\nTable:concert\n[(concert_ID, concert id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(concert_Name, concert name type:text. Value examples:[Auditions, Super bootcamp, Home Visits]),]\nTable:singer_in_concert\n[(concert_ID, concert id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Singer_ID, singer id type:text. Value examples:[2, 3, 5]),]\nForeign keys:\nsinger_in_concert.Singer_ID = singer.Singer_ID\nsinger_in_concert.concert_ID = concert.concert_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            0
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT concert_ID) FROM singer_in_concert WHERE Singer_ID = (SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the Singer_ID of Joe Sharp.\nSQL: ```sql SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp'```\nSubquestion 2: Find the number of concerts Joe Sharp has held.\nSQL: ```sql SELECT COUNT(DISTINCT concert_ID) FROM singer_in_concert WHERE Singer_ID = (SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT COUNT(DISTINCT concert_ID) FROM singer_in_concert WHERE Singer_ID = (SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp')",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "ok. what country is Joe sharp from?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT country from singer where name = \"Joe Sharp\" ",
+                "predict": "SELECT Country FROM singer WHERE Singer_ID = (SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp')",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What country is Joe Sharp from?"
+                },
+                "Selector": "Table:singer\n[(Singer_ID, singer id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Name, name type:text. Value examples:[Joe Sharp, Timbaland, Justin Brown]),(Country, country type:text. Value examples:[Netherlands, United States, France]),(Song_Name, song name type:text. Value examples:[You, Dangerous, Hey Oh]),(Song_release_year, song release year type:text. Value examples:[1992, 2008, 2013]),(Age, age type:number. Value examples:[52, 32, 29]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Netherlands"
+                        ]
+                    ],
+                    "sql": "SELECT Country FROM singer WHERE Singer_ID = (SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the Singer_ID of Joe Sharp.\nSQL: ```sql SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp'```\n\nSubquestion 2: Find the country of the singer with the Singer_ID found in the previous step.\nSQL: ```sql SELECT Country FROM singer WHERE Singer_ID = (SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Country FROM singer WHERE Singer_ID = (SELECT Singer_ID FROM singer WHERE Name = 'Joe Sharp')",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Thank you, good bye. ",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 4,
+                "RQS_Rationale": "Relevance: 0 - The response is completely irrelevant. The user is simply expressing gratitude, and the system's response is a generic attempt to continue the conversation. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 0 - The response does not address the question at all. \nAccuracy: 2 - Not applicable. \nUtility: 0 - The response does not meet the user's needs. The user is simply expressing gratitude and does not require further assistance. "
+            }
+        ],
+        "id": 10
+    },
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "which models are lighter than 3500?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.Model  =  T2.Model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.Id JOIN CAR_MAKERS AS T4 ON T1.Maker  =  T4.Id WHERE T3.weight  <  3500",
+                "predict": "SELECT T1.Model FROM car_names AS T1 INNER JOIN cars_data AS T2 ON T1.Model = T2.Id WHERE T2.Weight < 3500",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Which car models in the 'car_1' database have a weight less than 3500?"
+                },
+                "Selector": "Table:model_list\n[(Maker, maker type:number. Value examples:[1, 2, 3]),(Model, model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[(Model, model type:text. Value examples:[chevrolet, buick, plymouth]),(Make, make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Weight, weight type:number. Value examples:[3504, 3693, 3436]),]\nForeign keys:\ncar_names.Model = model_list.Model\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T1.Model FROM car_names AS T1 INNER JOIN cars_data AS T2 ON T1.Model = T2.Id WHERE T2.Weight < 3500",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the car models with weight less than 3500.\nSQL ```sql SELECT T1.Model FROM car_names AS T1 INNER JOIN cars_data AS T2 ON T1.Model = T2.Id WHERE T2.Weight < 3500```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT T1.Model FROM car_names AS T1 INNER JOIN cars_data AS T2 ON T1.Model = T2.Id WHERE T2.Weight < 3500",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "what is the weight of  BMW?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT DISTINCT T3.Weight FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.Model  =  T2.Model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.Id JOIN CAR_MAKERS AS T4 ON T1.Maker  =  T4.Id WHERE T1.Model=\"bmw\"",
+                "predict": "Ambiguous. Please clarify which \"BMW\" you are referring to: the car maker or the car model. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the weight of BMW cars?"
+                },
+                "Selector": "Table:car_makers\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Maker, maker type:text. Value examples:[amc, volkswagen, bmw]),(FullName, full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),(Country, country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[(ModelId, model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Maker, maker type:number. Value examples:[1, 2, 3]),(Model, model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[(MakeId, make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Model, model type:text. Value examples:[chevrolet, buick, plymouth]),(Make, make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(MPG, mpg type:text. Value examples:[18, 15, 16]),(Cylinders, cylinders type:number. Value examples:[8, 4, 6]),(Edispl, edispl type:number. Value examples:[307.0, 350.0, 318.0]),(Horsepower, horsepower type:text. Value examples:[130, 165, 150]),(Weight, weight type:number. Value examples:[3504, 3693, 3436]),]\nForeign keys:\nmodel_list.Maker = car_makers.Id\ncar_names.Model = model_list.Model\ncars_data.Id = car_names.MakeId\n",
+                "Detector": "Ambiguous. Please clarify which \"BMW\" you are referring to: the car maker or the car model. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "ambiguous",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant and addresses the question adequately. It correctly identifies the ambiguity in the question. \nClarity: 2 - The response is very clear and easy to understand. It clearly explains the ambiguity and provides a solution. \nCompleteness: 2 - The response thoroughly addresses all aspects of the question. It identifies the ambiguity and suggests a solution. \nAccuracy: 2 - The response is completely accurate. It correctly identifies the ambiguity in the question. \nUtility: 2 - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question. It provides a solution to the ambiguity."
+            },
+            {
+                "isuser": true,
+                "text": "what is the model name of the id 2?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Are you asking about the car or the carmaker?",
+                "query": "",
+                "predict": "SELECT Model FROM car_names WHERE MakeId = (SELECT MakeId FROM cars_data WHERE Id = 2)",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the model name of the car with ID 2?"
+                },
+                "Selector": "Table:car_names\n[(MakeId, make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Model, model type:text. Value examples:[chevrolet, buick, plymouth]),(Make, make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(MPG, mpg type:text. Value examples:[18, 15, 16]),(Cylinders, cylinders type:number. Value examples:[8, 4, 6]),(Edispl, edispl type:number. Value examples:[307.0, 350.0, 318.0]),(Horsepower, horsepower type:text. Value examples:[130, 165, 150]),(Weight, weight type:number. Value examples:[3504, 3693, 3436]),]\nForeign keys:\ncars_data.Id = car_names.MakeId\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "chevrolet"
+                        ],
+                        [
+                            "buick"
+                        ],
+                        [
+                            "plymouth"
+                        ],
+                        [
+                            "amc"
+                        ],
+                        [
+                            "ford"
+                        ],
+                        [
+                            "ford"
+                        ],
+                        [
+                            "chevrolet"
+                        ],
+                        [
+                            "plymouth"
+                        ],
+                        [
+                            "pontiac"
+                        ],
+                        [
+                            "amc"
+                        ]
+                    ],
+                    "sql": "SELECT Model FROM car_names WHERE MakeId = (SELECT MakeId FROM cars_data WHERE Id = 2)",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the MakeId of the car with ID 2.\nSQL: ```sql SELECT MakeId FROM cars_data WHERE Id = 2```\nSubquestion 2: Find the model name of the car with the MakeId found in the previous step.\nSQL: ```sql SELECT Model FROM car_names WHERE MakeId = (SELECT MakeId FROM cars_data WHERE Id = 2)```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Model FROM car_names WHERE MakeId = (SELECT MakeId FROM cars_data WHERE Id = 2)",
+                "predict_type": "answerable",
+                "RQS": 0
+            },
+            {
+                "isuser": true,
+                "text": "carmaker?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Model FROM car_names WHERE MakeId=2",
+                "predict": "SELECT Model FROM model_list WHERE Maker = 2",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the model name of the carmaker with ID 2?"
+                },
+                "Selector": "Table:car_makers\n[(Id, id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Maker, maker type:text. Value examples:[amc, volkswagen, bmw]),(FullName, full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),(Country, country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[(ModelId, model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Maker, maker type:number. Value examples:[1, 2, 3]),(Model, model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[(MakeId, make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Model, model type:text. Value examples:[chevrolet, buick, plymouth]),(Make, make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\nmodel_list.Maker = car_makers.Id\ncar_names.Model = model_list.Model\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "audi"
+                        ],
+                        [
+                            "volkswagen"
+                        ]
+                    ],
+                    "sql": "SELECT Model FROM model_list WHERE Maker = 2",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the model ID of the carmaker with ID 2.\nSQL: ```sql SELECT ModelId FROM model_list WHERE Maker = 2```\nSubquestion 2: Find the model name of the carmaker with ID 2.\nSQL: ```sql SELECT Model FROM model_list WHERE Maker = 2```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Model FROM model_list WHERE Maker = 2",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            }
+        ],
+        "id": 11
+    },
+    {
+        "db_name": "student_transcripts_tracking",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How many different lessons it have?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you mean the number of the courses with different course ids?",
+                "query": "",
+                "predict": "The question is unanswerable. The provided database schema only includes information about courses, not lessons.  To answer the question, you would need a table that contains information about lessons. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many different lessons are there in the student_transcripts_tracking database?"
+                },
+                "Selector": "Table:Courses\n[(course_id, course id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(course_name, course name type:text. Value examples:[ds, math, os]),(course_description, course description type:text. Value examples:[p, q, v]),(other_details, other details type:text. Value examples:[None]),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The provided database schema only includes information about courses, not lessons.  To answer the question, you would need a table that contains information about lessons. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "ambiguous",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response correctly identifies that the question is unanswerable based on the provided schema. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 2 - The response thoroughly addresses the question by explaining the lack of information and the need for a different table. \nAccuracy: 2 - The response is accurate in stating that the schema lacks information about lessons. \nUtility: 2 - The response excellently meets the user's needs by explaining the ambiguity and suggesting a potential solution."
+            },
+            {
+                "isuser": true,
+                "text": "Yes.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT  count(distinct course_id) from courses",
+                "predict": "SELECT COUNT(DISTINCT course_id) FROM Courses",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many different courses are there?"
+                },
+                "Selector": "Table:Courses\n[(course_id, course id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(course_name, course name type:text. Value examples:[ds, math, os]),(course_description, course description type:text. Value examples:[p, q, v]),(other_details, other details type:text. Value examples:[None]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            15
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT course_id) FROM Courses",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Count the number of distinct courses.\nSQL ```sql SELECT COUNT(DISTINCT course_id) FROM Courses```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT COUNT(DISTINCT course_id) FROM Courses",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "What's the name of the course with least number of students of enrollments?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) LIMIT 1",
+                "predict": "SELECT T1.course_name FROM Courses AS T1 INNER JOIN Student_Enrolment_Courses AS T2 ON T1.course_name = T2.course_id GROUP BY T2.course_id ORDER BY COUNT(*) ASC LIMIT 1",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the name of the course with the least number of student enrollments?"
+                },
+                "Selector": "Table:Courses\n[(course_name, course name type:text. Value examples:[ds, math, os]),]\nTable:Student_Enrolment_Courses\n[(course_id, course id type:number. Value examples:[6, 14, 11]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T1.course_name FROM Courses AS T1 INNER JOIN Student_Enrolment_Courses AS T2 ON T1.course_name = T2.course_id GROUP BY T2.course_id ORDER BY COUNT(*) ASC LIMIT 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the course_id with the least number of student enrollments.\nSQL ```sql SELECT course_id FROM Student_Enrolment_Courses GROUP BY course_id ORDER BY COUNT(*) ASC LIMIT 1```\nSubquestion 2: What is the name of the course with the least number of student enrollments?\nSQL ```sql SELECT T1.course_name FROM Courses AS T1 INNER JOIN Student_Enrolment_Courses AS T2 ON T1.course_name = T2.course_id GROUP BY T2.course_id ORDER BY COUNT(*) ASC LIMIT 1```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT T1.course_name FROM Courses AS T1 INNER JOIN Student_Enrolment_Courses AS T2 ON T1.course_name = T2.course_id GROUP BY T2.course_id ORDER BY COUNT(*) ASC LIMIT 1",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Who will be the most successful student in the student table in the next five years?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "Sorry, I can't answer this question. It is impossible to determine who will be the most successful student in the student table over the next five years. Success is influenced by numerous unpredictable factors, and its definition varies from person to person. Additionally, the current data in the student table does not provide sufficient information to make such a long-term prediction.",
+                "query": "",
+                "predict": "I am sorry, I cannot predict the future. I can only access and process information that is already available in the database. Therefore, I cannot tell you who will be the most successful student in the next five years.",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "I am sorry, I cannot predict the future. I can only access and process information that is already available in the database. Therefore, I cannot tell you who will be the most successful student in the next five years."
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant and addresses the question adequately. It correctly identifies the impossibility of predicting future success based on the given data.\nClarity: 2 - The response is very clear and easy to understand. It uses simple language and explains the limitations clearly.\nCompleteness: 2 - The response thoroughly addresses all aspects of the question. It explains why the question is unanswerable and provides a clear reason.\nAccuracy: 2 - The response is completely accurate. It correctly states that the database cannot predict future success.\nUtility: 2 - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question. It provides a satisfactory answer to the user's query."
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 8,
+                "RQS_Rationale": "Relevance: 2 points (The response is a polite and relevant greeting, though it doesn't directly answer the question.)\nClarity: 2 points (The response is clear and easy to understand.)\nCompleteness: 2 points (The response is complete in the sense that it acknowledges the user's statement.)\nAccuracy: 2 points (The response is accurate in its politeness.)\nUtility: 0 points (The response does not meet the user's needs, as the user is simply expressing gratitude. The system's attempt to continue the conversation is not helpful in this context.)"
+            }
+        ],
+        "id": 12
+    },
+    {
+        "db_name": "dog_kennels",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How many different treatments are there?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select count(*) from (SELECT distinct treatment_type_code from treatments)",
+                "predict": "SELECT COUNT(DISTINCT treatment_type_code) FROM Treatment_Types",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many different treatment types are there in the dog_kennels database?"
+                },
+                "Selector": "Table:Treatment_Types\n[(treatment_type_code, treatment type code type:text PRIMARY KEY. Value examples:[EXAM, VAC, WALK]),(treatment_type_description, treatment type description type:text. Value examples:[Physical examination, Vaccination, Take for a Walk]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            3
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT treatment_type_code) FROM Treatment_Types",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Count the number of distinct treatment types.\nSQL ```sql SELECT COUNT(DISTINCT treatment_type_code) FROM Treatment_Types```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT COUNT(DISTINCT treatment_type_code) FROM Treatment_Types",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "which one is the most expensive?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT * FROM Treatments ORDER BY cost_of_treatment DESC LIMIT 1",
+                "predict": "SELECT T1.treatment_type_code FROM Treatments AS T1 ORDER BY T1.cost_of_treatment DESC LIMIT 1",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the most expensive treatment type?"
+                },
+                "Selector": "Table:Treatment_Types\n[(treatment_type_code, treatment type code type:text PRIMARY KEY. Value examples:[EXAM, VAC, WALK]),(treatment_type_description, treatment type description type:text. Value examples:[Physical examination, Vaccination, Take for a Walk]),]\nTable:Treatments\n[(treatment_type_code, treatment type code type:text. Value examples:[WALK, VAC, EXAM]),(cost_of_treatment, cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\nTreatments.treatment_type_code = Treatment_Types.treatment_type_code\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "VAC"
+                        ]
+                    ],
+                    "sql": "SELECT T1.treatment_type_code FROM Treatments AS T1 ORDER BY T1.cost_of_treatment DESC LIMIT 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the treatment type with the highest cost.\nSQL ```sql SELECT T1.treatment_type_code FROM Treatments AS T1 ORDER BY T1.cost_of_treatment DESC LIMIT 1```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT T1.treatment_type_code FROM Treatments AS T1 ORDER BY T1.cost_of_treatment DESC LIMIT 1",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "And how about the price of the most recent treatment? ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT cost_of_treatment FROM Treatments ORDER BY date_of_treatment DESC LIMIT 1",
+                "predict": "SELECT cost_of_treatment FROM Treatments WHERE date_of_treatment = (SELECT MAX(date_of_treatment) FROM Treatments)",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the price of the most recent treatment?"
+                },
+                "Selector": "Table:Treatments\n[(treatment_id, treatment id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(dog_id, dog id type:number. Value examples:[14, 4, 2]),(professional_id, professional id type:number. Value examples:[9, 10, 4]),(treatment_type_code, treatment type code type:text. Value examples:[WALK, VAC, EXAM]),(date_of_treatment, date of treatment type:time. Value examples:[2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23]),(cost_of_treatment, cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            407
+                        ]
+                    ],
+                    "sql": "SELECT cost_of_treatment FROM Treatments WHERE date_of_treatment = (SELECT MAX(date_of_treatment) FROM Treatments)",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the most recent treatment date.\nSQL ```sql SELECT MAX(date_of_treatment) FROM Treatments```\nSubquestion 2: Find the price of the most recent treatment.\nSQL ```sql SELECT cost_of_treatment FROM Treatments WHERE date_of_treatment = (SELECT MAX(date_of_treatment) FROM Treatments)```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT cost_of_treatment FROM Treatments WHERE date_of_treatment = (SELECT MAX(date_of_treatment) FROM Treatments)",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Thanks. Bye!",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is a polite and relevant greeting, acknowledging the user's thanks. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 2 - The response is complete as it provides a suitable response to the user's greeting. \nAccuracy: 2 - The response is accurate as it is a polite and appropriate response. \nUtility: 2 - The response meets the user's needs by acknowledging their thanks and providing a friendly response. The user's question is not a database query, so the response is appropriate."
+            }
+        ],
+        "id": 13
+    },
+    {
+        "db_name": "flight_2",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "hey",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "hi, how can i help you? ",
+                "query": "",
+                "predict": "Hello! How can I help you today?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "Hello! How can I help you today?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 8,
+                "RQS_Rationale": "Relevance: 2 points (The response is a generic greeting, which is relevant to the user's greeting, but does not address the database context.)\nClarity: 2 points (The response is clear and easy to understand.)\nCompleteness: 2 points (The response is complete in the sense that it acknowledges the user's greeting.)\nAccuracy: 2 points (The response is accurate in that it is a standard greeting.)\nUtility: 0 points (The response does not meet the user's needs, as it does not provide any information about the database or how to interact with it.)"
+            },
+            {
+                "isuser": true,
+                "text": "Find all airlines that have fewer than 200 flights.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  <  200",
+                "predict": "No. The question cannot be answered because the database schema does not contain information about the number of flights for each airline. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Find all airlines that have fewer than 200 flights in the flight_2 database."
+                },
+                "Selector": "Table:airlines\n[(uid, airline id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Airline, airline name type:text. Value examples:[United Airlines, US Airways, Delta Airlines]),(Abbreviation, abbreviation type:text. Value examples:[UAL, USAir, Delta]),(Country, country type:text. Value examples:[USA]),]\nTable:flights\n[(Airline, airline type:number PRIMARY KEY. Value examples:[1, 2, 3]),(FlightNo, flight number type:number. Value examples:[28, 29, 44]),]\nForeign keys:\n",
+                "Detector": "No. The question cannot be answered because the database schema does not contain information about the number of flights for each airline. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response is fully relevant and correctly identifies the issue. \nClarity: 2 - The response is very clear and easy to understand. \nCompleteness: 2 - The response thoroughly addresses all aspects of the question. \nAccuracy: 2 - The response is completely accurate. \nUtility: 2 - The response excellently meets the user's needs and clearly explains the context or ambiguity of the question."
+            },
+            {
+                "isuser": true,
+                "text": "which ones are London bound?",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "Sorry, This question is not answerable by the table information. You can ask what country is their destination. ",
+                "query": "",
+                "predict": "The question is unanswerable. The database schema does not contain information about the number of flights for each airline. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Which airlines have fewer than 200 flights and are London bound?"
+                },
+                "Selector": "Table:airlines\n[(Airline, airline name type:text. Value examples:[United Airlines, US Airways, Delta Airlines]),(Abbreviation, abbreviation type:text. Value examples:[UAL, USAir, Delta]),(Country, country type:text. Value examples:[USA]),]\nTable:airports\n[(City, city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),(AirportCode, airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),(Country, country type:text. Value examples:[United States ]),]\nTable:flights\n[(Airline, airline type:number PRIMARY KEY. Value examples:[1, 2, 3]),(FlightNo, flight number type:number. Value examples:[28, 29, 44]),(DestAirport, destination airport type:text. Value examples:[ ASY,  APG,  ACV]),]\nForeign keys:\nflights.DestAirport = airports.AirportCode\n",
+                "Detector": "The question is unanswerable. The database schema does not contain information about the number of flights for each airline. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response correctly identifies that the question is unanswerable based on the database schema. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 2 - The response fully addresses the question by explaining why it is unanswerable. \nAccuracy: 2 - The response is accurate in stating that the database schema lacks information about London-bound flights. \nUtility: 2 - The response meets the user's needs by providing a clear explanation of why the question cannot be answered. "
+            },
+            {
+                "isuser": true,
+                "text": "what country is their destination of the first three?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.Airline, T2.DestAirport FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  <  200 limit 3",
+                "predict": "SELECT Country FROM airports WHERE AirportCode IN (SELECT DestAirport FROM flights WHERE Airline IN (SELECT Airline FROM flights GROUP BY Airline HAVING COUNT(*) < 200) LIMIT 3)",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What country is the destination of the first three airlines that have fewer than 200 flights?"
+                },
+                "Selector": "Table:airlines\n[(uid, airline id type:number PRIMARY KEY. Value examples:[1, 2, 3]),(Airline, airline name type:text. Value examples:[United Airlines, US Airways, Delta Airlines]),(Country, country type:text. Value examples:[USA]),]\nTable:airports\n[(City, city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),(AirportCode, airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),(AirportName, airport name type:text. Value examples:[Phillips AAF , Municipal , Dyess AFB ]),(Country, country type:text. Value examples:[United States ]),]\nTable:flights\n[(Airline, airline type:number PRIMARY KEY. Value examples:[1, 2, 3]),(FlightNo, flight number type:number. Value examples:[28, 29, 44]),(SourceAirport, source airport type:text. Value examples:[ APG,  ASY,  CVO]),(DestAirport, destination airport type:text. Value examples:[ ASY,  APG,  ACV]),]\nForeign keys:\nflights.DestAirport = airports.AirportCode\nflights.SourceAirport = airports.AirportCode\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT Country FROM airports WHERE AirportCode IN (SELECT DestAirport FROM flights WHERE Airline IN (SELECT Airline FROM flights GROUP BY Airline HAVING COUNT(*) < 200) LIMIT 3)",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the airlines that have fewer than 200 flights.\nSQL: ```sql\nSELECT Airline FROM flights GROUP BY Airline HAVING COUNT(*) < 200\n```\nSubquestion 2: Find the destination airport of the first three airlines that have fewer than 200 flights.\nSQL: ```sql\nSELECT DestAirport FROM flights WHERE Airline IN (SELECT Airline FROM flights GROUP BY Airline HAVING COUNT(*) < 200) LIMIT 3\n```\nSubquestion 3: Find the country of the destination airport of the first three airlines that have fewer than 200 flights.\nSQL: ```sql\nSELECT Country FROM airports WHERE AirportCode IN (SELECT DestAirport FROM flights WHERE Airline IN (SELECT Airline FROM flights GROUP BY Airline HAVING COUNT(*) < 200) LIMIT 3)\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Country FROM airports WHERE AirportCode IN (SELECT DestAirport FROM flights WHERE Airline IN (SELECT Airline FROM flights GROUP BY Airline HAVING COUNT(*) < 200) LIMIT 3)",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Thank you, good bye. ",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 4,
+                "RQS_Rationale": "Relevance: 0 - The response is completely irrelevant. The user is simply expressing gratitude, and the system's response is an attempt to continue the conversation, which is not relevant to the user's intent. \nClarity: 2 - The response is very clear and easy to understand. \nCompleteness: 0 - The response does not address the question at all. The user is not asking for further assistance. \nAccuracy: 2 - Not applicable. \nUtility: 0 - The response does not meet the user's needs. The user is simply expressing gratitude and does not need further assistance. \n"
+            }
+        ],
+        "id": 14
+    },
+    {
+        "db_name": "flight_2",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "how many flights are landing in the city of aberdeen or abilene",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM Flights AS T1 JOIN Airports AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.city  like  \"%Aberdeen%\" OR T2.city  like  \"%Abilene%\"",
+                "predict": "SELECT COUNT(*) FROM flights WHERE DestAirport IN (SELECT AirportCode FROM airports WHERE City = 'Aberdeen' OR City = 'Abilene')",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "How many flights are landing in Aberdeen or Abilene?"
+                },
+                "Selector": "Table:airports\n[(City, city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),(AirportCode, airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),]\nTable:flights\n[(Airline, airline type:number PRIMARY KEY. Value examples:[1, 2, 3]),(DestAirport, destination airport type:text. Value examples:[ ASY,  APG,  ACV]),]\nForeign keys:\nflights.DestAirport = airports.AirportCode\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            0
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM flights WHERE DestAirport IN (SELECT AirportCode FROM airports WHERE City = 'Aberdeen' OR City = 'Abilene')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the AirportCodes of Aberdeen and Abilene.\nSQL: ```sql SELECT AirportCode FROM airports WHERE City = 'Aberdeen' OR City = 'Abilene'```\nSubquestion 2: Count the number of flights landing in Aberdeen or Abilene.\nSQL: ```sql SELECT COUNT(*) FROM flights WHERE DestAirport IN (SELECT AirportCode FROM airports WHERE City = 'Aberdeen' OR City = 'Abilene')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT COUNT(*) FROM flights WHERE DestAirport IN (SELECT AirportCode FROM airports WHERE City = 'Aberdeen' OR City = 'Abilene')",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "what is the airport code for the city abilene",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT airportCode FROM  Airports  WHERE  city like \"%Abilene%\"",
+                "predict": "SELECT AirportCode FROM airports WHERE City = 'Abilene'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What is the airport code for the city Abilene?"
+                },
+                "Selector": "Table:airports\n[(City, city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),(AirportCode, airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT AirportCode FROM airports WHERE City = 'Abilene'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the airport code for the city Abilene.\nSQL ```sql SELECT AirportCode FROM airports WHERE City = 'Abilene'```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT AirportCode FROM airports WHERE City = 'Abilene'",
+                "predict_type": "answerable",
+                "RQS": 0
+            },
+            {
+                "isuser": true,
+                "text": "thanks",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "welcome  and  goodbye ",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 points (The response is a polite and relevant greeting, though not directly related to the database context). \nClarity: 2 points (The response is clear and easy to understand). \nCompleteness: 2 points (The response is complete in the sense that it acknowledges the user's thanks). \nAccuracy: 2 points (The response is accurate in its politeness). \nUtility: 2 points (The response is useful in acknowledging the user's thanks and offering further assistance)."
+            }
+        ],
+        "id": 15
+    },
+    {
+        "db_name": "tvshow",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Which titles were directed by Ben Jones or Brandon Vietti?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "The question is unanswerable. The TV_series table does not contain information about directors. \n",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Which titles in the TV_series table were directed by Ben Jones or Brandon Vietti?"
+                },
+                "Selector": "Table:TV_series\n[(Episode, episode type:text. Value examples:[A Love of a Lifetime, Friendly Skies, Game Three]),(Air_Date, air date type:text. Value examples:[September 24, 2007, October 1, 2007, October 8, 2007]),(Channel, channel type:text. Value examples:[700, 701, 707]),]\nTable:Cartoon\n[(Title, title type:text. Value examples:[The Rise of the Blue Beetle!, Terror on Dinosaur Island!, Evil Under the Sea!]),(Directed_by, directed by type:text. Value examples:[Ben Jones, Brandon Vietti, Michael Chang]),]\nForeign keys:\n",
+                "Detector": "The question is unanswerable. The TV_series table does not contain information about directors. \n",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "unanswerable",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 - The response correctly identifies that the question cannot be answered from the given database schema. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 2 - The response fully addresses the question by explaining why it is unanswerable. \nAccuracy: 2 - The response is accurate in stating that the TV_series table does not contain director information. \nUtility: 2 - The response meets the user's needs by providing a clear explanation of why the question cannot be answered."
+            },
+            {
+                "isuser": true,
+                "text": "What are their original air dates?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title, original_air_date FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "SELECT Original_air_date FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the original air dates of the cartoons directed by Ben Jones or Brandon Vietti?"
+                },
+                "Selector": "Table:Cartoon\n[(Title, title type:text. Value examples:[The Rise of the Blue Beetle!, Terror on Dinosaur Island!, Evil Under the Sea!]),(Directed_by, directed by type:text. Value examples:[Ben Jones, Brandon Vietti, Michael Chang]),(Original_air_date, original air date type:text. Value examples:[November14,2008, November21,2008, December5,2008]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "November14,2008"
+                        ],
+                        [
+                            "November21,2008"
+                        ],
+                        [
+                            "January2,2009"
+                        ],
+                        [
+                            "December12,2008"
+                        ],
+                        [
+                            "January16,2009"
+                        ],
+                        [
+                            "January23,2009"
+                        ],
+                        [
+                            "February6,2009"
+                        ],
+                        [
+                            "February20,2009"
+                        ]
+                    ],
+                    "sql": "SELECT Original_air_date FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the original air dates of cartoons directed by Ben Jones or Brandon Vietti.\nSQL ```sql SELECT Original_air_date FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Original_air_date FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Who are the writers of these cartoons?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Title, written_by FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+                "predict": "SELECT Written_by FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "What are the writers of the cartoons directed by Ben Jones or Brandon Vietti?"
+                },
+                "Selector": "Table:Cartoon\n[(Title, title type:text. Value examples:[The Rise of the Blue Beetle!, Terror on Dinosaur Island!, Evil Under the Sea!]),(Directed_by, directed by type:text. Value examples:[Ben Jones, Brandon Vietti, Michael Chang]),(Written_by, written by type:text. Value examples:[Michael Jelenic, Steven Melching, Joseph Kuhr]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Michael Jelenic"
+                        ],
+                        [
+                            "Steven Melching"
+                        ],
+                        [
+                            "J. M. DeMatteis"
+                        ],
+                        [
+                            "Adam Beechen"
+                        ],
+                        [
+                            "Steven Melching"
+                        ],
+                        [
+                            "James Krieg"
+                        ],
+                        [
+                            "J. M. DeMatteis"
+                        ],
+                        [
+                            "Todd Casey"
+                        ]
+                    ],
+                    "sql": "SELECT Written_by FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the titles of cartoons directed by Ben Jones or Brandon Vietti.\nSQL ```sql SELECT Title FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti'```\nSubquestion 2: Find the writers of the cartoons directed by Ben Jones or Brandon Vietti.\nSQL ```sql SELECT Written_by FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti'```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Written_by FROM Cartoon WHERE Directed_by = 'Ben Jones' OR Directed_by = 'Brandon Vietti'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome!",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 10,
+                "RQS_Rationale": "Relevance: 2 points (The response is a polite greeting, which is relevant to the user's 'Thanks'.)\nClarity: 2 points (The response is clear and easy to understand.)\nCompleteness: 2 points (The response is complete as it provides a polite greeting and an open-ended question.)\nAccuracy: 2 points (The response is accurate as it is a polite and appropriate response to the user's 'Thanks'.)\nUtility: 2 points (The response meets the user's needs by acknowledging their thanks and providing an opportunity for further interaction.)"
+            }
+        ],
+        "id": 16
+    },
+    {
+        "db_name": "cre_Doc_Template_Mgt",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can I get all the documents with 'w' in them",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you want documents with 'w' in the name or description?",
+                "query": "",
+                "predict": "SELECT * FROM Documents WHERE Document_Name LIKE '%w%'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can I get all the documents with 'w' in their name?"
+                },
+                "Selector": "Table:Documents\n[(Document_ID, document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),(Template_ID, template id type:number. Value examples:[7, 25, 6]),(Document_Name, document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),(Document_Description, document description type:text. Value examples:[n, y, u]),(Other_Details, other details type:text. Value examples:[None]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            3,
+                            6,
+                            "Summer Show",
+                            "u",
+                            null
+                        ],
+                        [
+                            80,
+                            14,
+                            "Welcome to NY",
+                            "h",
+                            null
+                        ],
+                        [
+                            2394,
+                            10,
+                            "Customer reviews",
+                            "y",
+                            null
+                        ],
+                        [
+                            33930,
+                            1,
+                            "How Google people work",
+                            "z",
+                            null
+                        ],
+                        [
+                            651512,
+                            21,
+                            "How to write a CV",
+                            "f",
+                            null
+                        ],
+                        [
+                            801801,
+                            4,
+                            "How to read a book",
+                            "w",
+                            null
+                        ]
+                    ],
+                    "sql": "SELECT * FROM Documents WHERE Document_Name LIKE '%w%'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find all documents with 'w' in their name.\nSQL ```sql SELECT * FROM Documents WHERE Document_Name LIKE '%w%'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT * FROM Documents WHERE Document_Name LIKE '%w%'",
+                "predict_type": "answerable",
+                "RQS": 0
+            },
+            {
+                "isuser": true,
+                "text": "Description pls",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT * from Documents WHERE Document_Description LIKE \"%w%\"",
+                "predict": "SELECT * FROM Documents WHERE Document_Description LIKE '%w%'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "I want to get all the documents with 'w' in the description."
+                },
+                "Selector": "Table:Documents\n[(Document_ID, document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),(Template_ID, template id type:number. Value examples:[7, 25, 6]),(Document_Name, document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),(Document_Description, document description type:text. Value examples:[n, y, u]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            82,
+                            11,
+                            "Data base",
+                            "w",
+                            null
+                        ],
+                        [
+                            801801,
+                            4,
+                            "How to read a book",
+                            "w",
+                            null
+                        ]
+                    ],
+                    "sql": "SELECT * FROM Documents WHERE Document_Description LIKE '%w%'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Get all the documents with 'w' in the description. \nSQL ```sql SELECT * FROM Documents WHERE Document_Description LIKE '%w%'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT * FROM Documents WHERE Document_Description LIKE '%w%'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Ok can I get just their names",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_name from Documents WHERE Document_Description LIKE \"%w%\"",
+                "predict": "SELECT Document_Name FROM Documents WHERE Document_Description LIKE '%w%'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "Can I get the names of the documents with 'w' in the description?"
+                },
+                "Selector": "Table:Documents\n[(Document_ID, document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),(Template_ID, template id type:number. Value examples:[7, 25, 6]),(Document_Name, document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),(Document_Description, document description type:text. Value examples:[n, y, u]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Data base"
+                        ],
+                        [
+                            "How to read a book"
+                        ]
+                    ],
+                    "sql": "SELECT Document_Name FROM Documents WHERE Document_Description LIKE '%w%'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the documents with 'w' in the description.\nSQL ```sql SELECT Document_Name FROM Documents WHERE Document_Description LIKE '%w%'```\n\nQuestion Solved. \n========== \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Document_Name FROM Documents WHERE Document_Description LIKE '%w%'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "I need the template ids too oops",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_name , template_id FROM Documents WHERE Document_Description LIKE \"%w%\"\n\n",
+                "predict": "SELECT Template_ID FROM Documents WHERE Document_Description LIKE '%w%'",
+                "Rewriter": {
+                    "improper": "NO",
+                    "text": "I need the template ids for the documents with 'w' in the description."
+                },
+                "Selector": "Table:Templates\n[(Template_ID, template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),(Version_Number, version number type:number. Value examples:[5, 9, 4]),(Template_Type_Code, template type code type:text. Value examples:[PP, BK, PPT]),(Date_Effective_From, date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),(Date_Effective_To, date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),(Template_Details, template details type:text. Value examples:[]),]\nTable:Documents\n[(Document_ID, document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),(Template_ID, template id type:number. Value examples:[7, 25, 6]),(Document_Description, document description type:text. Value examples:[n, y, u]),]\nForeign keys:\nDocuments.Template_ID = Templates.Template_ID\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            11
+                        ],
+                        [
+                            4
+                        ]
+                    ],
+                    "sql": "SELECT Template_ID FROM Documents WHERE Document_Description LIKE '%w%'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the document IDs that have 'w' in the description.\nSQL: ```sql SELECT Document_ID FROM Documents WHERE Document_Description LIKE '%w%'```\nSubquestion 2: Find the template IDs for the documents with 'w' in the description.\nSQL: ```sql SELECT Template_ID FROM Documents WHERE Document_Description LIKE '%w%'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": "",
+                "predict_sql": "SELECT Template_ID FROM Documents WHERE Document_Description LIKE '%w%'",
+                "predict_type": "answerable",
+                "RQS": "N/A"
+            },
+            {
+                "isuser": true,
+                "text": "Thanks",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Goodbye!",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "Rewriter": {
+                    "improper": "YES",
+                    "text": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Selector": "",
+                "Detector": "",
+                "Decomposer": "",
+                "Refiner": "",
+                "predict_sql": "",
+                "predict_type": "improper",
+                "RQS": 4,
+                "RQS_Rationale": "Relevance: 0 - The response is completely irrelevant to the user's question. The user is simply expressing gratitude, and the system's response is an attempt to continue the conversation, which is not relevant to the user's intent. \nClarity: 2 - The response is clear and easy to understand. \nCompleteness: 0 - The response does not address the question at all. The user is not asking for further assistance. \nAccuracy: 2 - Not applicable. \nUtility: 0 - The response does not meet the user's needs. The user is simply expressing gratitude and does not require further assistance. \n"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_name , template_id FROM Documents WHERE Document_Description LIKE \"%w%\"\n\n"
+            }
+        ],
+        "id": 17
+    }
+]

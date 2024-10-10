@@ -53,7 +53,7 @@ Now please fixup old SQL and generate new SQL again.
             "result": result,
             "sql": last_sql_code.replace('\n',' ').replace("\"","'"),
             "executable": executable,
-            "log": log
+            "log": str(log)
         }
         
         return output

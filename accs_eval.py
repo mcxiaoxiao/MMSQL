@@ -371,10 +371,8 @@ def signal_handler(signum, frame):
 
 error_count = 0
 def execute_query(db, query):
-    """
-    在独立的线程内执行数据库查询。
-    创建自己的数据库连接和游标来执行查询。
-    """
+
+    print("execute sql " + query)
     global error_count
     conn = None
     cursor = None
@@ -383,6 +381,7 @@ def execute_query(db, query):
         cursor = conn.cursor()
         cursor.execute(query)
         result = cursor.fetchall()
+        print()
     except sqlite3.Error as e:
         print(f"SQLite serror: {e}")
         error_count += 1
@@ -405,64 +404,93 @@ def calculate_f1(precision, recall):
     return 2 * (precision * recall) / (precision + recall)
 
 def eval_exec_match(db_path,db, p_str, g_str):
-    p_str = p_str.lower()
-    g_str = g_str.lower()
+    # p_str = p_str.lower()
+    # g_str = g_str.lower()
+    p_str = p_str.replace("```","")
+    p_str = p_str.replace(";","")
+    g_str = g_str.replace("```","")
     p_str = p_str.replace("`","'")
     p_str = p_str.replace("▁"," ")
-    g_str = g_str.replace(">="," >= ")
-    p_str = p_str.replace(">="," >= ")
     split_index = p_str.find('=')
     if split_index != -1:
         p_str = p_str[:split_index] + ' = ' + p_str[split_index + 1:]
     split_index = g_str.find('=')
     if split_index != -1:
         g_str = g_str[:split_index] + ' = ' + g_str[split_index + 1:]
-    p_str = ' '.join(p_str.split())
+    c = ' '.join(p_str.split())
     g_str = ' '.join(g_str.split())
     p_str = p_str.replace("\"","'")
     g_str = g_str.replace("\"","'")
     db = os.path.join(db_path, db, db + ".sqlite")
-    schema = Schema(get_schema(db))
-    # print("Gold:"+g_str)
-    # print("Pred:"+p_str)
-    gold = get_sql(schema, g_str)
-    pred = get_sql(schema, p_str)
+
+    p_r = execute_query(db, p_str)
+    g_r = execute_query(db, g_str)
+    print("Gold Result")
+    print(g_r)
+    print("Pred Result")
+    print(p_r)
+    return p_r == g_r
+# def eval_exec_match(db_path,db, p_str, g_str):
+#     # p_str = p_str.lower()
+#     # g_str = g_str.lower()
+#     # p_str = p_str.replace("`","'")
+#     # p_str = p_str.replace("▁"," ")
+#     # g_str = g_str.replace(">="," >= ")
+#     # p_str = p_str.replace(">="," >= ")
+#     # split_index = p_str.find('=')
+#     # if split_index != -1:
+#     #     p_str = p_str[:split_index] + ' = ' + p_str[split_index + 1:]
+#     # split_index = g_str.find('=')
+#     # if split_index != -1:
+#     #     g_str = g_str[:split_index] + ' = ' + g_str[split_index + 1:]
+#     # p_str = ' '.join(p_str.split())
+#     # g_str = ' '.join(g_str.split())
+#     # p_str = p_str.replace("\"","'")
+#     # g_str = g_str.replace("\"","'")
+#     db = os.path.join(db_path, db, db + ".sqlite")
+#     schema = Schema(get_schema(db))
+#     print("E Gold:"+g_str)
+#     print("E Pred:"+p_str)
+#     gold = get_sql(schema, g_str)
+#     pred = get_sql(schema, p_str)
 
 
-    with ThreadPoolExecutor(max_workers=1) as executor:
+#     with ThreadPoolExecutor(max_workers=1) as executor:
 
-        future = executor.submit(execute_query, db, p_str)
-        try:
-            p_res = future.result(timeout=10) 
-        except TimeoutError:
-            print("Timeout")
-            return False
-        except Exception as e:
-            print(f"SQL ERROR: {e}")
-            return False
+#         future = executor.submit(execute_query, db, p_str)
+#         try:
+#             p_res = future.result(timeout=10) 
+#         except TimeoutError:
+#             print("Timeout")
+#             return False
+#         except Exception as e:
+#             print(f"SQL ERROR: {e}")
+#             return False
             
 
-        future = executor.submit(execute_query, db, g_str)
-        try:
-            q_res = future.result(timeout=10) 
-        except TimeoutError:
-            print("Timeout")
-            return False
-        except Exception as e:
-            print(f"SQL ERROR: {e}")
-            return False
+#         future = executor.submit(execute_query, db, g_str)
+#         try:
+#             q_res = future.result(timeout=10) 
+#         except TimeoutError:
+#             print("Timeout")
+#             return False
+#         except Exception as e:
+#             print(f"SQL ERROR: {e}")
+#             return False
 
-    def res_map(res, val_units):
-        rmap = {}
-        for idx, val_unit in enumerate(val_units):
-            key = tuple(val_unit[1]) if not val_unit[2] else (val_unit[0], tuple(val_unit[1]), tuple(val_unit[2]))
-            rmap[key] = [r[idx] for r in res]
-        return rmap
+#     def res_map(res, val_units):
+#         rmap = {}
+#         for idx, val_unit in enumerate(val_units):
+#             key = tuple(val_unit[1]) if not val_unit[2] else (val_unit[0], tuple(val_unit[1]), tuple(val_unit[2]))
+#             rmap[key] = [r[idx] for r in res]
+#         return rmap
 
-    p_val_units = [unit[1] for unit in pred['select'][1]]
-    q_val_units = [unit[1] for unit in gold['select'][1]]
+#     p_val_units = [unit[1] for unit in pred['select'][1]]
+#     q_val_units = [unit[1] for unit in gold['select'][1]]
 
-    return res_map(p_res, p_val_units) == res_map(q_res, q_val_units)
+#     return res_map(p_res, p_val_units) == res_map(q_res, q_val_units)
+
+
 
 class Evaluator:
     """A simple evaluator"""
@@ -563,8 +591,8 @@ def calculate_metrics(correct, total_gold, total_pred):
 
 def qm(db_path,p_str,g_str,db):
     # print("Initial Gold SQL:"+g_str)
-    p_str = p_str.lower()
-    g_str = g_str.lower()
+    # p_str = p_str.lower()
+    # g_str = g_str.lower()
     p_str = p_str.replace("```","")
     p_str = p_str.replace(";","")
     g_str = g_str.replace("```","")
@@ -579,14 +607,15 @@ def qm(db_path,p_str,g_str,db):
     c = ' '.join(p_str.split())
     g_str = ' '.join(g_str.split())
     p_str = p_str.replace("\"","'")
-    print("Gold SQL:"+g_str)
-    print("Predict SQL:"+p_str)
+
     g_str = g_str.replace("\"","'")
     db_name = db
     db = os.path.join(db_path, db, db + ".sqlite")
     schema = Schema(get_schema(db))
     g_sql = get_sql(schema, g_str)
     p_sql = get_sql(schema, p_str)
+    print("Gold SQL:"+g_str)
+    print("Predict SQL:"+p_str)
     exact_score = evaluator.eval_exact_match(p_sql, g_sql)
     return exact_score
 
@@ -632,7 +661,7 @@ rqs_counts = defaultdict(int)
 
 
 for element in tqdm(data):
-    print("_________________________")
+    print("____________________________________")
     db_name = element.get('db_name')
     print("DB Name:"+db_name)
     turns = element.get('turns', [])
@@ -641,9 +670,10 @@ for element in tqdm(data):
     iaccs = True
     imatch = True
     for i in range(len(turns) - 1):
+        
         turn_number = (i) // 2 
         if turns[i].get('type','') == 'answerable':
-
+        
             turn_total_counts[turn_number+1] += 1  
 
         if  turns[i].get('RQS','N/A') != 'N/A':
@@ -662,7 +692,9 @@ for element in tqdm(data):
                         rqs_sums[gold_type] += int(RQS)
                         rqs_counts[gold_type] += 1
         if i%2 == 0:
-            print("\n turn:"+str((i+1)//2))
+            print("\n========turn:"+str((i+1)//2))
+            print("Question:"+turns[i].get('text',''))
+            print("Answer:"+turns[i+1].get('predict',''))
         if turns[i].get('isuser'):
             allqa+=1
             # print(turns[i]['text'])
@@ -705,7 +737,7 @@ for element in tqdm(data):
                 if i-2 >= 0 and turns[i-2].get('type','') == 'ambiguous':
                     AmbClaA_count += 1
                 try:
-                    print("Question:"+turns[i].get('text',''))
+                    # print("Question:"+turns[i].get('text',''))
                     if qm("datasets/cosql_dataset/database", turns[i+1].get('predict_sql',''),turns[i+1].get('query',''), db_name):
                         qm_count += 1
                         accs += 1
@@ -733,11 +765,13 @@ for element in tqdm(data):
                     
                     if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict_sql',''), turns[i+1].get('query','')):
                         em_count += 1
+                    else:
+                        print("\033[91mEM error\033[0m")
                 except Exception as e:
                     print("\033[91mEM error\033[0m")
                     print(e)
             if gold_type == predict_type and predict_type != 'answerable':
-                print("Question:"+turns[i].get('text',''))
+                # print("Question:"+turns[i].get('text',''))
                 accs += 1
                 print("\033[92mACCS+1\033[0m")
             if gold_type == 'answerable' and predict_type != 'answerable':
