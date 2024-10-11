@@ -423,8 +423,8 @@ def eval_exec_match(db_path,db, p_str, g_str):
     g_str = g_str.replace("\"","'")
     db = os.path.join(db_path, db, db + ".sqlite")
 
-    p_r = execute_query(db, p_str)
-    g_r = execute_query(db, g_str)
+    p_r = str(execute_query(db, p_str)).encode('utf-8')
+    g_r = str(execute_query(db, g_str)).encode('utf-8')
     print("Gold Result")
     print(g_r)
     print("Pred Result")

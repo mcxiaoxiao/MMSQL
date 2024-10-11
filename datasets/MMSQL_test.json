@@ -60,7 +60,7 @@
     "turns": [
       {
         "isuser": true,
-        "text": "Hi!  Can you tell me how many unique template IDs there are?",
+        "text": "Hi!  Can you tell me how many unique template IDs of documents there are?",
         "type": "answerable"
       },
       {
@@ -80,7 +80,7 @@
       },
       {
         "isuser": true,
-        "text": "Great!  Can you show me the corresponding document that used each of those template IDs on the list you just provided me?",
+        "text": "Great!  Can you show me the corresponding document names that used each of those template IDs on the list you just provided me?",
         "type": "answerable"
       },
       {
@@ -126,12 +126,12 @@
       },
       {
         "isuser": true,
-        "text": "Can you show me the last name and address for him?",
+        "text": "Can you show me the last name and city he lives?",
         "type": "ambiguous"
       },
       {
         "isuser": false,
-        "text": "Do you want his current address or the permanent address?",
+        "text": "Do you want the city of his current address or the permanent address?",
         "query": ""
       },
       {
@@ -142,7 +142,7 @@
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT T1.last_name, T2.* FROM Students as T1 join addresses as T2 on T1.current_address_id = T2.address_id WHERE T1.cell_mobile_number = '09700166582'"
+        "query": "SELECT T1.last_name, T2.city FROM Students as T1 join addresses as T2 on T1.current_address_id = T2.address_id WHERE T1.cell_mobile_number = '09700166582'"
       },
       {
         "isuser": true,
@@ -228,7 +228,7 @@
     "turns": [
       {
         "isuser": true,
-        "text": "how many female dogs have gone through treatment ",
+        "text": "how many dogs have gone through treatment ",
         "type": "answerable"
       },
       {
@@ -300,7 +300,7 @@
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT COUNT(*) FROM course_arrange"
+        "query": "SELECT COUNT(*) FROM course"
       },
       {
         "isuser": true,
@@ -340,7 +340,7 @@
     "turns": [
       {
         "isuser": true,
-        "text": "Which horsepower is higher?",
+        "text": "Which is higher?",
         "type": "ambiguous"
       },
       {
@@ -350,13 +350,13 @@
       },
       {
         "isuser": true,
-        "text": "what is the highest horsepower on the table?",
+        "text": "what is the highest weight on the table?",
         "type": "answerable"
       },
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT Horsepower FROM CARS_DATA ORDER BY Horsepower DESC LIMIT 1"
+        "query": "SELECT Weight FROM CARS_DATA ORDER BY Weight DESC LIMIT 1"
       },
       {
         "isuser": true,
@@ -402,7 +402,7 @@
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT District FROM city WHERE Population  >  (SELECT avg(Population) FROM city)"
+        "query": "SELECT DISTINCT District FROM city WHERE Population  >  (SELECT avg(Population) FROM city)"
       },
       {
         "isuser": true,
@@ -488,7 +488,7 @@
       },
       {
         "isuser": true,
-        "text": "give me all all local names",
+        "text": "give me all all local names in the world",
         "type": "answerable"
       },
       {
@@ -745,16 +745,6 @@
         "isuser": false,
         "text": "Sorry, This question is not answerable by the table information. You can ask what country is their destination. ",
         "query": ""
-      },
-      {
-        "isuser": true,
-        "text": "what country is their destination of the first three?",
-        "type": "answerable"
-      },
-      {
-        "isuser": false,
-        "text": "",
-        "query": "SELECT T1.Airline, T2.DestAirport FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  <  200 limit 3"
       },
       {
         "isuser": true,

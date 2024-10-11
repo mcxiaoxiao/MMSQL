@@ -22,12 +22,13 @@ class Decomposer(Agent):
 
         usr_prompt = f"""Given a [Database schema] description, a knowledge [Evidence] and the [Question], you need to use valid SQLite and understand the database and knowledge, and then decompose the question into subquestions for text-to-SQL generation.  When generating SQL, we should always consider constraints: 
 [Constraints] 
-- In ‘SELECT <column>‘, just select needed columns in the [Question] without any unnecessary column or value - In ‘FROM <table>‘ or ‘JOIN <table>‘, do not include unnecessary table 
-- If use max or min func, ‘JOIN <table>‘ FIRST, THEN use ‘SELECT MAX(<column>)‘ or ‘SELECT MIN(<column>)‘ 
-- If [Value examples] of <column> has ’None’ or None, use ‘JOIN <table>‘ or ‘WHERE <column> is NOT NULL‘ is better 
-- If use ‘ORDER BY <column> ASC|DESC‘, add ‘GROUP BY <column>‘ before to select distinct values 
-[Attention]
-Column's order in SELECT part should be in the same order as in the question. For example, if the question asks for count and name, then the SQL has to select count and then name. Value examples represent data samples and not all data.
+- **SELECT Smartly:**  When writing `SELECT <column>`, only include the columns specifically mentioned in the [Question]. No extras! 
+- **FROM & JOIN with Purpose:** Don't add tables to `FROM <table>` or `JOIN <table>` unless they're absolutely needed for the query.
+- **MAX/MIN Strategy:** If you're using `MAX()` or `MIN()`, make sure to do your `JOIN <table>` operations *before* using `SELECT MAX(<column>)` or `SELECT MIN(<column>)`.
+- **Handling "None":**  If you see 'None' or `None` in the [Value examples] for a column, prioritize using `JOIN <table>` or `WHERE <column> IS NOT NULL` to handle potential missing data effectively.
+- **ORDER BY with GROUP BY:**  Always include `GROUP BY <column>` before `ORDER BY <column> ASC|DESC` to ensure you're sorting distinct values.
+- **Column Order Matters:** The order of columns in your `SELECT` statement should match the order they appear in the question.  If the question asks for "count and name", your SQL should be `SELECT COUNT(...), name ...`
+- **DISTINCT Awareness:** Remember that [Value examples] are just samples, not the entire dataset. Consider using `DISTINCT` when necessary to avoid counting and display duplicates if the question implies unique results. 
 ==========
 [DB_ID] School
 [Database schema] 
