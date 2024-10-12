@@ -117,6 +117,8 @@ def process_json_part(data, output_file):
                                 }
                                 
                                 output_selector = selector.process_input(input_data)
+
+                            
                                 
                                 print("________Question type detect________")
                                 input_data = {
@@ -211,9 +213,9 @@ def process_json_part(data, output_file):
                     if not isinstance(items, list):
                         print("\033[91mError:The file content is not in valid JSON format\033[0m")
                         # items = []
-        
+
                     items.append(item)
-        
+
                     with open(output_file, 'w') as f:
                         json.dump(items, f, indent=4)
                         f.write('\n')
@@ -244,6 +246,6 @@ def process_json_multithreaded(input_file, output_file, num_threads=5):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MMSQL-EVAL MULTI-AGENT LLM GENERATION SCRIPT")
-    parser.add_argument("output_file", help="Output JSON file path. Such as 'output/gemini-1,5-pro'")
+    parser.add_argument("output_file", help="Output JSON file path. Such as 'output/gemini-1.5-pro'")
     args = parser.parse_args()
     process_json_multithreaded('datasets/MMSQL_test.json', args.output_file)

@@ -9,7 +9,7 @@ class Selector(Agent):
     
     def select(self, input_data):
 
-        data = {"continents": "drop_all", "countries": "keep_all", "car_makers": ["Id", "FullName"], "model_list": "keep_all",  "cars_data": "keep_all"}
+        data = {"continents": "drop_all", "countries": "drop_all", "car_makers": ["Id", "FullName"], "model_list": "keep_all",  "cars_data": "keep_all"}
         json_string_1 = json.dumps(data)
         
         sys_prompt = """
@@ -20,7 +20,8 @@ class Selector(Agent):
 1. If a table has less than or equal to 10 columns, mark it as "keep_all" you don't need to select. 
 2. If a table is completely irrelevant to the user question and evidence, mark it as "drop_all". 
 3. Prioritize the columns in each relevant table based on their relevance. 
-4. Foreign key and primary key columns of tables that are not "drop_all" are retained regardless of relevance.
+
+
 Here is a typical example:
 [DB_ID] car_1
 [Schema] 
@@ -55,16 +56,16 @@ cars_data:
 (2,15,8,350.0,165,3693,11.5,1970)
 (3,18,8,318.0,150,3436,11.0,1970)
 [Question]
-Which companies have three or more models? list the count and the maker's full name.
+Which companies have three or more models? list the count and the maker's name.
 [Evidence]
 ["'Continent' refers to the continent's Id in table countries, refers to the name of continent in table continents"]
 [Answer]
-The entities extracted from the Question are:
-count
-maker's full name
-companies
-three or more models
-Therefore we can select the related database schema based on these entities with Evidence
+The entities and conditions extracted from the Question are:
+
+entities: count, maker's name 
+conditions: companies have three or more models
+
+Therefore we can select the related database schema based on these entities with Evidence 
 {json_string_1}
 Question Solved. 
 ========== 
@@ -78,6 +79,7 @@ Here is a new example, please start answering:
 [Evidence]
 {input_data["evidence"]}
 [Answer]
+The entities extracted from the Question are:
         """
         
         llm_ans = self.request_llm(sys_prompt,usr_prompt)

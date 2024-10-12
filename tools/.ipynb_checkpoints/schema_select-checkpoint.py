@@ -73,9 +73,9 @@ def schema_select(dbname, table_config):
                     examples = ", ".join([str(row[0]) for row in examples_raw])
                     columns_selected.append(column_index)
                     desc += (
-                        '('
+                        '(\''
                         + column_value[1]
-                        + ", "
+                        + "\', "
                         + column_names[column_index][1]
                         + " type:"
                         + column_types[column_index]
@@ -98,7 +98,7 @@ def schema_select(dbname, table_config):
         result.append(new_sublist)
     FK_output = "Foreign keys:\n"
     for sublist in result:
-        text = " = ".join([f"{item[0]}.{item[1]}" for item in sublist])
+        text = " = ".join([f"{item[0]}.'{item[1]}'" for item in sublist])
         FK_output += text + "\n"
     desc = desc + FK_output
     return desc

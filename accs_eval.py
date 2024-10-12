@@ -646,6 +646,8 @@ args = parser.parse_args()
 with open(args.json_file_path, 'r', encoding='utf-8') as file:
     data = json.load(file)
 
+duem = 0
+iduem_count = 0
 qm_count = 0
 im_count = 0
 allsqlqa = 0
@@ -686,6 +688,7 @@ for element in tqdm(data):
     allturn += 1
     iaccs = True
     imatch = True
+    iduem = True
     for i in range(len(turns) - 1):
         
         turn_number = (i) // 2 
@@ -693,21 +696,23 @@ for element in tqdm(data):
         
             turn_total_counts[turn_number+1] += 1  
 
-        if  turns[i].get('RQS','N/A') != 'N/A':
-                predict_type = turns[i].get('predict_type','answerable')
-                gold_type = turns[i-1].get('type','')
-                print("RQS Gold Type:"+str(gold_type))
-                print("RQS Predict Type:"+str(predict_type))
-                if predict_type != 'answerable':
-                    RQS_count += 1
-                    RQS = 0
-                    if predict_type == gold_type:
-                        RQS = turns[i].get('RQS')
-                    RQS_sum += int(RQS)
-                    print("RQS:"+str(RQS))
-                    if gold_type in ['unanswerable', 'ambiguous', 'improper']:
-                        rqs_sums[gold_type] += int(RQS)
-                        rqs_counts[gold_type] += 1
+        # if  turns[i].get('RQS','N/A') != 'N/A':
+        predict_type = turns[i].get('predict_type','answerable')
+        gold_type = turns[i-1].get('type','')
+        print("RQS Gold Type:"+str(gold_type))
+        print("RQS Predict Type:"+str(predict_type))
+        if gold_type != 'answerable':
+            RQS_count += 1
+            RQS = 0
+            if predict_type == gold_type:
+                RQS = turns[i].get('RQS','0')
+            RQS_sum += int(RQS)
+            print("RQS:"+str(RQS))
+            if gold_type in ['unanswerable', 'ambiguous', 'improper']:
+                rqs_sums[gold_type] += int(RQS)
+                rqs_counts[gold_type] += 1
+
+
         if i%2 == 0:
             print("\n========turn:"+str((i+1)//2))
             print("Question:"+turns[i].get('text',''))
@@ -730,10 +735,8 @@ for element in tqdm(data):
             if gold_type == predict_type:
                 correct_counts[gold_type] += 1
 
-            # if gold_type == 'answerable':
-            #     allsqlqa += 1
-
-
+            if gold_type == 'answerable':
+                allsqlqa += 1
 
             if gold_type == predict_type and predict_type == 'answerable':
 
@@ -745,8 +748,12 @@ for element in tqdm(data):
                     
                     if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict_sql',''), turns[i+1].get('query','')):
                         em_count += 1
+                        duem += 1
+
                         print("\033[92mEM+1\033[0m")
+                        print("\033[92mDUEM+1\033[0m")
                     else:
+                        iduem = False
                         print("\033[91mEM error\033[0m")
                 except Exception as e:
                     print("\033[91mEM error\033[0m")
@@ -757,6 +764,7 @@ for element in tqdm(data):
                     if qm("datasets/cosql_dataset/database", turns[i+1].get('predict_sql',''),turns[i+1].get('query',''), db_name):
                         qm_count += 1
                         accs += 1
+                        print("\033[92mACCS+1\033[0m")
                         turn_qm_counts[turn_number+1] += 1 
                         if i-2 >= 0 and turns[i-2].get('type','') == 'ambiguous':
                             AmbClaA += 1
@@ -796,13 +804,17 @@ for element in tqdm(data):
                 
             if gold_type == predict_type and predict_type != 'answerable':
                 # print("Question:"+turns[i].get('text',''))
+                duem += 1
                 accs += 1
                 print("\033[92mACCS+1\033[0m")
+                print("\033[92mDUEM+1\033[0m")
             if gold_type == 'answerable' and predict_type != 'answerable':
                 imatch = False
             if gold_type != predict_type:
                 iaccs = False
+                iduem = False
                 print("\033[91mIACCS failed\033[0m")
+                print("\033[91mIDUEM failed\033[0m")
                 
     if iaccs:
         print("\033[92mIACCS+1\033[0m")
@@ -810,10 +822,14 @@ for element in tqdm(data):
     if imatch:
         print("\033[92mIM+1\033[0m")
         im_count += 1
+    if iduem:
+        print("\033[92mIDUEM+1\033[0m")
+        iduem_count += 1
 
 
 print("_____________________________________")
-
+percentage1= (duem / allqa) * 100
+percentage1_iduem = (iduem_count / allqa) * 100
 percentage2 = (accs / allqa) * 100
 percentage2_iaccs = (iaccs_count / allturn) * 100
 percentage3 = (em_count / allsqla) * 100
@@ -826,7 +842,8 @@ print("A. Overall Result Analysis")
 print("_____________________________________")
 print("| Metric | Count | Total | Percentage |")
 print("|--------|-------|-------|------------|")
-
+print(f"| DUEM   | {duem:<5} | {allqa:<5} | {percentage1:.1f}%      |")
+print(f"| IDUEM   | {iduem_count:<5} | {allqa:<5} | {percentage1_iduem:.1f}%      |")
 print(f"| ACCS   | {accs:<5} | {allqa:<5} | {percentage2:.1f}%      |")
 print(f"| IACCS  | {iaccs_count:<5} | {allturn:<5} | {percentage2_iaccs:.1f}%      |")
 print(f"| EM     | {em_count:<5} | {allsqla:<5} | {percentage3:.1f}%      |")
@@ -857,7 +874,7 @@ average_f1 = sum(f1_scores) / len(f1_scores)
 print("__________________________________________________")
 print(f"| {'Average F1':<14} | {'':<9} | {'':<6} | {average_f1*100:.1f}%  |")
 print("__________________________________________________")
-
+# print("__________________________________________________")
 
 print("C. Turn-wise QM Statistics")
 print("_________________________________________")
@@ -893,12 +910,27 @@ print("________________________________")
 print("| Category       | Average RQS |")
 print("|----------------|-------------|")
 
+total_rqs_sum = 0
+total_rqs_count = 3
+
 for category in ['unanswerable', 'ambiguous', 'improper']:
+    
+
     if rqs_counts[category] > 0:
+        # print(rqs_sums[category] , rqs_counts[category])
         avg_rqs = rqs_sums[category] / rqs_counts[category]
         print(f"| {category.capitalize():<14} | {avg_rqs:.2f}        |")
+        total_rqs_sum += avg_rqs
     else:
         print(f"| {category.capitalize():<14} | N/A         |")
+        total_rqs_sum += 0
+print("________________________________")
+
+if total_rqs_count > 0:
+    overall_avg_rqs = total_rqs_sum / total_rqs_count
+    print(f"| Overall Average | {overall_avg_rqs:.2f}        |")
+else:
+    print(f"| Overall Average | N/A         |")
 
 print("________________________________")
 

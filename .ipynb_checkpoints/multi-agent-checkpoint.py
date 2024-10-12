@@ -107,16 +107,18 @@ def process_json_part(data, output_file):
                                 # rewritten_question = output_rewriter["text"]
                                 rewritten_question = "previous QA:" + previous_QA + "\ncurrent question:" + user_question
                                 
-                                print("________Select columns and values________")
-                                input_data = {
-                                    "evidence": "",
-                                    "db_name": db_name,
-                                    "db_desc": db_getdesc(db_name),
-                                    "db_exam": get_example(db_name),
-                                    "question": rewritten_question 
-                                }
+                                # print("________Select columns and values________")
+                                # input_data = {
+                                #     "evidence": "",
+                                #     "db_name": db_name,
+                                #     "db_desc": db_getdesc(db_name),
+                                #     "db_exam": get_example(db_name),
+                                #     "question": rewritten_question 
+                                # }
                                 
-                                output_selector = selector.process_input(input_data)
+                                # output_selector = selector.process_input(input_data)
+
+                                output_selector =  "schema:" + db_getdesc(db_name) + "\nvalue examples:" + get_example(db_name)
                                 
                                 print("________Question type detect________")
                                 input_data = {
@@ -128,8 +130,10 @@ def process_json_part(data, output_file):
                                 }
                                 
                                 output_detector = detector.process_input(input_data)
+                                
                                 # print("output_detectoroutput_detectoroutput_detector" + output_detector)
                                 # The question is Answerable
+                                
                                 print(output_detector)
                                 if output_detector == "YES":
                                     

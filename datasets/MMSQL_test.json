@@ -1538,13 +1538,13 @@
       },
       {
         "isuser": false,
-        "text": "Did you mean  to ask for the names of all contestants?",
+        "text": "Did you mean to ask for the names of all contestants?",
         "query": ""
       },
       {
         "isuser": true,
-        "text": "yes.\n\n",
-        "type": "improper"
+        "text": "yes.",
+        "type": "answerable"
       },
       {
         "isuser": false,
@@ -3468,7 +3468,7 @@
       },
       {
         "isuser": true,
-        "text": "Cool who was the winner?",
+        "text": "Cool, i want the winner's twitter id!",
         "type": "unanswerable"
       },
       {
@@ -3610,12 +3610,12 @@
       },
       {
         "isuser": true,
-        "text": "Tell me how old the youngest dog is.",
+        "text": "Tell me the smallest dog is.",
         "type": "ambiguous"
       },
       {
         "isuser": false,
-        "text": "Do you mean the youngest among those that have gone through any treatment?",
+        "text": "Do you mean the age of the youngest among those that have gone through any treatment?",
         "query": ""
       },
       {
@@ -3960,7 +3960,7 @@
     "turns": [
       {
         "isuser": true,
-        "text": "which breed is the top ranked?",
+        "text": "which breed has the highest number of dogs in the entire database?",
         "type": "answerable"
       },
       {
@@ -4701,7 +4701,7 @@
       },
       {
         "isuser": true,
-        "text": "List the name of all professionals with the same state as Taryn. ",
+        "text": "where did taryn graduate from?",
         "type": "unanswerable"
       },
       {
@@ -5754,7 +5754,7 @@
       },
       {
         "isuser": true,
-        "text": "What is the region for each of these?",
+        "text": "Who is the oldest people for each of these?",
         "type": "unanswerable"
       },
       {

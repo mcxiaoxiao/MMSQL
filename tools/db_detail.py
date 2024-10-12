@@ -47,7 +47,7 @@ def db_getdesc(dbname):
             result.append(new_sublist)
         FK_output = "Foreign keys:\n"
         for sublist in result:
-            text = " = ".join([f"{item[0]}.{item[1]}" for item in sublist])
+            text = " = ".join([f"{item[0]}.'{item[1]}'" for item in sublist])
             FK_output += text + "\n"
         desc = desc + FK_output
         return desc
