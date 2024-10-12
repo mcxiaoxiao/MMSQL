@@ -403,33 +403,50 @@ def calculate_f1(precision, recall):
         return 0
     return 2 * (precision * recall) / (precision + recall)
 
-def eval_exec_match(db_path,db, p_str, g_str):
-    # p_str = p_str.lower()
-    # g_str = g_str.lower()
-    p_str = p_str.replace("```","")
-    p_str = p_str.replace(";","")
-    g_str = g_str.replace("```","")
-    p_str = p_str.replace("`","'")
-    p_str = p_str.replace("▁"," ")
+def eval_exec_match(db_path, db, p_str, g_str):
+    """Evaluates the EM of SQL query.
+
+    Args:
+        db_path (str): Path to the SQLite database directory.
+        db (str): Name of the SQLite database file.
+        p_str (str): The predicted SQL query.
+        g_str (str): The gold standard SQL query.
+
+    Returns:
+        bool: True if the predicted and gold standard queries produce the same results, False otherwise.
+    """
+    # Preprocess the queries
+    p_str = p_str.replace("```", "").replace(";", "").replace("`", "'").replace(" ", " ").replace("\"", "'")
+    g_str = g_str.replace("```", "").replace(";", "").replace("`", "'").replace(" ", " ").replace("\"", "'")
+
+    # Handle potential '=' issues
     split_index = p_str.find('=')
     if split_index != -1:
         p_str = p_str[:split_index] + ' = ' + p_str[split_index + 1:]
     split_index = g_str.find('=')
     if split_index != -1:
         g_str = g_str[:split_index] + ' = ' + g_str[split_index + 1:]
-    c = ' '.join(p_str.split())
-    g_str = ' '.join(g_str.split())
-    p_str = p_str.replace("\"","'")
-    g_str = g_str.replace("\"","'")
-    db = os.path.join(db_path, db, db + ".sqlite")
 
-    p_r = str(execute_query(db, p_str)).encode('utf-8')
-    g_r = str(execute_query(db, g_str)).encode('utf-8')
+    # Execute the queries
+    db_file = os.path.join(db_path, db, db + ".sqlite")
+    g_r = execute_query(db_file, g_str)
+    p_r = execute_query(db_file, p_str)
+
+    # Print the results for debugging
     print("Gold Result")
     print(g_r)
     print("Pred Result")
     print(p_r)
-    return p_r == g_r
+
+    # Compare the results
+    if "ORDER BY" in g_str:
+        # If the gold standard query has an ORDER BY clause, the results must be identical
+        return g_r == p_r
+    else:
+        # If the gold standard query doesn't have an ORDER BY clause, the results must have the same elements (regardless of order)
+        return set(g_r) == set(p_r)
+
+
 # def eval_exec_match(db_path,db, p_str, g_str):
 #     # p_str = p_str.lower()
 #     # g_str = g_str.lower()
@@ -694,12 +711,13 @@ for element in tqdm(data):
         if i%2 == 0:
             print("\n========turn:"+str((i+1)//2))
             print("Question:"+turns[i].get('text',''))
-            print("Answer:"+turns[i+1].get('predict',''))
+            print("Answer:" + turns[i+1].get('predict', '').encode('gbk', 'replace').decode('gbk'))
         if turns[i].get('isuser'):
             allqa+=1
             # print(turns[i]['text'])
             gold_type = turns[i].get('type','')
             predict_type = turns[i+1].get('predict_type','answerable')
+
             if len(gold_type) == 0:
                 gold_type ='answerable'
             if len(predict_type) == 0:
@@ -712,30 +730,28 @@ for element in tqdm(data):
             if gold_type == predict_type:
                 correct_counts[gold_type] += 1
 
-            if gold_type == 'answerable':
-                allsqlqa += 1
-            if predict_type == 'answerable':
-                allsqla += 1
+            # if gold_type == 'answerable':
+            #     allsqlqa += 1
 
-            if gold_type == 'ambiguous' and predict_type == 'answerable':      
-                AmbA_count += 1
-                try:
-                    print("AMBA")
-                    ambiguous_ans = parse_sql(turns[i+1].get('predict',''))
-                    print(ambiguous_ans)
-                    if qm("datasets/cosql_dataset/database",turns[i+3].get('query',''), ambiguous_ans, db_name):
-                        AmbA += 1
-                        print("\033[92mAmbA+1\033[0m")
-                except Exception as e:
-                    print("\033[91mAmbA error\033[0m")
-                    print(e)
-            
 
-            
 
             if gold_type == predict_type and predict_type == 'answerable':
+
+                allsqla += 1
+
                 if i-2 >= 0 and turns[i-2].get('type','') == 'ambiguous':
                     AmbClaA_count += 1
+                try:
+                    
+                    if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict_sql',''), turns[i+1].get('query','')):
+                        em_count += 1
+                        print("\033[92mEM+1\033[0m")
+                    else:
+                        print("\033[91mEM error\033[0m")
+                except Exception as e:
+                    print("\033[91mEM error\033[0m")
+                    print(e)
+
                 try:
                     # print("Question:"+turns[i].get('text',''))
                     if qm("datasets/cosql_dataset/database", turns[i+1].get('predict_sql',''),turns[i+1].get('query',''), db_name):
@@ -761,15 +777,23 @@ for element in tqdm(data):
                     iaccs = False
                     imatch = False
                     print("\033[91mIACCS failed\033[0m")
+
+
+
+            if gold_type == 'ambiguous' and predict_type == 'answerable':      
+                AmbA_count += 1
                 try:
-                    
-                    if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict_sql',''), turns[i+1].get('query','')):
-                        em_count += 1
-                    else:
-                        print("\033[91mEM error\033[0m")
+                    print("AMBA")
+                    ambiguous_ans = parse_sql(turns[i+1].get('predict',''))
+                    print(ambiguous_ans)
+                    if qm("datasets/cosql_dataset/database",turns[i+3].get('query',''), ambiguous_ans, db_name):
+                        AmbA += 1
+                        print("\033[92mAmbA+1\033[0m")
                 except Exception as e:
-                    print("\033[91mEM error\033[0m")
+                    print("\033[91mAmbA error\033[0m")
                     print(e)
+            
+                
             if gold_type == predict_type and predict_type != 'answerable':
                 # print("Question:"+turns[i].get('text',''))
                 accs += 1
@@ -792,8 +816,8 @@ print("_____________________________________")
 
 percentage2 = (accs / allqa) * 100
 percentage2_iaccs = (iaccs_count / allturn) * 100
-percentage3 = (em_count / allsqlqa) * 100
-percentage4 = (qm_count / allsqlqa) * 100
+percentage3 = (em_count / allsqla) * 100
+percentage4 = (qm_count / allsqla) * 100
 percentage5 = (error_count / allsqla) * 100
 percentage6 = (im_count / allturn) * 100
 
@@ -805,8 +829,8 @@ print("|--------|-------|-------|------------|")
 
 print(f"| ACCS   | {accs:<5} | {allqa:<5} | {percentage2:.1f}%      |")
 print(f"| IACCS  | {iaccs_count:<5} | {allturn:<5} | {percentage2_iaccs:.1f}%      |")
-print(f"| EM     | {em_count:<5} | {allsqlqa:<5} | {percentage3:.1f}%      |")
-print(f"| QM     | {qm_count:<5} | {allsqlqa:<5} | {percentage4:.1f}%      |")
+print(f"| EM     | {em_count:<5} | {allsqla:<5} | {percentage3:.1f}%      |")
+print(f"| QM     | {qm_count:<5} | {allsqla:<5} | {percentage4:.1f}%      |")
 print(f"| ERROR  | {error_count:<5} | {allsqla:<5} | {percentage5:.1f}%      |")
 print(f"| IM     | {im_count:<5} | {allturn:<5} | {percentage6:.1f}%      |")
 print(f"| RQS    | {RQS_sum:<5} | {RQS_count:<5} | {RQS_sum/RQS_count:.2f}      |")

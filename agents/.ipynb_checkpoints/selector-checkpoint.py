@@ -9,14 +9,18 @@ class Selector(Agent):
     
     def select(self, input_data):
 
-        data = {"continents": "drop_all", "countries": "drop_all", "car_makers": ["Id", "FullName"], "model_list": "keep_all",  "cars_data": "keep_all"}
+        data = {"continents": "drop_all", "countries": "keep_all", "car_makers": ["Id", "FullName"], "model_list": "keep_all",  "cars_data": "keep_all"}
         json_string_1 = json.dumps(data)
         
         sys_prompt = """
         As an experienced and professional database administrator, your task is to analyze a user question and a database schema to provide relevant information. The database schema consists of table descriptions and examples, each containing multiple column descriptions. Your goal is to identify any possible tables and columns based on the user question and evidence provided.
         """
-        usr_prompt = f"""[Instruction] 1. Discard any table schema unrelated to the user question and evidence. 2. Sort the columns in each relevant table in descending order of relevance and keep the top 6 columns. 3. Ensure that at least 3 tables are included in the final output JSON (Contains at least the three tables which are not "drop_all".). 4. The output should be in JSON format.
-[Requirements] 1. If a table has less than or equal to 10 columns, mark it as "keep_all" you dont need to select. 2. If a table is completely irrelevant to the user question and evidence, mark it as "drop_all". 3. Prioritize the columns in each relevant table based on their relevance. 4. Foreign key and primary key columns of tables which are not "drop_all" are retained regardless of relevance.
+        usr_prompt = f"""[Instruction] 1. Discard any table schema unrelated to the user question and evidence. 2. Sort the columns in each relevant table in descending order of relevance and keep the top 10 columns. 3. Ensure that at least 3 tables are included in the final output JSON (Contains at least 3 tables which are not "drop_all" even if it's not very relevant.). 4. The output should be in JSON format.
+[Requirements] 
+1. If a table has less than or equal to 10 columns, mark it as "keep_all" you don't need to select. 
+2. If a table is completely irrelevant to the user question and evidence, mark it as "drop_all". 
+3. Prioritize the columns in each relevant table based on their relevance. 
+4. Foreign key and primary key columns of tables that are not "drop_all" are retained regardless of relevance.
 Here is a typical example:
 [DB_ID] car_1
 [Schema] 

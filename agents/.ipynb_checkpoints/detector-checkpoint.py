@@ -6,7 +6,7 @@ class Detector(Agent):
 
     def detect(self, input_data):
         sys_prompt = """
-        As an experienced and professional database administrator, your task is to analyze a user question 的类型 如果是improper/unanswerable/ambiguous则直接回答如果是answerable则直接回答Yes.
+        As an experienced and professional database administrator, your task is to analyze a user question. If the question is improper, unanswerable, or ambiguous, directly answer with the appropriate term. If the question is answerable, directly respond with "Yes".
         """
         if input_data["mini_schema"] == "None":
             usr_prompt = f"""告诉用户问题不可被回答并根据数据库schema给出修改问题的建议（你可以这样问...）
@@ -20,7 +20,12 @@ class Detector(Agent):
 """
         else:
             usr_prompt = f"""
-根据数据库schema和问题判断问题是否能被准确的回答，如果不能则告知用户为什么不能；用户提问的字段是否已经指明是哪个字段无可歧义（注意数据库中意思相近的字段，这可能需要用户来确认），如果有歧义则也要求澄清，如果可以回答的话则输出Yes即可，你可以做有限的基于普遍认知的推断
+[Requirements]
+1. If the user's question is part of a routine conversation unrelated to the SQL, just answer directly. For example, the current question express gratitude or ask about functions not available outside the database or in llm. don't output "Yes" but give polite and helpful answers.
+2. Determine if the current question can be answered accurately based on the provided database schema. If not, explain why to the user.
+3. Check for ambiguity in the user's current question. If multiple fields have similar meanings with columns or conditions for user queries, ask the user to clarify which field they are referring to. You can make some reasonable guesses.
+4. Output "Yes" if the question can be answered with certainty for each column output.
+
 [DB_ID] {input_data["db_name"]}
 [Schema] 
 {input_data["mini_schema"]}
@@ -29,7 +34,7 @@ class Detector(Agent):
 [Evidence]
 {input_data["evidence"]}
             """
-            
+        # print(sys_prompt,usr_prompt)
         llm_response = self.request_llm(sys_prompt,usr_prompt)
         llm_lower = llm_response.lower()
         llm_lower = llm_lower.strip()

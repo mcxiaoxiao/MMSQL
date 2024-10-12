@@ -1029,7 +1029,7 @@
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )"
+        "query": "SELECT T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )"
       }
     ],
     "id": 19
@@ -1201,7 +1201,7 @@
       },
       {
         "isuser": true,
-        "text": "What about flight 29?\n",
+        "text": "29 going to?\n",
         "type": "answerable"
       },
       {
@@ -1339,17 +1339,17 @@
       },
       {
         "isuser": true,
-        "text": "HOW MANY LIVING IN THE NATIONS NOT USING ENGLISH",
+        "text": "HOW MANY ARE THERE IN THE NATIONS THAT DO NOT USE ENGLISH",
         "type": "ambiguous"
       },
       {
         "isuser": false,
-        "text": "did you mean you want the Population of the country  DO NOT USE ENGLISH",
+        "text": "did you mean you want the Population of the country DO NOT USE ENGLISH",
         "query": ""
       },
       {
         "isuser": true,
-        "text": "YES, THE TOTAL NUMBER OF PEOPLE LIVING IN THE NATIONS THAT DO NOT USE ENGLISH",
+        "text": "YES, THE CITY NAME AND TOTAL NUMBER OF PEOPLE LIVING IN THE NATIONS THAT DO NOT USE ENGLISH",
         "type": "answerable"
       },
       {
@@ -1375,18 +1375,18 @@
     "turns": [
       {
         "isuser": true,
-        "text": "What is the weight of id 1?",
+        "text": "What is the W of 1?",
         "type": "ambiguous"
       },
       {
         "isuser": false,
-        "text": "Did you mean to ask for the weight of the car with make id 1?",
+        "text": "Did you mean to ask for the weight of the car with makeid 1?",
         "query": ""
       },
       {
         "isuser": true,
         "text": "Yes",
-        "type": "improper"
+        "type": "answerable"
       },
       {
         "isuser": false,
@@ -1395,7 +1395,7 @@
       },
       {
         "isuser": true,
-        "text": "Which year launch the car model  buick?",
+        "text": "Which year launch the buick?",
         "type": "ambiguous"
       },
       {
@@ -1639,26 +1639,6 @@
       },
       {
         "isuser": true,
-        "text": "What is the biggest of those dog breeds?",
-        "type": "answerable"
-      },
-      {
-        "isuser": false,
-        "text": "",
-        "query": "SELECT T1.breed_name FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code  =  T2.breed_code GROUP BY T1.breed_name ORDER BY count(*) DESC LIMIT 1"
-      },
-      {
-        "isuser": true,
-        "text": "How big is the bulldog?\n",
-        "type": "answerable"
-      },
-      {
-        "isuser": false,
-        "text": "",
-        "query": "SELECT T2.size_code FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code  =  T2.breed_code where T1.breed_name=\"Bulldog\""
-      },
-      {
-        "isuser": true,
         "text": "Thanks!",
         "type": "improper"
       },
@@ -1853,7 +1833,7 @@
     "turns": [
       {
         "isuser": true,
-        "text": "list the makers who designed more than 3 car models",
+        "text": "list the all info of makers who designed more than 3 car models",
         "type": "answerable"
       },
       {
@@ -2645,7 +2625,7 @@
       },
       {
         "isuser": true,
-        "text": "Are there any apartments with only one room?",
+        "text": "How many apartments with only one room?",
         "type": "answerable"
       },
       {
@@ -3113,23 +3093,23 @@
     "turns": [
       {
         "isuser": true,
-        "text": "what are the degree_program_id in the Table Name: Student_Enrolment?",
+        "text": "what are the degree_program IDs in the Table Name: Student_Enrolment?",
         "type": "answerable"
       },
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT degree_program_id from Student_Enrolment"
+        "query": "SELECT DISTINCT degree_program_id from Student_Enrolment"
       },
       {
         "isuser": true,
-        "text": "what are the semester_id in the Table Name: Student_Enrolment?",
+        "text": "what are the semester IDs in the Table Name: Student_Enrolment?",
         "type": "answerable"
       },
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT semester_id from Student_Enrolment"
+        "query": "SELECT DISTINCT semester_id from Student_Enrolment"
       },
       {
         "isuser": true,
@@ -3169,7 +3149,7 @@
     "turns": [
       {
         "isuser": true,
-        "text": "Can you show me a list of owner and zip?",
+        "text": "Can you show me a list?",
         "type": "ambiguous"
       },
       {
@@ -3199,23 +3179,23 @@
       },
       {
         "isuser": true,
-        "text": "Which owner name and id has paid the largest amount of money in total for their dogs?",
+        "text": "Name of the customers who spend most for it",
         "type": "ambiguous"
       },
       {
         "isuser": false,
-        "text": "Did  you mean  the  full name?",
+        "text": "Did you mean the full name of the owner who has cost largest amount of total cost of treatment for all dogs owned by an owner?",
         "query": ""
       },
       {
         "isuser": true,
-        "text": "Just the first name will be fine.",
+        "text": "YES, but just the first name will be fine.",
         "type": "answerable"
       },
       {
         "isuser": false,
         "text": "",
-        "query": "SELECT  T1.first_name,T1.owner_id  FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1"
+        "query": "SELECT  T1.first_name  FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1"
       },
       {
         "isuser": true,
@@ -3229,7 +3209,7 @@
       },
       {
         "isuser": true,
-        "text": "As a last thing, can you also tell me the owner id and zip code of Jaclyn Stoltenberg, who has paid the largest amount of money in total for their dogs?",
+        "text": "As a last thing, can you also tell me the owner id and zip code of Jaclyn Stoltenberg, who has paid the largest amount of money in total for their treatments for dogs?",
         "type": "answerable"
       },
       {
@@ -5096,11 +5076,6 @@
   {
     "db_name": "cre_Doc_Template_Mgt",
     "turns": [
-      {
-        "isuser": true,
-        "text": "Thank you. That is all.",
-        "type": "improper"
-      },
       {
         "isuser": true,
         "text": "how many templates there",

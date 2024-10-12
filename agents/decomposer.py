@@ -20,15 +20,17 @@ class Decomposer(Agent):
         As an experienced and professional database administrator, your task is to decompose the question into subquestions to generate SQL step-by-step.
         """
 
-        usr_prompt = f"""Given a [Database schema] description, a knowledge [Evidence] and the [Question], you need to use valid SQLite and understand the database and knowledge, and then decompose the question into subquestions for text-to-SQL generation.  When generating SQL, we should always consider constraints: 
+        usr_prompt = f"""Given a [Database schema] description, a knowledge [Evidence] and the [Question], you need to use valid SQLite and understand the database and knowledge, and then decompose the question into subquestions for text-to-SQL generation if the question is complex.  When generating SQL, we should always consider constraints: 
 [Constraints] 
-- **SELECT Smartly:**  When writing `SELECT <column>`, only include the columns specifically mentioned in the [Question]. No extras! 
-- **FROM & JOIN with Purpose:** Don't add tables to `FROM <table>` or `JOIN <table>` unless they're absolutely needed for the query.
-- **MAX/MIN Strategy:** If you're using `MAX()` or `MIN()`, make sure to do your `JOIN <table>` operations *before* using `SELECT MAX(<column>)` or `SELECT MIN(<column>)`.
-- **Handling "None":**  If you see 'None' or `None` in the [Value examples] for a column, prioritize using `JOIN <table>` or `WHERE <column> IS NOT NULL` to handle potential missing data effectively.
-- **ORDER BY with GROUP BY:**  Always include `GROUP BY <column>` before `ORDER BY <column> ASC|DESC` to ensure you're sorting distinct values.
-- **Column Order Matters:** The order of columns in your `SELECT` statement should match the order they appear in the question.  If the question asks for "count and name", your SQL should be `SELECT COUNT(...), name ...`
-- **DISTINCT Awareness:** Remember that [Value examples] are just samples, not the entire dataset. Consider using `DISTINCT` when necessary to avoid counting and display duplicates if the question implies unique results. 
+- SELECT Smartly:  When writing `SELECT <column>`, only include the columns specifically mentioned in the [Question]. No extras! 
+- FROM & JOIN with Purpose: Don't add tables to `FROM <table>` or `INNER/LEFT/RIGHT JOIN <table>` unless they're absolutely needed for the query.
+- MAX/MIN Strategy: If you're using `MAX()` or `MIN()`, make sure to do your `JOIN <table>` operations *before* using `SELECT MAX(<column>)` or `SELECT MIN(<column>)`.
+- Handling "None":  If you see 'None' or `None` in the [Value examples] for a column, prioritize using `JOIN <table>` or `WHERE <column> IS NOT NULL` to handle potential missing data effectively.
+- ORDER BY with GROUP BY:  Always include `GROUP BY <column>` before `ORDER BY <column> ASC|DESC` to ensure you're sorting distinct values.
+- Column Order Matters: The order of columns in your `SELECT` statement should match the order they appear in the question.  If the question asks for "count and name", your SQL should be `SELECT COUNT(...), name ...`
+- Counting duplicates: Consider using `DISTINCT` when counting and sorting to avoid counting duplicates.
+- Fuzzy Text Matching: When you need to match text data in a column and the question suggests finding partial matches, use the '%' wildcard. For example, use `LIKE '%search_term%'` to find values containing "search_term". 
+- Keep it Simple: If the SQL query can be expressed simply and efficiently, don't add unnecessary subquestions. Strive for clarity! 
 ==========
 [DB_ID] School
 [Database schema] 
@@ -59,13 +61,18 @@ Question Solved.
 Foreign keys:
 account.district_id = district.district_id client.district_id = district.district_id
 
-[Question]
-What is the gender of the youngest client who opened account in the lowest average salary branch? 
-
 [Evidence]
 Later birthdate refers to younger age; A11 refers to average salary 
 
+[Question]
+What is the gender of the youngest client who opened account in the lowest average salary branch? 
+
+
 Decompose the question into subquestions, considering [Constraints], and generate the SQL after thinking step by step:
+
+The ordered presentation columns of the final SQL are as follows:
+1. gender
+
 Sub question 1: What is the district_id of the branch with the lowest average salary? 
 SQL ```sql SELECT ‘district_id‘ FROM district ORDER BY ‘A11‘ ASC LIMIT 1```
 Sub question 2: What is the youngest client who opened account in the lowest average salary branch? 
@@ -84,7 +91,7 @@ Question Solved.
 {input_data["evidence"]}
 Decompose the question into subquestions, considering [Constraints], and generate the SQL after thinking step by step:
 """
-
+        # print(sys_prompt,usr_prompt)
         llm_ans = self.request_llm(sys_prompt,usr_prompt)
         pattern = r"```sql(.*?)```"
         matches = re.findall(pattern, llm_ans, re.DOTALL)

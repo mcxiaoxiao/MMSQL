@@ -18,7 +18,7 @@ import os
 # You need to choose one of the api's or hf's "request_llm" function here. 
 # from tools.hf_open_source_llm_request import request_llm
 # from tools.api_request import request_gpt as request_llm
-# from tools.api_request import request_gemini as request_llm
+from tools.api_request import request_gemini as request_llm
 
 from tools.db_detail import db_getdesc
 from tools.sql_execute import sqlite_execute as execute
@@ -106,9 +106,10 @@ def process_json_part(data, output_file):
                 json.dump(items, f, indent=4)
                 f.write('\n') 
 
-def process_json_multithreaded(input_file, output_file, num_threads=1):
+def process_json_multithreaded(input_file, output_file, num_threads=5):
     with  open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
+        data = data[51:100]
     # split
     data_parts = []
     chunk_size = math.ceil(len(data) / num_threads)  # Round up to ensure all data is included

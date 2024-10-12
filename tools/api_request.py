@@ -104,7 +104,7 @@ def request_gemini(messages):
                 break
             else:
                 print(response.text) 
-                # print(GEMINI_API_KEY)
+                print(GEMINI_API_KEY)
                 retry_count += 1
                 time.sleep(2) 
         except Exception as e:
