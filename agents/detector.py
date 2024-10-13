@@ -7,12 +7,12 @@ class Detector(Agent):
         return self.detect(input_data)
 
     def detect(self, input_data):
-        data = {"answerable": "no", "answer": "did you mean the full name of the car maker amc?"}
+        data = {"answerable": "no", "answer": "Do you mean 'amc' as in model type or carmaker? Did you mean the full name of the carmaker amc?", "rewrite": ["What is the full name of the carmaker 'amc'", "What is the full name of the carmaker which made the model type named 'amc'"]}
         json_string_1 = json.dumps(data)
-        data = {"answerable": "Yes", "answer": ""}
+        data = {"answerable": "Yes"}
         json_string_2 = json.dumps(data)
         
-        sys_prompt = """As an experienced and professional database administrator, your task is to analyze a user question. If the question is improper, unanswerable, or ambiguous, directly answer with the appropriate term. If the question is answerable, directly respond with "Yes". You need to identify the problem type step by step and output"""
+        sys_prompt = """As an experienced and professional database administrator, your task is to analyze a user question. If the question is improper, unanswerable, or ambiguous, directly answer with the appropriate term. If the question is answerable, directly respond with "Yes". You need to identify the problem type step by step and output. The output should contain JSON format."""
         if input_data["mini_schema"] == "None":
             usr_prompt = f"""告诉用户问题不可被回答并根据数据库schema给出修改问题的建议（你可以这样问...）
 [DB_ID] {input_data["db_desc"]}
@@ -26,12 +26,13 @@ class Detector(Agent):
         else:
             usr_prompt = f"""
 [Requirements]
-1. If the user's current question is confirming an assumption made in a previous Answer, the answer will be based on that assumption.
+1. If the user's current question confirms an assumption made in a previous Answer, the answer will be based on that assumption. You can make your own limited and reasonable guesses about the user's intent based on the previous question and the current question.
 2. If the user's question is part of a routine conversation unrelated to the SQL, so the question is improper. just answer directly. For example, the current question express gratitude or asks about functions not available outside the database or in llm. don't output "Yes" but give polite and helpful answers.
-3. Determine if the current question can be answered accurately based on the provided database schema. If it is unable to answer questions based on database information the question is unanswerable, explain why to the user.
+3. Determine if the current question can be answered accurately based on the provided database schema. If it is unable to answer questions based on database information the question is unanswerable, explain why to the user. 
 4. You need to first try to select possible corresponding fields for each entity and condition in the question, and decide whether the question is answerable or ambiguous based on the matches
 5. Check for ambiguity in the user's current question. If multiple fields have similar meanings with columns or conditions for user queries the question is ambiguous (Problem is not enough to generate SQL with sure tables and columns), ask the user to clarify which field they are referring to or clarify the conditions.
-6. Output "answerable" is "Yes" if the question can be answered with certainty for each column and condition. No need to fill in "answer" in this case.
+6. If the question is ambiguous or unanswerable, you must refine and rewrite at least one answerable question example based on the question and put it in the "rewrite".
+7. Output "answerable" is "Yes" if the question can be answered with certainty for each column and condition. No need to fill in "answer" in this case. 
 
 [DB_ID] car_1
 [Schema] 
@@ -58,7 +59,7 @@ entities:
 name - car_makers.'Maker', car_makers.'FullName', car_names.'Model', car_names'Make'
 conditions: 
 AMC - model_list.'Model', car_makers.'Maker'
-Unable to derive user intent through common sense. ask for clarification and give advice: 
+Unable to derive user intent through common sense. ask for clarification and give advice and must rewrite an answerable question: 
 {json_string_1}
 Question Solved. 
 ========== 
@@ -100,7 +101,7 @@ entities:
 car models - model_list.'model' 
 conditions: 
 Germany - car_makers.'Country', Countries.'CountryName'
-the question can be answered with certainty for each column and condition.
+The question can be answered with certainty for each column and condition.
 {json_string_2}
 Question Solved. 
 ========== 
@@ -115,16 +116,15 @@ Question Solved.
 
             """
         # print(sys_prompt,usr_prompt)
-        llm_response = self.request_llm(sys_prompt,usr_prompt)
+        llm_response = self.request_llm(sys_prompt, usr_prompt)
         print(llm_response)
-        json_object = self.extract_json_from_string(llm_response)
-
         
-        llm_lower = json_object.get('answerable','yes').lower()
-        llm_lower = llm_lower.strip()
-        llm_lower = llm_lower.replace("\n", "")
-        # print("llm_lower" + llm_lower)
-        if llm_lower == "yes" or llm_lower == "yes.":
-            return f"YES"
+
+        json_object = self.extract_json_from_string(llm_response)
+        if json_object == None:
+            json_object = {"answerable": "no", "answer": llm_response, "rewrite": ""}
+        llm_lower = json_object.get('answerable', 'yes').lower().strip().replace("\n", "")
+        if llm_lower.startswith("yes"):
+            return "YES"
         else:
-            return json_object.get('answer','')
+            return json_object

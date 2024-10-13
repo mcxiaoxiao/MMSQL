@@ -41,8 +41,8 @@ def request_gpt(messages):
             return response_message
         except Exception as e:
             print(e)
-            if attempt < 9:  # Don't wait after the last attempt
-                time.sleep(2)  # Wait for 5 seconds before retrying
+            if attempt < 50:  # Don't wait after the last attempt
+                time.sleep(2)  # Wait for 2 seconds before retrying
             else:
                 print(f"An error occurred with GPT request after 10 attempts: {e}")
                 return "failed"

@@ -225,7 +225,7 @@ def process_json_part(data, output_file):
                 print(f"Error processing turn {index} (attempt {retries}): {e}")
 
 
-def process_json_multithreaded(input_file, output_file, num_threads=5):
+def process_json_multithreaded(input_file, output_file, num_threads=3):
     with  open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
         data = data[51:100]

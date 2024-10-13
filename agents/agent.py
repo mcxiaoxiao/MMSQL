@@ -25,6 +25,10 @@ class Agent:
 
     
     def extract_json_from_string(self, text):
+        open_count = text.count('{')
+        close_count = text.count('}')
+        if open_count > close_count:
+            text += '}' * (open_count - close_count)
         start = text.find('{')
         end = text.find('}', start)
         if start != -1 and end != -1:
