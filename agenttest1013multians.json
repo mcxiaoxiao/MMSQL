@@ -1,0 +1,1576 @@
+[
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What are the name of amc?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean the full name of the car maker amc?",
+                "query": "",
+                "predict": "Do you mean 'amc' as in model type or carmaker? Did you mean the full name of the carmaker amc?",
+                "rewritten_questions": [
+                    "What is the full name of the carmaker 'amc'",
+                    "What is the full name of the carmaker which made the model type named 'amc'",
+                    "What are the name of amc?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T1.FullName FROM car_makers AS T1 WHERE T1.Maker = 'amc'",
+                    "SELECT T2.FullName FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id WHERE T1.Model = 'amc'",
+                    "SELECT T1.FullName FROM car_makers AS T1 WHERE T1.Id = ( SELECT T2.Id FROM car_makers AS T2 WHERE T2.Maker = 'amc' )"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Do you mean 'amc' as in model type or carmaker? Did you mean the full name of the carmaker amc?",
+                    "rewrite": [
+                        "What is the full name of the carmaker 'amc'",
+                        "What is the full name of the carmaker which made the model type named 'amc'",
+                        "What are the name of amc?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            "American Motor Company"
+                        ]
+                    ],
+                    "sql": "SELECT T1.FullName FROM car_makers AS T1 WHERE T1.Id = ( SELECT T2.Id FROM car_makers AS T2 WHERE T2.Maker = 'amc' )",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the Id of amc.\nSQL ```sql SELECT T1.Id FROM car_makers AS T1 WHERE T1.Maker = 'amc'```\nSubquestion 2: What are the name of amc?\nSQL ```sql SELECT T1.FullName FROM car_makers AS T1 WHERE T1.Id = ( SELECT T2.Id FROM car_makers AS T2 WHERE T2.Maker = 'amc' )```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Yes",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select fullname from car_makers where maker = \"amc\"",
+                "predict": "SELECT FullName FROM car_makers WHERE Maker = 'amc'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nForeign keys:\nmodel_list.'Maker' = car_makers.'Id'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T2.FullName FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker WHERE T1.Maker = 'amc'",
+                    "executable": false,
+                    "log": "no such column: T2.FullName",
+                    "process": "Subquestion 1: What is the full name of the car maker amc?\nSQL ```sql SELECT T2.FullName FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker WHERE T1.Maker = 'amc'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": {
+                    "result": [
+                        [
+                            "American Motor Company"
+                        ]
+                    ],
+                    "sql": "SELECT FullName FROM car_makers WHERE Maker = 'amc'",
+                    "executable": true,
+                    "log": ""
+                }
+            },
+            {
+                "isuser": true,
+                "text": "What type of car making by german?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Sorry we don't have information about type of car. Can you clarify your question?",
+                "query": "",
+                "predict": "Sorry we don't have information about type of car. Can you clarify your question? Do you mean the car models produced in Germany or the car makers in Germany?",
+                "rewritten_questions": [
+                    "What car models are produced in Germany?",
+                    "What car makers are from Germany?",
+                    "What type of car making by german?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Maker = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                    "SELECT FullName FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                    "SELECT T1.Make FROM car_names AS T1 INNER JOIN model_list AS T2 ON T1.Model = T2.Model WHERE T2.Maker IN (SELECT Maker FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany'))"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Sorry we don't have information about type of car. Can you clarify your question? Do you mean the car models produced in Germany or the car makers in Germany?",
+                    "rewrite": [
+                        "What car models are produced in Germany?",
+                        "What car makers are from Germany?",
+                        "What type of car making by german?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T1.Make FROM car_names AS T1 INNER JOIN model_list AS T2 ON T1.Model = T2.Model WHERE T2.Maker IN (SELECT Maker FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany'))",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the country ID for Germany.\nSQL: ```sql SELECT Continent FROM countries WHERE CountryName = 'germany'```\n\nSubquestion 2: Find the car makers from Germany.\nSQL: ```sql SELECT Maker FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')```\n\nSubquestion 3: Find the models made by car makers from Germany.\nSQL: ```sql SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Maker = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')```\n\nSubquestion 4: Find the names of the models made by car makers from Germany.\nSQL: ```sql SELECT T1.Make FROM car_names AS T1 INNER JOIN model_list AS T2 ON T1.Model = T2.Model WHERE T2.Maker IN (SELECT Maker FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany'))```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What kind of car is produced in Germany?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean the car models produced in Germany?",
+                "query": "",
+                "predict": "Do you mean the car models produced in Germany or the car makers in Germany?",
+                "rewritten_questions": [
+                    "What are the car models produced in Germany?",
+                    "What are the car makers in Germany?",
+                    "What kind of car is produced in Germany?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = 'Germany'",
+                    "SELECT FullName FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                    "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = 'germany'"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Do you mean the car models produced in Germany or the car makers in Germany?",
+                    "rewrite": [
+                        "What are the car models produced in Germany?",
+                        "What are the car makers in Germany?",
+                        "What kind of car is produced in Germany?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = 'germany'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the car makers in Germany.\nSQL: ```sql SELECT T1.FullName FROM car_makers AS T1 INNER JOIN countries AS T2 ON T1.Country = T2.CountryName WHERE T2.CountryName = 'germany'```\n\nSubquestion 2: Find the models made by those car makers.\nSQL: ```sql SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = 'germany'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Yes",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T3.model FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T1.countryname = \"germany\"",
+                "predict": "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\ncar_names.'Model' = model_list.'Model'\ncars_data.'Id' = car_names.'MakeId'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the country code for Germany.\nSQL: ```sql SELECT Continent FROM countries WHERE CountryName = 'germany'```\n\nSubquestion 2: Find the car makers from Germany.\nSQL: ```sql SELECT FullName FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')```\n\nSubquestion 3: Find the car models made by car makers from Germany.\nSQL: ```sql SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What are the model id of BMW?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT modelid from model_list where model = \"bmw\"",
+                "predict": "SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'bmw')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\ncars_data.'Id' = car_names.'MakeId'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            3
+                        ]
+                    ],
+                    "sql": "SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'bmw')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the ID of the car maker BMW.\nSQL: ```sql SELECT Id FROM car_makers WHERE Maker = 'bmw'```\n\nSubquestion 2: Find the model IDs of cars made by the car maker with the ID found in the previous step.\nSQL: ```sql SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'bmw')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What are the id and names of the countries which have more than 3 cars makers or produce the 'flat' model?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.countryId HAVING count(*)  >  3 UNION SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T3.Model  =  'fiat';",
+                "predict": "I'm sorry, I can't answer your question. The database doesn't have information about the number of car makers per country. It also doesn't have information about the 'flat' model. Can you clarify your question?",
+                "rewritten_questions": [
+                    "What are the names of the countries that have more than 3 car makers?",
+                    "What are the names of the countries that produce the 'flat' model?",
+                    "What are the id and names of the countries which have more than 3 cars makers or produce the 'flat' model?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T1.CountryName FROM countries AS T1 INNER JOIN (     SELECT T1.CountryId     FROM countries AS T1     INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country     GROUP BY T1.CountryId     HAVING COUNT(T2.Id) > 3 ) AS T2 ON T1.CountryId = T2.CountryId",
+                    "SELECT T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'",
+                    "SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING COUNT(DISTINCT T2.Maker) > 3 UNION SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\ncars_data.'Id' = car_names.'MakeId'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "I'm sorry, I can't answer your question. The database doesn't have information about the number of car makers per country. It also doesn't have information about the 'flat' model. Can you clarify your question?",
+                    "rewrite": [
+                        "What are the names of the countries that have more than 3 car makers?",
+                        "What are the names of the countries that produce the 'flat' model?",
+                        "What are the id and names of the countries which have more than 3 cars makers or produce the 'flat' model?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            1,
+                            "usa"
+                        ],
+                        [
+                            2,
+                            "germany"
+                        ],
+                        [
+                            4,
+                            "japan"
+                        ]
+                    ],
+                    "sql": "SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING COUNT(DISTINCT T2.Maker) > 3 UNION SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the countries that have more than 3 car makers.\nSQL: ```sql SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING COUNT(DISTINCT T2.Maker) > 3```\nSubquestion 2: Find the countries that produce the 'flat' model.\nSQL: ```sql SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'```\nSubquestion 3: Combine the results of subquestion 1 and 2.\nSQL: ```sql SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING COUNT(DISTINCT T2.Maker) > 3 UNION SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "bye",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\ncars_data.'Id' = car_names.'MakeId'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?",
+                    "rewrite": []
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 97
+    },
+    {
+        "db_name": "dog_kennels",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What is the phone number of the professional who has done the most treatment.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id order by count(*)  desc limit 1",
+                "predict": "Do you mean the home phone number or the cell number? Please clarify.",
+                "rewritten_questions": [
+                    "What is the home phone number of the professional who has done the most treatment?",
+                    "What is the cell number of the professional who has done the most treatment?",
+                    "What is the phone number of the professional who has done the most treatment."
+                ],
+                "rewritten_outputs": [
+                    "SELECT T2.home_phone FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1",
+                    "SELECT T2.cell_number FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1",
+                    "SELECT T2.home_phone FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:Professionals\n[('professional_id', professional id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('first_name', first name type:text. Value examples:[Taryn, Jayson, Olaf]),('street', street type:text. Value examples:[6915 Oberbrunner Point Suite 491\nGleasonville, LA , 88665 Terence Lodge Apt. 904\nCorneliusfort, NC 194, 68589 Bradly Manor\nNew Audrey, IN 91497]),('city', city type:text. Value examples:[West Heidi, North Odellfurt, Jaceton]),('state', state type:text. Value examples:[Indiana, Connecticut, Wisconsin]),('zip_code', zip code type:text. Value examples:[06646, 43129, 77129]),('last_name', last name type:text. Value examples:[Braun, Ullrich, Watsica]),('email_address', email address type:text. Value examples:[deanna.schuster@example.com, lucile.shanahan@example.org, uboehm@example.org]),('home_phone', home phone type:text. Value examples:[+71(6)2898266914, +02(1)0259033559, 325-155-0801x7005]),('cell_number', cell number type:text. Value examples:[(275)939-2435x80863, 889-940-2676, (369)908-7311x065]),]\nTable:Treatments\n[('treatment_id', treatment id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('dog_id', dog id type:number. Value examples:[14, 4, 2]),('professional_id', professional id type:number. Value examples:[9, 10, 4]),('treatment_type_code', treatment type code type:text. Value examples:[WALK, VAC, EXAM]),('date_of_treatment', date of treatment type:time. Value examples:[2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23]),('cost_of_treatment', cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\nTreatments.'professional_id' = Professionals.'professional_id'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Do you mean the home phone number or the cell number? Please clarify.",
+                    "rewrite": [
+                        "What is the home phone number of the professional who has done the most treatment?",
+                        "What is the cell number of the professional who has done the most treatment?",
+                        "What is the phone number of the professional who has done the most treatment."
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            "320-508-6023"
+                        ]
+                    ],
+                    "sql": "SELECT T2.home_phone FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the professional_id who has done the most treatments.\nSQL: ```sql SELECT professional_id FROM Treatments GROUP BY professional_id ORDER BY COUNT(treatment_id) DESC LIMIT 1```\nSubquestion 2: Find the phone number of the professional who has done the most treatments.\nSQL: ```sql SELECT T2.home_phone FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What are the professional id of the professionals who have done at least two types of treatments?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.professional_id  FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2",
+                "predict": "SELECT professional_id FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) >= 2",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Treatment_Types\n[('treatment_type_code', treatment type code type:text PRIMARY KEY. Value examples:[EXAM, VAC, WALK]),('treatment_type_description', treatment type description type:text. Value examples:[Physical examination, Vaccination, Take for a Walk]),]\nTable:Professionals\n[('professional_id', professional id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('first_name', first name type:text. Value examples:[Taryn, Jayson, Olaf]),('street', street type:text. Value examples:[6915 Oberbrunner Point Suite 491\nGleasonville, LA , 88665 Terence Lodge Apt. 904\nCorneliusfort, NC 194, 68589 Bradly Manor\nNew Audrey, IN 91497]),('city', city type:text. Value examples:[West Heidi, North Odellfurt, Jaceton]),('state', state type:text. Value examples:[Indiana, Connecticut, Wisconsin]),('zip_code', zip code type:text. Value examples:[06646, 43129, 77129]),('last_name', last name type:text. Value examples:[Braun, Ullrich, Watsica]),('email_address', email address type:text. Value examples:[deanna.schuster@example.com, lucile.shanahan@example.org, uboehm@example.org]),('home_phone', home phone type:text. Value examples:[+71(6)2898266914, +02(1)0259033559, 325-155-0801x7005]),('cell_number', cell number type:text. Value examples:[(275)939-2435x80863, 889-940-2676, (369)908-7311x065]),]\nTable:Treatments\n[('dog_id', dog id type:number. Value examples:[14, 4, 2]),('professional_id', professional id type:number. Value examples:[9, 10, 4]),('treatment_type_code', treatment type code type:text. Value examples:[WALK, VAC, EXAM]),('date_of_treatment', date of treatment type:time. Value examples:[2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23]),('cost_of_treatment', cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\nTreatments.'professional_id' = Professionals.'professional_id'\nTreatments.'treatment_type_code' = Treatment_Types.'treatment_type_code'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            6
+                        ],
+                        [
+                            9
+                        ],
+                        [
+                            10
+                        ],
+                        [
+                            14
+                        ]
+                    ],
+                    "sql": "SELECT professional_id FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) >= 2",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the professional IDs who have done at least two types of treatments.\nSQL: ```sql\nSELECT professional_id FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) >= 2\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many professionals have done only one treatment?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select count(*) from (SELECT *  FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  = 1)",
+                "predict": "SELECT COUNT(DISTINCT professional_id) FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) = 1",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Professionals\n[('professional_id', professional id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('first_name', first name type:text. Value examples:[Taryn, Jayson, Olaf]),('street', street type:text. Value examples:[6915 Oberbrunner Point Suite 491\nGleasonville, LA , 88665 Terence Lodge Apt. 904\nCorneliusfort, NC 194, 68589 Bradly Manor\nNew Audrey, IN 91497]),('city', city type:text. Value examples:[West Heidi, North Odellfurt, Jaceton]),('state', state type:text. Value examples:[Indiana, Connecticut, Wisconsin]),('zip_code', zip code type:text. Value examples:[06646, 43129, 77129]),('last_name', last name type:text. Value examples:[Braun, Ullrich, Watsica]),('email_address', email address type:text. Value examples:[deanna.schuster@example.com, lucile.shanahan@example.org, uboehm@example.org]),('home_phone', home phone type:text. Value examples:[+71(6)2898266914, +02(1)0259033559, 325-155-0801x7005]),('cell_number', cell number type:text. Value examples:[(275)939-2435x80863, 889-940-2676, (369)908-7311x065]),]\nTable:Treatments\n[('treatment_id', treatment id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('dog_id', dog id type:number. Value examples:[14, 4, 2]),('professional_id', professional id type:number. Value examples:[9, 10, 4]),('treatment_type_code', treatment type code type:text. Value examples:[WALK, VAC, EXAM]),('date_of_treatment', date of treatment type:time. Value examples:[2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23]),('cost_of_treatment', cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\nTreatments.'professional_id' = Professionals.'professional_id'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1
+                        ],
+                        [
+                            1
+                        ],
+                        [
+                            1
+                        ],
+                        [
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT professional_id) FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) = 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the professional IDs of professionals who have done only one treatment.\nSQL: ```sql\nSELECT professional_id FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) = 1\n```\n\nSubquestion 2: Count the number of professionals who have done only one treatment.\nSQL: ```sql\nSELECT COUNT(DISTINCT professional_id) FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) = 1\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Breeds\n[('breed_code', breed code type:text PRIMARY KEY. Value examples:[BUL, ESK, HUS]),('breed_name', breed name type:text. Value examples:[Eskimo, Husky, Bulldog]),]\nTable:Sizes\n[('size_code', size code type:text PRIMARY KEY. Value examples:[LGE, MED, SML]),('size_description', size description type:text. Value examples:[Small, Medium, Large]),]\nTable:Treatment_Types\n[('treatment_type_code', treatment type code type:text PRIMARY KEY. Value examples:[EXAM, VAC, WALK]),('treatment_type_description', treatment type description type:text. Value examples:[Physical examination, Vaccination, Take for a Walk]),]\nTable:Professionals\n[('professional_id', professional id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('first_name', first name type:text. Value examples:[Taryn, Jayson, Olaf]),('street', street type:text. Value examples:[6915 Oberbrunner Point Suite 491\nGleasonville, LA , 88665 Terence Lodge Apt. 904\nCorneliusfort, NC 194, 68589 Bradly Manor\nNew Audrey, IN 91497]),('city', city type:text. Value examples:[West Heidi, North Odellfurt, Jaceton]),('state', state type:text. Value examples:[Indiana, Connecticut, Wisconsin]),('zip_code', zip code type:text. Value examples:[06646, 43129, 77129]),('last_name', last name type:text. Value examples:[Braun, Ullrich, Watsica]),('email_address', email address type:text. Value examples:[deanna.schuster@example.com, lucile.shanahan@example.org, uboehm@example.org]),('home_phone', home phone type:text. Value examples:[+71(6)2898266914, +02(1)0259033559, 325-155-0801x7005]),('cell_number', cell number type:text. Value examples:[(275)939-2435x80863, 889-940-2676, (369)908-7311x065]),]\nTable:Treatments\n[('treatment_id', treatment id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('dog_id', dog id type:number. Value examples:[14, 4, 2]),('professional_id', professional id type:number. Value examples:[9, 10, 4]),('treatment_type_code', treatment type code type:text. Value examples:[WALK, VAC, EXAM]),('date_of_treatment', date of treatment type:time. Value examples:[2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23]),('cost_of_treatment', cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\nTreatments.'professional_id' = Professionals.'professional_id'\nTreatments.'treatment_type_code' = Treatment_Types.'treatment_type_code'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 98
+    },
+    {
+        "db_name": "cre_Doc_Template_Mgt",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "WHAT IS THE DOCUMENT ID WITH 1 TO 2 PARAGRAPH?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*) BETWEEN 1 AND 2",
+                "predict": "Apologies, I cannot answer this question. The database schema does not contain information about the number of paragraphs in a document. I can only tell you which document is associated with a given paragraph.",
+                "rewritten_questions": [
+                    "What is the document ID associated with paragraph ID 1?",
+                    "What is the document ID associated with paragraph ID 2?",
+                    "WHAT IS THE DOCUMENT ID WITH 1 TO 2 PARAGRAPH?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T1.Document_ID FROM Paragraphs AS T1 WHERE T1.Paragraph_ID = 1",
+                    "SELECT T1.Document_ID FROM Paragraphs AS T1 WHERE T1.Paragraph_ID = 2",
+                    "SELECT DISTINCT T1.Document_ID FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.Document_ID = T2.Document_ID GROUP BY T1.Document_ID HAVING COUNT(T2.Paragraph_ID) BETWEEN 1 AND 2"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nTable:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),]\nTable:Paragraphs\n[('Paragraph_ID', paragraph id type:number PRIMARY KEY. Value examples:[7, 9, 65]),('Document_ID', document id type:number. Value examples:[2394, 3, 50123]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\nParagraphs.'Document_ID' = Documents.'Document_ID'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "unanswerable",
+                    "answer": "Apologies, I cannot answer this question. The database schema does not contain information about the number of paragraphs in a document. I can only tell you which document is associated with a given paragraph.",
+                    "rewrite": [
+                        "What is the document ID associated with paragraph ID 1?",
+                        "What is the document ID associated with paragraph ID 2?",
+                        "WHAT IS THE DOCUMENT ID WITH 1 TO 2 PARAGRAPH?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            3
+                        ],
+                        [
+                            80
+                        ],
+                        [
+                            3830
+                        ],
+                        [
+                            33930
+                        ],
+                        [
+                            50123
+                        ],
+                        [
+                            651512
+                        ],
+                        [
+                            3540024
+                        ],
+                        [
+                            16514113
+                        ],
+                        [
+                            385906526
+                        ]
+                    ],
+                    "sql": "SELECT DISTINCT T1.Document_ID FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.Document_ID = T2.Document_ID GROUP BY T1.Document_ID HAVING COUNT(T2.Paragraph_ID) BETWEEN 1 AND 2",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the document IDs that have between 1 and 2 paragraphs.\nSQL: ```sql\nSELECT DISTINCT T1.Document_ID\nFROM Documents AS T1\nINNER JOIN Paragraphs AS T2 ON T1.Document_ID = T2.Document_ID\nGROUP BY T1.Document_ID\nHAVING COUNT(T2.Paragraph_ID) BETWEEN 1 AND 2\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "WHAT IS THE DOCUMENT TEXT ",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean the \tParagraph Text?",
+                "query": "",
+                "predict": "Apologies, I can't answer this question. The database only contains information about document IDs and paragraph text, not the full document text. ",
+                "rewritten_questions": [
+                    "What is the paragraph text for document ID 1?",
+                    "What is the paragraph text for document ID 3?",
+                    "WHAT IS THE DOCUMENT TEXT "
+                ],
+                "rewritten_outputs": [
+                    "SELECT 'Paragraph_Text' FROM Paragraphs WHERE 'Document_ID' = 1",
+                    "SELECT 'Paragraph_Text' FROM Paragraphs WHERE 'Document_ID' = 3",
+                    "SELECT T1.'Document_Name' FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.'Document_ID' = T2.'Document_ID' GROUP BY T2.'Document_ID' HAVING count(*) BETWEEN 1 AND 2"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),]\nTable:Paragraphs\n[('Paragraph_ID', paragraph id type:number PRIMARY KEY. Value examples:[7, 9, 65]),('Document_ID', document id type:number. Value examples:[2394, 3, 50123]),('Paragraph_Text', paragraph text type:text. Value examples:[Korea, Somalia, Palestinian Territory]),]\nForeign keys:\nParagraphs.'Document_ID' = Documents.'Document_ID'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "unanswerable",
+                    "answer": "Apologies, I can't answer this question. The database only contains information about document IDs and paragraph text, not the full document text. ",
+                    "rewrite": [
+                        "What is the paragraph text for document ID 1?",
+                        "What is the paragraph text for document ID 3?",
+                        "WHAT IS THE DOCUMENT TEXT "
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Summer Show"
+                        ],
+                        [
+                            "Welcome to NY"
+                        ],
+                        [
+                            "Do not panic"
+                        ],
+                        [
+                            "How Google people work"
+                        ],
+                        [
+                            "Learning French"
+                        ],
+                        [
+                            "How to write a CV"
+                        ],
+                        [
+                            "Palm reading"
+                        ],
+                        [
+                            "A history of Arts"
+                        ],
+                        [
+                            "About Korea"
+                        ]
+                    ],
+                    "sql": "SELECT T1.'Document_Name' FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.'Document_ID' = T2.'Document_ID' GROUP BY T2.'Document_ID' HAVING count(*) BETWEEN 1 AND 2",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the document ID with 1 to 2 paragraphs?\nSQL ```sql SELECT 'Document_ID' FROM Paragraphs GROUP BY 'Document_ID' HAVING count(*) BETWEEN 1 AND 2```\nSubquestion 2: What is the document text of the document with 1 to 2 paragraphs?\nSQL ```sql SELECT T1.'Document_Name' FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.'Document_ID' = T2.'Document_ID' GROUP BY T2.'Document_ID' HAVING count(*) BETWEEN 1 AND 2```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "YES \n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Paragraph_Text FROM Paragraphs GROUP BY document_id HAVING count(*) BETWEEN 1 AND 2",
+                "predict": "SELECT 'Paragraph_Text' FROM Paragraphs",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),('Other_Details', other details type:text. Value examples:[None]),]\nTable:Paragraphs\n[('Document_ID', document id type:number. Value examples:[2394, 3, 50123]),('Paragraph_Text', paragraph text type:text. Value examples:[Korea, Somalia, Palestinian Territory]),]\nForeign keys:\nParagraphs.'Document_ID' = Documents.'Document_ID'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ]
+                    ],
+                    "sql": "SELECT 'Paragraph_Text' FROM Paragraphs",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the document text?\nSQL ```sql SELECT 'Paragraph_Text' FROM Paragraphs```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "OK THANKS! GOODBYE",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Bye!",
+                "query": "",
+                "predict": "You're welcome! Have a great day!",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nTable:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),('Other_Details', other details type:text. Value examples:[None]),]\nTable:Paragraphs\n[('Paragraph_ID', paragraph id type:number PRIMARY KEY. Value examples:[7, 9, 65]),('Document_ID', document id type:number. Value examples:[2394, 3, 50123]),('Paragraph_Text', paragraph text type:text. Value examples:[Korea, Somalia, Palestinian Territory]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\nParagraphs.'Document_ID' = Documents.'Document_ID'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Have a great day!"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 99
+    },
+    {
+        "db_name": "cre_Doc_Template_Mgt",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "what are all of the template ids?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT template_id FROM Templates;",
+                "predict": "SELECT Template_ID FROM Templates",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            0
+                        ],
+                        [
+                            1
+                        ],
+                        [
+                            4
+                        ],
+                        [
+                            6
+                        ],
+                        [
+                            7
+                        ],
+                        [
+                            8
+                        ],
+                        [
+                            9
+                        ],
+                        [
+                            10
+                        ],
+                        [
+                            11
+                        ],
+                        [
+                            14
+                        ]
+                    ],
+                    "sql": "SELECT Template_ID FROM Templates",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What are all of the template ids?\nSQL ```sql SELECT Template_ID FROM Templates```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "which of those is not used in a document ",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT template_id FROM Templates EXCEPT SELECT template_id FROM Documents\n\n",
+                "predict": "SELECT T1.Template_ID FROM Templates AS T1 EXCEPT SELECT DISTINCT T1.Template_ID FROM Templates AS T1 INNER JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),]\nTable:Documents\n[('Template_ID', template id type:number. Value examples:[7, 25, 6]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            0
+                        ],
+                        [
+                            9
+                        ],
+                        [
+                            15
+                        ],
+                        [
+                            16
+                        ],
+                        [
+                            18
+                        ],
+                        [
+                            19
+                        ],
+                        [
+                            23
+                        ],
+                        [
+                            24
+                        ]
+                    ],
+                    "sql": "SELECT T1.Template_ID FROM Templates AS T1 EXCEPT SELECT DISTINCT T1.Template_ID FROM Templates AS T1 INNER JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find all template IDs that are used in a document.\nSQL: ```sql SELECT DISTINCT T1.Template_ID FROM Templates AS T1 INNER JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID```\nSubquestion 2: Find all template IDs that are not used in a document.\nSQL: ```sql SELECT T1.Template_ID FROM Templates AS T1 EXCEPT SELECT DISTINCT T1.Template_ID FROM Templates AS T1 INNER JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "are those still effective?\n",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Do you mean the effective-to date of those templates?",
+                "query": "",
+                "predict": "Apologies, I can't answer this question. The database schema doesn't contain information about whether a template is still effective. It only has information about the effective dates.",
+                "rewritten_questions": [
+                    "What are the template IDs that are currently effective?",
+                    "are those still effective?\n"
+                ],
+                "rewritten_outputs": [
+                    "SELECT Template_ID FROM Templates WHERE Date_Effective_To > Date('now')",
+                    "SELECT Template_ID FROM Templates WHERE Template_ID IN (SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents) AND Date_Effective_To > Date('now')"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nTable:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),('Other_Details', other details type:text. Value examples:[None]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "unanswerable",
+                    "answer": "Apologies, I can't answer this question. The database schema doesn't contain information about whether a template is still effective. It only has information about the effective dates.",
+                    "rewrite": [
+                        "What are the template IDs that are currently effective?",
+                        "are those still effective?\n"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT Template_ID FROM Templates WHERE Template_ID IN (SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents) AND Date_Effective_To > Date('now')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the template IDs that are not used in any document.\nSQL: ```sql SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents```\n\nSubquestion 2: Check if those template IDs are still effective.\nSQL: ```sql SELECT Template_ID FROM Templates WHERE Template_ID IN (SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents) AND Date_Effective_To > Date('now')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "yes",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Date_effective_to FROM Templates WHERE template_id IN ( SELECT template_id FROM Templates EXCEPT SELECT template_id FROM Documents)\n\n",
+                "predict": "SELECT Template_ID FROM Templates WHERE Template_ID IN (SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents) AND Date_Effective_To > Date('now')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nTable:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),('Other_Details', other details type:text. Value examples:[None]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT Template_ID FROM Templates WHERE Template_ID IN (SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents) AND Date_Effective_To > Date('now')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the template IDs that are not used in any document.\nSQL: ```sql SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents```\n\nSubquestion 2: Check if those template IDs are still effective.\nSQL: ```sql SELECT Template_ID FROM Templates WHERE Template_ID IN (SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents) AND Date_Effective_To > Date('now')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "how many are used in documents?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM Templates WHERE template_id IN (SELECT template_id FROM Documents)\n\n",
+                "predict": "SELECT COUNT(DISTINCT Template_ID) FROM Documents",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nTable:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),('Other_Details', other details type:text. Value examples:[None]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            12
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT Template_ID) FROM Documents",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the template IDs that are used in documents.\nSQL: ```sql SELECT DISTINCT Template_ID FROM Documents```\n\nSubquestion 2: Count the number of distinct template IDs used in documents.\nSQL: ```sql SELECT COUNT(DISTINCT Template_ID) FROM Documents```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "and how many templates are not used?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM Templates WHERE template_id in (SELECT template_id FROM Templates EXCEPT SELECT template_id FROM Documents)\n\n\n",
+                "predict": "SELECT COUNT(DISTINCT T1.Template_ID) FROM Templates AS T1 EXCEPT SELECT T1.Template_ID FROM Templates AS T1 INNER JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),]\nTable:Documents\n[('Template_ID', template id type:number. Value examples:[7, 25, 6]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT COUNT(DISTINCT T1.Template_ID) FROM Templates AS T1 EXCEPT SELECT T1.Template_ID FROM Templates AS T1 INNER JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the number of templates that are not used in documents.\nSQL: ```sql SELECT COUNT(DISTINCT T1.Template_ID) FROM Templates AS T1 EXCEPT SELECT T1.Template_ID FROM Templates AS T1 INNER JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "what were those IDs again?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT template_id FROM Templates EXCEPT SELECT template_id FROM Documents\n\n\n\n",
+                "predict": "Do you mean the template IDs that are not used in a document or the template IDs that are used in a document?",
+                "rewritten_questions": [
+                    "What are the template IDs that are not used in a document?",
+                    "What are the template IDs that are used in a document?",
+                    "what were those IDs again?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents",
+                    "SELECT DISTINCT T1.Template_ID FROM Templates AS T1 INNER JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID",
+                    "SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nTable:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),('Other_Details', other details type:text. Value examples:[None]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Do you mean the template IDs that are not used in a document or the template IDs that are used in a document?",
+                    "rewrite": [
+                        "What are the template IDs that are not used in a document?",
+                        "What are the template IDs that are used in a document?",
+                        "what were those IDs again?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            0
+                        ],
+                        [
+                            9
+                        ],
+                        [
+                            15
+                        ],
+                        [
+                            16
+                        ],
+                        [
+                            18
+                        ],
+                        [
+                            19
+                        ],
+                        [
+                            23
+                        ],
+                        [
+                            24
+                        ]
+                    ],
+                    "sql": "SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the template IDs that are not used in any documents.\nSQL: ```sql SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents```\n\nSubquestion 2: List the template IDs that are not used in any documents.\nSQL: ```sql SELECT Template_ID FROM Templates EXCEPT SELECT Template_ID FROM Documents```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Bye!",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nTable:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),('Other_Details', other details type:text. Value examples:[None]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 86
+    },
+    {
+        "db_name": "world_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What is the population in Asian continent?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT sum(Population) FROM country where Continent = 'Asia'",
+                "predict": "Apologies, I can't answer this question. The database only contains information about the population of individual countries, not continents. ",
+                "rewritten_questions": [
+                    "What is the total population of all countries in Asia?",
+                    "What is the population in Asian continent?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT SUM(Population) FROM country WHERE Continent = 'Asia'",
+                    "SELECT SUM(Population) FROM country WHERE Continent = 'Asia'"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:country\n[('Code', code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Name', name type:text. Value examples:[Aruba, Afghanistan, Angola]),('Continent', continent type:text. Value examples:[North America, Asia, Africa]),('Region', region type:text. Value examples:[Caribbean, Southern and Central Asia, Central Africa]),('SurfaceArea', surface area type:number. Value examples:[193.0, 652090.0, 1246700.0]),('IndepYear', indepdent year type:number. Value examples:[None, 1919, 1975]),('Population', population type:number. Value examples:[103000, 22720000, 12878000]),('LifeExpectancy', life expectancy type:number. Value examples:[78.4, 45.9, 38.3]),('GNP', gnp type:number. Value examples:[828.0, 5976.0, 6648.0]),('GNPOld', gnp old type:number. Value examples:[793.0, None, 7984.0]),]\nForeign keys:\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "unanswerable",
+                    "answer": "Apologies, I can't answer this question. The database only contains information about the population of individual countries, not continents. ",
+                    "rewrite": [
+                        "What is the total population of all countries in Asia?",
+                        "What is the population in Asian continent?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            3705025700
+                        ]
+                    ],
+                    "sql": "SELECT SUM(Population) FROM country WHERE Continent = 'Asia'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the population in Asian continent? \nSQL ```sql SELECT SUM(Population) FROM country WHERE Continent = 'Asia'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Which language has 9.5%?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Language FROM countrylanguage where Percentage = 9.5",
+                "predict": "SELECT Language FROM countrylanguage WHERE Percentage = 9.5",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:country\n[('Code', code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Name', name type:text. Value examples:[Aruba, Afghanistan, Angola]),('Continent', continent type:text. Value examples:[North America, Asia, Africa]),('Population', population type:number. Value examples:[103000, 22720000, 12878000]),]\nTable:countrylanguage\n[('CountryCode', countrycode type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Language', language type:text. Value examples:[Dutch, English, Papiamento]),('Percentage', percentage type:number. Value examples:[5.3, 9.5, 76.7]),]\nForeign keys:\ncountrylanguage.'CountryCode' = country.'Code'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "English"
+                        ],
+                        [
+                            "Afrikaans"
+                        ]
+                    ],
+                    "sql": "SELECT Language FROM countrylanguage WHERE Percentage = 9.5",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the language with a percentage of 9.5%.\nSQL: ```sql SELECT Language FROM countrylanguage WHERE Percentage = 9.5```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What is the life expectancy rate in Angola?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT LifeExpectancy FROM country where LocalName = 'Angola'",
+                "predict": "SELECT LifeExpectancy FROM country WHERE Name = 'Angola'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:country\n[('Code', code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Name', name type:text. Value examples:[Aruba, Afghanistan, Angola]),('Continent', continent type:text. Value examples:[North America, Asia, Africa]),('Region', region type:text. Value examples:[Caribbean, Southern and Central Asia, Central Africa]),('SurfaceArea', surface area type:number. Value examples:[193.0, 652090.0, 1246700.0]),('IndepYear', indepdent year type:number. Value examples:[None, 1919, 1975]),('Population', population type:number. Value examples:[103000, 22720000, 12878000]),('LifeExpectancy', life expectancy type:number. Value examples:[78.4, 45.9, 38.3]),('GNP', gnp type:number. Value examples:[828.0, 5976.0, 6648.0]),('GNPOld', gnp old type:number. Value examples:[793.0, None, 7984.0]),('LocalName', local name type:text. Value examples:[Aruba, Afganistan/Afqanestan, Angola]),('GovernmentForm', government form type:text. Value examples:[Nonmetropolitan Territory of The Netherlands, Islamic Emirate, Republic]),('HeadOfState', head of state type:text. Value examples:[Beatrix, Mohammad Omar, Jos\u00e9 Eduardo dos Santos]),('Capital', capital type:number. Value examples:[129, 1, 56]),('Code2', code2 type:text. Value examples:[AW, AF, AO]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            38.3
+                        ]
+                    ],
+                    "sql": "SELECT LifeExpectancy FROM country WHERE Name = 'Angola'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the life expectancy rate in Angola.\nSQL: ```sql SELECT LifeExpectancy FROM country WHERE Name = 'Angola'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What is the GNP rate of Aruba?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "did you mean the GNP or GNP old?",
+                "query": "",
+                "predict": "SELECT GNP FROM country WHERE Name = 'Aruba'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:country\n[('Code', code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Name', name type:text. Value examples:[Aruba, Afghanistan, Angola]),('Continent', continent type:text. Value examples:[North America, Asia, Africa]),('Region', region type:text. Value examples:[Caribbean, Southern and Central Asia, Central Africa]),('SurfaceArea', surface area type:number. Value examples:[193.0, 652090.0, 1246700.0]),('IndepYear', indepdent year type:number. Value examples:[None, 1919, 1975]),('Population', population type:number. Value examples:[103000, 22720000, 12878000]),('LifeExpectancy', life expectancy type:number. Value examples:[78.4, 45.9, 38.3]),('GNP', gnp type:number. Value examples:[828.0, 5976.0, 6648.0]),('LocalName', local name type:text. Value examples:[Aruba, Afganistan/Afqanestan, Angola]),]\nTable:countrylanguage\n[('CountryCode', countrycode type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Language', language type:text. Value examples:[Dutch, English, Papiamento]),('IsOfficial', is official type:text. Value examples:[T, F]),('Percentage', percentage type:number. Value examples:[5.3, 9.5, 76.7]),]\nForeign keys:\ncountrylanguage.'CountryCode' = country.'Code'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            828.0
+                        ]
+                    ],
+                    "sql": "SELECT GNP FROM country WHERE Name = 'Aruba'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the GNP rate of Aruba?\nSQL ```sql SELECT GNP FROM country WHERE Name = 'Aruba'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "GNP",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT GNP FROM country where LocalName = 'Angola'",
+                "predict": "Did you mean GNP or GNPOld?",
+                "rewritten_questions": [
+                    "What is the GNP rate of Aruba?",
+                    "What is the GNPOld rate of Aruba?",
+                    "GNP"
+                ],
+                "rewritten_outputs": [
+                    "SELECT GNP FROM country WHERE Name = 'Aruba'",
+                    "SELECT GNPOld FROM country WHERE Name = 'Aruba'",
+                    "SELECT GNP FROM country WHERE Name = 'Aruba'"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:country\n[('Code', code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Name', name type:text. Value examples:[Aruba, Afghanistan, Angola]),('Continent', continent type:text. Value examples:[North America, Asia, Africa]),('Region', region type:text. Value examples:[Caribbean, Southern and Central Asia, Central Africa]),('SurfaceArea', surface area type:number. Value examples:[193.0, 652090.0, 1246700.0]),('IndepYear', indepdent year type:number. Value examples:[None, 1919, 1975]),('Population', population type:number. Value examples:[103000, 22720000, 12878000]),('LifeExpectancy', life expectancy type:number. Value examples:[78.4, 45.9, 38.3]),('GNP', gnp type:number. Value examples:[828.0, 5976.0, 6648.0]),('GNPOld', gnp old type:number. Value examples:[793.0, None, 7984.0]),]\nForeign keys:\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Did you mean GNP or GNPOld?",
+                    "rewrite": [
+                        "What is the GNP rate of Aruba?",
+                        "What is the GNPOld rate of Aruba?",
+                        "GNP"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            828.0
+                        ]
+                    ],
+                    "sql": "SELECT GNP FROM country WHERE Name = 'Aruba'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the GNP of Aruba?\nSQL ```sql SELECT GNP FROM country WHERE Name = 'Aruba'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What is the GNP old of Afghanistan?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT GNPOld FROM country where Name = 'Afghanistan'",
+                "predict": "SELECT GNPOld FROM country WHERE LocalName = 'Afghanistan'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:country\n[('Code', code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Name', name type:text. Value examples:[Aruba, Afghanistan, Angola]),('Continent', continent type:text. Value examples:[North America, Asia, Africa]),('Region', region type:text. Value examples:[Caribbean, Southern and Central Asia, Central Africa]),('SurfaceArea', surface area type:number. Value examples:[193.0, 652090.0, 1246700.0]),('IndepYear', indepdent year type:number. Value examples:[None, 1919, 1975]),('Population', population type:number. Value examples:[103000, 22720000, 12878000]),('LifeExpectancy', life expectancy type:number. Value examples:[78.4, 45.9, 38.3]),('GNPOld', gnp old type:number. Value examples:[793.0, None, 7984.0]),('LocalName', local name type:text. Value examples:[Aruba, Afganistan/Afqanestan, Angola]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT GNPOld FROM country WHERE LocalName = 'Afghanistan'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the GNP old of Afghanistan.\nSQL: ```sql SELECT GNPOld FROM country WHERE LocalName = 'Afghanistan'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "goodbye.",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:country\n[('Code', code type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Name', name type:text. Value examples:[Aruba, Afghanistan, Angola]),('Continent', continent type:text. Value examples:[North America, Asia, Africa]),('Region', region type:text. Value examples:[Caribbean, Southern and Central Asia, Central Africa]),('Population', population type:number. Value examples:[103000, 22720000, 12878000]),('LifeExpectancy', life expectancy type:number. Value examples:[78.4, 45.9, 38.3]),('GNP', gnp type:number. Value examples:[828.0, 5976.0, 6648.0]),('GNPOld', gnp old type:number. Value examples:[793.0, None, 7984.0]),('LocalName', local name type:text. Value examples:[Aruba, Afganistan/Afqanestan, Angola]),('GovernmentForm', government form type:text. Value examples:[Nonmetropolitan Territory of The Netherlands, Islamic Emirate, Republic]),]\nTable:countrylanguage\n[('CountryCode', countrycode type:text PRIMARY KEY. Value examples:[ABW, AFG, AGO]),('Language', language type:text. Value examples:[Dutch, English, Papiamento]),('IsOfficial', is official type:text. Value examples:[T, F]),('Percentage', percentage type:number. Value examples:[5.3, 9.5, 76.7]),]\nForeign keys:\ncountrylanguage.'CountryCode' = country.'Code'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 87
+    },
+    {
+        "db_name": "battle_death",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How many battles did not lose any ship with tonnage 225?\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM battle WHERE id NOT IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
+                "predict": "Apologies, I can't answer this question. The database only contains information about battles and ships, and doesn't have information about the number of ships lost in each battle.  I can only tell you which battles ships were lost in.",
+                "rewritten_questions": [
+                    "How many battles did not lose any ship with tonnage 225?\n"
+                ],
+                "rewritten_outputs": [
+                    "SELECT COUNT(DISTINCT T1.id) FROM battle AS T1 WHERE T1.id NOT IN ( SELECT DISTINCT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225' )"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:battle\n[('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Battle of Adrianople, Battle of Serres, Battle of Rusion]),('date', date type:text. Value examples:[14 April 1205, June 1205, 31 January 1206]),('bulgarian_commander', bulgarian commander type:text. Value examples:[Kaloyan, Unknown, Boril]),('latin_commander', latin commander type:text. Value examples:[Baldwin I, Unknown, Thierry de Termond]),('result', result type:text. Value examples:[Bulgarian victory, Latin victory, Two Year Truce]),]\nTable:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\nship.'lost_in_battle' = battle.'id'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "unanswerable",
+                    "answer": "Apologies, I can't answer this question. The database only contains information about battles and ships, and doesn't have information about the number of ships lost in each battle.  I can only tell you which battles ships were lost in.",
+                    "rewrite": [
+                        "How many battles did not lose any ship with tonnage 225?\n"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            7
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT T1.id) FROM battle AS T1 WHERE T1.id NOT IN ( SELECT DISTINCT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225' )",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the battles that lost ships with tonnage 225.\nSQL: ```sql SELECT DISTINCT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225'```\nSubquestion 2: Find the battles that did not lose any ship with tonnage 225.\nSQL: ```sql SELECT COUNT(DISTINCT T1.id) FROM battle AS T1 WHERE T1.id NOT IN ( SELECT DISTINCT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225' )```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many battles did lose a ship with tonnage 225?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM battle WHERE id IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
+                "predict": "SELECT COUNT(DISTINCT lost_in_battle) FROM ship WHERE tonnage = '225'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:battle\n[('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Battle of Adrianople, Battle of Serres, Battle of Rusion]),('date', date type:text. Value examples:[14 April 1205, June 1205, 31 January 1206]),('bulgarian_commander', bulgarian commander type:text. Value examples:[Kaloyan, Unknown, Boril]),('latin_commander', latin commander type:text. Value examples:[Baldwin I, Unknown, Thierry de Termond]),('result', result type:text. Value examples:[Bulgarian victory, Latin victory, Two Year Truce]),]\nTable:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\nship.'lost_in_battle' = battle.'id'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT lost_in_battle) FROM ship WHERE tonnage = '225'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the battles that lost a ship with tonnage 225.\nSQL: ```sql SELECT DISTINCT lost_in_battle FROM ship WHERE tonnage = '225'```\nSubquestion 2: Count the number of battles that lost a ship with tonnage 225.\nSQL: ```sql SELECT COUNT(DISTINCT lost_in_battle) FROM ship WHERE tonnage = '225'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many ships have a tonnage of 225?\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM ship WHERE tonnage  =  '225'",
+                "predict": "SELECT COUNT(*) FROM ship WHERE tonnage = '225'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM ship WHERE tonnage = '225'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: How many ships have a tonnage of 225?\nSQL ```sql SELECT COUNT(*) FROM ship WHERE tonnage = '225'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Do any ships have a tonnage above 225?\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM ship WHERE tonnage  >  '225'",
+                "predict": "SELECT CASE WHEN EXISTS (SELECT 1 FROM ship WHERE tonnage > '225') THEN 1 ELSE 0 END",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT CASE WHEN EXISTS (SELECT 1 FROM ship WHERE tonnage > '225') THEN 1 ELSE 0 END",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the ships with tonnage above 225.\nSQL: ```sql SELECT * FROM ship WHERE tonnage > '225'```\n\nSubquestion 2: Check if there are any ships with tonnage above 225.\nSQL: ```sql SELECT CASE WHEN EXISTS (SELECT 1 FROM ship WHERE tonnage > '225') THEN 1 ELSE 0 END```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Who won in the battle when the ship with a tonnage of 225 was sunk?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT result FROM battle WHERE id IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
+                "predict": "The question is ambiguous. Do you mean the battle where a ship with a tonnage of 225 was lost, or the battle where a ship with a tonnage of 225 was sunk? Please clarify.",
+                "rewritten_questions": [
+                    "Who won in the battle where a ship with a tonnage of 225 was lost?",
+                    "Who won in the battle where a ship with a tonnage of 225 was sunk?",
+                    "Who won in the battle when the ship with a tonnage of 225 was sunk?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT result FROM battle WHERE id = (SELECT lost_in_battle FROM ship WHERE tonnage = '225')",
+                    "SELECT T1.result FROM battle AS T1 WHERE T1.id IN ( SELECT T2.id FROM battle AS T2 INNER JOIN ship AS T3 ON T2.id = T3.lost_in_battle WHERE T3.tonnage = '225' AND T3.disposition_of_ship = 'Wrecked' )",
+                    "SELECT T1.result FROM battle AS T1 WHERE T1.id IN ( SELECT T2.id FROM battle AS T2 INNER JOIN ship AS T3 ON T2.id = T3.lost_in_battle WHERE T3.tonnage = '225' AND T3.disposition_of_ship = 'Wrecked' )"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:battle\n[('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Battle of Adrianople, Battle of Serres, Battle of Rusion]),('date', date type:text. Value examples:[14 April 1205, June 1205, 31 January 1206]),('bulgarian_commander', bulgarian commander type:text. Value examples:[Kaloyan, Unknown, Boril]),('latin_commander', latin commander type:text. Value examples:[Baldwin I, Unknown, Thierry de Termond]),('result', result type:text. Value examples:[Bulgarian victory, Latin victory, Two Year Truce]),]\nTable:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\nship.'lost_in_battle' = battle.'id'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "The question is ambiguous. Do you mean the battle where a ship with a tonnage of 225 was lost, or the battle where a ship with a tonnage of 225 was sunk? Please clarify.",
+                    "rewrite": [
+                        "Who won in the battle where a ship with a tonnage of 225 was lost?",
+                        "Who won in the battle where a ship with a tonnage of 225 was sunk?",
+                        "Who won in the battle when the ship with a tonnage of 225 was sunk?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T1.result FROM battle AS T1 WHERE T1.id IN ( SELECT T2.id FROM battle AS T2 INNER JOIN ship AS T3 ON T2.id = T3.lost_in_battle WHERE T3.tonnage = '225' AND T3.disposition_of_ship = 'Wrecked' )",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the battle ID where a ship with tonnage 225 was sunk.\nSQL: ```sql SELECT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225' AND T2.disposition_of_ship = 'Wrecked'```\nSubquestion 2: Find the winner of the battle with the ID found in the previous subquestion.\nSQL: ```sql SELECT T1.result FROM battle AS T1 WHERE T1.id IN ( SELECT T2.id FROM battle AS T2 INNER JOIN ship AS T3 ON T2.id = T3.lost_in_battle WHERE T3.tonnage = '225' AND T3.disposition_of_ship = 'Wrecked' )```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:battle\n[('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Battle of Adrianople, Battle of Serres, Battle of Rusion]),('date', date type:text. Value examples:[14 April 1205, June 1205, 31 January 1206]),('bulgarian_commander', bulgarian commander type:text. Value examples:[Kaloyan, Unknown, Boril]),('latin_commander', latin commander type:text. Value examples:[Baldwin I, Unknown, Thierry de Termond]),('result', result type:text. Value examples:[Bulgarian victory, Latin victory, Two Year Truce]),]\nTable:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\nship.'lost_in_battle' = battle.'id'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 51
+    },
+    {
+        "db_name": "battle_death",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How many battles did not lose any ship with tonnage 225?\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM battle WHERE id NOT IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
+                "predict": "SELECT COUNT(DISTINCT T1.id) FROM battle AS T1 WHERE T1.id NOT IN ( SELECT DISTINCT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225' )",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:battle\n[('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Battle of Adrianople, Battle of Serres, Battle of Rusion]),('date', date type:text. Value examples:[14 April 1205, June 1205, 31 January 1206]),('bulgarian_commander', bulgarian commander type:text. Value examples:[Kaloyan, Unknown, Boril]),('latin_commander', latin commander type:text. Value examples:[Baldwin I, Unknown, Thierry de Termond]),('result', result type:text. Value examples:[Bulgarian victory, Latin victory, Two Year Truce]),]\nTable:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nTable:death\n[('caused_by_ship_id', caused by ship id type:number. Value examples:[1, 2, 3]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('note', note type:text. Value examples:[Dantewada, Chhattisgarh, Erraboru, Chhattisgarh, East Champaran, Bihar]),('killed', killed type:number. Value examples:[8, 3, 25]),('injured', injured type:number. Value examples:[0, 9, 5]),]\nForeign keys:\nship.'lost_in_battle' = battle.'id'\ndeath.'caused_by_ship_id' = ship.'id'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            7
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT T1.id) FROM battle AS T1 WHERE T1.id NOT IN ( SELECT DISTINCT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225' )",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the battles that lost ships with tonnage 225.\nSQL: ```sql SELECT DISTINCT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225'```\nSubquestion 2: Find the battles that did not lose any ship with tonnage 225.\nSQL: ```sql SELECT COUNT(DISTINCT T1.id) FROM battle AS T1 WHERE T1.id NOT IN ( SELECT DISTINCT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225' )```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many battles did lose a ship with tonnage 225?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM battle WHERE id IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
+                "predict": "SELECT COUNT(DISTINCT lost_in_battle) FROM ship WHERE tonnage = '225'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:battle\n[('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Battle of Adrianople, Battle of Serres, Battle of Rusion]),('date', date type:text. Value examples:[14 April 1205, June 1205, 31 January 1206]),('bulgarian_commander', bulgarian commander type:text. Value examples:[Kaloyan, Unknown, Boril]),('latin_commander', latin commander type:text. Value examples:[Baldwin I, Unknown, Thierry de Termond]),('result', result type:text. Value examples:[Bulgarian victory, Latin victory, Two Year Truce]),]\nTable:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\nship.'lost_in_battle' = battle.'id'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT lost_in_battle) FROM ship WHERE tonnage = '225'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the battles that lost a ship with tonnage 225.\nSQL: ```sql SELECT DISTINCT lost_in_battle FROM ship WHERE tonnage = '225'```\nSubquestion 2: Count the number of battles that lost a ship with tonnage 225.\nSQL: ```sql SELECT COUNT(DISTINCT lost_in_battle) FROM ship WHERE tonnage = '225'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many ships have a tonnage of 225?\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM ship WHERE tonnage  =  '225'",
+                "predict": "SELECT COUNT(*) FROM ship WHERE tonnage = '225'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM ship WHERE tonnage = '225'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: How many ships have a tonnage of 225?\nSQL ```sql SELECT COUNT(*) FROM ship WHERE tonnage = '225'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Do any ships have a tonnage above 225?\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM ship WHERE tonnage  >  '225'",
+                "predict": "SELECT CASE WHEN EXISTS (SELECT 1 FROM ship WHERE tonnage > '225') THEN 1 ELSE 0 END",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT CASE WHEN EXISTS (SELECT 1 FROM ship WHERE tonnage > '225') THEN 1 ELSE 0 END",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the ships with tonnage above 225.\nSQL: ```sql SELECT * FROM ship WHERE tonnage > '225'```\n\nSubquestion 2: Check if there are any ships with tonnage above 225.\nSQL: ```sql SELECT CASE WHEN EXISTS (SELECT 1 FROM ship WHERE tonnage > '225') THEN 1 ELSE 0 END```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Who won in the battle when the ship with a tonnage of 225 was sunk?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT result FROM battle WHERE id IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
+                "predict": "The question is ambiguous. Do you mean the battle where a ship with a tonnage of 225 was lost, or the battle where a ship with a tonnage of 225 was sunk? Please clarify.",
+                "rewritten_questions": [
+                    "Who won in the battle where a ship with a tonnage of 225 was lost?",
+                    "Who won in the battle where a ship with a tonnage of 225 was sunk?",
+                    "Who won in the battle when the ship with a tonnage of 225 was sunk?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT result FROM battle WHERE id = (SELECT lost_in_battle FROM ship WHERE tonnage = '225')",
+                    "SELECT T1.result FROM battle AS T1 WHERE T1.id IN ( SELECT T2.id FROM battle AS T2 INNER JOIN ship AS T3 ON T2.id = T3.lost_in_battle WHERE T3.tonnage = '225' AND T3.disposition_of_ship = 'Wrecked' )",
+                    "SELECT T1.result FROM battle AS T1 WHERE T1.id IN ( SELECT T2.id FROM battle AS T2 INNER JOIN ship AS T3 ON T2.id = T3.lost_in_battle WHERE T3.tonnage = '225' AND T3.disposition_of_ship = 'Wrecked' )"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:battle\n[('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Battle of Adrianople, Battle of Serres, Battle of Rusion]),('date', date type:text. Value examples:[14 April 1205, June 1205, 31 January 1206]),('bulgarian_commander', bulgarian commander type:text. Value examples:[Kaloyan, Unknown, Boril]),('latin_commander', latin commander type:text. Value examples:[Baldwin I, Unknown, Thierry de Termond]),('result', result type:text. Value examples:[Bulgarian victory, Latin victory, Two Year Truce]),]\nTable:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\nship.'lost_in_battle' = battle.'id'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "The question is ambiguous. Do you mean the battle where a ship with a tonnage of 225 was lost, or the battle where a ship with a tonnage of 225 was sunk? Please clarify.",
+                    "rewrite": [
+                        "Who won in the battle where a ship with a tonnage of 225 was lost?",
+                        "Who won in the battle where a ship with a tonnage of 225 was sunk?",
+                        "Who won in the battle when the ship with a tonnage of 225 was sunk?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T1.result FROM battle AS T1 WHERE T1.id IN ( SELECT T2.id FROM battle AS T2 INNER JOIN ship AS T3 ON T2.id = T3.lost_in_battle WHERE T3.tonnage = '225' AND T3.disposition_of_ship = 'Wrecked' )",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the battle ID where a ship with tonnage 225 was sunk.\nSQL: ```sql SELECT T1.id FROM battle AS T1 INNER JOIN ship AS T2 ON T1.id = T2.lost_in_battle WHERE T2.tonnage = '225' AND T2.disposition_of_ship = 'Wrecked'```\nSubquestion 2: Find the winner of the battle with the ID found in the previous subquestion.\nSQL: ```sql SELECT T1.result FROM battle AS T1 WHERE T1.id IN ( SELECT T2.id FROM battle AS T2 INNER JOIN ship AS T3 ON T2.id = T3.lost_in_battle WHERE T3.tonnage = '225' AND T3.disposition_of_ship = 'Wrecked' )```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:battle\n[('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Battle of Adrianople, Battle of Serres, Battle of Rusion]),('date', date type:text. Value examples:[14 April 1205, June 1205, 31 January 1206]),('bulgarian_commander', bulgarian commander type:text. Value examples:[Kaloyan, Unknown, Boril]),('latin_commander', latin commander type:text. Value examples:[Baldwin I, Unknown, Thierry de Termond]),('result', result type:text. Value examples:[Bulgarian victory, Latin victory, Two Year Truce]),]\nTable:ship\n[('lost_in_battle', lost in battle type:number. Value examples:[8, 7, 6]),('id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('name', name type:text. Value examples:[Lettice, Bon Accord, Mary]),('tonnage', tonnage type:text. Value examples:[t, 391, 225]),('ship_type', ship type type:text. Value examples:[Brig, 18-gun Brig, 8 gun Brig]),('location', location type:text. Value examples:[English Channel, SW Approaches, Mid-Atlantic]),('disposition_of_ship', disposition of ship type:text. Value examples:[Captured, Wrecked, Scuttled]),]\nForeign keys:\nship.'lost_in_battle' = battle.'id'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 51
+    }
+]

@@ -62,8 +62,10 @@ def schema_select(dbname, table_config):
             desc += "Table:" + table_name + "\n["
 
             for column_index, column_value in enumerate(column_names_original):
+
                 if (column_value[0] == table_index
                     and (table_config[table_name] == "keep_all"
+                    or (isinstance(table_config[table_name], dict) and table_config[table_name].get('keep_all') == "keep_all")
                     or column_value[1] in table_config[table_name]
                     )):
                     isp = " PRIMARY KEY" if column_index in primarys else ""

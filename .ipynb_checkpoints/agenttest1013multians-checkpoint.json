@@ -1,0 +1,665 @@
+[
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What are the name of amc?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean the full name of the car maker amc?",
+                "query": "",
+                "predict": "Do you mean 'amc' as in model type or carmaker? Did you mean the full name of the carmaker amc?",
+                "rewritten_questions": [
+                    "What is the full name of the carmaker 'amc'",
+                    "What is the full name of the carmaker which made the model type named 'amc'",
+                    "What are the name of amc?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T1.FullName FROM car_makers AS T1 WHERE T1.Maker = 'amc'",
+                    "SELECT T2.FullName FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id WHERE T1.Model = 'amc'",
+                    "SELECT T1.FullName FROM car_makers AS T1 WHERE T1.Id = ( SELECT T2.Id FROM car_makers AS T2 WHERE T2.Maker = 'amc' )"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Do you mean 'amc' as in model type or carmaker? Did you mean the full name of the carmaker amc?",
+                    "rewrite": [
+                        "What is the full name of the carmaker 'amc'",
+                        "What is the full name of the carmaker which made the model type named 'amc'",
+                        "What are the name of amc?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            "American Motor Company"
+                        ]
+                    ],
+                    "sql": "SELECT T1.FullName FROM car_makers AS T1 WHERE T1.Id = ( SELECT T2.Id FROM car_makers AS T2 WHERE T2.Maker = 'amc' )",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the Id of amc.\nSQL ```sql SELECT T1.Id FROM car_makers AS T1 WHERE T1.Maker = 'amc'```\nSubquestion 2: What are the name of amc?\nSQL ```sql SELECT T1.FullName FROM car_makers AS T1 WHERE T1.Id = ( SELECT T2.Id FROM car_makers AS T2 WHERE T2.Maker = 'amc' )```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Yes",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select fullname from car_makers where maker = \"amc\"",
+                "predict": "SELECT FullName FROM car_makers WHERE Maker = 'amc'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nForeign keys:\nmodel_list.'Maker' = car_makers.'Id'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T2.FullName FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker WHERE T1.Maker = 'amc'",
+                    "executable": false,
+                    "log": "no such column: T2.FullName",
+                    "process": "Subquestion 1: What is the full name of the car maker amc?\nSQL ```sql SELECT T2.FullName FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Id = T2.Maker WHERE T1.Maker = 'amc'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": {
+                    "result": [
+                        [
+                            "American Motor Company"
+                        ]
+                    ],
+                    "sql": "SELECT FullName FROM car_makers WHERE Maker = 'amc'",
+                    "executable": true,
+                    "log": ""
+                }
+            },
+            {
+                "isuser": true,
+                "text": "What type of car making by german?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Sorry we don't have information about type of car. Can you clarify your question?",
+                "query": "",
+                "predict": "Sorry we don't have information about type of car. Can you clarify your question? Do you mean the car models produced in Germany or the car makers in Germany?",
+                "rewritten_questions": [
+                    "What car models are produced in Germany?",
+                    "What car makers are from Germany?",
+                    "What type of car making by german?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Maker = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                    "SELECT FullName FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                    "SELECT T1.Make FROM car_names AS T1 INNER JOIN model_list AS T2 ON T1.Model = T2.Model WHERE T2.Maker IN (SELECT Maker FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany'))"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Sorry we don't have information about type of car. Can you clarify your question? Do you mean the car models produced in Germany or the car makers in Germany?",
+                    "rewrite": [
+                        "What car models are produced in Germany?",
+                        "What car makers are from Germany?",
+                        "What type of car making by german?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T1.Make FROM car_names AS T1 INNER JOIN model_list AS T2 ON T1.Model = T2.Model WHERE T2.Maker IN (SELECT Maker FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany'))",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the country ID for Germany.\nSQL: ```sql SELECT Continent FROM countries WHERE CountryName = 'germany'```\n\nSubquestion 2: Find the car makers from Germany.\nSQL: ```sql SELECT Maker FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')```\n\nSubquestion 3: Find the models made by car makers from Germany.\nSQL: ```sql SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.Maker = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')```\n\nSubquestion 4: Find the names of the models made by car makers from Germany.\nSQL: ```sql SELECT T1.Make FROM car_names AS T1 INNER JOIN model_list AS T2 ON T1.Model = T2.Model WHERE T2.Maker IN (SELECT Maker FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany'))```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What kind of car is produced in Germany?",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean the car models produced in Germany?",
+                "query": "",
+                "predict": "Do you mean the car models produced in Germany or the car makers in Germany?",
+                "rewritten_questions": [
+                    "What are the car models produced in Germany?",
+                    "What are the car makers in Germany?",
+                    "What kind of car is produced in Germany?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = 'Germany'",
+                    "SELECT FullName FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                    "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = 'germany'"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Do you mean the car models produced in Germany or the car makers in Germany?",
+                    "rewrite": [
+                        "What are the car models produced in Germany?",
+                        "What are the car makers in Germany?",
+                        "What kind of car is produced in Germany?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = 'germany'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the car makers in Germany.\nSQL: ```sql SELECT T1.FullName FROM car_makers AS T1 INNER JOIN countries AS T2 ON T1.Country = T2.CountryName WHERE T2.CountryName = 'germany'```\n\nSubquestion 2: Find the models made by those car makers.\nSQL: ```sql SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = 'germany'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Yes",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T3.model FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T1.countryname = \"germany\"",
+                "predict": "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\ncar_names.'Model' = model_list.'Model'\ncars_data.'Id' = car_names.'MakeId'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the country code for Germany.\nSQL: ```sql SELECT Continent FROM countries WHERE CountryName = 'germany'```\n\nSubquestion 2: Find the car makers from Germany.\nSQL: ```sql SELECT FullName FROM car_makers WHERE Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')```\n\nSubquestion 3: Find the car models made by car makers from Germany.\nSQL: ```sql SELECT T2.Model FROM car_makers AS T1 INNER JOIN model_list AS T2 ON T1.FullName = T2.Maker WHERE T1.Country = (SELECT Continent FROM countries WHERE CountryName = 'germany')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What are the model id of BMW?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT modelid from model_list where model = \"bmw\"",
+                "predict": "SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'bmw')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\ncars_data.'Id' = car_names.'MakeId'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            3
+                        ]
+                    ],
+                    "sql": "SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'bmw')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the ID of the car maker BMW.\nSQL: ```sql SELECT Id FROM car_makers WHERE Maker = 'bmw'```\n\nSubquestion 2: Find the model IDs of cars made by the car maker with the ID found in the previous step.\nSQL: ```sql SELECT ModelId FROM model_list WHERE Maker = (SELECT Id FROM car_makers WHERE Maker = 'bmw')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What are the id and names of the countries which have more than 3 cars makers or produce the 'flat' model?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.countryId HAVING count(*)  >  3 UNION SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T3.Model  =  'fiat';",
+                "predict": "I'm sorry, I can't answer your question. The database doesn't have information about the number of car makers per country. It also doesn't have information about the 'flat' model. Can you clarify your question?",
+                "rewritten_questions": [
+                    "What are the names of the countries that have more than 3 car makers?",
+                    "What are the names of the countries that produce the 'flat' model?",
+                    "What are the id and names of the countries which have more than 3 cars makers or produce the 'flat' model?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T1.CountryName FROM countries AS T1 INNER JOIN (     SELECT T1.CountryId     FROM countries AS T1     INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country     GROUP BY T1.CountryId     HAVING COUNT(T2.Id) > 3 ) AS T2 ON T1.CountryId = T2.CountryId",
+                    "SELECT T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'",
+                    "SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING COUNT(DISTINCT T2.Maker) > 3 UNION SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\ncars_data.'Id' = car_names.'MakeId'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "I'm sorry, I can't answer your question. The database doesn't have information about the number of car makers per country. It also doesn't have information about the 'flat' model. Can you clarify your question?",
+                    "rewrite": [
+                        "What are the names of the countries that have more than 3 car makers?",
+                        "What are the names of the countries that produce the 'flat' model?",
+                        "What are the id and names of the countries which have more than 3 cars makers or produce the 'flat' model?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            1,
+                            "usa"
+                        ],
+                        [
+                            2,
+                            "germany"
+                        ],
+                        [
+                            4,
+                            "japan"
+                        ]
+                    ],
+                    "sql": "SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING COUNT(DISTINCT T2.Maker) > 3 UNION SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the countries that have more than 3 car makers.\nSQL: ```sql SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING COUNT(DISTINCT T2.Maker) > 3```\nSubquestion 2: Find the countries that produce the 'flat' model.\nSQL: ```sql SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'```\nSubquestion 3: Combine the results of subquestion 1 and 2.\nSQL: ```sql SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country GROUP BY T1.CountryId HAVING COUNT(DISTINCT T2.Maker) > 3 UNION SELECT T1.CountryId, T1.CountryName FROM countries AS T1 INNER JOIN car_makers AS T2 ON T1.CountryId = T2.Country INNER JOIN model_list AS T3 ON T2.Id = T3.Maker WHERE T3.Model = 'flat'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "bye",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nTable:cars_data\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('MPG', mpg type:text. Value examples:[18, 15, 16]),('Cylinders', cylinders type:number. Value examples:[8, 4, 6]),('Edispl', edispl type:number. Value examples:[307.0, 350.0, 318.0]),('Horsepower', horsepower type:text. Value examples:[130, 165, 150]),('Weight', weight type:number. Value examples:[3504, 3693, 3436]),('Accelerate', accelerate type:number. Value examples:[12.0, 11.5, 11.0]),('Year', year type:number. Value examples:[1970, 1971, 1972]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\ncars_data.'Id' = car_names.'MakeId'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?",
+                    "rewrite": []
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 97
+    },
+    {
+        "db_name": "dog_kennels",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "What is the phone number of the professional who has done the most treatment.",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id order by count(*)  desc limit 1",
+                "predict": "Do you mean the home phone number or the cell number? Please clarify.",
+                "rewritten_questions": [
+                    "What is the home phone number of the professional who has done the most treatment?",
+                    "What is the cell number of the professional who has done the most treatment?",
+                    "What is the phone number of the professional who has done the most treatment."
+                ],
+                "rewritten_outputs": [
+                    "SELECT T2.home_phone FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1",
+                    "SELECT T2.cell_number FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1",
+                    "SELECT T2.home_phone FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:Professionals\n[('professional_id', professional id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('first_name', first name type:text. Value examples:[Taryn, Jayson, Olaf]),('street', street type:text. Value examples:[6915 Oberbrunner Point Suite 491\nGleasonville, LA , 88665 Terence Lodge Apt. 904\nCorneliusfort, NC 194, 68589 Bradly Manor\nNew Audrey, IN 91497]),('city', city type:text. Value examples:[West Heidi, North Odellfurt, Jaceton]),('state', state type:text. Value examples:[Indiana, Connecticut, Wisconsin]),('zip_code', zip code type:text. Value examples:[06646, 43129, 77129]),('last_name', last name type:text. Value examples:[Braun, Ullrich, Watsica]),('email_address', email address type:text. Value examples:[deanna.schuster@example.com, lucile.shanahan@example.org, uboehm@example.org]),('home_phone', home phone type:text. Value examples:[+71(6)2898266914, +02(1)0259033559, 325-155-0801x7005]),('cell_number', cell number type:text. Value examples:[(275)939-2435x80863, 889-940-2676, (369)908-7311x065]),]\nTable:Treatments\n[('treatment_id', treatment id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('dog_id', dog id type:number. Value examples:[14, 4, 2]),('professional_id', professional id type:number. Value examples:[9, 10, 4]),('treatment_type_code', treatment type code type:text. Value examples:[WALK, VAC, EXAM]),('date_of_treatment', date of treatment type:time. Value examples:[2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23]),('cost_of_treatment', cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\nTreatments.'professional_id' = Professionals.'professional_id'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Do you mean the home phone number or the cell number? Please clarify.",
+                    "rewrite": [
+                        "What is the home phone number of the professional who has done the most treatment?",
+                        "What is the cell number of the professional who has done the most treatment?",
+                        "What is the phone number of the professional who has done the most treatment."
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            "320-508-6023"
+                        ]
+                    ],
+                    "sql": "SELECT T2.home_phone FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the professional_id who has done the most treatments.\nSQL: ```sql SELECT professional_id FROM Treatments GROUP BY professional_id ORDER BY COUNT(treatment_id) DESC LIMIT 1```\nSubquestion 2: Find the phone number of the professional who has done the most treatments.\nSQL: ```sql SELECT T2.home_phone FROM Treatments AS T1 INNER JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id GROUP BY T1.professional_id ORDER BY COUNT(T1.treatment_id) DESC LIMIT 1```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What are the professional id of the professionals who have done at least two types of treatments?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.professional_id  FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2",
+                "predict": "SELECT professional_id FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) >= 2",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Treatment_Types\n[('treatment_type_code', treatment type code type:text PRIMARY KEY. Value examples:[EXAM, VAC, WALK]),('treatment_type_description', treatment type description type:text. Value examples:[Physical examination, Vaccination, Take for a Walk]),]\nTable:Professionals\n[('professional_id', professional id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('first_name', first name type:text. Value examples:[Taryn, Jayson, Olaf]),('street', street type:text. Value examples:[6915 Oberbrunner Point Suite 491\nGleasonville, LA , 88665 Terence Lodge Apt. 904\nCorneliusfort, NC 194, 68589 Bradly Manor\nNew Audrey, IN 91497]),('city', city type:text. Value examples:[West Heidi, North Odellfurt, Jaceton]),('state', state type:text. Value examples:[Indiana, Connecticut, Wisconsin]),('zip_code', zip code type:text. Value examples:[06646, 43129, 77129]),('last_name', last name type:text. Value examples:[Braun, Ullrich, Watsica]),('email_address', email address type:text. Value examples:[deanna.schuster@example.com, lucile.shanahan@example.org, uboehm@example.org]),('home_phone', home phone type:text. Value examples:[+71(6)2898266914, +02(1)0259033559, 325-155-0801x7005]),('cell_number', cell number type:text. Value examples:[(275)939-2435x80863, 889-940-2676, (369)908-7311x065]),]\nTable:Treatments\n[('dog_id', dog id type:number. Value examples:[14, 4, 2]),('professional_id', professional id type:number. Value examples:[9, 10, 4]),('treatment_type_code', treatment type code type:text. Value examples:[WALK, VAC, EXAM]),('date_of_treatment', date of treatment type:time. Value examples:[2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23]),('cost_of_treatment', cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\nTreatments.'professional_id' = Professionals.'professional_id'\nTreatments.'treatment_type_code' = Treatment_Types.'treatment_type_code'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            6
+                        ],
+                        [
+                            9
+                        ],
+                        [
+                            10
+                        ],
+                        [
+                            14
+                        ]
+                    ],
+                    "sql": "SELECT professional_id FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) >= 2",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the professional IDs who have done at least two types of treatments.\nSQL: ```sql\nSELECT professional_id FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) >= 2\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many professionals have done only one treatment?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "select count(*) from (SELECT *  FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  = 1)",
+                "predict": "SELECT COUNT(DISTINCT professional_id) FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) = 1",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Professionals\n[('professional_id', professional id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('first_name', first name type:text. Value examples:[Taryn, Jayson, Olaf]),('street', street type:text. Value examples:[6915 Oberbrunner Point Suite 491\nGleasonville, LA , 88665 Terence Lodge Apt. 904\nCorneliusfort, NC 194, 68589 Bradly Manor\nNew Audrey, IN 91497]),('city', city type:text. Value examples:[West Heidi, North Odellfurt, Jaceton]),('state', state type:text. Value examples:[Indiana, Connecticut, Wisconsin]),('zip_code', zip code type:text. Value examples:[06646, 43129, 77129]),('last_name', last name type:text. Value examples:[Braun, Ullrich, Watsica]),('email_address', email address type:text. Value examples:[deanna.schuster@example.com, lucile.shanahan@example.org, uboehm@example.org]),('home_phone', home phone type:text. Value examples:[+71(6)2898266914, +02(1)0259033559, 325-155-0801x7005]),('cell_number', cell number type:text. Value examples:[(275)939-2435x80863, 889-940-2676, (369)908-7311x065]),]\nTable:Treatments\n[('treatment_id', treatment id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('dog_id', dog id type:number. Value examples:[14, 4, 2]),('professional_id', professional id type:number. Value examples:[9, 10, 4]),('treatment_type_code', treatment type code type:text. Value examples:[WALK, VAC, EXAM]),('date_of_treatment', date of treatment type:time. Value examples:[2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23]),('cost_of_treatment', cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\nTreatments.'professional_id' = Professionals.'professional_id'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1
+                        ],
+                        [
+                            1
+                        ],
+                        [
+                            1
+                        ],
+                        [
+                            1
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT professional_id) FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) = 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the professional IDs of professionals who have done only one treatment.\nSQL: ```sql\nSELECT professional_id FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) = 1\n```\n\nSubquestion 2: Count the number of professionals who have done only one treatment.\nSQL: ```sql\nSELECT COUNT(DISTINCT professional_id) FROM Treatments GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) = 1\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Breeds\n[('breed_code', breed code type:text PRIMARY KEY. Value examples:[BUL, ESK, HUS]),('breed_name', breed name type:text. Value examples:[Eskimo, Husky, Bulldog]),]\nTable:Sizes\n[('size_code', size code type:text PRIMARY KEY. Value examples:[LGE, MED, SML]),('size_description', size description type:text. Value examples:[Small, Medium, Large]),]\nTable:Treatment_Types\n[('treatment_type_code', treatment type code type:text PRIMARY KEY. Value examples:[EXAM, VAC, WALK]),('treatment_type_description', treatment type description type:text. Value examples:[Physical examination, Vaccination, Take for a Walk]),]\nTable:Professionals\n[('professional_id', professional id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('first_name', first name type:text. Value examples:[Taryn, Jayson, Olaf]),('street', street type:text. Value examples:[6915 Oberbrunner Point Suite 491\nGleasonville, LA , 88665 Terence Lodge Apt. 904\nCorneliusfort, NC 194, 68589 Bradly Manor\nNew Audrey, IN 91497]),('city', city type:text. Value examples:[West Heidi, North Odellfurt, Jaceton]),('state', state type:text. Value examples:[Indiana, Connecticut, Wisconsin]),('zip_code', zip code type:text. Value examples:[06646, 43129, 77129]),('last_name', last name type:text. Value examples:[Braun, Ullrich, Watsica]),('email_address', email address type:text. Value examples:[deanna.schuster@example.com, lucile.shanahan@example.org, uboehm@example.org]),('home_phone', home phone type:text. Value examples:[+71(6)2898266914, +02(1)0259033559, 325-155-0801x7005]),('cell_number', cell number type:text. Value examples:[(275)939-2435x80863, 889-940-2676, (369)908-7311x065]),]\nTable:Treatments\n[('treatment_id', treatment id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('dog_id', dog id type:number. Value examples:[14, 4, 2]),('professional_id', professional id type:number. Value examples:[9, 10, 4]),('treatment_type_code', treatment type code type:text. Value examples:[WALK, VAC, EXAM]),('date_of_treatment', date of treatment type:time. Value examples:[2018-03-19 04:39:54, 2018-03-15 20:25:34, 2018-03-08 05:26:23]),('cost_of_treatment', cost of treatment type:number. Value examples:[567, 147, 429]),]\nForeign keys:\nTreatments.'professional_id' = Professionals.'professional_id'\nTreatments.'treatment_type_code' = Treatment_Types.'treatment_type_code'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 98
+    },
+    {
+        "db_name": "cre_Doc_Template_Mgt",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "WHAT IS THE DOCUMENT ID WITH 1 TO 2 PARAGRAPH?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT document_id FROM Paragraphs GROUP BY document_id HAVING count(*) BETWEEN 1 AND 2",
+                "predict": "Apologies, I cannot answer this question. The database schema does not contain information about the number of paragraphs in a document. I can only tell you which document is associated with a given paragraph.",
+                "rewritten_questions": [
+                    "What is the document ID associated with paragraph ID 1?",
+                    "What is the document ID associated with paragraph ID 2?",
+                    "WHAT IS THE DOCUMENT ID WITH 1 TO 2 PARAGRAPH?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT T1.Document_ID FROM Paragraphs AS T1 WHERE T1.Paragraph_ID = 1",
+                    "SELECT T1.Document_ID FROM Paragraphs AS T1 WHERE T1.Paragraph_ID = 2",
+                    "SELECT DISTINCT T1.Document_ID FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.Document_ID = T2.Document_ID GROUP BY T1.Document_ID HAVING COUNT(T2.Paragraph_ID) BETWEEN 1 AND 2"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nTable:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),]\nTable:Paragraphs\n[('Paragraph_ID', paragraph id type:number PRIMARY KEY. Value examples:[7, 9, 65]),('Document_ID', document id type:number. Value examples:[2394, 3, 50123]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\nParagraphs.'Document_ID' = Documents.'Document_ID'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "unanswerable",
+                    "answer": "Apologies, I cannot answer this question. The database schema does not contain information about the number of paragraphs in a document. I can only tell you which document is associated with a given paragraph.",
+                    "rewrite": [
+                        "What is the document ID associated with paragraph ID 1?",
+                        "What is the document ID associated with paragraph ID 2?",
+                        "WHAT IS THE DOCUMENT ID WITH 1 TO 2 PARAGRAPH?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            3
+                        ],
+                        [
+                            80
+                        ],
+                        [
+                            3830
+                        ],
+                        [
+                            33930
+                        ],
+                        [
+                            50123
+                        ],
+                        [
+                            651512
+                        ],
+                        [
+                            3540024
+                        ],
+                        [
+                            16514113
+                        ],
+                        [
+                            385906526
+                        ]
+                    ],
+                    "sql": "SELECT DISTINCT T1.Document_ID FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.Document_ID = T2.Document_ID GROUP BY T1.Document_ID HAVING COUNT(T2.Paragraph_ID) BETWEEN 1 AND 2",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the document IDs that have between 1 and 2 paragraphs.\nSQL: ```sql\nSELECT DISTINCT T1.Document_ID\nFROM Documents AS T1\nINNER JOIN Paragraphs AS T2 ON T1.Document_ID = T2.Document_ID\nGROUP BY T1.Document_ID\nHAVING COUNT(T2.Paragraph_ID) BETWEEN 1 AND 2\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "WHAT IS THE DOCUMENT TEXT ",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean the \tParagraph Text?",
+                "query": "",
+                "predict": "Apologies, I can't answer this question. The database only contains information about document IDs and paragraph text, not the full document text. ",
+                "rewritten_questions": [
+                    "What is the paragraph text for document ID 1?",
+                    "What is the paragraph text for document ID 3?",
+                    "WHAT IS THE DOCUMENT TEXT "
+                ],
+                "rewritten_outputs": [
+                    "SELECT 'Paragraph_Text' FROM Paragraphs WHERE 'Document_ID' = 1",
+                    "SELECT 'Paragraph_Text' FROM Paragraphs WHERE 'Document_ID' = 3",
+                    "SELECT T1.'Document_Name' FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.'Document_ID' = T2.'Document_ID' GROUP BY T2.'Document_ID' HAVING count(*) BETWEEN 1 AND 2"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),]\nTable:Paragraphs\n[('Paragraph_ID', paragraph id type:number PRIMARY KEY. Value examples:[7, 9, 65]),('Document_ID', document id type:number. Value examples:[2394, 3, 50123]),('Paragraph_Text', paragraph text type:text. Value examples:[Korea, Somalia, Palestinian Territory]),]\nForeign keys:\nParagraphs.'Document_ID' = Documents.'Document_ID'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "unanswerable",
+                    "answer": "Apologies, I can't answer this question. The database only contains information about document IDs and paragraph text, not the full document text. ",
+                    "rewrite": [
+                        "What is the paragraph text for document ID 1?",
+                        "What is the paragraph text for document ID 3?",
+                        "WHAT IS THE DOCUMENT TEXT "
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Summer Show"
+                        ],
+                        [
+                            "Welcome to NY"
+                        ],
+                        [
+                            "Do not panic"
+                        ],
+                        [
+                            "How Google people work"
+                        ],
+                        [
+                            "Learning French"
+                        ],
+                        [
+                            "How to write a CV"
+                        ],
+                        [
+                            "Palm reading"
+                        ],
+                        [
+                            "A history of Arts"
+                        ],
+                        [
+                            "About Korea"
+                        ]
+                    ],
+                    "sql": "SELECT T1.'Document_Name' FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.'Document_ID' = T2.'Document_ID' GROUP BY T2.'Document_ID' HAVING count(*) BETWEEN 1 AND 2",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the document ID with 1 to 2 paragraphs?\nSQL ```sql SELECT 'Document_ID' FROM Paragraphs GROUP BY 'Document_ID' HAVING count(*) BETWEEN 1 AND 2```\nSubquestion 2: What is the document text of the document with 1 to 2 paragraphs?\nSQL ```sql SELECT T1.'Document_Name' FROM Documents AS T1 INNER JOIN Paragraphs AS T2 ON T1.'Document_ID' = T2.'Document_ID' GROUP BY T2.'Document_ID' HAVING count(*) BETWEEN 1 AND 2```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "YES \n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Paragraph_Text FROM Paragraphs GROUP BY document_id HAVING count(*) BETWEEN 1 AND 2",
+                "predict": "SELECT 'Paragraph_Text' FROM Paragraphs",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),('Other_Details', other details type:text. Value examples:[None]),]\nTable:Paragraphs\n[('Document_ID', document id type:number. Value examples:[2394, 3, 50123]),('Paragraph_Text', paragraph text type:text. Value examples:[Korea, Somalia, Palestinian Territory]),]\nForeign keys:\nParagraphs.'Document_ID' = Documents.'Document_ID'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ],
+                        [
+                            "Paragraph_Text"
+                        ]
+                    ],
+                    "sql": "SELECT 'Paragraph_Text' FROM Paragraphs",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the document text?\nSQL ```sql SELECT 'Paragraph_Text' FROM Paragraphs```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "OK THANKS! GOODBYE",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Bye!",
+                "query": "",
+                "predict": "You're welcome! Have a great day!",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Ref_Template_Types\n[('Template_Type_Code', template type code type:text PRIMARY KEY. Value examples:[AD, BK, CV]),('Template_Type_Description', template type description type:text. Value examples:[Presentation, CV, Advertisement]),]\nTable:Templates\n[('Template_ID', template id type:number PRIMARY KEY. Value examples:[0, 1, 4]),('Version_Number', version number type:number. Value examples:[5, 9, 4]),('Template_Type_Code', template type code type:text. Value examples:[PP, BK, PPT]),('Date_Effective_From', date effective from type:time. Value examples:[2005-11-12 07:09:48, 2010-09-24 01:15:11, 2002-03-02 14:39:49]),('Date_Effective_To', date effective to type:time. Value examples:[2008-01-05 14:19:28, 1999-07-08 03:31:04, 2001-04-18 09:29:52]),('Template_Details', template details type:text. Value examples:[]),]\nTable:Documents\n[('Document_ID', document id type:number PRIMARY KEY. Value examples:[0, 1, 3]),('Template_ID', template id type:number. Value examples:[7, 25, 6]),('Document_Name', document name type:text. Value examples:[Introduction of OS, Understanding DB, Summer Show]),('Document_Description', document description type:text. Value examples:[n, y, u]),('Other_Details', other details type:text. Value examples:[None]),]\nTable:Paragraphs\n[('Paragraph_ID', paragraph id type:number PRIMARY KEY. Value examples:[7, 9, 65]),('Document_ID', document id type:number. Value examples:[2394, 3, 50123]),('Paragraph_Text', paragraph text type:text. Value examples:[Korea, Somalia, Palestinian Territory]),]\nForeign keys:\nTemplates.'Template_Type_Code' = Ref_Template_Types.'Template_Type_Code'\nDocuments.'Template_ID' = Templates.'Template_ID'\nParagraphs.'Document_ID' = Documents.'Document_ID'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Have a great day!"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 99
+    }
+]

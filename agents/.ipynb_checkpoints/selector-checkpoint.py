@@ -85,6 +85,8 @@ The entities extracted from the Question are:
         llm_ans = self.request_llm(sys_prompt,usr_prompt)
         
         json_object = self.extract_json_from_string(llm_ans)
+
+        minischema = input_data["db_desc"] + input_data["db_exam"]
         
         if json_object:
             # print(json_object)
@@ -92,6 +94,6 @@ The entities extracted from the Question are:
             if minischema == "":
                 minischema = "None"
         else:
-          print("No valid JSON object found.")
+            print("No valid JSON object found.")
             
         return f"{str(minischema)}"

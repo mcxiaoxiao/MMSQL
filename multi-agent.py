@@ -57,13 +57,59 @@ refiner = Refiner("Refiner")
 # output_decomposer = decomposer.process_input(input_data)
 # output_refiner = refiner.process_input(input_data)
 
+
+
+
+def solve_answerable(db_name, output_selector, question):
+    output_decomposer = ""
+    output_refiner = ""
+    
+    print("________Decompose question and solve________")
+    input_data = {
+    "evidence": "",
+    "db_name": db_name,
+    "mini_schema": output_selector,
+    "question": question,
+    }
+
+    output_decomposer = decomposer.process_input(input_data)
+    print(output_decomposer)
+    
+    if output_decomposer["executable"]:
+        return output_decomposer["sql"], output_decomposer, output_refiner
+        # sql_output = " Result:" + str(output_decomposer["result"])
+    else:
+        
+        print("________Refines erroneous SQL queries________")
+        input_data = {
+        "evidence": "",
+        "db_name": db_name,
+        "mini_schema": output_selector,
+        "question": question,
+        "old_sql": output_decomposer.get("sql"),
+        "log": output_decomposer.get("log")
+        }
+        
+        
+        output_refiner = refiner.process_input(input_data)
+        # print(output_refiner)
+        print(output_refiner)
+        return output_refiner["sql"], output_decomposer, output_refiner
+        
+        # if output_decomposer["executable"]:
+        #     sql_output = " Result:" + str(output_refiner["result"])
+
+
+
 def process_json_part(data, output_file):
     for index1,item in enumerate(tqdm(data)):
         retries = 0
         while retries < 2:
             try:
+                # print(item)
                 # Initialnize messages
-                print("Turn "+str(index1)+" ==================================================================")
+                id_now = item.get('id')
+                print("id " + str(id_now) + " Turn "+str(index1)+" ==================================================================")
                 db_name = item['db_name']
                 previous_QA = ""
                 
@@ -78,6 +124,8 @@ def process_json_part(data, output_file):
                         output_decomposer = ""
                         output_refiner = ""
                         final_output = ""
+                        rewritten_questions = []
+                        rewritten_outputs = []
                         sql_output = ""
                         user_question = turn['text']
                         question_type = turn['type']
@@ -117,7 +165,7 @@ def process_json_part(data, output_file):
                                 }
                                 
                                 output_selector = selector.process_input(input_data)
-
+                                print(output_selector)
                             
                                 
                                 print("________Question type detect________")
@@ -132,52 +180,35 @@ def process_json_part(data, output_file):
                                 output_detector = detector.process_input(input_data)
                                 # print("output_detectoroutput_detectoroutput_detector" + output_detector)
                                 # The question is Answerable
-                                print(output_detector)
+                                # print(output_detector)
+                                
                                 if output_detector == "YES":
                                     
-                                    print("________Decompose question and solve________")
-                                    input_data = {
-                                    "evidence": "",
-                                    "db_name": db_name,
-                                    "mini_schema": output_selector,
-                                    "question": rewritten_question
-                                    }
-        
-                                    output_decomposer = decomposer.process_input(input_data)
-                                    print(output_decomposer)
-                                    
-                                    if output_decomposer["executable"]:
-                                        final_output = output_decomposer["sql"]
-                                        # sql_output = " Result:" + str(output_decomposer["result"])
-                                    else:
-                                        
-                                        print("________Refines erroneous SQL queries________")
-                                        input_data = {
-                                        "evidence": "",
-                                        "db_name": db_name,
-                                        "mini_schema": output_selector,
-                                        "question": rewritten_question,
-                                        "old_sql": output_decomposer.get("sql"),
-                                        "log": output_decomposer.get("log")
-                                        }
-                                        
-                                        
-                                        output_refiner = refiner.process_input(input_data)
-                                        # print(output_refiner)
-                                        print(output_refiner)
-                                        final_output = output_refiner["sql"]
-                                        
-                                        # if output_decomposer["executable"]:
-                                        #     sql_output = " Result:" + str(output_refiner["result"])
+                                    final_output, output_decomposer, output_refiner = solve_answerable(db_name, output_selector, rewritten_question)
                                     
                                 else:
-                                    final_output = output_detector
-                                    
+                                        
+                                    final_output = output_detector.get("answer",output_detector)
+
+                                    if output_detector.get("type",'').lower() != 'improper':
+                                        rewritten_questions = output_detector.get("rewrite",[])
+                                        rewritten_questions.append(user_question)
+                                        print("rewritten_questions: :\033[94m" + str(rewritten_questions) + "\033[0m")
+                                        
+                                        for rewritten_question in rewritten_questions:
+                                            possible_output, output_decomposer, output_refiner = solve_answerable(db_name, output_selector, "previous QA:" + previous_QA + "\ncurrent question:" + rewritten_question)
+                                            rewritten_outputs.append(possible_output)
+                                                            
                             # llm record
                             print("\nFINAL Response:")
                             print(final_output)
-                            print("————————————————————————————————————————————————————————————")
+                            
                             item['turns'][index+1]['predict'] = final_output
+                            item['turns'][index+1]['rewritten_questions'] = rewritten_questions
+                            item['turns'][index+1]['rewritten_outputs'] = rewritten_outputs
+
+                            
+                            
                             item['turns'][index+1]['Rewriter'] = output_rewriter
                             item['turns'][index+1]['Selector'] = output_selector
                             item['turns'][index+1]['Detector'] = output_detector
@@ -195,7 +226,8 @@ def process_json_part(data, output_file):
                                 sql_output = " Result:" + str(sql_result)
                             # previous_QA += "\nQ:" + user_question + "\nA:" + g_ans + sql_output + '\n'
                             previous_QA += "\nQ:" + user_question + "\nA:" + g_ans + '\n'
-                            
+                            print("gold answer: " + g_ans)
+                            print("————————————————————————————————————————————————————————————")
                             
                 if not os.path.exists(output_file):
                     with open(output_file, 'w') as f:
@@ -222,7 +254,7 @@ def process_json_part(data, output_file):
                 break
             except Exception as e:
                 retries += 1
-                print(f"Error processing turn {index} (attempt {retries}): {e}")
+                print(f"\033[91m==============Error processing id {id_now} data index {index} (attempt {retries}): {e}==============\033[0m")
 
 
 def process_json_multithreaded(input_file, output_file, num_threads=3):
@@ -243,6 +275,7 @@ def process_json_multithreaded(input_file, output_file, num_threads=3):
             future = executor.submit(process_json_part, part, output_file)
             futures.append(future)
         concurrent.futures.wait(futures)
+        
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MMSQL-EVAL MULTI-AGENT LLM GENERATION SCRIPT")
