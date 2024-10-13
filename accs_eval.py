@@ -722,7 +722,9 @@ for element in tqdm(data):
             # print(turns[i]['text'])
             gold_type = turns[i].get('type','')
             predict_type = turns[i+1].get('predict_type','answerable')
-
+            # if isinstance(turns[i+1].get('Detector',{}), dict):
+            #     predict_type = turns[i+1].get('Detector',{}).get('type',predict_type)
+            
             if len(gold_type) == 0:
                 gold_type ='answerable'
             if len(predict_type) == 0:
@@ -808,13 +810,51 @@ for element in tqdm(data):
                 accs += 1
                 print("\033[92mACCS+1\033[0m")
                 print("\033[92mDUEM+1\033[0m")
-            if gold_type == 'answerable' and predict_type != 'answerable':
-                imatch = False
+
+
+
             if gold_type != predict_type:
                 iaccs = False
-                iduem = False
+
                 print("\033[91mIACCS failed\033[0m")
-                print("\033[91mIDUEM failed\033[0m")
+
+
+
+            
+            if gold_type == 'answerable' and predict_type != 'answerable':
+                # rewritten QAs to save the score
+                imatch = False
+
+                rewriten_success = False
+                if len(turns[i+1].get('rewritten_outputs',[])) > 0:
+                    for rewritten_output in turns[i+1].get('rewritten_outputs',[]):
+                        print("Rewritten Output:"+rewritten_output)
+                        # try:
+                        #     if qm("datasets/cosql_dataset/database",rewritten_output,turns[i+1].get('query',''), db_name):
+                        #         qm_count += 1
+                        #         accs += 1
+                        #         print("\033[92mACCS+1\033[0m")
+                        #         print("\033[92mQM+1\033[0m")
+                        #         break
+                        #     else:
+                        #         print("\033[91mQM failed\033[0m")
+                        # except Exception as e:
+                        #     print("\033[91mQM error\033[0m")
+                        #     print(e)
+                        #     print("\033[91mQM failed\033[0m")
+                        try:
+                            if eval_exec_match("datasets/cosql_dataset/database",db_name, rewritten_output, turns[i+1].get('query','')):
+                                rewriten_success = True
+                                print("\033[92mDUEM+1\033[0m")
+                                print("\033[92mEM+1\033[0m")
+                                break
+                            else:
+                                print("\033[91mEM failed\033[0m")
+                        except Exception as e:
+                            print("\033[91mEM error\033[0m")
+                            print(e)
+                            print("\033[91mEM failed\033[0m")
+                
                 
     if iaccs:
         print("\033[92mIACCS+1\033[0m")
