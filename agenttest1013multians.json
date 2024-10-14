@@ -1572,5 +1572,486 @@
             }
         ],
         "id": 51
+    },
+    {
+        "db_name": "flight_2",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How many flights in this table?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT count(*) FROM flights",
+                "predict": "SELECT COUNT(*) FROM flights",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:flights\n[('Airline', airline type:number PRIMARY KEY. Value examples:[1, 2, 3]),('FlightNo', flight number type:number. Value examples:[28, 29, 44]),('SourceAirport', source airport type:text. Value examples:[ APG,  ASY,  CVO]),('DestAirport', destination airport type:text. Value examples:[ ASY,  APG,  ACV]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            1200
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM flights",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: How many flights in this table? \nSQL ```sql SELECT COUNT(*) FROM flights```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Which city has least number of departing flights?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.City FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.SourceAirport GROUP BY T1.City ORDER BY count(*) ASC LIMIT 1",
+                "predict": "Do you mean the city with the least number of departing flights or the city with the least number of arriving flights?",
+                "rewritten_questions": [
+                    "Which city has the least number of departing flights?",
+                    "Which city has the least number of arriving flights?",
+                    "Which city has least number of departing flights?"
+                ],
+                "rewritten_outputs": [
+                    "SELECT City FROM (   SELECT T1.City, COUNT(T2.SourceAirport) AS DepartingFlights   FROM airports AS T1   INNER JOIN flights AS T2 ON T1.AirportCode = T2.SourceAirport   GROUP BY T1.City ) ORDER BY DepartingFlights ASC LIMIT 1",
+                    "SELECT City FROM (   SELECT T1.City, COUNT(T2.DestAirport) AS arriving_flights   FROM airports AS T1   INNER JOIN flights AS T2 ON T1.AirportCode = T2.DestAirport   GROUP BY T1.City ) ORDER BY arriving_flights ASC LIMIT 1",
+                    "SELECT City FROM (   SELECT T1.City, COUNT(T2.SourceAirport) AS DepartingFlights   FROM airports AS T1   INNER JOIN flights AS T2 ON T1.AirportCode = T2.SourceAirport   GROUP BY T1.City ) ORDER BY DepartingFlights ASC LIMIT 1"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:airports\n[('City', city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),('AirportCode', airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),]\nTable:flights\n[('SourceAirport', source airport type:text. Value examples:[ APG,  ASY,  CVO]),('DestAirport', destination airport type:text. Value examples:[ ASY,  APG,  ACV]),]\nForeign keys:\nflights.'DestAirport' = airports.'AirportCode'\nflights.'SourceAirport' = airports.'AirportCode'\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "ambiguous",
+                    "answer": "Do you mean the city with the least number of departing flights or the city with the least number of arriving flights?",
+                    "rewrite": [
+                        "Which city has the least number of departing flights?",
+                        "Which city has the least number of arriving flights?",
+                        "Which city has least number of departing flights?"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT City FROM (   SELECT T1.City, COUNT(T2.SourceAirport) AS DepartingFlights   FROM airports AS T1   INNER JOIN flights AS T2 ON T1.AirportCode = T2.SourceAirport   GROUP BY T1.City ) ORDER BY DepartingFlights ASC LIMIT 1",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the number of departing flights for each city.\nSQL: ```sql\nSELECT T1.City, COUNT(T2.SourceAirport) AS DepartingFlights\nFROM airports AS T1\nINNER JOIN flights AS T2 ON T1.AirportCode = T2.SourceAirport\nGROUP BY T1.City\n```\n\nSubquestion 2: Find the city with the least number of departing flights.\nSQL: ```sql\nSELECT City FROM (\n  SELECT T1.City, COUNT(T2.SourceAirport) AS DepartingFlights\n  FROM airports AS T1\n  INNER JOIN flights AS T2 ON T1.AirportCode = T2.SourceAirport\n  GROUP BY T1.City\n) ORDER BY DepartingFlights ASC LIMIT 1\n```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Find the flight number of APG?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT FlightNo FROM flights WHERE SourceAirport=\"APG\"",
+                "predict": "SELECT T1.FlightNo FROM flights AS T1 WHERE T1.SourceAirport = 'APG'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:airports\n[('City', city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),('AirportCode', airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),]\nTable:flights\n[('FlightNo', flight number type:number. Value examples:[28, 29, 44]),('SourceAirport', source airport type:text. Value examples:[ APG,  ASY,  CVO]),('DestAirport', destination airport type:text. Value examples:[ ASY,  APG,  ACV]),]\nForeign keys:\nflights.'DestAirport' = airports.'AirportCode'\nflights.'SourceAirport' = airports.'AirportCode'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T1.FlightNo FROM flights AS T1 WHERE T1.SourceAirport = 'APG'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the flight number of flights that have APG as source airport.\nSQL ```sql SELECT T1.FlightNo FROM flights AS T1 WHERE T1.SourceAirport = 'APG'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome. Anything you'd like to know more?",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:airlines\n[('uid', airline id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Airline', airline name type:text. Value examples:[United Airlines, US Airways, Delta Airlines]),('Abbreviation', abbreviation type:text. Value examples:[UAL, USAir, Delta]),('Country', country type:text. Value examples:[USA]),]\nTable:airports\n[('City', city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),('AirportCode', airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),('Country', country type:text. Value examples:[United States ]),('CountryAbbrev', country abbrev type:text. Value examples:[US , US]),]\nTable:flights\n[('Airline', airline type:number PRIMARY KEY. Value examples:[1, 2, 3]),('FlightNo', flight number type:number. Value examples:[28, 29, 44]),('SourceAirport', source airport type:text. Value examples:[ APG,  ASY,  CVO]),('DestAirport', destination airport type:text. Value examples:[ ASY,  APG,  ACV]),]\nForeign keys:\nflights.'DestAirport' = airports.'AirportCode'\nflights.'SourceAirport' = airports.'AirportCode'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Find the airport names of DYS?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT AirportName FROM airports WHERE AirportCode=\"DYS\"",
+                "predict": "SELECT T1.AirportName FROM airports AS T1 WHERE T1.AirportCode = 'DYS'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:airports\n[('City', city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),('AirportCode', airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),('AirportName', airport name type:text. Value examples:[Phillips AAF , Municipal , Dyess AFB ]),]\nTable:flights\n[('Airline', airline type:number PRIMARY KEY. Value examples:[1, 2, 3]),('FlightNo', flight number type:number. Value examples:[28, 29, 44]),('SourceAirport', source airport type:text. Value examples:[ APG,  ASY,  CVO]),('DestAirport', destination airport type:text. Value examples:[ ASY,  APG,  ACV]),]\nForeign keys:\nflights.'DestAirport' = airports.'AirportCode'\nflights.'SourceAirport' = airports.'AirportCode'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Dyess AFB "
+                        ]
+                    ],
+                    "sql": "SELECT T1.AirportName FROM airports AS T1 WHERE T1.AirportCode = 'DYS'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the airport name of DYS.\nSQL ```sql SELECT T1.AirportName FROM airports AS T1 WHERE T1.AirportCode = 'DYS'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Fin the city of ABR?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT CITY FROM airports WHERE AirportCode=\"ABR\"",
+                "predict": "SELECT City FROM airports WHERE AirportCode = 'ABR'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:airports\n[('City', city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),('AirportCode', airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),('AirportName', airport name type:text. Value examples:[Phillips AAF , Municipal , Dyess AFB ]),('Country', country type:text. Value examples:[United States ]),('CountryAbbrev', country abbrev type:text. Value examples:[US , US]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Aberdeen "
+                        ]
+                    ],
+                    "sql": "SELECT City FROM airports WHERE AirportCode = 'ABR'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the city of ABR.\nSQL ```sql SELECT City FROM airports WHERE AirportCode = 'ABR'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You are welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:airlines\n[('uid', airline id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Airline', airline name type:text. Value examples:[United Airlines, US Airways, Delta Airlines]),('Abbreviation', abbreviation type:text. Value examples:[UAL, USAir, Delta]),('Country', country type:text. Value examples:[USA]),]\nTable:airports\n[('City', city type:text. Value examples:[Aberdeen , Abilene , Abingdon ]),('AirportCode', airport code type:text PRIMARY KEY. Value examples:[AAF, ABI, ABL]),('AirportName', airport name type:text. Value examples:[Phillips AAF , Municipal , Dyess AFB ]),('Country', country type:text. Value examples:[United States ]),('CountryAbbrev', country abbrev type:text. Value examples:[US , US]),]\nTable:flights\n[('Airline', airline type:number PRIMARY KEY. Value examples:[1, 2, 3]),('FlightNo', flight number type:number. Value examples:[28, 29, 44]),('SourceAirport', source airport type:text. Value examples:[ APG,  ASY,  CVO]),('DestAirport', destination airport type:text. Value examples:[ ASY,  APG,  ACV]),]\nForeign keys:\nflights.'DestAirport' = airports.'AirportCode'\nflights.'SourceAirport' = airports.'AirportCode'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You are welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 57
+    },
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can you list the number of car makers on each continent?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country GROUP BY T1.Continent;",
+                "predict": "SELECT T1.Continent, COUNT(DISTINCT T3.Country) FROM continents AS T1 INNER JOIN countries AS T2 ON T1.ContId = T2.Continent INNER JOIN car_makers AS T3 ON T2.CountryName = T3.Country GROUP BY T1.Continent",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:continents\n[('ContId', cont id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Continent', continent type:text. Value examples:[america, europe, asia]),]\nTable:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Country', country type:text. Value examples:[1, 2, 3]),]\nForeign keys:\ncountries.'Continent' = continents.'ContId'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T1.Continent, COUNT(T2.Country) FROM continents AS T1 INNER JOIN countries AS T2 ON T1.ContId = T2.Continent GROUP BY T1.Continent",
+                    "executable": false,
+                    "log": "no such column: T2.Country",
+                    "process": "Subquestion 1: Get the count of car makers for each continent.\nSQL ```sql SELECT T1.Continent, COUNT(T2.Country) FROM continents AS T1 INNER JOIN countries AS T2 ON T1.ContId = T2.Continent GROUP BY T1.Continent```\n\nQuestion Solved. \n"
+                },
+                "Refiner": {
+                    "result": [],
+                    "sql": "SELECT T1.Continent, COUNT(DISTINCT T3.Country) FROM continents AS T1 INNER JOIN countries AS T2 ON T1.ContId = T2.Continent INNER JOIN car_makers AS T3 ON T2.CountryName = T3.Country GROUP BY T1.Continent",
+                    "executable": true,
+                    "log": ""
+                }
+            },
+            {
+                "isuser": true,
+                "text": "What about the number of car makers in the country USA?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"usa\"",
+                "predict": "SELECT COUNT(DISTINCT Maker) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'usa')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            4
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT Maker) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'usa')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the country ID for USA.\nSQL: ```sql SELECT CountryId FROM countries WHERE CountryName = 'usa'```\n\nSubquestion 2: Count the number of car makers in the country USA.\nSQL: ```sql SELECT COUNT(DISTINCT Maker) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'usa')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How about in the country Germany?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"germany\"",
+                "predict": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'germany')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            4
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'germany')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the CountryId for Germany.\nSQL: ```sql SELECT CountryId FROM countries WHERE CountryName = 'germany'```\n\nSubquestion 2: Count the number of car makers in the country Germany.\nSQL: ```sql SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'germany')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What about France?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"france\"",
+                "predict": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'france')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            3
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'france')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the CountryId for France.\nSQL: ```sql SELECT CountryId FROM countries WHERE CountryName = 'france'```\n\nSubquestion 2: Count the number of car makers in the country with the found CountryId.\nSQL: ```sql SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'france')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Bye",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 80
+    },
+    {
+        "db_name": "car_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "Can you list the number of car makers on each continent?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country GROUP BY T1.Continent;",
+                "predict": "SELECT T1.Continent, COUNT(DISTINCT T3.Country) FROM continents AS T1 INNER JOIN countries AS T2 ON T1.ContId = T2.Continent INNER JOIN car_makers AS T3 ON T2.CountryName = T3.Country GROUP BY T1.Continent",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:continents\n[('ContId', cont id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Continent', continent type:text. Value examples:[america, europe, asia]),]\nTable:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Country', country type:text. Value examples:[1, 2, 3]),]\nForeign keys:\ncountries.'Continent' = continents.'ContId'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [],
+                    "sql": "SELECT T1.Continent, COUNT(T2.Country) FROM continents AS T1 INNER JOIN countries AS T2 ON T1.ContId = T2.Continent GROUP BY T1.Continent",
+                    "executable": false,
+                    "log": "no such column: T2.Country",
+                    "process": "Subquestion 1: Get the count of car makers for each continent.\nSQL ```sql SELECT T1.Continent, COUNT(T2.Country) FROM continents AS T1 INNER JOIN countries AS T2 ON T1.ContId = T2.Continent GROUP BY T1.Continent```\n\nQuestion Solved. \n"
+                },
+                "Refiner": {
+                    "result": [],
+                    "sql": "SELECT T1.Continent, COUNT(DISTINCT T3.Country) FROM continents AS T1 INNER JOIN countries AS T2 ON T1.ContId = T2.Continent INNER JOIN car_makers AS T3 ON T2.CountryName = T3.Country GROUP BY T1.Continent",
+                    "executable": true,
+                    "log": ""
+                }
+            },
+            {
+                "isuser": true,
+                "text": "What about the number of car makers in the country USA?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"usa\"",
+                "predict": "SELECT COUNT(DISTINCT Maker) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'usa')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            4
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(DISTINCT Maker) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'usa')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the country ID for USA.\nSQL: ```sql SELECT CountryId FROM countries WHERE CountryName = 'usa'```\n\nSubquestion 2: Count the number of car makers in the country USA.\nSQL: ```sql SELECT COUNT(DISTINCT Maker) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'usa')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How about in the country Germany?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"germany\"",
+                "predict": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'germany')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            4
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'germany')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the CountryId for Germany.\nSQL: ```sql SELECT CountryId FROM countries WHERE CountryName = 'germany'```\n\nSubquestion 2: Count the number of car makers in the country Germany.\nSQL: ```sql SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'germany')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What about France?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "seLECT count(*) FROM car_makers as T1 join countries as T2 on T2.CountryId  =  T1.Country where T2.countryname = \"france\"",
+                "predict": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'france')",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nTable:model_list\n[('ModelId', model id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:number. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[amc, audi, bmw]),]\nTable:car_names\n[('MakeId', make id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Model', model type:text. Value examples:[chevrolet, buick, plymouth]),('Make', make type:text. Value examples:[chevrolet chevelle malibu, buick skylark 320, plymouth satellite]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\nmodel_list.'Maker' = car_makers.'Id'\ncar_names.'Model' = model_list.'Model'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            3
+                        ]
+                    ],
+                    "sql": "SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'france')",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the CountryId for France.\nSQL: ```sql SELECT CountryId FROM countries WHERE CountryName = 'france'```\n\nSubquestion 2: Count the number of car makers in the country with the CountryId found in the previous step.\nSQL: ```sql SELECT COUNT(*) FROM car_makers WHERE Country = (SELECT CountryId FROM countries WHERE CountryName = 'france')```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "Bye",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:countries\n[('CountryId', country id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]\nTable:car_makers\n[('Id', id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Maker', maker type:text. Value examples:[amc, volkswagen, bmw]),('FullName', full name type:text. Value examples:[American Motor Company, Volkswagen, BMW]),('Country', country type:text. Value examples:[1, 2, 3]),]\nForeign keys:\ncar_makers.'Country' = countries.'CountryId'\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 80
     }
 ]

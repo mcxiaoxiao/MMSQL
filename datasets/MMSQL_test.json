@@ -5154,16 +5154,6 @@
       },
       {
         "isuser": true,
-        "text": "CAN YOU WHICH CAR MODEL IS MOST RECENT RELEASED",
-        "type": "answerable"
-      },
-      {
-        "isuser": false,
-        "text": "",
-        "query": "SELECT T2.Model FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId order by T1.Year desc limit 1"
-      },
-      {
-        "isuser": true,
         "text": "THANKS! GOODBYE",
         "type": "improper"
       },

@@ -28,10 +28,10 @@ class Detector(Agent):
 [Requirements]
 1. If the user's current question confirms an assumption made in a previous Answer, the answer will be based on that assumption. You can make your own limited and reasonable guesses about the user's intent based on the previous question and the current question.
 2. If the user's question is part of a routine conversation unrelated to the SQL, so the question is improper. just answer directly. For example, the current question express gratitude or asks about functions not available outside the database or in llm. don't output "Yes" but give polite and helpful answers.
-3. Determine if the current question can be answered accurately based on the provided database schema. If it is unable to answer questions based on database information the question is unanswerable, express expressing Apologies and explain difficulties to the user. 
-4. You need to first try to select possible corresponding fields for each entity and condition in the question, and decide whether the question is answerable or ambiguous based on the matches
+3. You need to first try to select possible corresponding fields for each entity and condition in the question, and decide whether the question is answerable or ambiguous based on the matches
+4. Determine if the current question can be answered based on the provided database schema. If it is unable to answer questions based on database information, the question is unanswerable. Express Apologies and explain difficulties to the user. You must be absolutely certain that the question is unanswerable before you can determine that.
 5. Check for ambiguity in the user's current question. If multiple fields have similar meanings with columns or conditions for user queries the question is ambiguous (Problem is not enough to generate SQL with sure tables and columns), ask the user to clarify which field they are referring to or clarify the conditions.
-6. If the question is ambiguous or unanswerable, you must guess the user's intent and make only minor adjustments to make the refined question examples answerable and put it in the "rewrite". Choose one from improper/unanswerable/ambiguous and put it in the "type"
+6. If the question is ambiguous, guess the user's intent and make only minor adjustments to make the refined question examples answerable and put it in the "rewrite". Choose one from improper/unanswerable/ambiguous and put it in the "type"
 7. Output "answerable" is "Yes" if the question can be answered with certainty for each column and condition. No need to fill in "answer" in this case. 
 
 [DB_ID] car_1
@@ -53,7 +53,7 @@ current question: What is the name of AMC?
 
 [Answer]
 The single user question is not routine conversation unrelated to the SQL, not the improper.
-The problem is related to the current database, not unanswerable.
+The question is not related to the current database, not unanswerable.
 Match possible database sections:
 entities: 
 name - car_makers.'Maker', car_makers.'FullName', car_names.'Model', car_names'Make'
@@ -94,13 +94,43 @@ Q:Yes
 [Evidence]
 
 [Answer]
-Current user issues confirm previous assumptions: "car models produced in Germany", not the improper.
-The Question is related to the database, not unanswerable.
+Current user question confirm previous assumptions: "count how many car models produced in Germany", not the improper.
+The question is not related to the database, not unanswerable.
 Match possible database sections:
 entities: 
-car models - model_list.'model' 
+count of car models - model_list.'model' 
 conditions: 
 Germany - car_makers.'Country', Countries.'CountryName'
+The question can be answered with certainty for each column and condition.
+{json_string_2}
+Question Solved. 
+========== 
+[DB_ID] car_1
+[Schema] 
+Table:continents
+[('ContId', cont id type:number PRIMARY KEY. Value examples:[1, 2, 3]),('Continent', continent type:text. Value examples:[america, europe, asia]),]
+Table:countries
+[('CountryName', country name type:text. Value examples:[usa, germany, france]),('Continent', continent type:number. Value examples:[1, 2, 3]),]
+Table:car_makers
+[('Country', country type:text. Value examples:[1, 2, 3]),]
+Foreign keys:
+countries.'Continent' = continents.'ContId'
+
+[Question]
+previous_QA :
+current question:Can you list the number of car makers on each continent?
+[Evidence]
+
+[Answer]
+Current user question requires counting of makers on each continent, not the improper.
+The question is not related to the database, not unanswerable.
+Match possible database sections:
+entities: 
+counting of makers on each continent - continents.'continents'
+conditions: 
+Join continents with countries on continents.ContId = countries.Continent. 
+Join the result with car_makers on countries.CountryName = car_makers.Country.
+Group the results by continent name and count the car makers in each group.
 The question can be answered with certainty for each column and condition.
 {json_string_2}
 Question Solved. 
