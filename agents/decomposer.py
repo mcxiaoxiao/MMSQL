@@ -95,7 +95,7 @@ Decompose the question into subquestions, considering [Constraints], and generat
         llm_ans = self.request_llm(sys_prompt,usr_prompt)
         pattern = r"```sql(.*?)```"
         matches = re.findall(pattern, llm_ans, re.DOTALL)
-        
+        last_sql_code = ""
         if matches:
             last_sql_code = matches[-1].strip()
  

@@ -2053,5 +2053,187 @@
             }
         ],
         "id": 80
+    },
+    {
+        "db_name": "poker_player",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "How much did the winning poker player make?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Earnings FROM poker_player ",
+                "predict": "SELECT Earnings FROM poker_player WHERE Poker_Player_ID = (SELECT Poker_Player_ID FROM poker_player WHERE Best_Finish = 1)",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "poker_player(Poker_Player_ID:poker player id type:number PRIMARY KEY|People_ID:people id type:number|Final_Table_Made:final table made type:number|Best_Finish:best finish type:number|Money_Rank:money rank type:number|Earnings:earnings type:number|)\npeople(People_ID:people id type:number PRIMARY KEY|Nationality:nationality type:text|Name:name type:text|Birth_Date:birth date type:text|Height:height type:number|)\nForeign keys:\npoker_player.'People_ID' = people.'People_ID'\nValue examples:poker_player:\n(1,1,42.0,1.0,68.0,476090.0)\n(2,2,10.0,2.0,141.0,189233.0)\n(3,5,21.0,1.0,166.0,104871.0)\npeople:\n(1,Russia,Aleksey Ostapenko,May 26, 1986,207.0)\n(2,Bulgaria,Teodor Salparov,August 16, 1982,182.0)\n(3,Russia,Roman Bragin,April 17, 1987,187.0)\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            476090.0
+                        ]
+                    ],
+                    "sql": "SELECT Earnings FROM poker_player WHERE Poker_Player_ID = (SELECT Poker_Player_ID FROM poker_player WHERE Best_Finish = 1)",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the Poker_Player_ID of the winning poker player.\nSQL: ```sql SELECT Poker_Player_ID FROM poker_player WHERE Best_Finish = 1```\nSubquestion 2: Find the earnings of the winning poker player.\nSQL: ```sql SELECT Earnings FROM poker_player WHERE Poker_Player_ID = (SELECT Poker_Player_ID FROM poker_player WHERE Best_Finish = 1)```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Cool, i want the winner's twitter id!",
+                "type": "unanswerable"
+            },
+            {
+                "isuser": false,
+                "text": "Sorry the information is not available from the table.",
+                "query": "",
+                "predict": "I apologize, but I cannot provide Twitter IDs. My access is limited to the database information provided. I can only answer questions based on the data available in the tables. Is there anything else I can help you with?",
+                "rewritten_questions": [
+                    "Cool, i want the winner's twitter id!"
+                ],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "poker_player(Poker_Player_ID:poker player id type:number PRIMARY KEY|People_ID:people id type:number|Final_Table_Made:final table made type:number|Best_Finish:best finish type:number|Money_Rank:money rank type:number|Earnings:earnings type:number|)\npeople(People_ID:people id type:number PRIMARY KEY|Nationality:nationality type:text|Name:name type:text|Birth_Date:birth date type:text|Height:height type:number|)\nForeign keys:\npoker_player.'People_ID' = people.'People_ID'\nValue examples:poker_player:\n(1,1,42.0,1.0,68.0,476090.0)\n(2,2,10.0,2.0,141.0,189233.0)\n(3,5,21.0,1.0,166.0,104871.0)\npeople:\n(1,Russia,Aleksey Ostapenko,May 26, 1986,207.0)\n(2,Bulgaria,Teodor Salparov,August 16, 1982,182.0)\n(3,Russia,Roman Bragin,April 17, 1987,187.0)\n",
+                "Detector": {
+                    "answerable": "no",
+                    "type": "unanswerable",
+                    "answer": "I apologize, but I cannot provide Twitter IDs. My access is limited to the database information provided. I can only answer questions based on the data available in the tables. Is there anything else I can help you with?"
+                },
+                "Decomposer": {
+                    "result": [],
+                    "sql": "",
+                    "executable": true,
+                    "log": "",
+                    "process": "The question asks for the Twitter ID of the winning poker player. However, the database schema does not contain any information about Twitter IDs. Therefore, we cannot answer this question using the provided database. \n\n**SQL:**  We cannot generate SQL for this question as the required information is not available in the database. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Can you rank the poker players earnings from highest to lowest?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Earnings FROM poker_player order by Earnings desc ",
+                "predict": "SELECT Earnings FROM poker_player ORDER BY Earnings DESC",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "poker_player(Poker_Player_ID:poker player id type:number PRIMARY KEY|People_ID:people id type:number|Final_Table_Made:final table made type:number|Best_Finish:best finish type:number|Money_Rank:money rank type:number|Earnings:earnings type:number|)\npeople(People_ID:people id type:number PRIMARY KEY|Nationality:nationality type:text|Name:name type:text|Birth_Date:birth date type:text|Height:height type:number|)\nForeign keys:\npoker_player.'People_ID' = people.'People_ID'\nValue examples:poker_player:\n(1,1,42.0,1.0,68.0,476090.0)\n(2,2,10.0,2.0,141.0,189233.0)\n(3,5,21.0,1.0,166.0,104871.0)\npeople:\n(1,Russia,Aleksey Ostapenko,May 26, 1986,207.0)\n(2,Bulgaria,Teodor Salparov,August 16, 1982,182.0)\n(3,Russia,Roman Bragin,April 17, 1987,187.0)\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            596462.0
+                        ],
+                        [
+                            476090.0
+                        ],
+                        [
+                            189233.0
+                        ],
+                        [
+                            142800.0
+                        ],
+                        [
+                            104871.0
+                        ]
+                    ],
+                    "sql": "SELECT Earnings FROM poker_player ORDER BY Earnings DESC",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Rank the poker players earnings from highest to lowest. \nSQL ```sql SELECT Earnings FROM poker_player ORDER BY Earnings DESC```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "How many final tables did the poker player with the least amount of earnings make?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Final_Table_Made FROM poker_player order by Earnings asc limit 1",
+                "predict": "SELECT Final_Table_Made FROM poker_player WHERE People_ID = (SELECT People_ID FROM poker_player ORDER BY Earnings ASC LIMIT 1)",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "poker_player(Poker_Player_ID:poker player id type:number PRIMARY KEY|People_ID:people id type:number|Final_Table_Made:final table made type:number|Best_Finish:best finish type:number|Money_Rank:money rank type:number|Earnings:earnings type:number|)\npeople(People_ID:people id type:number PRIMARY KEY|Nationality:nationality type:text|Name:name type:text|Birth_Date:birth date type:text|Height:height type:number|)\nForeign keys:\npoker_player.'People_ID' = people.'People_ID'\nValue examples:poker_player:\n(1,1,42.0,1.0,68.0,476090.0)\n(2,2,10.0,2.0,141.0,189233.0)\n(3,5,21.0,1.0,166.0,104871.0)\npeople:\n(1,Russia,Aleksey Ostapenko,May 26, 1986,207.0)\n(2,Bulgaria,Teodor Salparov,August 16, 1982,182.0)\n(3,Russia,Roman Bragin,April 17, 1987,187.0)\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            21.0
+                        ]
+                    ],
+                    "sql": "SELECT Final_Table_Made FROM poker_player WHERE People_ID = (SELECT People_ID FROM poker_player ORDER BY Earnings ASC LIMIT 1)",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the poker player with the least amount of earnings.\nSQL: ```sql SELECT People_ID FROM poker_player ORDER BY Earnings ASC LIMIT 1```\n\nSubquestion 2: How many final tables did the poker player with the least amount of earnings make?\nSQL: ```sql SELECT Final_Table_Made FROM poker_player WHERE People_ID = (SELECT People_ID FROM poker_player ORDER BY Earnings ASC LIMIT 1)```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "What about the poker player with the most earnings how many final table did they make?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT Final_Table_Made FROM poker_player order by Earnings desc limit 1",
+                "predict": "SELECT Final_Table_Made FROM poker_player WHERE People_ID = (SELECT People_ID FROM poker_player ORDER BY Earnings DESC LIMIT 1)",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "poker_player(Poker_Player_ID:poker player id type:number PRIMARY KEY|People_ID:people id type:number|Final_Table_Made:final table made type:number|Best_Finish:best finish type:number|Money_Rank:money rank type:number|Earnings:earnings type:number|)\npeople(People_ID:people id type:number PRIMARY KEY|Nationality:nationality type:text|Name:name type:text|Birth_Date:birth date type:text|Height:height type:number|)\nForeign keys:\npoker_player.'People_ID' = people.'People_ID'\nValue examples:poker_player:\n(1,1,42.0,1.0,68.0,476090.0)\n(2,2,10.0,2.0,141.0,189233.0)\n(3,5,21.0,1.0,166.0,104871.0)\npeople:\n(1,Russia,Aleksey Ostapenko,May 26, 1986,207.0)\n(2,Bulgaria,Teodor Salparov,August 16, 1982,182.0)\n(3,Russia,Roman Bragin,April 17, 1987,187.0)\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            19.0
+                        ]
+                    ],
+                    "sql": "SELECT Final_Table_Made FROM poker_player WHERE People_ID = (SELECT People_ID FROM poker_player ORDER BY Earnings DESC LIMIT 1)",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the poker player with the most earnings.\nSQL: ```sql SELECT People_ID FROM poker_player ORDER BY Earnings DESC LIMIT 1```\n\nSubquestion 2: Find the number of final tables made by the poker player with the most earnings.\nSQL: ```sql SELECT Final_Table_Made FROM poker_player WHERE People_ID = (SELECT People_ID FROM poker_player ORDER BY Earnings DESC LIMIT 1)```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome.",
+                "query": "",
+                "predict": "You're welcome! Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "poker_player(Poker_Player_ID:poker player id type:number PRIMARY KEY|People_ID:people id type:number|Final_Table_Made:final table made type:number|Best_Finish:best finish type:number|Money_Rank:money rank type:number|Earnings:earnings type:number|)\npeople(People_ID:people id type:number PRIMARY KEY|Nationality:nationality type:text|Name:name type:text|Birth_Date:birth date type:text|Height:height type:number|)\nForeign keys:\npoker_player.'People_ID' = people.'People_ID'\nValue examples:poker_player:\n(1,1,42.0,1.0,68.0,476090.0)\n(2,2,10.0,2.0,141.0,189233.0)\n(3,5,21.0,1.0,166.0,104871.0)\npeople:\n(1,Russia,Aleksey Ostapenko,May 26, 1986,207.0)\n(2,Bulgaria,Teodor Salparov,August 16, 1982,182.0)\n(3,Russia,Roman Bragin,April 17, 1987,187.0)\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome! Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 59
     }
 ]

@@ -99,8 +99,7 @@ def solve_answerable(db_name, output_selector, question):
         # if output_decomposer["executable"]:
         #     sql_output = " Result:" + str(output_refiner["result"])
 
-
-
+        
 def process_json_part(data, output_file):
     for index1,item in enumerate(tqdm(data)):
         retries = 0
@@ -165,6 +164,7 @@ def process_json_part(data, output_file):
                                 }
                                 
                                 output_selector = selector.process_input(input_data)
+                                # output_selector = db_getdesc(db_name) + "Value examples:" + get_example(db_name)
                                 print(output_selector)
                             
                                 
@@ -197,7 +197,8 @@ def process_json_part(data, output_file):
                                         
                                         for rewritten_question in rewritten_questions:
                                             possible_output, output_decomposer, output_refiner = solve_answerable(db_name, output_selector, "previous QA:" + previous_QA + "\ncurrent question:" + rewritten_question)
-                                            rewritten_outputs.append(possible_output)
+                                            if possible_output != "":
+                                                rewritten_outputs.append(possible_output)
                                                             
                             # llm record
                             print("\nFINAL Response:")
@@ -257,10 +258,10 @@ def process_json_part(data, output_file):
                 print(f"\033[91m==============Error processing id {id_now} data index {index} (attempt {retries}): {e}==============\033[0m")
 
 
-def process_json_multithreaded(input_file, output_file, num_threads=3):
+def process_json_multithreaded(input_file, output_file, num_threads=5):
     with  open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
-        data = data[51:100]
+        data = data[:]
     # split
     data_parts = []
     chunk_size = math.ceil(len(data) / num_threads)  # Round up to ensure all data is included
@@ -275,7 +276,7 @@ def process_json_multithreaded(input_file, output_file, num_threads=3):
             future = executor.submit(process_json_part, part, output_file)
             futures.append(future)
         concurrent.futures.wait(futures)
-        
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MMSQL-EVAL MULTI-AGENT LLM GENERATION SCRIPT")

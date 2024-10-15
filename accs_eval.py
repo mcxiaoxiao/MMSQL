@@ -838,7 +838,13 @@ for element in tqdm(data):
                             print(e)
                 if rewriten_success:
                     rewritten_correct_amb += 1
-            
+
+
+            if gold_type == 'answerable' and predict_type == 'unanswerable':
+
+                iduem = False
+                print("\033[91mIDUEM failed\033[0m")
+
             if gold_type == 'answerable' and predict_type == 'ambiguous':
                 # rewritten QAs to save the score
                 imatch = False
@@ -880,8 +886,9 @@ for element in tqdm(data):
 
                 else:
                     iduem = False
-                    print("\033[91mEM failed\033[0m")
                     print("\033[91mIDUEM failed\033[0m")
+                    print("\033[91mEM failed\033[0m")
+                    
                 
                 
     if iaccs:
@@ -912,13 +919,15 @@ print("| Metric | Count | Total | Percentage |")
 print("|--------|-------|-------|------------|")
 print(f"| DUEM   | {duem:<5} | {allqa:<5} | {percentage1:.1f}%      |")
 print(f"| IDUEM   | {iduem_count:<5} | {allqa:<5} | {percentage1_iduem:.1f}%      |")
+
+print(f"| QM     | {qm_count:<5} | {allsqlqa:<5} | {percentage4:.1f}%      |")
+print(f"| EM     | {em_count:<5} | {allsqlqa:<5} | {percentage3:.1f}%      |")
+
 print(f"| ACCS   | {accs:<5} | {allqa:<5} | {percentage2:.1f}%      |")
 print(f"| IACCS  | {iaccs_count:<5} | {allturn:<5} | {percentage2_iaccs:.1f}%      |")
-print(f"| EM     | {em_count:<5} | {allsqlqa:<5} | {percentage3:.1f}%      |")
-print(f"| QM     | {qm_count:<5} | {allsqlqa:<5} | {percentage4:.1f}%      |")
+
 print(f"| ERROR  | {error_count:<5} | {allsqlqa:<5} | {percentage5:.1f}%      |")
 print(f"| IM     | {im_count:<5} | {allturn:<5} | {percentage6:.1f}%      |")
-print(f"| RQS    | {RQS_sum:<5} | {RQS_count:<5} | {RQS_sum/RQS_count:.2f}      |")
 print("-------------------------------------")
 
 
@@ -1006,8 +1015,10 @@ print("F. Rewritten QA Analysis")
 print("_____________________________________________")
 print("| Metric       | Count | Total | Percentage |")
 print("|--------------|-------|-------|------------|")
-print(f"| Ans.Q+Amb    | {rewritten_correct_ans:<5} | {rewritten_count_ans:<5} | {(rewritten_correct_ans/rewritten_count_ans)*100:.1f}%      |")
-print(f"| Amb.Q+Amb    | {rewritten_correct_amb:<5} | {rewritten_count_amb:<5} | {(rewritten_correct_amb/rewritten_count_amb)*100:.1f}%      |")
+if rewritten_count_ans != 0:
+    print(f"| Ans.Q+Amb    | {rewritten_correct_ans:<5} | {rewritten_count_ans:<5} | {(rewritten_correct_ans/rewritten_count_ans)*100:.1f}%      |")
+if rewritten_count_amb != 0:
+    print(f"| Amb.Q+Amb    | {rewritten_correct_amb:<5} | {rewritten_count_amb:<5} | {(rewritten_correct_amb/rewritten_count_amb)*100:.1f}%      |")
 print("_____________________________________________")
 
 
