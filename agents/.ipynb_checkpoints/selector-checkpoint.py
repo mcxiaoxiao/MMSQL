@@ -83,6 +83,9 @@ The entities extracted from the Question are:
         """
         
         llm_ans = self.request_llm(sys_prompt,usr_prompt)
+
+        llm_ans = llm_ans.replace('true','True')
+        llm_ans = llm_ans.replace('"professional_id"]','"professional_id"],')
         
         json_object = self.extract_json_from_string(llm_ans)
 
