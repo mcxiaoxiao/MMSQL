@@ -1,0 +1,165 @@
+[
+    {
+        "db_name": "network_1",
+        "turns": [
+            {
+                "isuser": true,
+                "text": "what is the average of grades?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT AVG(grade) FROM Highschooler",
+                "predict": "SELECT AVG(grade) FROM Highschooler",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Highschooler\n[('ID', id type:number PRIMARY KEY. Value examples:[1025, 1101, 1247]),('name', name type:text. Value examples:[Jordan, Gabriel, Tiffany]),('grade', grade type:number. Value examples:[9, 10, 11]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            10.5
+                        ]
+                    ],
+                    "sql": "SELECT AVG(grade) FROM Highschooler",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the average of grades?\nSQL ```sql SELECT AVG(grade) FROM Highschooler```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "what is the name of higshoolers that starting with 'A'?",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT AVG(grade) FROM Highschooler",
+                "predict": "SELECT name FROM Highschooler WHERE name LIKE 'A%'",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Highschooler\n[('ID', id type:number PRIMARY KEY. Value examples:[1025, 1101, 1247]),('name', name type:text. Value examples:[Jordan, Gabriel, Tiffany]),('grade', grade type:number. Value examples:[9, 10, 11]),]\nTable:Friend\n[('student_id', student id type:number PRIMARY KEY. Value examples:[1101, 1247, 1304]),('friend_id', friend id type:number. Value examples:[1381, 1689, 1709]),]\nTable:Likes\n[('student_id', student id type:number PRIMARY KEY. Value examples:[1025, 1247, 1316]),('liked_id', liked id type:number. Value examples:[1709, 1689, 1247]),]\nForeign keys:\nFriend.'friend_id' = Highschooler.'ID'\nFriend.'student_id' = Highschooler.'ID'\nLikes.'student_id' = Highschooler.'ID'\nLikes.'liked_id' = Highschooler.'ID'\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            "Andrew"
+                        ],
+                        [
+                            "Alexis"
+                        ],
+                        [
+                            "Austin"
+                        ]
+                    ],
+                    "sql": "SELECT name FROM Highschooler WHERE name LIKE 'A%'",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the names of highschoolers that start with 'A'. \nSQL ```sql SELECT name FROM Highschooler WHERE name LIKE 'A%'```\n\nQuestion Solved. \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "Top score",
+                "type": "ambiguous"
+            },
+            {
+                "isuser": false,
+                "text": "Did you mean to ask for the highest grade?",
+                "query": "",
+                "predict": "Top score of what? Please clarify.",
+                "rewritten_questions": [
+                    "What is the highest grade in the Highschooler table?",
+                    "What is the highest grade among all the Highschoolers?",
+                    "Top score"
+                ],
+                "rewritten_outputs": [
+                    "SELECT MAX(grade) FROM Highschooler",
+                    "SELECT MAX(grade) FROM Highschooler",
+                    "SELECT MAX(grade) FROM Highschooler"
+                ],
+                "Rewriter": "",
+                "Selector": "Table:Highschooler\n[('ID', id type:number PRIMARY KEY. Value examples:[1025, 1101, 1247]),('name', name type:text. Value examples:[Jordan, Gabriel, Tiffany]),('grade', grade type:number. Value examples:[9, 10, 11]),]\nForeign keys:\n",
+                "Detector": {
+                    "answerable": "ambiguous",
+                    "type": "ambiguous",
+                    "answer": "Top score of what? Please clarify.",
+                    "rewrite": [
+                        "What is the highest grade in the Highschooler table?",
+                        "What is the highest grade among all the Highschoolers?",
+                        "Top score"
+                    ]
+                },
+                "Decomposer": {
+                    "result": [
+                        [
+                            12
+                        ]
+                    ],
+                    "sql": "SELECT MAX(grade) FROM Highschooler",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: What is the highest grade among all high schoolers?\nSQL ```sql SELECT MAX(grade) FROM Highschooler``` \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "yes\n",
+                "type": "answerable"
+            },
+            {
+                "isuser": false,
+                "text": "",
+                "query": "SELECT MAX(grade) FROM Highschooler",
+                "predict": "SELECT MAX(grade) FROM Highschooler",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Highschooler\n[('ID', id type:number PRIMARY KEY. Value examples:[1025, 1101, 1247]),('name', name type:text. Value examples:[Jordan, Gabriel, Tiffany]),('grade', grade type:number. Value examples:[9, 10, 11]),]\nForeign keys:\n",
+                "Detector": "YES",
+                "Decomposer": {
+                    "result": [
+                        [
+                            12
+                        ]
+                    ],
+                    "sql": "SELECT MAX(grade) FROM Highschooler",
+                    "executable": true,
+                    "log": "",
+                    "process": "Subquestion 1: Find the highest grade in the table.\nSQL: ```sql SELECT MAX(grade) FROM Highschooler``` \n"
+                },
+                "Refiner": ""
+            },
+            {
+                "isuser": true,
+                "text": "thanks!",
+                "type": "improper"
+            },
+            {
+                "isuser": false,
+                "text": "You are welcome. Good bye!",
+                "query": "",
+                "predict": "You're welcome!  Is there anything else I can help you with?",
+                "rewritten_questions": [],
+                "rewritten_outputs": [],
+                "Rewriter": "",
+                "Selector": "Table:Highschooler\n[('ID', id type:number PRIMARY KEY. Value examples:[1025, 1101, 1247]),('name', name type:text. Value examples:[Jordan, Gabriel, Tiffany]),('grade', grade type:number. Value examples:[9, 10, 11]),]\nForeign keys:\n",
+                "Detector": {
+                    "answerable": "improper",
+                    "type": "improper",
+                    "answer": "You're welcome!  Is there anything else I can help you with?"
+                },
+                "Decomposer": "",
+                "Refiner": ""
+            }
+        ],
+        "id": 120
+    }
+]

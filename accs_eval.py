@@ -840,16 +840,13 @@ for element in tqdm(data):
                     rewritten_correct_amb += 1
 
 
-            if gold_type == 'answerable' and predict_type == 'unanswerable':
-
-                iduem = False
-                print("\033[91mIDUEM failed\033[0m")
+            rewriten_success = False
 
             if gold_type == 'answerable' and predict_type == 'ambiguous':
                 # rewritten QAs to save the score
                 imatch = False
                 rewritten_count_ans += 1
-                rewriten_success = False
+                
                 if len(turns[i+1].get('rewritten_outputs',[])) > 0:
                     for rewritten_output in turns[i+1].get('rewritten_outputs',[]):
                         print("Rewritten Output:"+rewritten_output)
@@ -889,7 +886,10 @@ for element in tqdm(data):
                     print("\033[91mIDUEM failed\033[0m")
                     print("\033[91mEM failed\033[0m")
                     
+            if gold_type == 'answerable' and predict_type == 'unanswerable' and rewriten_success == False:
                 
+                iduem = False
+                print("\033[91mIDUEM failed\033[0m")
                 
     if iaccs:
         print("\033[92mIACCS+1\033[0m")
