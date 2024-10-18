@@ -147,6 +147,7 @@ Question Solved.
             """
         # print(sys_prompt,usr_prompt)
         llm_response = self.request_llm(sys_prompt, usr_prompt)
+        llm_response = llm_response.replace("false","False")
         print(llm_response)
         
 
