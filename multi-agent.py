@@ -111,7 +111,7 @@ def process_json_part(data, output_file):
                 print("id " + str(id_now) + " Turn "+str(index1)+" ==================================================================")
                 db_name = item['db_name']
                 previous_QA = ""
-                
+                print(id_now)
                 
                 for index, turn in enumerate(item['turns']):
                     
@@ -163,8 +163,8 @@ def process_json_part(data, output_file):
                                     "question": rewritten_question 
                                 }
                                 
-                                output_selector = selector.process_input(input_data)
-                                # output_selector = db_getdesc(db_name) + "Value examples:" + get_example(db_name)
+                                # output_selector = selector.process_input(input_data)
+                                output_selector = db_getdesc(db_name) + "Value examples:" + get_example(db_name)
                                 print(output_selector)
                             
                                 
@@ -178,12 +178,10 @@ def process_json_part(data, output_file):
                                 }
                                 
                                 output_detector = detector.process_input(input_data)
-                                # print("output_detectoroutput_detectoroutput_detector" + output_detector)
-                                # The question is Answerable
-                                # print(output_detector)
-                                
                                 if output_detector == "YES":
-                                    
+
+                                
+                                # if "YES" == "YES":
                                     final_output, output_decomposer, output_refiner = solve_answerable(db_name, output_selector, rewritten_question)
                                     
                                 else:
@@ -258,7 +256,7 @@ def process_json_part(data, output_file):
                 print(f"\033[91m==============Error processing id {id_now} data index {index} (attempt {retries}): {e}==============\033[0m")
 
 
-def process_json_multithreaded(input_file, output_file, num_threads=5):
+def process_json_multithreaded(input_file, output_file, num_threads=2):
     with  open(input_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
         data = data[:]

@@ -1,9 +1,5 @@
 
 /datasets/cosql_dataset
-tools/api_request.py
-tools/api_request.py
-tools/api_request.py
-tools/api_request.py
 tools/.ipynb_checkpoints/api_request-checkpoint.py
 tools/__pycache__/api_request.cpython-312.pyc
 tools/api_request.py

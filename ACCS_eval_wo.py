@@ -29,7 +29,7 @@ import nltk
 try:
     nltk.data.find('punkt_tab')  # check
 except LookupError:
-    print("check::: punkt_tab not found，start download...")
+    print("check::: punkt_tab not found, start download...")
     nltk.download('punkt_tab')  # auto download
     print("punkt_tab has installed")
 else:
@@ -748,11 +748,19 @@ for element in tqdm(data):
 
                 allsqla += 1
 
+                sql_to_eval = turns[i+1].get('predict_sql','')
+
+                if turns[i+1].get('Refiner','') != '':
+                    sql_to_eval = ''
+
+
+
+
                 if i-2 >= 0 and turns[i-2].get('type','') == 'ambiguous':
                     AmbClaA_count += 1
                 try:
                     
-                    if eval_exec_match("datasets/cosql_dataset/database",db_name, turns[i+1].get('predict_sql',''), turns[i+1].get('query','')):
+                    if eval_exec_match("datasets/cosql_dataset/database", db_name, sql_to_eval, turns[i+1].get('query','')):
                         em_count += 1
                         duem += 1
 
@@ -768,7 +776,7 @@ for element in tqdm(data):
 
                 try:
                     # print("Question:"+turns[i].get('text',''))
-                    if qm("datasets/cosql_dataset/database", turns[i+1].get('predict_sql',''),turns[i+1].get('query',''), db_name):
+                    if qm("datasets/cosql_dataset/database", sql_to_eval, turns[i+1].get('query',''), db_name):
                         qm_count += 1
                         accs += 1
                         print("\033[92mACCS+1\033[0m")

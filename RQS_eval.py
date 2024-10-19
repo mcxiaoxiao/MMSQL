@@ -143,7 +143,7 @@ def process_turns(file_path, output_path):
                     # Check and process the next turn (if it exists)
                     if i + 1 < length:
                         next_turn = turns[i + 1]
-                        predict_text = next_turn.get('predict', '')
+                        predict_text = str(next_turn.get('predict', ''))
                         print("Next Turn predict_text:", predict_text)
                         # Find the positions of SELECT and the semicolon
                         select_pos = predict_text.upper().find('SELECT')
