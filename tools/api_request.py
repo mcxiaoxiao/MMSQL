@@ -4,15 +4,17 @@ import time
 import random
 import google.generativeai as genai
 # Set API key
-OPENAI_API_KEY = 'your api key'
+OPENAI_API_KEY = 'your openai key'
 OPENAI_MODEL_NAME = "gpt-4o-mini"
-client = OpenAI(api_key=OPENAI_API_KEY)
+OPENAI_BASE_URL = "https://api.openai.com/v1"
+client1 = OpenAI(api_key=OPENAI_API_KEY,base_url=OPENAI_BASE_URL)
+NVIDIA_API_KEY = 'your nvidia key'
+NVIDIA_MODEL_NAME = "meta/llama3-70b-instruct"
+NVIDAI_BASE_URL = "https://integrate.api.nvidia.com/v1"
+client2 = OpenAI(api_key=NVIDIA_MODEL_NAME,base_url=NVIDAI_BASE_URL)
 
 GEMINI_API_KEYS = [
-    "AIzaSyAUJEkCFcasjISnFQLqu5kyXFZWLppKIaU",
-    "AIzaSyDfFuhj-UgJxC2ThsAgPYPhKyjFaPHqJ1M",
-    "AIzaSyAWaTmfp7pCPcxpZln7EfzyZlkrIGltZfw",
-    "AIzaSyC5FBoMFzNWvsz7FlnexrmdLFoHWed4LTc"]
+    "your gemini key 1"]
 GEMINI_MODEL_NAME = "gemini-1.5-flash"
 ge_model = genai.GenerativeModel(GEMINI_MODEL_NAME)
 
@@ -28,14 +30,16 @@ def transform_messages_for_gemini(messages):
         transformed.append(new_message)
     return transformed
 
+
+
 def request_gpt(messages):
     print("request "+ OPENAI_MODEL_NAME)
     for attempt in range(10):  # Retry up to 10 times
         try:
-            response = client.chat.completions.create(
+            response = client1.chat.completions.create(
                 model=OPENAI_MODEL_NAME,
                 messages=messages,
-                temperature=0
+                temperature=0.0
             )
             response_message = response.choices[0].message.content
             return response_message
@@ -46,6 +50,26 @@ def request_gpt(messages):
             else:
                 print(f"An error occurred with GPT request after 10 attempts: {e}")
                 return "failed"
+
+def request_nvidia(messages):
+    print("request "+ NVIDIA_MODEL_NAME)
+    for attempt in range(10):  # Retry up to 10 times
+        try:
+            response = client1.chat.completions.create(
+                model=OPENAI_MODEL_NAME,
+                messages=messages,
+                temperature=0.0
+            )
+            response_message = response.choices[0].message.content
+            return response_message
+        except Exception as e:
+            print(e)
+            if attempt < 50:  # Don't wait after the last attempt
+                time.sleep(2)  # Wait for 2 seconds before retrying
+            else:
+                print(f"An error occurred with NVIDIA request after 10 attempts: {e}")
+                return "failed"
+
 
 def request_gemini(messages):   
     print("request "+ GEMINI_MODEL_NAME)
