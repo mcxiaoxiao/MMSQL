@@ -24,7 +24,7 @@ To reproduce the experiments or test your models, follow the steps below:
 
 ### 1. Generate Responses with LLM
 
-Use the `llm_generation.py` (Default) or `multi-agent.py` (Multi-agent) script to generate responses for the MMSQL test set. You can choose between huggingface or api based LLMs.
+Use the `llm_generation.py` (Default setting) or `multi-agent.py` (Multi-agent setting) script to generate responses for the MMSQL test set. You can choose between huggingface or api based LLMs.
 
 ```bash
 python python llm_generation.py outputs/Llama-3-70B.json
