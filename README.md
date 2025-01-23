@@ -15,7 +15,7 @@
 - `RQS_eval.py`: Script for evaluating responses using GPT-4o-mini to score RQS and label the response types.
 - `TDEX_eval.py`: Script for calculating several metrics including TDEX, EM, EX, ERROR...
 - `correlation_analysis.ipynb`: Jupyter notebook for calculating the Spearman and Pearson correlations between human ratings and GPT-4o ratings.
-- `analysis_outputs.ipynb`: Jupyter notebook for producing figures in a thesis.
+- `analysis_outputs.ipynb`: Jupyter notebook for producing figures.
 
 
 ## Getting Started
