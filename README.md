@@ -14,7 +14,7 @@
 - `llm_generation.py`: The script generates responses using the LLM.
 - `RQS_eval.py`: Script for evaluating responses using GPT-4o-mini to score RQS and label the response types.
 - `TDEX_eval.py`: Script for calculating several metrics including TDEX, EM, EX, ERROR...
-- `correlation_analysis.ipynb`: Jupyter notebook for calculating the Spearman and Pearson correlations between human ratings and GPT-4o ratings.
+- `correlation_analysis.ipynb`: Jupyter notebook for calculating the correlation scores between human ratings and GPT-4o ratings.
 - `analysis_outputs.ipynb`: Jupyter notebook for producing figures.
 
 
