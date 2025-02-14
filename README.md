@@ -60,7 +60,7 @@ python python TDEX_eval.py outputs/one-shot/gpt4_scored_Llama-3-70B.json
 }
 ```
 ### Output Example
-
+The output example of `TDEX_eval.py`
 ```bash
 _____________________________________
 A. Overall Result Analysis
