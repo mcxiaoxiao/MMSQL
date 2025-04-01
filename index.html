@@ -251,18 +251,7 @@
 
       <div class="container is-max-desktop content">
         <div class="content">
-          <img src="static/images/qda.svg" alt="fig.2" class="center-image" style="min-width: 700px;" />
-          <p class="has-text-centered">
-            Fig. 2 Overview of QDA-SQL processes. (Method of dataset construction)
-          </p>
-          <p>
-            <a href="https://github.com/mcxiaoxiao/QDA-SQL" target="_blank"> QDA-SQL </a>(Questions Enhanced Dialogue
-            Augmentation for Multi-turn Text-to-SQL) uses Chain of Thought (CoT) reasoning to generate multi-turn Q&A
-            pairs step-by-step. It combines context relationships and question types randomly, followed by a refinement
-            process, guiding Gemini Pro to create diverse datasets. This ensures each sample fits our defined question
-            types. The samples produced by QDA-SQL showed higher natural language annotation quality, with a 62% win
-            rate, and included more complex text-to-SQL examples compared to the original dataset.
-          </p>
+
           <p>
             In our dataset generation process, we used samples from SPARC and CoSQL as GoalSQL as GoalSQL, transforming them into multi-turn, multi-type datasets in our format. You can preview or download the following datasets:
           </p>
@@ -289,6 +278,18 @@
       
             </tbody>
           </table>
+          <img src="static/images/qda.svg" alt="fig.2" class="center-image" style="min-width: 700px;" />
+          <p class="has-text-centered">
+            Fig. 2 Overview of QDA-SQL processes. (Method of dataset construction)
+          </p>
+          <p>
+            <a href="https://github.com/mcxiaoxiao/QDA-SQL" target="_blank"> QDA-SQL </a>(Questions Enhanced Dialogue
+            Augmentation for Multi-turn Text-to-SQL) uses Chain of Thought (CoT) reasoning to generate multi-turn Q&A
+            pairs step-by-step. It combines context relationships and question types randomly, followed by a refinement
+            process, guiding Gemini Pro to create diverse datasets. This ensures each sample fits our defined question
+            types. The samples produced by QDA-SQL showed higher natural language annotation quality, with a 62% win
+            rate, and included more complex text-to-SQL examples compared to the original dataset.
+          </p>
           <h2 class="title is-3">Evaluation</h2>
           <p>Our evaluation metrics include Exact Matching (EM) and Execution Accuracy (EX). EM compares each predicted clause to the reference query, considering it correct only if all components match, excluding values. EX evaluates the proportion of SQL where the execution results of both predicted and ground-truth SQL are identical. Interaction Execution Accuracy (IEX) is achieved when all SQL queries in a multi-turn interaction execute correctly. We also developed the Dual Assessment of Question Type Detection and Execution Accuracy (TDEX) to assess the comprehensive capability of text-to-SQL models with complex queries. Additionally, the Response Quality Score (RQS) measures the quality of the model's natural language responses.</p>
 
