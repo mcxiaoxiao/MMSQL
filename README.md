@@ -43,7 +43,7 @@ python RQS_eval.py outputs/Llama-3-70B.json outputs/gpt4_scored_Llama-3-70B.json
 Use the `TDEX_eval.py` script to calculate several metrics from the output JSON files, including base metric (e.g. TDEX, EX, EM...) and analytical results.
 
 ```bash
-python python TDEX_eval.py outputs/one-shot/gpt4_scored_Llama-3-70B.json 
+python TDEX_eval.py outputs/one-shot/gpt4_scored_Llama-3-70B.json 
 ```
 
 ### Citations
