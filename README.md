@@ -35,7 +35,7 @@ python llm_generation.py outputs/Llama-3-70B.json
 Use the `RQS_eval.py` script to evaluate the generated responses. The RQS scores will be added to the output JSON file in the `outputs` directory.
 
 ```bash
-python RQS_eval.py outputs/Llama-3-70B.json outputs/gpt4_scored_Llama-3-70B.json
+python RQS_eval.py outputs/Llama-3-70B.json
 ```
 
 ### 3. Calculate Metrics
