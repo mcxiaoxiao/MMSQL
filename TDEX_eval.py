@@ -723,7 +723,7 @@ for element in tqdm(data):
             print("\n========turn:"+str((i+1)//2))
             print("Question:"+turns[i].get('text',''))
             # print("Answer:" + turns[i+1].get('predict', '').encode('gbk', 'replace').decode('gbk'))
-        if turns[i].get('isuser'):
+        if turns[i].get('isuser') or turns[i].get('isUser'):
             allqa+=1
             # print(turns[i]['text'])
             gold_type = turns[i].get('type','')
