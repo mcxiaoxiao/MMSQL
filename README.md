@@ -139,3 +139,7 @@ _____________________________________________
 We appreciate your interest! For more details and if you have any questions, please refer to: https://github.com/mcxiaoxiao/MMSQL
 
 ```
+
+## Star History
+
+[![Star History Chart](star-history.svg)](https://github.com/mcxiaoxiao/MMSQL)
